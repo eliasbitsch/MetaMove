@@ -1,0 +1,54 @@
+{
+    "folders": [
+        {
+            "name": "📝 Root",
+            "path": "."
+        },
+        {
+            "name": "🎮 Unity — MetaMove (Quest 3)",
+            "path": "unity-quest"
+        },
+        {
+            "name": "💻 PC Server (EGM / UDP / PCSDK)",
+            "path": "pc-server"
+        },
+        {
+            "name": "🤖 ROS 2 (ABB packages)",
+            "path": "ros2"
+        },
+        {
+            "name": "🏭 RobotStudio (sim pack)",
+            "path": "robotstudio"
+        },
+        {
+            "name": "🐳 Docker / WSL",
+            "path": "docker"
+        },
+        {
+            "name": "📚 Docs",
+            "path": "docs"
+        },
+        {
+            "name": "📦 Third-party",
+            "path": "third_party"
+        },
+        {
+            "name": "🗄 Archive",
+            "path": "_archive"
+        }
+    ],
+    "settings": {
+        "files.exclude": {
+            "**/Library": true,
+            "**/Temp": true,
+            "**/obj": true,
+            "**/bin": true,
+            "**/Logs": true,
+            "**/PrefabPreviews": true,
+            "**/UserSettings": true,
+            "**/.vs": true,
+            "**/*.csproj": true,
+            "**/*.sln": true
+        }
+    }
+}

@@ -1,0 +1,25 @@
+services:
+  perception:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: goholo/perception-dino:latest
+    container_name: goholo_perception
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    volumes:
+      - perception_models:/models
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=compute,utility
+
+volumes:
+  perception_models:
