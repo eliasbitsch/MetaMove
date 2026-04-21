@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd3c6cca34905694cb417e9c6e4ca604, type: 3}
+  m_Name: RobotConnectionConfig
+  m_EditorClassIdentifier: Assembly-CSharp::MetaMove.Settings.RobotConnectionConfig
+  activeIndex: 0
+  mode: 0
+  endpoints:
+  - label: GoFa Primary (.1)
+    rwsHost: 192.168.125.1
+    rwsPort: 443
+    rwsHttps: 1
+    egmHost: 192.168.125.1
+    egmPort: 6511
+  - label: GoFa Alternate (.99)
+    rwsHost: 192.168.125.99
+    rwsPort: 443
+    rwsHttps: 1
+    egmHost: 192.168.125.99
+    egmPort: 6511
+  - label: Virtual Controller
+    rwsHost: 127.0.0.1
+    rwsPort: 80
+    rwsHttps: 0
+    egmHost: 127.0.0.1
+    egmPort: 6511

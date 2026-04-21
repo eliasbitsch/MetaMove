@@ -1,0 +1,518 @@
+﻿<Window x:Class="MetaMove.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MetaMove"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="720" Width="1280">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="260"/>
+            <RowDefinition Height="150"/>
+            <RowDefinition Height="150*"/>
+            <RowDefinition Height="100"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250" />
+            <ColumnDefinition Width="3*" />
+            <ColumnDefinition Width="3*" />
+            <ColumnDefinition Width="300" />
+        </Grid.ColumnDefinitions>
+
+        <TextBlock x:Name="showCounter" HorizontalAlignment="Left" Margin="516,9,0,0" Text="Das ist mein Text" TextWrapping="Wrap" VerticalAlignment="Top" Height="16" Grid.Row="1" Width="89"/>
+
+        <Button Content="Display" HorizontalAlignment="Left" Margin="108,166,0,0" VerticalAlignment="Top" Click="Button_Click" Height="20" Grid.Row="3" Width="42" Grid.Column="2"/>
+
+
+        <StackPanel Grid.Row="0" Grid.Column="3" Margin="0,10,10,0" Grid.RowSpan="3">
+            <GroupBox  Header="HoloLens2 TCP-IP" Height="80" Margin="0,-5,0,0" >
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="50"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" Margin="0,10,0,0" x:Name="TCPButtons" IsEnabled="True">
+                        <RadioButton x:Name="radio_TCPdefault" GroupName="TCP" Content="default:" />
+                        <RadioButton GroupName="TCP" Content="custom:  " Margin="0,2,0,0" IsChecked="true"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="1" HorizontalAlignment="Left" Margin="0,10,0,0" >
+                        <TextBlock Text="127.0.0.1 : 5515" TextAlignment="Right"/>
+                        <WrapPanel>
+                            <TextBox x:Name="TCPcustom" Width="100" TextAlignment="Right" IsEnabled="True" TextChanged="TCPcustom_TextChanged" Text="192.168.1.10"/>
+                            <TextBlock Margin="0,2,0,0" Text=" : 5515"></TextBlock>
+                        </WrapPanel>
+                    </StackPanel>
+                    <StackPanel Grid.Column="2"  Width="50"  VerticalAlignment="Bottom">
+                        <Button x:Name="TCPButtonStart" Content="START" Margin="0,0,-0.4,0" Click="Button_Click_1" HorizontalAlignment="Right" Width="50" ></Button>
+                        <Button x:Name="TCPButtonStop" Content="STOP" Margin="0,5,0,0" Click="Button_Click_3" IsEnabled="false" ></Button>
+                    </StackPanel>
+                 
+                </Grid>
+            </GroupBox>
+            <GroupBox Header="UDP">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="5"/>
+                        <ColumnDefinition Width="50"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0">
+                        <GroupBox Header="Real Controller"  Height="80">
+                            <WrapPanel DockPanel.Dock="Top">
+                                <StackPanel  Margin="0,10,0,0">
+                                    <RadioButton x:Name="RC_radio_UDPdefault" GroupName="RC_UDP" Content="default:" IsChecked="False" IsEnabled="true"/>
+                                    <RadioButton x:Name="RC_radio_UDPcustom" GroupName="RC_UDP" Content="custom:  " Margin="0,2,0,0" IsEnabled="true" IsChecked="true"/>
+                                    <CheckBox x:Name="UDP_RC_enable" Margin="0,1,0,0" Content="enable" IsChecked="True" IsEnabled="True"/>
+                                </StackPanel>
+                                <StackPanel HorizontalAlignment="Left"  Margin="0,10,0,0">
+                                    <TextBlock Text="192.168.125.5 : 6510" TextAlignment="Right"/>
+                                    <WrapPanel>
+                                        <TextBox x:Name="RC_UDPcustomIP"  Width="100" TextAlignment="Right" IsEnabled="true" Text="192.168.125.50"/>
+                                        <TextBlock Text=" : 6510"></TextBlock>
+                                    </WrapPanel>
+                                </StackPanel>
+                                <StackPanel Margin="10,5,0,0" DockPanel.Dock="Right"/>
+                            </WrapPanel>
+                        </GroupBox>
+                        <GroupBox  Header="Virtual Controller"  Height="80">
+                            <WrapPanel DockPanel.Dock="Top">
+                                <StackPanel  Margin="0,10,0,0">
+                                    <RadioButton x:Name="VC_radio_UDPdefault" GroupName="UDP" Content="default:" IsChecked="true"/>
+                                    <RadioButton x:Name="VC_radio_UDPcustom" GroupName="UDP" Content="custom:  " Margin="0,2,0,0"/>
+                                    <CheckBox x:Name="UDP_VC_enable" Margin="0,1,0,0" Content="enable" IsChecked="True" IsEnabled="True" />
+                                </StackPanel>
+                                <StackPanel HorizontalAlignment="Left"  Margin="0,10,0,0">
+                                    <TextBlock Text="127.0.0.1 : 6510" TextAlignment="Right"/>
+                                    <WrapPanel>
+                                        <TextBox x:Name="VC_UDPcustomIP" Width="100" TextAlignment="Right"/>
+                                        <TextBlock Text=" : 6510"></TextBlock>
+                                    </WrapPanel>
+                                </StackPanel>
+                            </WrapPanel>
+                        </GroupBox>
+                    </StackPanel>
+                    <DockPanel Width="50" Grid.Column="2">
+                        <StackPanel Margin="0,0,0,0"  VerticalAlignment="Bottom" DockPanel.Dock="Right" Width="50">
+                            <Button x:Name="GUI_UDP_start" Content="START" Margin="0,0,0,0" Click="Button_Click_4" ></Button>
+                            <Button x:Name="GUI_UDP_stop" Content="STOP" Margin="0,5,-0.4,0" Click="Button_Click_5" HorizontalAlignment="Left" Width="50"  IsEnabled="False" ></Button>
+                        </StackPanel>
+                    </DockPanel>
+                </Grid>
+            </GroupBox>
+            <GroupBox  Header="PCSDK"  Height="80" Margin="0,0,0,0">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="5"/>
+                        <ColumnDefinition Width="50"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Margin="0,10,0,0" Grid.Column="0">
+                        <DockPanel>
+                            <CheckBox DockPanel.Dock="Left" x:Name="check_VC" Content="Virtual Controller: " HorizontalAlignment="Left" VerticalAlignment="Top" IsEnabled="true" IsChecked="True"/>
+                            <TextBox x:Name="VC_name" DockPanel.Dock="Right" Width="100" TextChanged="VC_name_TextChanged" IsEnabled="true">controller name</TextBox>
+                            <TextBlock></TextBlock>
+                        </DockPanel>
+                        <DockPanel Margin="0,5,0,0">
+                            <CheckBox x:Name="check_RC" Content="Real Controller:" HorizontalAlignment="Left" VerticalAlignment="Top" IsEnabled="true" IsChecked="True"/>
+                            <TextBox x:Name="RC_name" DockPanel.Dock="Right" Width="100" TextChanged="TextBox_TextChanged" IsEnabled="true">controller name</TextBox>
+                            <TextBlock></TextBlock>
+                        </DockPanel>
+                    </StackPanel>
+                    <StackPanel Grid.Column="2"  VerticalAlignment="Bottom">
+                        <Button x:Name="GUI_PCSDK_start" Content="START" Margin="0,0,0,0" Click="btn_PCSDK_start_Click" ></Button>
+                        <Button x:Name="GUI_PCSDK_stop" Content="STOP" Margin="0,5,0,0" Click="btn_PCSDK_stop_Click" IsEnabled="False" ></Button>
+                    </StackPanel>
+                </Grid>
+            </GroupBox>
+            <DockPanel Grid.Column="3" Grid.Row="2" Margin="10,10,10,10" Grid.RowSpan="2">
+                <WrapPanel Margin="0,0,0,0" DockPanel.Dock="Top">
+                    <TextBlock  HorizontalAlignment="Right" Height="25" VerticalAlignment="Stretch" TextAlignment="Left" Padding="4" Width="150" >HoloLens2 connected</TextBlock>
+                    <Canvas HorizontalAlignment="Right" Margin="0,0,0,0" Width="25" Height="25">
+                        <Image x:Name="holoOFF" Width="25" Source="/data/OFF.png" Height="25"/>
+                        <Image x:Name="holoON" Height="25" Width="25" Source="/data/ON.png" Visibility="Hidden"/>
+                    </Canvas>
+                </WrapPanel>
+                <WrapPanel DockPanel.Dock="Top" Margin="0,0,0,0">
+                    <TextBlock Margin="150,0,0,0" HorizontalAlignment="Right" Height="25" VerticalAlignment="Stretch" TextAlignment="Left" Padding="4" Width="20" FontWeight="Bold" >VC</TextBlock>
+                    <TextBlock Margin="16,0,0,0" HorizontalAlignment="Right" Height="25" VerticalAlignment="Stretch" TextAlignment="Left" Padding="4" Width="20" FontWeight="Bold" >RC</TextBlock>
+                </WrapPanel>
+                <WrapPanel DockPanel.Dock="Top">
+                    <TextBlock HorizontalAlignment="Right" Height="25" VerticalAlignment="Stretch" TextAlignment="Left" Padding="4" Width="150" >RAPID running</TextBlock>
+                    <Canvas HorizontalAlignment="Right" Margin="0,0,0,0" Width="25" Height="25">
+                        <Image x:Name="VC_rapidOFF" Width="25" Source="/data/OFF.png" Height="25"/>
+                        <Image x:Name="VC_rapidON" Height="25" Width="25" Source="/data/ON.png" Visibility="Hidden"/>
+                    </Canvas>
+                    <Canvas HorizontalAlignment="Right" Margin="10,0,0,0" Width="25" Height="25">
+                        <Image x:Name="RC_rapidOFF" Width="25" Source="/data/OFF.png" Height="25"/>
+                        <Image x:Name="RC_rapidON" Height="25" Width="25" Source="/data/ON.png" Visibility="Hidden"/>
+                    </Canvas>
+                </WrapPanel>
+                <WrapPanel Margin="0,5,0,0" DockPanel.Dock="Top">
+                    <TextBlock HorizontalAlignment="Right" Height="25" VerticalAlignment="Stretch" TextAlignment="Left" Padding="4" Width="150" >Cycle Forever</TextBlock>
+                    <Canvas HorizontalAlignment="Right" Margin="0,0,0,0" Width="25" Height="25">
+                        <Image x:Name="VC_foreverOFF" Width="25" Source="/data/OFF.png" Height="25"/>
+                        <Image x:Name="VC_foreverON" Height="25" Width="25" Source="/data/ON.png" Visibility="Hidden"/>
+                    </Canvas>
+                    <Canvas  HorizontalAlignment="Right" Margin="10,0,0,0" Width="25" Height="25">
+                        <Image x:Name="RC_foreverOFF" Width="25" Source="/data/OFF.png" Height="25"/>
+                        <Image x:Name="RC_foreverON" Height="25" Width="25" Source="/data/ON.png" Visibility="Hidden"/>
+                    </Canvas>
+                </WrapPanel>
+                <WrapPanel Margin="0,5,0,0" DockPanel.Dock="Top">
+                    <TextBlock HorizontalAlignment="Right" Height="25" VerticalAlignment="Stretch" TextAlignment="Left" Padding="4" Width="150" >Automatic Mode</TextBlock>
+                    <Canvas HorizontalAlignment="Right" Margin="0,0,0,0" Width="25" Height="25">
+                        <Image x:Name="VC_automaticOFF" Width="25" Source="/data/OFF.png" Height="25"/>
+                        <Image x:Name="VC_automaticON" Height="25" Width="25" Source="/data/ON.png" Visibility="Hidden"/>
+                    </Canvas>
+                    <Canvas HorizontalAlignment="Right" Margin="10,0,0,0" Width="25" Height="25">
+                        <Image x:Name="RC_automaticOFF" Width="25" Source="/data/OFF.png" Height="25"/>
+                        <Image x:Name="RC_automaticON" Height="25" Width="25" Source="/data/ON.png" Visibility="Hidden"/>
+                    </Canvas>
+                </WrapPanel>
+                <WrapPanel Margin="0,5,0,0" DockPanel.Dock="Top">
+                    <TextBlock HorizontalAlignment="Right" Height="25" VerticalAlignment="Stretch" TextAlignment="Left" Padding="4" Width="150" >PCSDK</TextBlock>
+                    <Canvas HorizontalAlignment="Right" Margin="0,0,0,0" Width="25" Height="25">
+                        <Image x:Name="VC_pcsdkOFF" Width="25" Source="/data/OFF.png" Height="25"/>
+                        <Image x:Name="VC_pcsdkON" Height="25" Width="25" Source="/data/ON.png" Visibility="Hidden"/>
+                    </Canvas>
+                    <Canvas HorizontalAlignment="Right" Margin="10,0,0,0" Width="25" Height="25">
+                        <Image x:Name="RC_pcsdkOFF" Width="25" Source="/data/OFF.png" Height="25"/>
+                        <Image x:Name="RC_pcsdkON" Height="25" Width="25" Source="/data/ON.png" Visibility="Hidden"/>
+                    </Canvas>
+                    <!--
+                <Canvas HorizontalAlignment="Right" Margin="0,0,0,0" Width="25" Height="25">
+                    <Rectangle HorizontalAlignment="Left" Height="15" Margin="2,5,0,0" Stroke="Black" VerticalAlignment="Top" Width="20" RadiusX="7.5" RadiusY="7.5"/>
+                    <Rectangle x:Name="VC_PCSDK" HorizontalAlignment="Left" Height="15" Margin="25,5,0,0" Stroke="Black" VerticalAlignment="Top" Width="20" RadiusX="7.5" RadiusY="7.5"/>
+                </Canvas>
+                -->
+                </WrapPanel>
+                <WrapPanel Margin="0,5,0,0" DockPanel.Dock="Top">
+                    <TextBlock HorizontalAlignment="Right" Height="25" VerticalAlignment="Stretch" TextAlignment="Left" Padding="4" Width="150" >EGM</TextBlock>
+                    <Canvas HorizontalAlignment="Right" Margin="0,0,0,0" Width="25" Height="25">
+                        <Image x:Name="VC_egmOFF" Width="25" Source="/data/OFF.png" Height="25"/>
+                        <Image x:Name="VC_egmON" Height="25" Width="25" Source="/data/ON.png" Visibility="Hidden"/>
+                    </Canvas>
+                    <Canvas HorizontalAlignment="Right" Margin="10,0,0,0" Width="25" Height="25">
+                        <Image x:Name="RC_egmOFF" Width="25" Source="/data/OFF.png" Height="25"/>
+                        <Image x:Name="RC_egmON" Height="25" Width="25" Source="/data/ON.png" Visibility="Hidden"/>
+                    </Canvas>
+
+                </WrapPanel>
+
+            </DockPanel>
+        </StackPanel>
+
+
+        <StackPanel Grid.Column="0" Grid.Row="3">
+            <TextBlock  HorizontalAlignment="Left"  TextWrapping="Wrap" VerticalAlignment="Top" Width="100"/>
+
+
+
+        </StackPanel>
+
+        <StackPanel Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="2">
+            <GroupBox Margin="10,0,10,10" Grid.ColumnSpan="2" >
+
+                <GroupBox.Header >
+                    <Label FontWeight="Bold">VC AXIS DATA</Label>
+                </GroupBox.Header>
+                <WrapPanel Margin="0,-5,0,0">
+                    <StackPanel  DockPanel.Dock="Left" Width="40">
+                        <TextBlock TextWrapping="Wrap" Height="18"><Run Language="de-at" Text="axis"/></TextBlock>
+                        <TextBlock TextWrapping="Wrap" Height="18"><Run Language="de-at" Text="1"/></TextBlock>
+                        <TextBlock TextWrapping="Wrap" Height="18"><Run Language="de-at" Text="2"/></TextBlock>
+                        <TextBlock TextWrapping="Wrap" Height="18"><Run Language="de-at" Text="3"/></TextBlock>
+                        <TextBlock TextWrapping="Wrap" Height="18"><Run Language="de-at" Text="4"/></TextBlock>
+                        <TextBlock TextWrapping="Wrap" Height="18"><Run Language="de-at" Text="5"/></TextBlock>
+                        <TextBlock TextWrapping="Wrap" Height="18"><Run Language="de-at" Text="6"/></TextBlock>
+                    </StackPanel>
+
+                    <StackPanel DockPanel.Dock="Left" Width="60">
+                        <TextBlock TextWrapping="Wrap"><Run Language="de-at" Text="angle [°]"/></TextBlock>
+                        <TextBlock x:Name="visuVC_angle01" Height="18" TextWrapping="Wrap"><Run Language="de-at" Text="empty"/></TextBlock>
+                        <TextBlock x:Name="visuVC_angle02" Height="18" TextWrapping="Wrap"><Run Language="de-at" Text="empty"/></TextBlock>
+                        <TextBlock x:Name="visuVC_angle03" Height="18" TextWrapping="Wrap"><Run Language="de-at" Text="empty"/></TextBlock>
+                        <TextBlock x:Name="visuVC_angle04" Height="18" TextWrapping="Wrap"><Run Language="de-at" Text="empty"/></TextBlock>
+                        <TextBlock x:Name="visuVC_angle05" Height="18" TextWrapping="Wrap"><Run Language="de-at" Text="empty"/></TextBlock>
+                        <TextBlock x:Name="visuVC_angle06" Height="18" TextWrapping="Wrap"><Run Language="de-at" Text="empty"/></TextBlock>
+                    </StackPanel>
+<!--
+                    <StackPanel DockPanel.Dock="Left" Width="90">
+                        <TextBlock TextWrapping="Wrap"><Run Language="de-at" Text="anglePCSDK [°]"/></TextBlock>
+                        <TextBlock x:Name="visuVC_PCSDKangle01" Height="18" TextWrapping="Wrap"><Run Language="de-at" Text="empty"/></TextBlock>
+                        <TextBlock x:Name="visuVC_PCSDKangle02" Height="18" TextWrapping="Wrap"><Run Language="de-at" Text="empty"/></TextBlock>
+                        <TextBlock x:Name="visuVC_PCSDKangle03" Height="18" TextWrapping="Wrap"><Run Language="de-at" Text="empty"/></TextBlock>
+                        <TextBlock x:Name="visuVC_PCSDKangle04" Height="18" TextWrapping="Wrap"><Run Language="de-at" Text="empty"/></TextBlock>
+                        <TextBlock x:Name="visuVC_PCSDKangle05" Height="18" TextWrapping="Wrap"><Run Language="de-at" Text="empty"/></TextBlock>
+                        <TextBlock x:Name="visuVC_PCSDKangle06" Height="18" TextWrapping="Wrap"><Run Language="de-at" Text="empty"/></TextBlock>
+                    </StackPanel>
+-->
+                    <StackPanel DockPanel.Dock="Left" Width="80">
+                        <TextBlock TextWrapping="Wrap"><Run Language="de-at" Text="torque [Nm]"/></TextBlock>
+                        <TextBlock x:Name="visuVC_tor01" Height="18" TextWrapping="Wrap"><Run Language="de-at" Text="empty"/></TextBlock>
+                        <TextBlock x:Name="visuVC_tor02" Height="18" TextWrapping="Wrap"><Run Language="de-at" Text="empty"/></TextBlock>
+                        <TextBlock x:Name="visuVC_tor03" Height="18" TextWrapping="Wrap"><Run Language="de-at" Text="empty"/></TextBlock>
+                        <TextBlock x:Name="visuVC_tor04" Height="18" TextWrapping="Wrap"><Run Language="de-at" Text="empty"/></TextBlock>
+                        <TextBlock x:Name="visuVC_tor05" Height="18" TextWrapping="Wrap"><Run Language="de-at" Text="empty"/></TextBlock>
+                        <TextBlock x:Name="visuVC_tor06" Height="18" TextWrapping="Wrap"><Run Language="de-at" Text="empty"/></TextBlock>
+                    </StackPanel>
+                    <!--
+                    <StackPanel DockPanel.Dock="Left">
+                        <TextBlock TextWrapping="Wrap"><Run Language="de-at" Text="ext. torque [Nm]"/></TextBlock>
+                        <TextBlock x:Name="visuVC_extTor01" TextWrapping="Wrap" Height="18"><Run Language="de-at" Text="empty"/></TextBlock>
+                        <TextBlock x:Name="visuVC_extTor02" TextWrapping="Wrap" Height="18"><Run Language="de-at" Text="empty"/></TextBlock>
+                        <TextBlock x:Name="visuVC_extTor03" TextWrapping="Wrap" Height="18"><Run Language="de-at" Text="empty"/></TextBlock>
+                        <TextBlock x:Name="visuVC_extTor04" TextWrapping="Wrap" Height="18"><Run Language="de-at" Text="empty"/></TextBlock>
+                        <TextBlock x:Name="visuVC_extTor05" TextWrapping="Wrap" Height="18"><Run Language="de-at" Text="empty"/></TextBlock>
+                        <TextBlock x:Name="visuVC_extTor06" TextWrapping="Wrap" Height="18"><Run Language="de-at" Text="empty"/></TextBlock>
+                    </StackPanel>
+                    -->
+                    <TextBlock Width="10"></TextBlock>
+                    <StackPanel DockPanel.Dock="Left" Margin="5,0,0,0" Width="10">
+                        <TextBlock TextWrapping="Wrap"><Run Language="de-at" Text=" "/></TextBlock>
+                        <TextBlock TextWrapping="Wrap" Height="18"><Run Language="de-at" Text="6"/></TextBlock>
+                        <TextBlock TextWrapping="Wrap" Height="18"><Run Language="de-at" Text="5"/></TextBlock>
+                        <TextBlock TextWrapping="Wrap" Height="18"><Run Language="de-at" Text="4"/></TextBlock>
+                        <TextBlock TextWrapping="Wrap" Height="18"><Run Language="de-at" Text="3"/></TextBlock>
+                        <TextBlock TextWrapping="Wrap" Height="18"><Run Language="de-at" Text="2"/></TextBlock>
+                        <TextBlock TextWrapping="Wrap" Height="18"><Run Language="de-at" Text="1"/></TextBlock>
+                    </StackPanel>
+                    <StackPanel DockPanel.Dock="Right" Width="150">
+                        <Slider x:Name="visu_sliderJoint06" Height="18" Grid.Column="1" HorizontalAlignment="Left" Margin="0,16,0,0" VerticalAlignment="Top" Width="150" ValueChanged="visu_sliderJoint06_ValueChanged" IsEnabled="False"/>
+                        <Slider x:Name="visu_sliderJoint05" Height="18" Grid.Column="1" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Width="150" ValueChanged="visu_sliderJoint05_ValueChanged" IsEnabled="False"/>
+                        <Slider x:Name="visu_sliderJoint04" Height="18" Grid.Column="1" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Width="150" ValueChanged="visu_sliderJoint04_ValueChanged" IsEnabled="False"/>
+                        <Slider x:Name="visu_sliderJoint03" Height="18" Grid.Column="1" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Width="150" ValueChanged="visu_sliderJoint03_ValueChanged" IsEnabled="False"/>
+                        <Slider x:Name="visu_sliderJoint02" Height="18" Grid.Column="1" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Width="150" ValueChanged="visu_sliderJoint02_ValueChanged" IsEnabled="False"/>
+                        <Slider x:Name="visu_sliderJoint01" Height="18" Grid.Column="1" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Width="150" ValueChanged="visu_sliderJoint01_ValueChanged" IsEnabled="False"/>
+                    </StackPanel>
+                    <StackPanel DockPanel.Dock="Left" Margin="5,0,0,0">
+                        <TextBlock TextWrapping="Wrap"><Run Language="de-at" Text="pose"/></TextBlock>
+                        <TextBlock TextWrapping="Wrap" Height="18"><Run Language="de-at" Text="X"/></TextBlock>
+                        <TextBlock TextWrapping="Wrap" Height="18"><Run Language="de-at" Text="Y"/></TextBlock>
+                        <TextBlock TextWrapping="Wrap" Height="18"><Run Language="de-at" Text="Z"/></TextBlock>
+                        <TextBlock TextWrapping="Wrap" Height="18"><Run Language="de-at" Text="RX"/></TextBlock>
+                        <TextBlock TextWrapping="Wrap" Height="18"><Run Language="de-at" Text="RY"/></TextBlock>
+                        <TextBlock TextWrapping="Wrap" Height="18"><Run Language="de-at" Text="RZ"/></TextBlock>
+                    </StackPanel>
+                    <StackPanel DockPanel.Dock="Left" Margin="5,0,0,0">
+                        <TextBlock TextWrapping="Wrap"><Run Language="de-at" Text=" "/></TextBlock>
+                        <TextBlock x:Name="visuVC_poseX" TextWrapping="Wrap" Height="18"><Run Language="de-at" Text="empty"/></TextBlock>
+                        <TextBlock x:Name="visuVC_poseY" TextWrapping="Wrap" Height="18"><Run Language="de-at" Text="empty"/></TextBlock>
+                        <TextBlock x:Name="visuVC_poseZ" TextWrapping="Wrap" Height="18"><Run Language="de-at" Text="empty"/></TextBlock>
+                        <TextBlock x:Name="visuVC_poseRX" TextWrapping="Wrap" Height="18"><Run Language="de-at" Text="empty"/></TextBlock>
+                        <TextBlock x:Name="visuVC_poseRY" TextWrapping="Wrap" Height="18"><Run Language="de-at" Text="empty"/></TextBlock>
+                        <TextBlock x:Name="visuVC_poseRZ" TextWrapping="Wrap" Height="18"><Run Language="de-at" Text="empty"/></TextBlock>
+                    </StackPanel>
+
+                </WrapPanel>
+            </GroupBox>
+            <GroupBox Margin="10,-10,10,10">
+
+                <GroupBox.Header >
+                    <Label FontWeight="Bold" Content="RC AXIS DATA"/>
+                </GroupBox.Header>
+                <WrapPanel Margin="0,-5,0,0">
+                    <StackPanel  DockPanel.Dock="Left" Width="40">
+                        <TextBlock TextWrapping="Wrap"><Run Language="de-at" Text="axis"/></TextBlock>
+                        <TextBlock TextWrapping="Wrap"><Run Language="de-at" Text="1"/></TextBlock>
+                        <TextBlock TextWrapping="Wrap"><Run Language="de-at" Text="2"/></TextBlock>
+                        <TextBlock TextWrapping="Wrap"><Run Language="de-at" Text="3"/></TextBlock>
+                        <TextBlock TextWrapping="Wrap"><Run Language="de-at" Text="4"/></TextBlock>
+                        <TextBlock TextWrapping="Wrap"><Run Language="de-at" Text="5"/></TextBlock>
+                        <TextBlock TextWrapping="Wrap"><Run Language="de-at" Text="6"/></TextBlock>
+                    </StackPanel>
+
+                    <StackPanel DockPanel.Dock="Left" Width="60">
+                        <TextBlock TextWrapping="Wrap"><Run Language="de-at" Text="angle [°]"/></TextBlock>
+                        <TextBlock x:Name="visuRC_angle01" TextWrapping="Wrap"><Run Language="de-at" Text="empty"/></TextBlock>
+                        <TextBlock x:Name="visuRC_angle02" TextWrapping="Wrap"><Run Language="de-at" Text="empty"/></TextBlock>
+                        <TextBlock x:Name="visuRC_angle03" TextWrapping="Wrap"><Run Language="de-at" Text="empty"/></TextBlock>
+                        <TextBlock x:Name="visuRC_angle04" TextWrapping="Wrap"><Run Language="de-at" Text="empty"/></TextBlock>
+                        <TextBlock x:Name="visuRC_angle05" TextWrapping="Wrap"><Run Language="de-at" Text="empty"/></TextBlock>
+                        <TextBlock x:Name="visuRC_angle06" TextWrapping="Wrap"><Run Language="de-at" Text="empty"/></TextBlock>
+                    </StackPanel>
+<!--
+                    <StackPanel DockPanel.Dock="Left" Width="90">
+                        <TextBlock TextWrapping="Wrap"><Run Language="de-at" Text="anglePCSDK [°]"/></TextBlock>
+                        <TextBlock x:Name="visuRC_PCSDKangle01" TextWrapping="Wrap"><Run Language="de-at" Text="empty"/></TextBlock>
+                        <TextBlock x:Name="visuRC_PCSDKangle02" TextWrapping="Wrap"><Run Language="de-at" Text="empty"/></TextBlock>
+                        <TextBlock x:Name="visuRC_PCSDKangle03" TextWrapping="Wrap"><Run Language="de-at" Text="empty"/></TextBlock>
+                        <TextBlock x:Name="visuRC_PCSDKangle04" TextWrapping="Wrap"><Run Language="de-at" Text="empty"/></TextBlock>
+                        <TextBlock x:Name="visuRC_PCSDKangle05" TextWrapping="Wrap"><Run Language="de-at" Text="empty"/></TextBlock>
+                        <TextBlock x:Name="visuRC_PCSDKangle06" TextWrapping="Wrap"><Run Language="de-at" Text="empty"/></TextBlock>
+                    </StackPanel>
+-->
+                    <StackPanel DockPanel.Dock="Left" Width="80">
+                        <TextBlock TextWrapping="Wrap"><Run Language="de-at" Text="torque [Nm]"/></TextBlock>
+                        <TextBlock x:Name="visuRC_tor01" TextWrapping="Wrap"><Run Language="de-at" Text="empty"/></TextBlock>
+                        <TextBlock x:Name="visuRC_tor02" TextWrapping="Wrap"><Run Language="de-at" Text="empty"/></TextBlock>
+                        <TextBlock x:Name="visuRC_tor03" TextWrapping="Wrap"><Run Language="de-at" Text="empty"/></TextBlock>
+                        <TextBlock x:Name="visuRC_tor04" TextWrapping="Wrap"><Run Language="de-at" Text="empty"/></TextBlock>
+                        <TextBlock x:Name="visuRC_tor05" TextWrapping="Wrap"><Run Language="de-at" Text="empty"/></TextBlock>
+                        <TextBlock x:Name="visuRC_tor06" TextWrapping="Wrap"><Run Language="de-at" Text="empty"/></TextBlock>
+                    </StackPanel>
+                    <!--
+                    <StackPanel DockPanel.Dock="Left">
+                        <TextBlock TextWrapping="Wrap"><Run Language="de-at" Text="ext. torque [Nm]"/></TextBlock>
+                        <TextBlock x:Name="visuRC_extTor01" TextWrapping="Wrap"><Run Language="de-at" Text="empty"/></TextBlock>
+                        <TextBlock x:Name="visuRC_extTor02" TextWrapping="Wrap"><Run Language="de-at" Text="empty"/></TextBlock>
+                        <TextBlock x:Name="visuRC_extTor03" TextWrapping="Wrap"><Run Language="de-at" Text="empty"/></TextBlock>
+                        <TextBlock x:Name="visuRC_extTor04" TextWrapping="Wrap"><Run Language="de-at" Text="empty"/></TextBlock>
+                        <TextBlock x:Name="visuRC_extTor05" TextWrapping="Wrap"><Run Language="de-at" Text="empty"/></TextBlock>
+                        <TextBlock x:Name="visuRC_extTor06" TextWrapping="Wrap"><Run Language="de-at" Text="empty"/></TextBlock>
+                    </StackPanel>
+                    -->
+                    <StackPanel DockPanel.Dock="Left" Margin="5,0,0,0" Width="10">
+                        <TextBlock TextWrapping="Wrap"><Run Language="de-at" Text=" "/></TextBlock>
+                        <TextBlock TextWrapping="Wrap" Height="18"><Run Language="de-at" Text="6"/></TextBlock>
+                        <TextBlock TextWrapping="Wrap" Height="18"><Run Language="de-at" Text="5"/></TextBlock>
+                        <TextBlock TextWrapping="Wrap" Height="18"><Run Language="de-at" Text="4"/></TextBlock>
+                        <TextBlock TextWrapping="Wrap" Height="18"><Run Language="de-at" Text="3"/></TextBlock>
+                        <TextBlock TextWrapping="Wrap" Height="18"><Run Language="de-at" Text="2"/></TextBlock>
+                        <TextBlock TextWrapping="Wrap" Height="18"><Run Language="de-at" Text="1"/></TextBlock>
+                    </StackPanel>
+                    <StackPanel DockPanel.Dock="Right" Width="150">
+                        <Slider x:Name="visu_RCsliderJoint06" Height="18" Grid.Column="1" HorizontalAlignment="Left" Margin="0,16,0,0" VerticalAlignment="Top" Width="150" ValueChanged="visu_sliderJoint06_ValueChanged" IsEnabled="False"/>
+                        <Slider x:Name="visu_RCsliderJoint05" Height="18" Grid.Column="1" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Width="150" ValueChanged="visu_sliderJoint05_ValueChanged" IsEnabled="False"/>
+                        <Slider x:Name="visu_RCsliderJoint04" Height="18" Grid.Column="1" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Width="150" ValueChanged="visu_sliderJoint04_ValueChanged" IsEnabled="False"/>
+                        <Slider x:Name="visu_RCsliderJoint03" Height="18" Grid.Column="1" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Width="150" ValueChanged="visu_sliderJoint03_ValueChanged" IsEnabled="False"/>
+                        <Slider x:Name="visu_RCsliderJoint02" Height="18" Grid.Column="1" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Width="150" ValueChanged="visu_sliderJoint02_ValueChanged" IsEnabled="False"/>
+                        <Slider x:Name="visu_RCsliderJoint01" Height="18" Grid.Column="1" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Width="150" ValueChanged="visu_sliderJoint01_ValueChanged" IsEnabled="False"/>
+                    </StackPanel>
+                    <StackPanel DockPanel.Dock="Left" Margin="5,0,0,0">
+                        <TextBlock TextWrapping="Wrap"><Run Language="de-at" Text="pose"/></TextBlock>
+                        <TextBlock TextWrapping="Wrap" Height="18"><Run Language="de-at" Text="X"/></TextBlock>
+                        <TextBlock TextWrapping="Wrap" Height="18"><Run Language="de-at" Text="Y"/></TextBlock>
+                        <TextBlock TextWrapping="Wrap" Height="18"><Run Language="de-at" Text="Z"/></TextBlock>
+                        <TextBlock TextWrapping="Wrap" Height="18"><Run Language="de-at" Text="RX"/></TextBlock>
+                        <TextBlock TextWrapping="Wrap" Height="18"><Run Language="de-at" Text="RY"/></TextBlock>
+                        <TextBlock TextWrapping="Wrap" Height="18"><Run Language="de-at" Text="RZ"/></TextBlock>
+                    </StackPanel>
+                    <StackPanel DockPanel.Dock="Left" Margin="5,0,0,0">
+                        <TextBlock TextWrapping="Wrap"><Run Language="de-at" Text=" "/></TextBlock>
+                        <TextBlock x:Name="visuRC_poseX" TextWrapping="Wrap" Height="18"><Run Language="de-at" Text="empty"/></TextBlock>
+                        <TextBlock x:Name="visuRC_poseY" TextWrapping="Wrap" Height="18"><Run Language="de-at" Text="empty"/></TextBlock>
+                        <TextBlock x:Name="visuRC_poseZ" TextWrapping="Wrap" Height="18"><Run Language="de-at" Text="empty"/></TextBlock>
+                        <TextBlock x:Name="visuRC_poseRX" TextWrapping="Wrap" Height="18"><Run Language="de-at" Text="empty"/></TextBlock>
+                        <TextBlock x:Name="visuRC_poseRY" TextWrapping="Wrap" Height="18"><Run Language="de-at" Text="empty"/></TextBlock>
+                        <TextBlock x:Name="visuRC_poseRZ" TextWrapping="Wrap" Height="18"><Run Language="de-at" Text="empty"/></TextBlock>
+                    </StackPanel>
+                </WrapPanel>
+            </GroupBox>
+            <GroupBox Margin="10,-10,10,10">
+
+                <GroupBox.Header >
+                    <Label FontWeight="Bold" Content="HoloLens2 DATASOURCE"/>
+                </GroupBox.Header>
+                <StackPanel>
+                    <RadioButton GroupName="source" Content="Virtual Controller" x:Name="holoLensDataSourceSimulation" Margin="5,5,0,0" Checked="holoLensDataSourceSimulation_Checked" ></RadioButton>
+                    <RadioButton GroupName="source" Content="Real Controller" x:Name="holoLensDataSourceReal"  Margin="5,5,0,0"  Checked="holoLensDataSourceReal_Checked" IsChecked="True"></RadioButton>
+                </StackPanel>
+                
+            </GroupBox>
+        </StackPanel>
+        <!--
+        <DockPanel Grid.Column="2" Grid.Row ="2">
+            <ListView x:Name="LogEntryList">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Timestamp" Width="70" DisplayMemberBinding="{Binding Path=Log.Message, Mode=OneWay}"></GridViewColumn>
+                        <GridViewColumn Header="System" Width="70"></GridViewColumn>
+                        <GridViewColumn Header="Message" Width="100"></GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+
+        </DockPanel>
+        -->
+
+
+        <!--
+            <Canvas>
+            <Ellipse Height="25" Width="25">
+                <Ellipse.Fill>
+                    <LinearGradientBrush StartPoint="0.5,0" EndPoint="0,0">
+                        <GradientStop Color="#FF00C659" Offset="0.0" />
+                        <GradientStop Color="#FF32D736" Offset="0.0" />
+                    </LinearGradientBrush>
+                </Ellipse.Fill>
+            </Ellipse>
+            <Ellipse Height="25" Width="25" Panel.ZIndex="3" >
+                <Ellipse.Stroke>
+                    <LinearGradientBrush StartPoint="0.5,0" EndPoint="0,0">
+                        <GradientStop Color="#FF00C659" Offset="0.0" />
+                        <GradientStop Color="#FF32D736" Offset="0.0" />
+                    </LinearGradientBrush>
+                </Ellipse.Stroke>
+            </Ellipse>
+            </Canvas>
+            -->
+
+
+
+
+        <DockPanel  Grid.Column="0" Grid.Row="3" Margin="10,10,10,10"/>
+
+
+        <DockPanel Grid.Row="0" Grid.Column="0" Margin="10,10,10,10">
+            <TextBlock DockPanel.Dock="Top" TextWrapping="Wrap"><Run Language="de-at" Text="select mode" FontWeight="Bold" FontSize="14"/></TextBlock>
+            <StackPanel DockPanel.Dock="Left">
+                <DockPanel>
+                    <RadioButton Margin="0,3,0,0" x:Name="mode_doNothing" GroupName="mode" DockPanel.Dock="Left" Content="do nothing" IsEnabled="false" IsChecked="true"/>
+                    <Button DockPanel.Dock="Right" Width="50" Click="Button_Click_6" IsEnabled="False">select</Button>
+                    <TextBlock></TextBlock>
+                </DockPanel>
+                <DockPanel Margin="0,3,0,0">
+                    <RadioButton Margin="0,3,0,0" x:Name="mode_rapidPath" GroupName="mode" DockPanel.Dock="Left" Content="random RAPID path"  IsEnabled="false"/>
+                    <Button DockPanel.Dock="Right" Width="50" Click="Button_Click_7" IsEnabled="False">select</Button>
+                    <TextBlock></TextBlock>
+                </DockPanel>
+                <DockPanel Margin="0,3,0,0">
+                    <RadioButton Margin="0,3,0,0" x:Name="mode_egmMotion" GroupName="mode" DockPanel.Dock="Left" Content="EGM motion" IsEnabled="false"/>
+                    <Button DockPanel.Dock="Right" Width="50" Click="Button_Click_8" IsEnabled="False">select</Button>
+                    <TextBlock></TextBlock>
+                </DockPanel>
+                <DockPanel Margin="0,3,0,0">
+                    <RadioButton x:Name="mode_jointController" Margin="0,3,0,0" GroupName="mode" DockPanel.Dock="Left" Content="joint controller" IsEnabled="false"/>
+                    <Button DockPanel.Dock="Right" Width="50" Click="Button_Click_9" IsEnabled="False">select</Button>
+                    <TextBlock></TextBlock>
+                </DockPanel>
+                <DockPanel Margin="0,3,0,0">
+                    <RadioButton x:Name="mode_holoPath" Margin="0,3,0,0" GroupName="mode" DockPanel.Dock="Left" Content="holo Path" IsEnabled="false"/>
+                    <Button DockPanel.Dock="Right" Width="50" Click="Button_Click_10" IsEnabled="False">select</Button>
+                    <TextBlock></TextBlock>
+                </DockPanel>
+                <DockPanel Margin="0,3,0,0">
+                    <RadioButton x:Name="mode_wizardSimulation" Margin="0,3,0,0" GroupName="mode" DockPanel.Dock="Left" Content="wizard simulation" IsEnabled="False"/>
+                    <Button x:Name="btn_wizardSimulation" Click="Button_Click_2" Content="select" DockPanel.Dock="Right" Width="50" IsEnabled="False"/>
+                    <TextBlock></TextBlock>
+                </DockPanel>
+
+                <TextBlock Height="8"></TextBlock>
+                <Button x:Name="rapidStart" Content="RAPID START (VC)" Click="rapidStart_Click" IsEnabled="False" />
+                <TextBlock Height="5"></TextBlock>
+                <Button x:Name="rapidStop" Content="RAPID STOP (VC)" Click="rapidStop_Click" IsEnabled="False"/>
+
+            </StackPanel>
+
+        </DockPanel>
+        <WrapPanel Grid.ColumnSpan="4" Grid.RowSpan="1" Grid.Row="3" Grid.Column="0">
+            <Canvas VerticalAlignment="Top"  Background="#FFC9C9C9" Margin="0,0,0,0" Height="100" Width="1280">
+                <WrapPanel Margin="-10,0,0,0">
+                    <Image Height="100" Width="220" Source="/data/ABB.png" Canvas.Left="0" Canvas.Top="0"/>
+                    <Image Height="60" Width="120" Source="/data/FHTW_logo.png" Canvas.Left="0" Canvas.Top="0"/>
+                    <TextBlock Height="32" VerticalAlignment="Bottom" Width="175" FontWeight="Bold" HorizontalAlignment="Center" Margin="10,0,0,0" FontSize="15"><Run Text="by Jakob Hörbst"/></TextBlock>
+                    
+                </WrapPanel>
+            </Canvas>
+
+
+        </WrapPanel>
+        <!--  -->
+
+    </Grid>
+
+
+</Window>
