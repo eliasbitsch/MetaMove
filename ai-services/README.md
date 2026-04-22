@@ -38,10 +38,17 @@ Geplant: `grounding/` (DINO + SAM 2 für Tier-3 Object-Grounding).
 └───────────────────────────────────────────────┘
 ```
 
-## Shared Python venv
+## Python venvs (pro Service eine)
 
-Alle Services teilen sich `~/tts-qwen3-venv` (Linux-home, NICHT `/mnt/c/`).
-Bei separaten Services später auf eigene venvs splitten.
+Jeder Service hat eine eigene venv im Linux-Home (NICHT `/mnt/c/`, wegen I/O-Perf):
+
+| Service | venv-Pfad | Grund separater venv |
+|---|---|---|
+| tts-qwen3 | `~/tts-qwen3-venv` | `qwen-tts` pinnt `transformers==4.57.3` |
+| llm-gemma | `~/llm-gemma-venv` | Gemma 4 braucht `transformers>=5.x` (main) |
+
+Inkompatible transformers-Versionen → strikt getrennte Environments.
+Disk-Overhead: ~6 GB pro venv (hauptsächlich Torch + CUDA-Libs).
 
 ## VRAM-Budget
 

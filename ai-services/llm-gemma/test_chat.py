@@ -36,15 +36,20 @@ def main() -> None:
 
     system_prompt = PROMPT_FILE.read_text(encoding="utf-8")
 
+    # Gemma 4 hat head_dim > 256, wird von flash-attn-v2 nicht unterstuetzt.
+    # sdpa (torch's native SDP Attention) ist auf 3080 Ti fast genauso schnell.
+    attn_impl = "sdpa"
+
     if args.no_quantize:
-        print(f"[load] {args.model} bfloat16")
+        print(f"[load] {args.model} bfloat16 ({attn_impl})")
         model = AutoModelForCausalLM.from_pretrained(
             args.model,
             device_map="cuda:0",
             torch_dtype=torch.bfloat16,
+            attn_implementation=attn_impl,
         )
     else:
-        print(f"[load] {args.model} 4bit (nf4)")
+        print(f"[load] {args.model} 4bit nf4 ({attn_impl})")
         bnb = BitsAndBytesConfig(
             load_in_4bit=True,
             bnb_4bit_quant_type="nf4",
@@ -55,6 +60,7 @@ def main() -> None:
             args.model,
             device_map="cuda:0",
             quantization_config=bnb,
+            attn_implementation=attn_impl,
         )
 
     processor = AutoProcessor.from_pretrained(args.model)

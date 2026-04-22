@@ -1,7 +1,15 @@
-# Shared venv with tts-qwen3 (~/tts-qwen3-venv).
-# These are additional deps beyond what tts-qwen3 installs.
-transformers>=4.57
+# DEDICATED venv: ~/llm-gemma-venv
+# Nicht shared mit tts-qwen3-venv — Gemma 4 braucht transformers>=5.x,
+# qwen-tts pinnt transformers==4.57.3 → strikt getrennt.
+
+# PyTorch separat installieren (vor diesem file):
+#   pip install torch torchaudio --index-url https://download.pytorch.org/whl/cu121
+
+# Transformers muss aktuell von main installiert werden (Gemma4 noch nicht in PyPI-release):
+#   pip install 'transformers@git+https://github.com/huggingface/transformers.git'
+
 accelerate>=1.0
 bitsandbytes>=0.43
 sentencepiece
 pillow
+protobuf
