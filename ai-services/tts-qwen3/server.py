@@ -13,16 +13,18 @@ from __future__ import annotations
 
 import io
 import logging
+import re
+import time
 from contextlib import asynccontextmanager
 from pathlib import Path
-from typing import Literal
+from typing import AsyncIterator, Literal
 
 import numpy as np
 import soundfile as sf
 import torch
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import Response
+from fastapi.responses import Response, StreamingResponse
 from pedalboard import Pedalboard
 from pydantic import BaseModel, Field
 
@@ -203,5 +205,82 @@ async def tts(req: TTSRequest) -> Response:
             "X-Sample-Rate": str(sr),
             "X-Language": req.language,
             "X-Variant": req.variant,
+        },
+    )
+
+
+# ─── Pseudo-Streaming per text chunking ─────────────────────────────────────
+# True chunked-audio-streaming is blocked by the qwen-tts library (non_streaming_mode
+# is cosmetic, output is always collected before return). Workaround: split the
+# text at sentence boundaries, generate each sentence independently, and stream
+# the resulting mini-WAVs over chunked HTTP. Client concatenates them into one
+# playback queue.
+
+_SENTENCE_SPLIT_RE = re.compile(r"(?<=[.!?…])\s+(?=[A-ZÄÖÜ])")
+
+
+def _split_sentences(text: str, min_chars: int = 20) -> list[str]:
+    """Split text at sentence boundaries, merging tiny fragments forward."""
+    parts = _SENTENCE_SPLIT_RE.split(text.strip())
+    out: list[str] = []
+    buffer = ""
+    for p in parts:
+        p = p.strip()
+        if not p:
+            continue
+        if len(buffer) + len(p) < min_chars:
+            buffer = (buffer + " " + p).strip()
+            continue
+        if buffer:
+            out.append(buffer)
+            buffer = ""
+        out.append(p)
+    if buffer:
+        out.append(buffer)
+    return out or [text]
+
+
+def _wav_bytes(audio: np.ndarray, sr: int) -> bytes:
+    buf = io.BytesIO()
+    sf.write(buf, audio, sr, format="WAV", subtype="PCM_16")
+    return buf.getvalue()
+
+
+@app.post("/tts/stream")
+async def tts_stream(req: TTSRequest) -> StreamingResponse:
+    """
+    Returns a multipart-style stream: each chunk is a complete WAV file
+    framed by a simple 4-byte big-endian length header, then that many
+    bytes of WAV data. Client reads length, reads WAV, plays, repeats.
+
+    Format per chunk on the wire:
+        [4 bytes big-endian uint32 length N][N bytes WAV-file]
+
+    End of stream: a final length-zero frame (4 zero bytes).
+    """
+    sentences = _split_sentences(req.text)
+    log.info("[stream] lang=%s variant=%s %d sentences", req.language, req.variant, len(sentences))
+
+    async def gen() -> AsyncIterator[bytes]:
+        t0 = time.time()
+        for i, sentence in enumerate(sentences, 1):
+            sub = TTSRequest(text=sentence, language=req.language, variant=req.variant)
+            audio, sr = _generate(sub)
+            audio = _apply_fx(audio, sr, req.variant)
+            wav = _wav_bytes(audio, sr)
+            dt = time.time() - t0
+            tag = "TTFA" if i == 1 else "chunk"
+            log.info("[stream] %s %d/%d len=%d %.2fs: %r", tag, i, len(sentences),
+                     len(wav), dt, sentence[:50])
+            yield len(wav).to_bytes(4, "big") + wav
+        yield (0).to_bytes(4, "big")  # end marker
+
+    return StreamingResponse(
+        gen(),
+        media_type="application/octet-stream",
+        headers={
+            "X-Language": req.language,
+            "X-Variant": req.variant,
+            "X-Stream-Format": "length-prefixed-wav-chunks",
         },
     )
