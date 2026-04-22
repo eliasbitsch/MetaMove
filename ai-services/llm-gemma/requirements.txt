@@ -1,0 +1,7 @@
+# Shared venv with tts-qwen3 (~/tts-qwen3-venv).
+# These are additional deps beyond what tts-qwen3 installs.
+transformers>=4.57
+accelerate>=1.0
+bitsandbytes>=0.43
+sentencepiece
+pillow
