@@ -24,8 +24,11 @@ from threading import Thread
 from typing import AsyncIterator
 
 import io
-from typing import Optional
+import os
+import re
+from typing import AsyncIterator, Optional
 
+import httpx
 import librosa
 import numpy as np
 import torch
@@ -40,6 +43,11 @@ from transformers import (
     BitsAndBytesConfig,
     TextIteratorStreamer,
 )
+
+TTS_URL = os.environ.get("TTS_URL", "http://localhost:8765/tts")
+
+# Split after sentence terminators followed by whitespace.
+_SENTENCE_END_RE = re.compile(r"[.!?…]['\")\]]?\s")
 
 log = logging.getLogger("llm-gemma")
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
@@ -242,6 +250,139 @@ async def chat_voice(
         hist.append({"role": "assistant", "content": resp})
 
     return {"text": resp, "latency_s": round(dt, 3), "audio_duration_s": round(len(wav) / 16000, 2)}
+
+
+async def _synth_sentence(client: httpx.AsyncClient, text: str, language: str, variant: str) -> bytes:
+    """Call the TTS blocking endpoint for one sentence, return WAV bytes."""
+    r = await client.post(
+        TTS_URL,
+        json={"text": text, "language": language, "variant": variant},
+        timeout=60,
+    )
+    r.raise_for_status()
+    return r.content
+
+
+def _extract_complete_sentences(buffer: str) -> tuple[list[str], str]:
+    """Scan buffer for sentence-terminated spans, return (sentences, remainder)."""
+    sentences = []
+    pos = 0
+    for m in _SENTENCE_END_RE.finditer(buffer):
+        sentences.append(buffer[pos:m.end()].strip())
+        pos = m.end()
+    remainder = buffer[pos:]
+    return sentences, remainder
+
+
+@app.post("/chat/voice/stream")
+async def chat_voice_stream(
+    audio: UploadFile = File(...),
+    text: Optional[str] = Form(None),
+    session_id: Optional[str] = Form(None),
+    language: str = Form("de"),
+    variant: str = Form("helmet"),
+    max_new_tokens: int = Form(200),
+    temperature: float = Form(0.6),
+) -> StreamingResponse:
+    """
+    Full pipeline: Audio -> Gemma (streaming) -> sentence-by-sentence TTS -> WAV chunks.
+
+    Wire format (same as tts-qwen3/server.py /tts/stream):
+      repeat: [4 bytes big-endian length N][N bytes WAV file]
+      end:    [4 bytes 0]
+    """
+    raw = await audio.read()
+    try:
+        wav_in, _ = librosa.load(io.BytesIO(raw), sr=16000, mono=True)
+    except Exception as e:
+        raise HTTPException(400, f"Could not decode audio: {e}")
+    log.info("[voice/stream] audio=%.2fs lang=%s variant=%s", len(wav_in) / 16000, language, variant)
+
+    messages = _voice_messages(session_id, wav_in, text)
+    inputs = Models.processor.apply_chat_template(
+        messages, add_generation_prompt=True, tokenize=True,
+        return_dict=True, return_tensors="pt",
+    ).to("cuda:0")
+
+    streamer = TextIteratorStreamer(
+        Models.tokenizer, skip_prompt=True, skip_special_tokens=True,
+    )
+    gen_kwargs = dict(
+        **inputs,
+        max_new_tokens=max_new_tokens,
+        do_sample=temperature > 0,
+        temperature=temperature,
+        top_p=0.9,
+        repetition_penalty=1.08,
+        pad_token_id=Models.tokenizer.eos_token_id,
+        streamer=streamer,
+    )
+    from threading import Thread
+    Thread(target=lambda: Models.model.generate(**gen_kwargs), daemon=True).start()
+
+    async def gen() -> AsyncIterator[bytes]:
+        import time
+        t0 = time.time()
+        buffer = ""
+        full_text = []
+        sentence_idx = 0
+        async with httpx.AsyncClient() as client:
+            for token in streamer:
+                if not token:
+                    continue
+                buffer += token
+                full_text.append(token)
+                sentences, buffer = _extract_complete_sentences(buffer)
+                for s in sentences:
+                    if len(s) < 3:
+                        continue
+                    t_tts = time.time()
+                    try:
+                        wav = await _synth_sentence(client, s, language, variant)
+                    except Exception as e:
+                        log.warning("[voice/stream] TTS failed for %r: %s", s[:50], e)
+                        continue
+                    sentence_idx += 1
+                    tag = "TTFA" if sentence_idx == 1 else "chunk"
+                    log.info("[voice/stream] %s %d t_total=%.2fs t_tts=%.2fs len=%d %r",
+                             tag, sentence_idx, time.time() - t0, time.time() - t_tts,
+                             len(wav), s[:50])
+                    yield len(wav).to_bytes(4, "big") + wav
+
+            # Drain leftover buffer (text without terminal punctuation)
+            if buffer.strip():
+                leftover = buffer.strip()
+                if len(leftover) >= 3:
+                    try:
+                        async with httpx.AsyncClient() as client2:
+                            wav = await _synth_sentence(client2, leftover, language, variant)
+                        sentence_idx += 1
+                        log.info("[voice/stream] drain %d t_total=%.2fs len=%d %r",
+                                 sentence_idx, time.time() - t0, len(wav), leftover[:50])
+                        yield len(wav).to_bytes(4, "big") + wav
+                    except Exception as e:
+                        log.warning("[voice/stream] drain TTS failed: %s", e)
+
+        full = "".join(full_text).strip()
+        log.info("[voice/stream] done %.2fs sentences=%d text=%r",
+                 time.time() - t0, sentence_idx, full[:120])
+        # Persist to session
+        if session_id:
+            hist = Models.sessions.setdefault(session_id, [])
+            hist.append({"role": "user",
+                         "content": f"[audio {len(wav_in)/16000:.1f}s]" + (f" {text}" if text else "")})
+            hist.append({"role": "assistant", "content": full})
+        yield (0).to_bytes(4, "big")
+
+    return StreamingResponse(
+        gen(),
+        media_type="application/octet-stream",
+        headers={
+            "X-Language": language,
+            "X-Variant": variant,
+            "X-Stream-Format": "length-prefixed-wav-chunks",
+        },
+    )
 
 
 @app.post("/chat/stream")
