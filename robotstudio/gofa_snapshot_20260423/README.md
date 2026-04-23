@@ -57,12 +57,68 @@ One-shot snapshots of controller state at snapshot time:
 - `ionetworks.json` — I/O bus network list
 - `elog.json` — last 100 event log entries (contains the `ROB_Michi` connection-refused spam since 2026-04-16)
 
+## Additional content pulled 2026-04-23 (extended snapshot)
+
+### `safety/`
+
+Full `/ctrl/safety` subtree: mode, cbc, load, config, violation. Covers SafeMove Collaborative state not exposed via the 6 standard CFG domains.
+
+### `fs/`
+
+Listings of `$HOME`, `$BACKUP`, and the fileservice root (directory trees only, no binary content — that's in `fs_files/`).
+
+### `fs_files/`
+
+Source files pulled directly from controller filesystem:
+
+| Folder | Contents |
+|---|---|
+| `HOME_NewProgramdemoergo/` | Live project: MainModule.modx (60 KB), Morobot_Assembly.modx, all 7 Calib_Def_wobj_kiste files, module_MAIN/WIZARD/mr22/mr19, NewProgramdemoergo.pgf |
+| `HOME_Wizard/` | Wizard_Params.sys, Wizard.mod, category_order.txt, Bind/ subfolder |
+| `HOME_RECOVERY/` | RECOVERY copies of T_DATA/T_COMM modules (useful rollback reference) |
+| `HOME_Dap/` | eg1bas/prc/tol.sysx — EGM-related sysmod files |
+
+### `backups/`
+
+Two full RobotWare backups, pulled from the controller's `$BACKUP` folder (spy logs stripped — 99 MB → 2.4 MB):
+
+- **`15000-500126_Backup_20220728/`** — original 2022-07-28 snapshot. Contains `Safety Configuration Report.pdf` (1.2 MB, formal SafeMove PDF), full RAPID tree, SYSPAR .cfg files.
+- **`15000-500126_Backup_20250127/`** — most recent formal backup (2025-01-27). Used as the canonical reference.
+
+Each backup has the canonical RobotWare structure:
+
+```
+15000-500126_Backup_YYYYMMDD/
+  BACKINFO/    ← system metadata, sc_cfg.xml, version.xml
+  ADDINDATA/   ← ABB.ROBOTICS.ROBOTS/HOME/GOFA_Main.sysx etc.
+  RAPID/       ← TASK1..4/{SYSMOD,PROGMOD}/*.sysx/*.modx — THE canonical source
+  SYSPAR/      ← EIO.cfg, SIO.cfg, MOC.cfg, SYS.cfg, MMC.cfg, PROC.cfg
+                 (real RobotWare .cfg files, loadable via RobotStudio)
+  HOME/        ← project files: Dashboard.xml, Safety PDF, eg1*.cfg, MainModule.modx
+  License/     ← license blobs
+  hwsettings.rsf
+  system.xml
+```
+
 ## Replay on a Virtual Controller
 
-Not automated yet. Manual path:
+The `backups/15000-500126_Backup_20250127/` folder is effectively a complete `Backup & Restore` package that RobotStudio can import directly:
 
-1. Create a clean VC with matching options (EGM 3124-1, UDPUC Driver, Multitasking 3114-1, SafeMove Collaborative 3043-3, IoT Data Gateway 3154-1).
-2. Import CFG: in RobotStudio → Controller → Configuration → **Load Parameters** → point at the relevant JSON-equivalent `.cfg` files. (CFG JSON here needs conversion to the RobotWare `.cfg` format — todo: write a converter.)
-3. Copy `rapid/T_ROB1/*.mod` into the VC's T_ROB1 task.
+1. In RobotStudio: **Datei → Zurücksichern von Steuerung** (or "Restore from Controller")
+2. Point at the `15000-500126_Backup_20250127` directory
+3. RobotStudio creates a new VC with all RAPID, CFG, and hardware settings
 
-The immediate value of this snapshot is **read-only reference** — we have everything needed to understand the working EGM setup and replicate it correctly on a VC or a new MetaMoveDemos deployment.
+For a cleaner VC targeted at MetaMove without the legacy project:
+- Take `SYSPAR/SIO.cfg` (UDPUC hosts incl. ROB_Michi @ 192.168.125.99:6511)
+- Take `SYSPAR/MOC.cfg` (motion limits, EGM config in CFG terms)
+- Skip `RAPID/TASK2/PROGMOD/*` (the old project) — replace with MetaMoveDemos.mod
+- Keep `RAPID/TASK2/SYSMOD/module_EGM.sysx` as the EGM logic template
+
+## Key findings for MetaMove
+
+1. **UDPUC `ROB_Michi` → 192.168.125.99:6511** is the surviving working EGM config. Point Unity host there.
+2. **All GoHolo code commented** on the live controller — not deleted. Can be reactivated via RobotStudio if needed, but MetaMoveDemos is the cleaner path.
+3. **Production-Framework I/O signals** (ix_/ox_ pattern) present — MetaMove must use a different prefix to avoid collision.
+4. **Multi-vacuum + clutch gripper hardware** — existing `ox_multi_vac_greifer_*`, `ox_kupplung_*` signals can be reused.
+5. **SafeMove Collaborative** is active — MetaMove-Safety-Gate must integrate with it, not bypass.
+6. **`Safety Configuration Report.pdf`** (in both backups) contains the formal zones + speed/force limits — read before designing MetaMove safety zones.

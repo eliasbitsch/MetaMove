@@ -1,0 +1,34 @@
+MODULE GOFA_ASI_Procedures(SYSMODULE)
+    
+    LOCAL PERS bool toggle := TRUE;
+    
+    
+    PROC ASI_Routine1()
+        !Example of Customized routine that can be connected with ASI buttons
+        !MoveJ [[0,0,0],[1,0,0,0],[0,0,0,0],[9E9,9E9,9E9,9E9,9E9,9E9]],v100,z0,tool0;
+        
+        TPWrite "Gripper" \Bool:=toggle;
+        reset ox_single_vac_greifer_oeffnen;
+        reset ox_multi_vac_greifer_schliessen;
+        WaitTime 0.1;
+        IF (toggle = TRUE) THEN
+            TPWrite "open";
+            toggle:=FALSE;
+            reset ox_kupplung_schliessen;
+            set ox_kupplung_oeffnen;
+        ELSE
+            TPWrite "close";
+            toggle:=True;
+            set ox_kupplung_schliessen;
+            reset ox_kupplung_oeffnen;
+        ENDIF
+        
+    ENDPROC
+
+    PROC ASI_Routine2()
+        !Example of Customized routine that can be connected with ASI buttons
+        !MoveJ [[0,0,0],[1,0,0,0],[0,0,0,0],[9E9,9E9,9E9,9E9,9E9,9E9]],v100,z0,tool0;
+        TPWrite "Example 2";
+		MoveAbsJ sync_position\NoEOffs,v100, fine, tool0;
+    ENDPROC
+ENDMODULE

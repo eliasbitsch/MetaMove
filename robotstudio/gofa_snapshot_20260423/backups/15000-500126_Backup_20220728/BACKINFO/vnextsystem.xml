@@ -1,0 +1,43 @@
+<!--XML file to hold the vNEXT configurations -->
+<vNEXT>
+  <USER name="">
+    <ProgrammableKeys>
+      <Key_1 friendlyName="Single Vacuum">
+        <type>Output</type>
+        <allowInAuto>Yes</allowInAuto>
+        <pressed>Toggle</pressed>
+        <target>ox_single_vac_greifer_oeffnen</target>
+      </Key_1>
+      <Key_2 friendlyName="Multi Vacuum">
+        <type>Output</type>
+        <allowInAuto>Yes</allowInAuto>
+        <pressed>Toggle</pressed>
+        <target>ox_multi_vac_greifer_schliessen</target>
+      </Key_2>
+      <Key_3 friendlyName="Schunk open">
+        <type>System</type>
+        <allowInAuto>Yes</allowInAuto>
+        <pressed>MovePPtoMain</pressed>
+        <target></target>
+      </Key_3>
+      <Key_4 friendlyName="Schunk close">
+        <type>Output</type>
+        <allowInAuto>Yes</allowInAuto>
+        <pressed>Toggle</pressed>
+        <target>ox_kupplung_schliessen</target>
+      </Key_4>
+    </ProgrammableKeys>
+    <BackgroundImage>
+      <location>(HOME$)/SampleImage.gif</location>
+    </BackgroundImage>
+    <BackupRestorePath>
+      <LastPath>/BACKUP</LastPath>
+    </BackupRestorePath>
+    <StartUpAppEvent>
+      <SwitchAuto Name="" />
+      <SwitchManual Name="" />
+      <SwitchManualFS Name="" />
+      <Startup Name="" />
+    </StartUpAppEvent>
+  </USER>
+</vNEXT>

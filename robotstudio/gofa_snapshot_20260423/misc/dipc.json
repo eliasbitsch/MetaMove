@@ -1,0 +1,1 @@
+{ "_links" : { "base" : { "href" : "https://192.168.125.1:443/rw/" } ,"self" : { "href" : "dipc" } } , "state" : [ { "_type" : "dipc-info", "_title" : "info", "max-body-size" : "448", "max-pkg-size" : "5000" } ], "_embedded" : { "resources" : [ ] }}

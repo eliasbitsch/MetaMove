@@ -1,0 +1,789 @@
+MODULE MainModule
+
+    !###################################################
+    ! ob32       -       robot status
+    ! ob33       -       greifer typ
+    ! ob34       -       
+    ! ob35       -       
+    ! ob36       -       
+    ! ob37       -       
+    ! ob38       -       
+    ! ob39       -       
+    ! ox0_0     -       live sign
+    ! ox0_1     -       kupplung oeffnen
+    ! ox0_2     -       kupplung schliessen
+    ! ox0_3     -       pneumatik aus
+    ! ox0_4     -       single vacuum ein   |   greifer oeffnen
+    ! ox0_5     -       multi vacuum ein    |   greifer schliessen
+    ! ox0_6     -       
+    ! ox0_7     -  
+    ! ox1_0     -       request user ack
+    ! ox1_1     -       
+    ! ox1_2     -       
+    ! ox1_3     -       
+    ! ox1_4     -       
+    ! ox1_5     -       
+    ! ox1_6     -       
+    ! ox1_7     -       
+    !----------------------------------------------------
+    ! ib32       -       programm number
+    ! ib33       -       
+    ! ib34       -       
+    ! ib35       -       
+    ! ib36       -       
+    ! ib37       -       
+    ! ib38       -       
+    ! ib39       -       
+    ! ix0_0     -       live sign 
+    ! ix0_1     -       ack kupplung oeffnen
+    ! ix0_2     -       ack kupplung schliessen
+    ! ix0_3     -       ack pneumatik aus
+    ! ix0_4     -       ack single vacuum ein
+    ! ix0_5     -       ack multi vacuum ein
+    ! ix0_6     -       
+    ! ix0_7     -       
+    ! ix1_0     -       user ack
+    ! ix1_1     -       start program
+    ! ix1_2     -       
+    ! ix1_3     -       
+    ! ix1_4     -       
+    ! ix1_5     -       
+    ! ix1_6     -       
+    ! ix1_7     -       
+    !###################################################
+
+    LOCAL VAR egmident egm_id;
+
+    LOCAL VAR num n_gripper_change;
+    LOCAL VAR num n_program_selection;
+    LOCAL VAR num n_temp;
+
+
+    !###################################################################################
+    ! Vorpositionen 
+    !###################################################################################
+    CONST robtarget pPreDesk:=[[-91.18,463.89,479.36],[0.0292572,0.268175,-0.962905,0.00633495],[-1,-1,-1,0],[9E+09,9E+09,9E+09,9E+09,9E+09,9E+09]];
+    CONST robtarget pPre1_UT1:=[[-552.09,555.38,495.64],[0.0044952,-0.902819,0.429948,-0.00651631],[0,-1,-1,0],[9E+09,9E+09,9E+09,9E+09,9E+09,9E+09]];
+    CONST robtarget pPre2_UT1:=[[-392.21,204.61,842.26],[0.667079,-0.560097,-0.323818,-0.369377],[-1,0,-2,6],[9E+09,9E+09,9E+09,9E+09,9E+09,9E+09]];
+    CONST robtarget pPre3_UT1:=[[-350.89,976.02,658.71],[0.0375793,0.884847,0.460146,-0.0624369],[-1,0,-2,0],[9E+09,9E+09,9E+09,9E+09,9E+09,9E+09]];
+    CONST robtarget pPre4_UT1:=[[-414.66,598.41,495.29],[0.207994,0.825958,0.505094,-0.139328],[0,0,-2,0],[9E+09,9E+09,9E+09,9E+09,9E+09,9E+09]];
+
+    !###################################################################################
+    ! Magazinpositionen
+    !###################################################################################
+    CONST robtarget pUT1_Kiste:=[[-513.73,2.11,-42.42],[6.04912E-05,0.00599409,-0.999982,-3.32221E-06],[1,0,1,0],[9E+09,9E+09,9E+09,9E+09,9E+09,9E+09]];
+    CONST robtarget pUT2_Kiste:=[[-825.59,-2.15,-40.12],[8.13186E-05,-0.99997,0.00769148,-0.000126513],[1,-2,0,0],[9E+09,9E+09,9E+09,9E+09,9E+09,9E+09]];
+    CONST robtarget pUT3_Kiste:=[[-823.60,415.17,-36.21],[4.32479E-05,0.693819,-0.720149,-2.03609E-05],[1,-1,0,0],[9E+09,9E+09,9E+09,9E+09,9E+09,9E+09]];
+    CONST robtarget pOT1_Kiste:=[[-184.82,672.04,-16.32],[1.03823E-05,0.00826908,-0.999966,9.72737E-05],[0,-2,0,0],[9E+09,9E+09,9E+09,9E+09,9E+09,9E+09]];
+    CONST robtarget pOT2_Kiste:=[[-566.53,587.46,-15.57],[3.49322E-05,0.00829619,-0.999966,7.69623E-05],[0,-1,0,0],[9E+09,9E+09,9E+09,9E+09,9E+09,9E+09]];
+    CONST robtarget pOT3_Kiste:=[[-818.17,668.53,-15.11],[1.88135E-05,0.693917,-0.720055,0.000111014],[0,-2,0,0],[9E+09,9E+09,9E+09,9E+09,9E+09,9E+09]];
+
+    CONST robtarget pFT_Kiste:=[[-281.55,-25.37,-13.48],[0.000833676,0.707524,0.706689,0.000744787],[-2,-1,-2,0],[9E+09,9E+09,9E+09,9E+09,9E+09,9E+09]];
+
+    CONST robtarget pKiste_Uebergabe_1:=[[-261.73,1111.51,-40.12],[0.00238766,0.715105,0.699005,0.00325473],[-1,-1,0,0],[9E+09,9E+09,9E+09,9E+09,9E+09,9E+09]];
+    CONST robtarget pKiste_Uebergabe_2:=[[-538.07,1171.31,-51.88],[0.000332083,0.706618,0.707595,0.000175215],[0,0,0,0],[9E+09,9E+09,9E+09,9E+09,9E+09,9E+09]];
+    CONST robtarget pKiste_Uebergabe_3:=[[-856.33,1169.13,-49.79],[0.000492859,0.706617,0.707596,0.000120657],[0,0,0,0],[9E+09,9E+09,9E+09,9E+09,9E+09,9E+09]];
+
+    CONST robtarget pKiste_Vorne_1:=[[-267.40,690.49,-57.43],[0.00294082,-0.708083,-0.706112,-0.00395136],[-1,0,0,0],[9E+09,9E+09,9E+09,9E+09,9E+09,9E+09]];
+    CONST robtarget pKiste_Vorne_2:=[[-543.21,752.89,-56.70],[0.000269182,0.706591,0.707622,0.000227048],[0,0,0,0],[9E+09,9E+09,9E+09,9E+09,9E+09,9E+09]];
+    CONST robtarget pKiste_Vorne_3:=[[-854.93,752.86,-56.22],[0.000210849,0.706573,0.70764,0.000221873],[0,0,0,0],[9E+09,9E+09,9E+09,9E+09,9E+09,9E+09]];
+
+    CONST robtarget pKiste_Hinten_1:=[[-227.08,-85.62,-60.56],[0.00475642,0.706536,0.707659,-0.00204104],[-2,-1,-2,0],[9E+09,9E+09,9E+09,9E+09,9E+09,9E+09]];
+    CONST robtarget pKiste_Hinten_2:=[[-548.78,-83.94,-61.86],[0.000240667,0.70655,0.707663,9.96488E-05],[1,0,1,0],[9E+09,9E+09,9E+09,9E+09,9E+09,9E+09]];
+    CONST robtarget pKiste_Hinten_3:=[[-868.12,-82.69,-61.12],[0.000273639,0.706549,0.707664,0.000195961],[1,0,1,0],[9E+09,9E+09,9E+09,9E+09,9E+09,9E+09]];
+
+    CONST robtarget pKiste_FT:=[[-863.48,337.21,-59.05],[0.000308987,0.706558,0.707655,0.000217246],[0,0,1,0],[9E+09,9E+09,9E+09,9E+09,9E+09,9E+09]];
+
+    CONST robtarget pAblage_KistenGreifer:=[[-1028.76,298.52,67.06],[0.702797,-0.134574,-0.685832,0.132669],[1,-2,0,0],[9E+09,9E+09,9E+09,9E+09,9E+09,9E+09]];
+    CONST robtarget pAblage_VacuumGreifer:=[[-669.69,329.92,-37.07],[0.000763729,-0.976661,0.214782,0.0012781],[0,0,0,0],[9E+09,9E+09,9E+09,9E+09,9E+09,9E+09]];
+
+
+    !###################################################################################
+    ! Tischpositionen
+    !###################################################################################
+    CONST robtarget pUT1_Tisch:=[[519.86,117.61,93.95],[0.00724997,-0.700539,-0.713575,-0.00163116],[-2,-2,0,0],[9E+09,9E+09,9E+09,9E+09,9E+09,9E+09]];
+    CONST robtarget pUT2_Tisch:=[[429.17,127.86,99.08],[0.00721143,-0.712779,-0.70135,-0.00177402],[-1,-1,0,0],[9E+09,9E+09,9E+09,9E+09,9E+09,9E+09]];
+    CONST robtarget pUT3_Tisch:=[[358.81,116.67,97.20],[0.00720976,-0.70856,-0.705611,-0.00175584],[-2,-2,0,0],[9E+09,9E+09,9E+09,9E+09,9E+09,9E+09]];
+    CONST robtarget pOT1_Tisch:=[[528.70,118.89,119.77],[0.00726881,-0.696857,-0.717171,-0.00159584],[-1,-2,0,0],[9E+09,9E+09,9E+09,9E+09,9E+09,9E+09]];
+    CONST robtarget pOT2_Tisch:=[[440.77,142.77,122.36],[0.00728003,-0.696833,-0.717195,-0.00159892],[-1,-2,0,0],[9E+09,9E+09,9E+09,9E+09,9E+09,9E+09]];
+    CONST robtarget pOT3_Tisch:=[[357.61,111.54,120.96],[0.00728625,-0.720939,-0.692959,-0.00138065],[-2,-1,0,0],[9E+09,9E+09,9E+09,9E+09,9E+09,9E+09]];
+
+    CONST robtarget pServoAusrichtung_0_grad:=[[537.95,397.45,63.56],[3.35746E-05,0.707472,-0.706741,-1.72099E-05],[-1,-1,-2,0],[9E+09,9E+09,9E+09,9E+09,9E+09,9E+09]];
+    CONST robtarget pServoAusrichtung_90_grad:=[[537.94,397.46,63.54],[1.36248E-05,1,-0.00014261,-5.07474E-05],[-1,-2,-1,0],[9E+09,9E+09,9E+09,9E+09,9E+09,9E+09]];
+
+    CONST robtarget pFT1_Tisch:=[[437.44,119.85,100.80],[1.68646E-05,0.702726,-0.711461,-2.17869E-05],[-2,-1,1,0],[9E+09,9E+09,9E+09,9E+09,9E+09,9E+09]];
+    CONST robtarget pFT2_Tisch:=[[439.58,209.89,73.69],[0.496884,0.496986,-0.503086,0.503007],[-1,-1,1,0],[9E+09,9E+09,9E+09,9E+09,9E+09,9E+09]];
+    CONST robtarget pFT3_Tisch:=[[431.39,209.35,71.52],[0.501863,0.501904,0.498158,-0.498061],[-1,-1,-1,0],[9E+09,9E+09,9E+09,9E+09,9E+09,9E+09]];
+    CONST robtarget pFT4_Tisch:=[[100,200,300],[1,0,0,0],[0,0,0,0],[9E9,9E9,9E9,9E9,9E9,9E9]];
+    CONST robtarget pFT5_Tisch:=[[100,200,300],[1,0,0,0],[0,0,0,0],[9E9,9E9,9E9,9E9,9E9,9E9]];
+
+    CONST robtarget pServoBox:=[[236.03,-110.15,154.03],[0.00019642,0.983366,-0.00584258,-0.181541],[-2,-1,-1,0],[9E+09,9E+09,9E+09,9E+09,9E+09,9E+09]];
+    CONST robtarget pKLTBox:=[[241.64,870.37,158.31],[0.000551274,0.984047,0.000871644,-0.177906],[-1,0,0,0],[9E+09,9E+09,9E+09,9E+09,9E+09,9E+09]];
+
+    CONST robtarget pFT_Kiste10:=[[-513.73,2.11,-42.42],[6.00617E-05,0.0059922,-0.999982,-3.55453E-06],[1,0,1,0],[9E+09,9E+09,9E+09,9E+09,9E+09,9E+09]];
+
+    PERS tooldata tool_calib:=[TRUE,[[0.63997,1.78002,136.1],[1,0,0,0]],[0.491,[0,0,0],[1,0,0,0],0,0,0]];
+    PERS tooldata tool_vacuum_gripper:=[TRUE,[[0,0,151.5],[0.190809,0,0,0.981627]],[0.707,[0,0,100],[1,0,0,0],0,0,0]];
+    PERS tooldata tool_servo_rotator:=[TRUE,[[-45.156,-109.017,96.5],[0.587938,0.392848,-0.587938,0.392848]],[0.707,[0,0,40],[1,0,0,0],0,0,0]];
+    PERS tooldata tool_single_vacuum:=[TRUE,[[74.05,178.77,88.5],[0.5879378,-0.3928475,0.5879378,0.3928475]],[0.707,[0,0,20],[1,0,0,0],0,0,0]];
+    PERS tooldata tool_box_gripper:=[TRUE,[[0,0,93.5],[0.190809,0,0,0.981627]],[1.6,[0,0,100],[1,0,0,0],0,0,0]];
+    PERS wobjdata wobj_colab:=[FALSE,TRUE,"",[[-311.878,-378.558,188.656],[0.711833,-0.0027417,0.00397248,-0.702332]],[[0,0,0],[1,0,0,0]]];
+    PERS wobjdata wobj_tabel:=[FALSE,TRUE,"",[[0,-1000,200],[0.707106781,0,0,-0.707106781]],[[-300,0,200],[1,0,0,0]]];
+
+    !###################################################################################
+    ! Interruptroutine
+    !###################################################################################
+    VAR intnum sig1int;
+    VAR intnum sig2int;
+    VAR intnum sig3int;
+    VAR intnum sig4int;
+
+
+    TRAP abort_program
+        Reset ox_program_running;
+        StopMove;
+        ClearPath;
+        StorePath;
+        MoveJ pPreDesk,v300,z200,tool0\WObj:=wobj_colab;
+        RestoPath;
+        ResetPPMoved;
+        Load \Dynamic, diskhome \File:="MainModule.MODX";
+        
+    ENDTRAP
+
+    TRAP stop_motion
+        StopMove;
+        Reset ox_robot_moving;
+        set ox_motion_stopped;
+    ENDTRAP
+
+    TRAP restart_motion
+        StartMove;
+        Reset ox_motion_stopped;
+        set ox_robot_moving;
+    ENDTRAP
+
+    TRAP set_speed
+        !VelSet AInput(ib_speed_ovrd),250;
+        TPWrite"set speed to = "\Num:=AInput(ib_speed_ovrd);
+        SpeedRefresh AInput(ib_speed_ovrd);
+        TPWrite"current speed = "\Num:=CSpeedOverride(\CTask);
+        SetAO ob_speed_ovrd,CSpeedOverride(\CTask);
+    ENDTRAP
+
+
+
+
+    !###################################################################################
+    ! Hauptprogramm
+    !###################################################################################
+    PROC main()
+        VAR num pnCounter:=0;
+        VAR num loop_cnt:=0;
+
+
+
+        CONNECT sig1int WITH abort_program;
+        ISignalDI ix_abort_program,1,sig1int;
+
+        CONNECT sig2int WITH stop_motion;
+        ISignalDI ix_pause_motion,1,sig2int;
+
+        CONNECT sig3int WITH restart_motion;
+        ISignalDI ix_restart_motion,1,sig3int;
+
+        CONNECT sig4int WITH set_speed;
+        ISignalDI ix_set_speed,1,sig4int;
+
+
+        WHILE TRUE DO
+
+            n_gripper_change:=0;
+            WaitDI ix_start_program,1;
+            n_program_selection:=AInput(ib_prog_num);
+            set ox_ack_start_program;
+            WaitDI ix_start_program,0;
+            reset ox_ack_start_program;
+            set ox_program_running;
+
+            !        TPWrite "Program selection";
+            !        TPWrite "10 - EGM                |   20 - Gripper         |       30 - Servo alignment";
+            !        TPWrite "40 - Get servo box      |   50 - Remove servo box|      120 - Ablauf starten";
+            !        TPWrite "60 - Get KLT box        |   70 - Remove KLT box  |      130 - test";
+            !        TPWrite "80 - Get FT box         |   90 - Remove FT box   |      140 - servo rotate";
+            !        TPWrite "100 - Get housing box   |   110 - Remove housing box";
+            !        TPReadNum n_program_selection,"Choose a program:";
+
+            IF n_program_selection>=10 and n_program_selection<=19 THEN
+                ! Register an EGM id.kjskdj
+                EGMGetId egm_id;
+                WaitTime 3;
+                ! Setup the EGM communication.
+                EGMSetupUC ROB_1,egm_id,"default","ROB_1",\Joint;
+                WaitTime 3;
+                EGMStreamStart egm_id\SampleRate:=4;
+                FOR loop_cnt FROM 0 TO 10 DO
+
+                    MoveAbsJ [[12.3881,-20.4178,28.5566,-2.80517,41.8339,47.7017],[9E+09,9E+09,9E+09,9E+09,9E+09,9E+09]]\NoEOffs,v100,z50,tool0\WObj:=wobj_tabel;
+                    MoveAbsJ [[62.7989,2.72476,25.5112,-10.3091,52.8357,47.6953],[9E+09,9E+09,9E+09,9E+09,9E+09,9E+09]]\NoEOffs,v100,z50,tool0\WObj:=wobj_tabel;
+                    MoveAbsJ [[0.792137,1.62058,27.5173,2.80266,52.9559,47.6935],[9E+09,9E+09,9E+09,9E+09,9E+09,9E+09]]\NoEOffs,v100,z50,tool0\WObj:=wobj_tabel;
+                    MoveAbsJ [[-34.3135,5.89853,20.2037,0.97229,67.2404,47.6928],[9E+09,9E+09,9E+09,9E+09,9E+09,9E+09]]\NoEOffs,v100,z50,tool0\WObj:=wobj_tabel;
+                    MoveAbsJ [[-86.3023,16.3015,12.8081,-0.0264702,62.6727,25.3953],[9E+09,9E+09,9E+09,9E+09,9E+09,9E+09]]\NoEOffs,v100,z50,tool0\WObj:=wobj_tabel;
+                    MoveAbsJ [[-118.316,7.03305,15.6242,0.998005,62.7376,25.3962],[9E+09,9E+09,9E+09,9E+09,9E+09,9E+09]]\NoEOffs,v100,fine,tool0\WObj:=wobj_tabel;
+
+                ENDFOR
+            ELSEIF n_program_selection>=30 and n_program_selection<=39 THEN
+                Servo;
+            ELSEIF n_program_selection>=20 and n_program_selection<=29 THEN
+                !            TPErase;
+                !            TPWrite "Gripper Change";
+                !            TPReadNum n_gripper_change,"1 - Place vac grip; 2 - Pick vac grip; 3 - Place box grip; 4 - Pick box grip";
+                TPWrite "prog act="\Num:=AInput(ib_prog_num);
+                IF n_program_selection=25 THEN
+                    IF AInput(ib_greifer_typ)=1 THEN
+                        n_program_selection:=23;
+                        TPWrite "greifer 1";
+                    ELSEIF AInput(ib_greifer_typ)=2 THEN
+                        n_program_selection:=21;
+                        TPWrite "greifer 2";
+                    ELSE
+                        TPWrite "no gripper";
+
+                    ENDIF
+                ENDIF
+
+                IF n_program_selection=21 and AInput(ib_greifer_typ)=2 THEN
+                    place_vacuum_gripper;
+                ELSEIF n_program_selection=22 and AInput(ib_greifer_typ)=0 THEN
+                    pick_vacuum_gripper;
+                ELSEIF n_program_selection=22 and AInput(ib_greifer_typ)=1 THEN
+                    place_box_gripper;
+                    pick_vacuum_gripper;
+                ELSEIF n_program_selection=23 and AInput(ib_greifer_typ)=1 THEN
+                    place_box_gripper;
+                ELSEIF n_program_selection=24 and AInput(ib_greifer_typ)=0 THEN
+                    pick_box_gripper;
+                ELSEIF n_program_selection=24 and AInput(ib_greifer_typ)=2 THEN
+                    place_vacuum_gripper;
+                    pick_box_gripper;
+                ELSE
+                    TPWrite "Wrong number";
+                    TPWrite "typ="\Num:=AInput(ib_greifer_typ);
+                    TPWrite "prog="\Num:=n_program_selection;
+                ENDIF
+            ELSEIF n_program_selection>=40 and n_program_selection<=49 THEN
+                getServoBox;
+            ELSEIF n_program_selection>=5 and n_program_selection<=59 THEN
+                removeServoBox;
+            ELSEIF n_program_selection=60 THEN
+            ELSEIF n_program_selection=70 THEN
+            ELSEIF n_program_selection=80 THEN
+                move_box;
+            ELSEIF n_program_selection=90 THEN
+                pnp_ut1;
+                pnp_ut2;
+                pnp_ut3;
+                TPWrite "Gewindeeinsätze, Leiterplatte, Servomotoren und Zahnstange bestücken";
+                user_ack;
+                pnp_ot3;
+                pnp_ot2;
+                pnp_ot1;
+                TPWrite "Roboter verschrauben";
+                user_ack;
+                move_robot_to_pos_2;
+                move_robot_to_pos_3;
+
+            ELSEIF n_program_selection=100 THEN
+                pnp_ut1;
+            ELSEIF n_program_selection=110 THEN
+                pnp_ut2;
+            ELSEIF n_program_selection=120 THEN
+                pnp_ut3;
+            ELSEIF n_program_selection=130 THEN
+                pnp_ot1;
+            ELSEIF n_program_selection=140 THEN
+                pnp_ot2;
+            ELSEIF n_program_selection=150 THEN
+                pnp_ot3;
+            ELSEIF n_program_selection=160 THEN
+
+            ELSEIF n_program_selection=170 THEN
+                move_robot_to_pos_2;
+            ELSEIF n_program_selection=180 THEN
+                move_robot_to_pos_3;
+            ELSEIF n_program_selection=190 THEN
+
+            ELSEIF n_program_selection=210 THEN
+
+            ELSEIF n_program_selection=220 THEN
+                getServoBox;
+            ELSEIF n_program_selection=230 THEN
+
+            ELSEIF n_program_selection=240 THEN
+                removeServoBox;
+            ELSEIF n_program_selection=250 THEN
+
+            ELSE
+                TPWrite "Wrong number";
+            ENDIF
+
+        ENDWHILE
+    ENDPROC
+
+    !###################################################################################
+    ! Unterprogramme
+    !###################################################################################
+
+    ! Roboter in Position 2 einlegen
+    PROC move_robot_to_pos_2()
+
+        Movej offs(pFT1_Tisch,0,0,150),v200,z50,tool_vacuum_gripper\WObj:=wobj_colab;
+        MoveL offs(pFT1_Tisch,0,0,10),v200,z10,tool_vacuum_gripper\WObj:=wobj_colab;
+        MoveL offs(pFT1_Tisch,0,0,0),v20,fine,tool_vacuum_gripper\WObj:=wobj_colab;
+        !activate_multi_vacuum;
+        MoveL offs(pFT1_Tisch,0,0,10),v20,z10,tool_vacuum_gripper\WObj:=wobj_colab;
+        MoveL offs(pFT1_Tisch,0,0,150),v200,z50,tool_vacuum_gripper\WObj:=wobj_colab;
+
+        Movel offs(pFT2_Tisch,0,0,250),v200,z10,tool_vacuum_gripper\WObj:=wobj_colab;
+        Movel offs(pFT2_Tisch,0,0,35),v200,z10,tool_vacuum_gripper\WObj:=wobj_colab;
+        MoveL offs(pFT2_Tisch,0,0,0),v20,fine,tool_vacuum_gripper\WObj:=wobj_colab;
+        deactivate_multi_vacuum;
+        MoveL offs(pFT2_Tisch,0,20,0),v20,z50,tool_vacuum_gripper\WObj:=wobj_colab;
+        MoveL offs(pFT2_Tisch,0,20,150),v200,z50,tool_vacuum_gripper\WObj:=wobj_colab;
+    ENDPROC
+
+    ! Roboter in Position 3 einlegen
+    PROC move_robot_to_pos_3()
+
+        Movej offs(pFT2_Tisch,0,20,150),v200,z50,tool_vacuum_gripper\WObj:=wobj_colab;
+        MoveL offs(pFT2_Tisch,0,20,0),v200,z10,tool_vacuum_gripper\WObj:=wobj_colab;
+        MoveL offs(pFT2_Tisch,0,0,0),v20,fine,tool_vacuum_gripper\WObj:=wobj_colab;
+        !activate_multi_vacuum;
+        MoveL offs(pFT2_Tisch,0,0,35),v20,z10,tool_vacuum_gripper\WObj:=wobj_colab;
+        MoveL offs(pFT2_Tisch,0,0,250),v200,z50,tool_vacuum_gripper\WObj:=wobj_colab;
+        MoveAbsJ [[-77.8837,39.1412,-15.7825,-85.9471,100.618,45.1965],[9E+09,9E+09,9E+09,9E+09,9E+09,9E+09]]\NoEOffs,v200,z50,tool_vacuum_gripper\WObj:=wobj_colab;
+
+        MoveL offs(pFT3_Tisch,0,0,250),v200,z50,tool_vacuum_gripper\WObj:=wobj_colab;
+        MoveL offs(pFT3_Tisch,0,0,35),v200,z10,tool_vacuum_gripper\WObj:=wobj_colab;
+        MoveL offs(pFT3_Tisch,0,0,0),v20,fine,tool_vacuum_gripper\WObj:=wobj_colab;
+        deactivate_multi_vacuum;
+        MoveL offs(pFT3_Tisch,0,20,0),v20,z50,tool_vacuum_gripper\WObj:=wobj_colab;
+        MoveL offs(pFT3_Tisch,0,20,150),v200,z50,tool_vacuum_gripper\WObj:=wobj_colab;
+    ENDPROC
+
+    PROC user_ack()
+        TPWrite "Waiting for user ack";
+        setdo ox_request_user_ack,1;
+        WaitDI ix_user_ack,1;
+        setdo ox_request_user_ack,0;
+        WaitDI ix_user_ack,0;
+    endproc
+
+    ! OT1 holen & einlegen
+    PROC pnp_ot1()
+        VAR num z_offset:=100;
+        VAR num numfoo;
+        MoveJ pPreDesk,v300,z200,tool0\WObj:=wobj_colab;
+        pick_housing\posTemp:=pOT1_Kiste\z_offset:=100;
+        MoveJ pPreDesk,v300,z200,tool0\WObj:=wobj_colab;
+        user_ack;
+        place_housing\posTemp:=pOT1_Tisch\z_offset:=100;
+        MoveJ pPreDesk,v300,z200,tool0\WObj:=wobj_colab;
+    ENDPROC
+
+    ! OT2 holen & einlegen
+    PROC pnp_ot2()
+        VAR num z_offset:=100;
+        VAR num numfoo;
+        MoveJ pPreDesk,v300,z200,tool0\WObj:=wobj_colab;
+        pick_housing\posTemp:=pOT2_Kiste\z_offset:=100;
+        MoveJ pPreDesk,v300,z200,tool0\WObj:=wobj_colab;
+        user_ack;
+        place_housing\posTemp:=pOT2_Tisch\z_offset:=100;
+        MoveJ pPreDesk,v300,z200,tool0\WObj:=wobj_colab;
+    ENDPROC
+
+    ! OT3 holen & einlegen
+    PROC pnp_ot3()
+        VAR num z_offset:=100;
+        VAR num numfoo;
+        MoveJ pPreDesk,v300,z200,tool0\WObj:=wobj_colab;
+        pick_housing\posTemp:=pOT3_Kiste\z_offset:=100;
+        MoveJ pPreDesk,v300,z200,tool0\WObj:=wobj_colab;
+        user_ack;
+        place_housing\posTemp:=pOT3_Tisch\z_offset:=100;
+        MoveJ pPreDesk,v300,z200,tool0\WObj:=wobj_colab;
+    ENDPROC
+
+    ! UT1 holen & einlegen
+    PROC pnp_ut1()
+        VAR num z_offset:=100;
+        VAR num numfoo;
+        MoveJ pPreDesk,v300,z200,tool0\WObj:=wobj_colab;
+        MoveJ pPre1_UT1,v300,z200,tool0\WObj:=wobj_colab;
+        pick_housing\posTemp:=pUT1_Kiste\z_offset:=100;
+        MoveJ pPre1_UT1,v300,z200,tool0\WObj:=wobj_colab;
+        MoveJ pPreDesk,v300,z200,tool0\WObj:=wobj_colab;
+        user_ack;
+        place_housing\posTemp:=pUT1_Tisch\z_offset:=100;
+        MoveJ pPreDesk,v300,z200,tool0\WObj:=wobj_colab;
+    ENDPROC
+
+    ! UT2 holen & einlegen
+    PROC pnp_ut2()
+        VAR num z_offset:=100;
+        VAR num numfoo;
+        MoveJ pPreDesk,v300,z200,tool0\WObj:=wobj_colab;
+        pick_housing\posTemp:=pUT2_Kiste\z_offset:=100;
+        MoveJ pPreDesk,v300,z200,tool0\WObj:=wobj_colab;
+        user_ack;
+        place_housing\posTemp:=pUT2_Tisch\z_offset:=100;
+        MoveJ pPreDesk,v300,z200,tool0\WObj:=wobj_colab;
+    ENDPROC
+
+    ! UT3 holen & einlegen
+    PROC pnp_ut3()
+        VAR num z_offset:=100;
+        VAR num numfoo;
+        MoveJ pPreDesk,v300,z200,tool0\WObj:=wobj_colab;
+        pick_housing\posTemp:=pUT3_Kiste\z_offset:=100;
+        MoveJ pPreDesk,v300,z200,tool0\WObj:=wobj_colab;
+        user_ack;
+        place_housing\posTemp:=pUT3_Tisch\z_offset:=100;
+        MoveJ pPreDesk,v300,z200,tool0\WObj:=wobj_colab;
+    ENDPROC
+
+    ! Gehaeuse aufnehmen
+    PROC pick_housing(\robtarget posTemp,\num z_offset)
+        Movej offs(posTemp,0,0,z_offset),v200,z20,tool_single_vacuum\WObj:=wobj_colab;
+        MoveL offs(posTemp,0,0,15),v200,z5,tool_single_vacuum\WObj:=wobj_colab;
+        MoveL offs(posTemp,0,0,0),v10,fine,tool_single_vacuum\WObj:=wobj_colab;
+        !activate_single_vacuum;
+        MoveL offs(posTemp,0,0,z_offset),v200,z20,tool_single_vacuum\WObj:=wobj_colab;
+    ENDPROC
+
+    ! Gehaeuse ablegen
+    PROC place_housing(\robtarget posTemp,\num z_offset)
+        Movej offs(posTemp,0,200,z_offset),v200,z20,tool_single_vacuum\WObj:=wobj_colab;
+        Movej offs(posTemp,0,0,z_offset),v200,z20,tool_single_vacuum\WObj:=wobj_colab;
+        MoveL offs(posTemp,0,0,15),v200,z5,tool_single_vacuum\WObj:=wobj_colab;
+        MoveL offs(posTemp,0,0,0),v10,fine,tool_single_vacuum\WObj:=wobj_colab;
+        deactivate_single_vacuum;
+        MoveL offs(posTemp,0,0,z_offset),v200,z20,tool_single_vacuum\WObj:=wobj_colab;
+        MoveL offs(posTemp,0,200,z_offset),v200,z20,tool_single_vacuum\WObj:=wobj_colab;
+    endproc
+
+    ! Servo ausrichten
+    PROC Servo()
+        user_ack;
+        Movej offs(pServoAusrichtung_0_grad,0,0,150),v200,z100,tool_servo_rotator\WObj:=wobj_colab;
+        MoveL offs(pServoAusrichtung_0_grad,0,0,10),v200,z10,tool_servo_rotator\WObj:=wobj_colab;
+        MoveL offs(pServoAusrichtung_0_grad,0,0,-10),v20,fine,tool_servo_rotator\WObj:=wobj_colab;
+        VelSet 10,10;
+        MoveL offs(pServoAusrichtung_90_grad,0,0,-10),v5,fine,tool_servo_rotator\WObj:=wobj_colab;
+        VelSet 100,100;
+        MoveL offs(pServoAusrichtung_90_grad,0,0,20),v50,z20,tool_servo_rotator\WObj:=wobj_colab;
+        Movej offs(pServoAusrichtung_90_grad,0,0,150),v200,z100,tool_servo_rotator\WObj:=wobj_colab;
+    ENDPROC
+
+    ! Greiferverriegeln
+    PROC gripper_lock()
+        WaitTime(0.5);
+        reset ox_single_vac_greifer_oeffnen;
+        reset ox_multi_vac_greifer_schliessen;
+        set ox_kupplung_schliessen;
+        reset ox_kupplung_oeffnen;
+        WaitTime(0.5);
+    ENDPROC
+
+    ! Greifer entriegeln
+    PROC gripper_unlock()
+        WaitTime(0.5);
+        reset ox_single_vac_greifer_oeffnen;
+        reset ox_multi_vac_greifer_schliessen;
+        WaitTime(0.5);
+        set ox_kupplung_oeffnen;
+        reset ox_kupplung_schliessen;
+        WaitTime(0.5);
+    ENDPROC
+
+    ! Boxgreifer aufnehmen
+    PROC pick_box_gripper()
+        MoveAbsJ [[93.2885,3.48128,10.9841,5.23713,-7.20273,98.5318],[9E+09,9E+09,9E+09,9E+09,9E+09,9E+09]]\NoEOffs,v200,z20,tool_box_gripper\WObj:=wobj_colab;
+        MoveAbsJ [[91.5021,7.96955,13.5233,-92.373,5.69663,21.2911],[9E+09,9E+09,9E+09,9E+09,9E+09,9E+09]]\NoEOffs,v200,z20,tool_box_gripper\WObj:=wobj_colab;
+        MoveL offs(pAblage_KistenGreifer,40,0,300),v200,z20,tool0\WObj:=wobj_colab;
+        MoveL offs(pAblage_KistenGreifer,40,0,0),v200,z20,tool0\WObj:=wobj_colab;
+        MoveL offs(pAblage_KistenGreifer,0,0,0),v20,fine,tool0\WObj:=wobj_colab;
+        gripper_lock;
+        set_gripper_typ\typ:=1;
+        MoveL offs(pAblage_KistenGreifer,0,0,20),v20,fine,tool0\WObj:=wobj_colab;
+        MoveL offs(pAblage_KistenGreifer,0,0,300),v200,z20,tool0\WObj:=wobj_colab;
+        MoveAbsJ [[91.5021,7.96955,13.5233,-92.373,5.69663,21.2911],[9E+09,9E+09,9E+09,9E+09,9E+09,9E+09]]\NoEOffs,v200,z20,tool_box_gripper\WObj:=wobj_colab;
+        MoveAbsJ [[93.2885,3.48128,10.9841,5.23713,-7.20273,98.5318],[9E+09,9E+09,9E+09,9E+09,9E+09,9E+09]]\NoEOffs,v200,z20,tool_box_gripper\WObj:=wobj_colab;
+    ENDPROC
+
+    PROC set_gripper_typ(\num typ)
+        !VAR num in_typ;
+        !VAR num out_typ;
+        !in_typ:=AInput(ib_greifer_typ);
+        !out_typ:=AOutput(ob_greifer_typ);
+        SetAO ob_greifer_typ,typ;
+        set ox_greifer_typ_setzen;
+        WHILE AInput(ib_greifer_typ)<>AOutput(ob_greifer_typ) DO
+
+            WaitTime 0.01;
+        ENDWHILE
+        reset ox_greifer_typ_setzen;
+    ENDPROC
+
+    ! Boxgreifer ablegen
+    PROC place_box_gripper()
+        MoveJ pPreDesk,v300,z200,tool0\WObj:=wobj_colab;
+        MoveAbsJ [[93.2885,3.48128,10.9841,5.23713,-7.20273,98.5318],[9E+09,9E+09,9E+09,9E+09,9E+09,9E+09]]\NoEOffs,v200,z20,tool_box_gripper\WObj:=wobj_colab;
+        MoveAbsJ [[91.5021,7.96955,13.5233,-92.373,5.69663,21.2911],[9E+09,9E+09,9E+09,9E+09,9E+09,9E+09]]\NoEOffs,v200,z20,tool_box_gripper\WObj:=wobj_colab;
+        MoveL offs(pAblage_KistenGreifer,0,0,300),v200,fine,tool0\WObj:=wobj_colab;
+        MoveL offs(pAblage_KistenGreifer,0,0,20),v200,fine,tool0\WObj:=wobj_colab;
+        MoveL offs(pAblage_KistenGreifer,0,0,0),v20,fine,tool0\WObj:=wobj_colab;
+        gripper_unlock;
+        set_gripper_typ\typ:=0;
+        MoveL offs(pAblage_KistenGreifer,40,0,0),v20,fine,tool0\WObj:=wobj_colab;
+        MoveL offs(pAblage_KistenGreifer,40,0,300),v200,fine,tool0\WObj:=wobj_colab;
+        MoveAbsJ [[91.5021,7.96955,13.5233,-92.373,5.69663,21.2911],[9E+09,9E+09,9E+09,9E+09,9E+09,9E+09]]\NoEOffs,v200,z20,tool_box_gripper\WObj:=wobj_colab;
+        MoveAbsJ [[93.2885,3.48128,10.9841,5.23713,-7.20273,98.5318],[9E+09,9E+09,9E+09,9E+09,9E+09,9E+09]]\NoEOffs,v200,z20,tool_box_gripper\WObj:=wobj_colab;
+    ENDPROC
+
+    ! Vacuumgreifer aufnehmem
+    PROC pick_vacuum_gripper()
+        MoveL offs(pAblage_VacuumGreifer,0,0,300),v200,z20,tool0\WObj:=wobj_colab;
+        MoveL offs(pAblage_VacuumGreifer,0,0,30),v200,z20,tool0\WObj:=wobj_colab;
+        MoveL offs(pAblage_VacuumGreifer,0,0,0),v20,fine,tool0\WObj:=wobj_colab;
+        gripper_lock;
+        set_gripper_typ\typ:=2;
+
+        MoveL offs(pAblage_VacuumGreifer,0,0,30),v20,fine,tool0\WObj:=wobj_colab;
+        MoveL offs(pAblage_VacuumGreifer,0,0,300),v200,z20,tool0\WObj:=wobj_colab;
+    ENDPROC
+
+    ! Vacuumgreifer ablegen
+    PROC place_vacuum_gripper()
+        MoveJ pPreDesk,v300,z200,tool0\WObj:=wobj_colab;
+        MoveJ offs(pAblage_VacuumGreifer,0,0,500),v200,z20,tool0\WObj:=wobj_colab;
+        MoveL offs(pAblage_VacuumGreifer,0,0,30),v200,z20,tool0\WObj:=wobj_colab;
+        MoveL offs(pAblage_VacuumGreifer,0,0,0),v20,fine,tool0\WObj:=wobj_colab;
+        gripper_unlock;
+        set_gripper_typ\typ:=0;
+        MoveL offs(pAblage_VacuumGreifer,0,0,30),v20,fine,tool0\WObj:=wobj_colab;
+        MoveL offs(pAblage_VacuumGreifer,0,0,500),v200,z20,tool0\WObj:=wobj_colab;
+    ENDPROC
+
+    ! Kiste aufnehmen
+    PROC pick_box(\robtarget pTempPosistion,\num z_offset,\bool magazin)
+        !pick box
+        openBoxGripper;
+        MoveL Offs(pTempPosistion,-5,0,z_offset),v400,fine,tool_box_gripper\WObj:=wobj_colab;
+        MoveL Offs(pTempPosistion,-5,0,30),v150,z10,tool_box_gripper\WObj:=wobj_colab;
+        MoveL Offs(pTempPosistion,-5,0,0),v50,fine,tool_box_gripper\WObj:=wobj_colab;
+        MoveL pTempPosistion,v20,fine,tool_box_gripper\WObj:=wobj_colab;
+        closeBoxGripper;
+        MoveL Offs(pTempPosistion,0,0,z_offset),v150,fine,tool_box_gripper\WObj:=wobj_colab;
+    ENDPROC
+
+    ! Kiste ablegen
+    PROC place_box(\robtarget pTempPosistion,\num z_offset,\bool magazin)
+        !place box
+        MoveL Offs(pTempPosistion,0,0,z_offset),v400,fine,tool_box_gripper\WObj:=wobj_colab;
+        MoveL Offs(pTempPosistion,0,0,30),v150,z10,tool_box_gripper\WObj:=wobj_colab;
+        MoveL pTempPosistion,v50,fine,tool_box_gripper\WObj:=wobj_colab;
+        closeBoxGripper;
+        MoveL Offs(pTempPosistion,-5,0,0),v20,fine,tool_box_gripper\WObj:=wobj_colab;
+        MoveL Offs(pTempPosistion,-5,0,z_offset),v150,fine,tool_box_gripper\WObj:=wobj_colab;
+    ENDPROC
+
+    ! 
+    PROC move_box()
+        pick_box\pTempPosistion:=pKiste_Uebergabe_2\z_offset:=200\magazin:=true;
+        place_box\pTempPosistion:=pKiste_Vorne_1\z_offset:=200\magazin:=true;
+    ENDPROC
+
+    ! Servobox von Magazin holenn und auf Tisch ablegen
+    PROC getServoBox()
+        MoveL offs(pKiste_Vorne_1,0,0,300),v100,fine,tool_box_gripper\WObj:=wobj_colab;
+        MoveL offs(pKiste_Uebergabe_1,-5,0,200),v100,fine,tool_box_gripper\WObj:=wobj_colab;
+        MoveL offs(pKiste_Uebergabe_1,-5,0,10),v100,fine,tool_box_gripper\WObj:=wobj_colab;
+        MoveL offs(pKiste_Uebergabe_1,-5,0,0),v20,fine,tool_box_gripper\WObj:=wobj_colab;
+        MoveL offs(pKiste_Uebergabe_1,0,0,0),v20,fine,tool_box_gripper\WObj:=wobj_colab;
+        closeBoxGripper;
+        MoveL offs(pKiste_Uebergabe_1,0,0,10),v20,fine,tool_box_gripper\WObj:=wobj_colab;
+        MoveL offs(pKiste_Uebergabe_1,0,0,200),v100,fine,tool_box_gripper\WObj:=wobj_colab;
+        MoveL offs(pKiste_Vorne_1,0,0,300),v100,fine,tool_box_gripper\WObj:=wobj_colab;
+        MoveL pPreDesk,v100,fine,tool0\WObj:=wobj_colab;
+        user_ack;
+        MoveL offs(pServoBox,0,0,160),v100,fine,tool_box_gripper\WObj:=wobj_colab;
+        MoveL offs(pServoBox,0,0,10),v100,fine,tool_box_gripper\WObj:=wobj_colab;
+        MoveL offs(pServoBox,0,0,0),v20,fine,tool_box_gripper\WObj:=wobj_colab;
+        openBoxGripper;
+        MoveL offs(pServoBox,0,5,0),v20,fine,tool_box_gripper\WObj:=wobj_colab;
+        MoveL offs(pServoBox,0,5,10),v20,fine,tool_box_gripper\WObj:=wobj_colab;
+        MoveL offs(pServoBox,0,5,160),v100,fine,tool_box_gripper\WObj:=wobj_colab;
+        MoveL pPreDesk,v100,fine,tool0\WObj:=wobj_colab;
+        MoveL offs(pKiste_Vorne_1,0,0,300),v100,fine,tool_box_gripper\WObj:=wobj_colab;
+    ENDPROC
+
+    ! Servobox von Tisch holen und im Magazin ablegen
+    PROC removeServoBox()
+        MoveL offs(pKiste_Vorne_1,0,0,300),v100,fine,tool_box_gripper\WObj:=wobj_colab;
+        MoveL pPreDesk,v100,fine,tool0\WObj:=wobj_colab;
+        user_ack;
+        MoveL offs(pServoBox,0,5,160),v100,fine,tool_box_gripper\WObj:=wobj_colab;
+        MoveL offs(pServoBox,0,5,10),v100,fine,tool_box_gripper\WObj:=wobj_colab;
+        MoveL offs(pServoBox,0,5,0),v20,fine,tool_box_gripper\WObj:=wobj_colab;
+        MoveL offs(pServoBox,0,0,0),v20,fine,tool_box_gripper\WObj:=wobj_colab;
+        closeBoxGripper;
+        MoveL offs(pServoBox,0,0,10),v20,fine,tool_box_gripper\WObj:=wobj_colab;
+        MoveL offs(pServoBox,0,0,160),v100,fine,tool_box_gripper\WObj:=wobj_colab;
+        MoveL pPreDesk,v100,fine,tool0\WObj:=wobj_colab;
+        MoveL offs(pKiste_Vorne_1,0,0,300),v100,fine,tool_box_gripper\WObj:=wobj_colab;
+
+        MoveL offs(pKiste_Uebergabe_1,0,0,200),v100,fine,tool_box_gripper\WObj:=wobj_colab;
+        MoveL offs(pKiste_Uebergabe_1,0,0,10),v100,fine,tool_box_gripper\WObj:=wobj_colab;
+        MoveL offs(pKiste_Uebergabe_1,0,0,0),v20,fine,tool_box_gripper\WObj:=wobj_colab;
+        openBoxGripper;
+        MoveL offs(pKiste_Uebergabe_1,-5,0,0),v20,fine,tool_box_gripper\WObj:=wobj_colab;
+        MoveL offs(pKiste_Uebergabe_1,-5,0,10),v20,fine,tool_box_gripper\WObj:=wobj_colab;
+        MoveL offs(pKiste_Uebergabe_1,-5,0,200),v100,fine,tool_box_gripper\WObj:=wobj_colab;
+        MoveL offs(pKiste_Vorne_1,0,0,300),v100,fine,tool_box_gripper\WObj:=wobj_colab;
+
+    ENDPROC
+
+    ! Boxgreifer oeffnen
+    PROC openBoxGripper()
+        WaitTime(0.5);
+        set ox_single_vac_greifer_oeffnen;
+        reset ox_multi_vac_greifer_schliessen;
+        WaitTime(0.5);
+    ENDPROC
+
+    ! Boxgreifer schliessen
+    PROC closeBoxGripper()
+        WaitTime(0.5);
+        reset ox_single_vac_greifer_oeffnen;
+        set ox_multi_vac_greifer_schliessen;
+        WaitTime(0.5);
+    ENDPROC
+
+    ! Einzelvakuum einschalten
+    PROC activate_single_vacuum()
+        WaitTime(0.5);
+        set ox_single_vac_greifer_oeffnen;
+        reset ox_multi_vac_greifer_schliessen;
+        WaitTime(0.5);
+    ENDPROC
+
+    ! Einzelvakuum ausschalten
+    PROC deactivate_single_vacuum()
+        WaitTime(0.5);
+        reset ox_single_vac_greifer_oeffnen;
+        reset ox_multi_vac_greifer_schliessen;
+        WaitTime(0.5);
+    ENDPROC
+
+    ! Multivakuum einschalten
+    PROC activate_multi_vacuum()
+        WaitTime(0.5);
+        reset ox_single_vac_greifer_oeffnen;
+        set ox_multi_vac_greifer_schliessen;
+        WaitTime(0.5);
+    ENDPROC
+
+    ! Multivakuum ausschalten
+    PROC deactivate_multi_vacuum()
+        WaitTime(0.5);
+        reset ox_single_vac_greifer_oeffnen;
+        reset ox_multi_vac_greifer_schliessen;
+        WaitTime(0.5);
+    ENDPROC
+
+
+    !#############################################################################################
+    ! Positionen zum Teachen
+    !#############################################################################################
+    PROC teach_box()
+        MoveL pKiste_FT,v50,fine,tool_box_gripper\WObj:=wobj_colab;
+        MoveL pKiste_Hinten_1,v50,fine,tool_box_gripper\WObj:=wobj_colab;
+        MoveL pKiste_Hinten_2,v50,fine,tool_box_gripper\WObj:=wobj_colab;
+        MoveL pKiste_Hinten_3,v50,fine,tool_box_gripper\WObj:=wobj_colab;
+        MoveL pKiste_Vorne_1,v50,fine,tool_box_gripper\WObj:=wobj_colab;
+        MoveL pKiste_Vorne_2,v50,fine,tool_box_gripper\WObj:=wobj_colab;
+        MoveL pKiste_Vorne_3,v50,fine,tool_box_gripper\WObj:=wobj_colab;
+        MoveL pKiste_Uebergabe_1,v50,fine,tool_box_gripper\WObj:=wobj_colab;
+        MoveL pKiste_Uebergabe_2,v50,fine,tool_box_gripper\WObj:=wobj_colab;
+        MoveL pKiste_Uebergabe_3,v50,fine,tool_box_gripper\WObj:=wobj_colab;
+
+        MoveL pServoBox,v50,fine,tool_box_gripper\WObj:=wobj_colab;
+        MoveL pKLTBox,v50,fine,tool_box_gripper\WObj:=wobj_colab;
+
+    ENDPROC
+
+    PROC teach_pre_pos()
+        MoveL pPreDesk,v100,fine,tool0\WObj:=wobj_colab;
+    endproc
+
+    PROC teach_gripper()
+        MoveL pAblage_KistenGreifer,v50,fine,tool0\WObj:=wobj_colab;
+        MoveL pAblage_VacuumGreifer,v50,fine,tool0\WObj:=wobj_colab;
+
+    ENDPROC
+
+    PROC teach_parts()
+        movel pUT1_Kiste,v50,fine,tool_single_vacuum\WObj:=wobj_colab;
+        movel pUT2_Kiste,v50,fine,tool_single_vacuum\WObj:=wobj_colab;
+        movel pUT3_Kiste,v50,fine,tool_single_vacuum\WObj:=wobj_colab;
+        movel pOT1_Kiste,v50,fine,tool_single_vacuum\WObj:=wobj_colab;
+        movel pOT2_Kiste,v50,fine,tool_single_vacuum\WObj:=wobj_colab;
+        movel pOT3_Kiste,v50,fine,tool_single_vacuum\WObj:=wobj_colab;
+        movel pFT_Kiste,v50,fine,tool_vacuum_gripper\WObj:=wobj_colab;
+        MoveL pFT_Kiste10,v50,fine,tool_single_vacuum\WObj:=wobj_colab;
+
+        movel pUT1_Tisch,v50,fine,tool_single_vacuum\WObj:=wobj_colab;
+        movel pUT2_Tisch,v50,fine,tool_single_vacuum\WObj:=wobj_colab;
+        movel pUT3_Tisch,v50,fine,tool_single_vacuum\WObj:=wobj_colab;
+        movel pOT1_Tisch,v50,fine,tool_single_vacuum\WObj:=wobj_colab;
+        movel pOT2_Tisch,v50,fine,tool_single_vacuum\WObj:=wobj_colab;
+        movel pOT3_Tisch,v50,fine,tool_single_vacuum\WObj:=wobj_colab;
+        movel pFT1_Tisch,v50,fine,tool_vacuum_gripper\WObj:=wobj_colab;
+        movel pFT2_Tisch,v50,fine,tool_vacuum_gripper\WObj:=wobj_colab;
+        movel pFT3_Tisch,v50,fine,tool_vacuum_gripper\WObj:=wobj_colab;
+        movel pFT4_Tisch,v50,fine,tool_vacuum_gripper\WObj:=wobj_colab;
+        movel pFT5_Tisch,v50,fine,tool_vacuum_gripper\WObj:=wobj_colab;
+
+        movel pServoAusrichtung_0_grad,v50,fine,tool_servo_rotator\WObj:=wobj_colab;
+        movel pServoAusrichtung_90_grad,v50,fine,tool_servo_rotator\WObj:=wobj_colab;
+
+        !################################################################
+        !OFFSET
+        !################################################################
+        movel offs(pUT1_Kiste,0,0,100),v50,fine,tool_single_vacuum\WObj:=wobj_colab;
+        movel offs(pUT2_Kiste,0,0,100),v50,fine,tool_single_vacuum\WObj:=wobj_colab;
+        movel offs(pUT3_Kiste,0,0,100),v50,fine,tool_single_vacuum\WObj:=wobj_colab;
+        movel offs(pOT1_Kiste,0,0,100),v50,fine,tool_single_vacuum\WObj:=wobj_colab;
+        movel offs(pOT2_Kiste,0,0,100),v50,fine,tool_single_vacuum\WObj:=wobj_colab;
+        movel offs(pOT3_Kiste,0,0,100),v50,fine,tool_single_vacuum\WObj:=wobj_colab;
+        movel offs(pFT_Kiste,0,0,100),v50,fine,tool_vacuum_gripper\WObj:=wobj_colab;
+
+        movel offs(pUT1_Tisch,0,0,100),v50,fine,tool_single_vacuum\WObj:=wobj_colab;
+        movel offs(pUT2_Tisch,0,0,100),v50,fine,tool_single_vacuum\WObj:=wobj_colab;
+        movel offs(pUT3_Tisch,0,0,100),v50,fine,tool_single_vacuum\WObj:=wobj_colab;
+        movel offs(pOT1_Tisch,0,0,100),v50,fine,tool_single_vacuum\WObj:=wobj_colab;
+        movel offs(pOT2_Tisch,0,0,100),v50,fine,tool_single_vacuum\WObj:=wobj_colab;
+        movel offs(pOT3_Tisch,0,0,100),v50,fine,tool_single_vacuum\WObj:=wobj_colab;
+        movel offs(pFT1_Tisch,0,0,100),v50,fine,tool_vacuum_gripper\WObj:=wobj_colab;
+        movel offs(pFT2_Tisch,0,0,100),v50,fine,tool_vacuum_gripper\WObj:=wobj_colab;
+        movel offs(pFT3_Tisch,0,0,100),v50,fine,tool_vacuum_gripper\WObj:=wobj_colab;
+        movel offs(pFT4_Tisch,0,0,100),v50,fine,tool_vacuum_gripper\WObj:=wobj_colab;
+        movel offs(pFT5_Tisch,0,0,100),v50,fine,tool_vacuum_gripper\WObj:=wobj_colab;
+
+        movel offs(pServoAusrichtung_0_grad,0,0,100),v50,fine,tool_servo_rotator\WObj:=wobj_colab;
+
+    ENDPROC
+
+ENDMODULE

@@ -1,0 +1,1 @@
+{ "_links" : { "base" : { "href" : "https://192.168.125.1:443/rw/motionsystem/" }, "self" : { "href" : "mechunits" } }  , "_embedded" : { "resources" : [  { "_links" : { "self" : { "href" : "mechunits/ROB_1" } }, "_type" : "ms-mechunit-li", "_title" : "ROB_1", "mode" : "Activated", "activation-allowed" : "True", "drive-module" : "0" } ] }}

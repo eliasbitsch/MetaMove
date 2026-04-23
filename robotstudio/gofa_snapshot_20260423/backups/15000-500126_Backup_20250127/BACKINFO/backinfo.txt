@@ -1,0 +1,90 @@
+#
+# Generated backup file, do not edit.
+#
+# Originally at: /user/TEMP/backup.483881
+# 2025-01-27  13:20:06
+#
+>>SYSTEM_ID:
+15000-500126
+
+>>PRODUCTS_ID:
+RobotControl Version: 7.8.2
+RobotOS Version: 7.0.1
+ASI Version: 1.0.7
+FlexPendantSoftwareUpdate Version: 1.10.1
+Robots Version: 1.9.1
+Wizard Version: 1.5.0
+
+  UDPUC Driver
+  Leadthrough
+  No Category 0
+  Safe Move Plug and Play
+  English
+  3121-1 RW Add-In Prepared
+  Auto acknowledge input
+  3150-1 Collision Avoidance
+  3107-1 Collision Detection
+  3124-1 Externally Guided Motion (EGM)
+  3120-2 FlexPendant Essential App Package
+  3151-1 FlexPendant Program Package
+  3116-1 FTP and SFTP client
+  3154-1 IoT Data Gateway
+  3044-2 Keyless Mode Switch, 2 modes
+  3114-1 Multitasking
+  3113-1 Path Recovery
+  3023-2 PROFIsafe Device
+  3020-2 PROFINET Device
+  3119-1 RobotStudio Connect
+  3043-3 SafeMove Collaborative
+  3106-1 World Zones
+  RobotControl Base
+  C30-D7 for CRB 15000
+  ASI
+  FlexPendant App Package
+  CRB 15000-5/0.95
+  Wizard
+
+>>HOME:
+All public files and directories
+
+>>SYSPAR:
+SYS.cfg
+SIO.cfg
+PROC.cfg
+MMC.cfg
+MOC.cfg
+EIO.cfg
+
+
+
+>>TASK2: (T_ROB1,NewProgram,)
+SYSMOD/GOFA_ASI_Procedures.sysx @ 
+PROGMOD/Calib_Def_wobj_kiste_5.modx @ 
+PROGMOD/module_mr19m010_copy.modx @ 
+PROGMOD/Wizard_LoadData.modx @ 
+PROGMOD/module_MAIN.modx @ 
+PROGMOD/module_WIZARD.modx @ 
+PROGMOD/Calib_Def_wobj_kiste_3.modx @ 
+PROGMOD/MainModule.modx @ 
+SYSMOD/module_HOLOPATH.sysx @ 
+SYSMOD/module_RANDOMPATH.sysx @ 
+PROGMOD/Calib_Def1_wobj_kiste_1.modx @ 
+PROGMOD/Calib_Def_wobj_kiste_1.modx @ 
+SYSMOD/module_EGM.sysx @ 
+PROGMOD/module_mr22m012.modx @ 
+PROGMOD/Calib_Def_wobj_kiste_6.modx @ 
+PROGMOD/Calib_Def_wobj_kiste_4.modx @ 
+SYSMOD/module_MAIN_GOHOLO.sysx @ 
+SYSMOD/Wizard_Params.sysx @ 
+PROGMOD/Calib_Def_wobj_kiste_2.modx @ 
+PROGMOD/Morobot_Assembly.modx @ 
+PROGMOD/Calib_Def_wobj_kiste_7.modx @ 
+
+>>TASK3: (T_GOFA_LED,,)
+SYSMOD/GOFA_Main.sysx @ 
+
+>>TASK4: (T_COMM,,)
+PROGMOD/CommModule.modx @ 
+
+
+>>EOF:

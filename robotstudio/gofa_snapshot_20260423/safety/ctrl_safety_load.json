@@ -1,0 +1,1 @@
+{ "_links" : { "base" : { "href" : "https://192.168.125.1:443/ctrl/safety/load/" }, "self" : { "href" : "" } }  , "state" : [ { "_type" : "scorch-load-status", "_title" : "status", "status" : "SCORCH_ERR_USER_GRANT_IS_MISSING" } ]}

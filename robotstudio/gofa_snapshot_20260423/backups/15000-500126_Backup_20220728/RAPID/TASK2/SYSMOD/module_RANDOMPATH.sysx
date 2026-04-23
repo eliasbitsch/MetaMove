@@ -1,0 +1,41 @@
+MODULE module_RANDOMPATH (SYSMODULE)
+!    
+!       ---------------------------------   
+!                   GoHolo    
+!       ---------------------------------
+!
+!       Copyright (C)   2021 Jakob Hörbst
+!       author:         Jakob Hörbst
+!       email:          jakob@hoerbst.net
+!       year:           2021
+!
+
+    
+    ! RANDOM PATH
+    CONST robtarget randomPathTarget00:=[[400,0,530],[0.5,0,0.866025404,0],[0,0,0,0],[9E+09,9E+09,9E+09,9E+09,9E+09,9E+09]];
+    CONST robtarget randomPathTarget10:=[[500,212.17119565,600],[0.372760006,-0.5370996,0.745736898,0.128259412],[0,-1,-1,0],[9E+09,9E+09,9E+09,9E+09,9E+09,9E+09]];
+    CONST robtarget randomPathTarget20:=[[300,300,391.552096279],[0.026136637,-0.60685633,0.794057513,-0.022692201],[0,-1,-1,0],[9E+09,9E+09,9E+09,9E+09,9E+09,9E+09]];
+    CONST robtarget randomPathTarget30:=[[400,-274.159707825,500],[0.02613664,-0.606856313,0.794057525,-0.022692264],[-1,0,-2,0],[9E+09,9E+09,9E+09,9E+09,9E+09,9E+09]];
+    CONST robtarget randomPathTarget40:=[[227.290100304,17.365610106,300],[0.026136653,-0.606856329,0.794057512,-0.022692262],[0,-1,-1,0],[9E+09,9E+09,9E+09,9E+09,9E+09,9E+09]];
+    CONST robtarget randomPathTarget50:=[[900,17.365611158,259.858480384],[0.026136644,-0.60685631,0.794057527,-0.022692255],[0,-1,-1,0],[9E+09,9E+09,9E+09,9E+09,9E+09,9E+09]];
+    CONST robtarget randomPathTarget60:=[[253.740697546,17.36560977,650.310810579],[0.607005214,0.022414458,0.027561649,0.793903406],[0,-1,1,1],[9E+09,9E+09,9E+09,9E+09,9E+09,9E+09]];
+  
+    !
+    !   RANDOM PATH
+    !
+    PROC randomPath()
+        VAR speeddata randomPath_Speed := v100;
+        
+        ConfJ \On;
+        ConfL \On;
+        MoveJ randomPathTarget00,randomPath_Speed,z100,tool0\WObj:=wobj0;
+        MoveJ randomPathTarget10,randomPath_Speed,z100,tool0\WObj:=wobj0;
+        MoveL randomPathTarget20,randomPath_Speed,z100,tool0\WObj:=wobj0;
+        MoveL randomPathTarget30,randomPath_Speed,z100,tool0\WObj:=wobj0;
+        MoveL randomPathTarget40,randomPath_Speed,z100,tool0\WObj:=wobj0;
+        MoveL randomPathTarget50,randomPath_Speed,z100,tool0\WObj:=wobj0;
+        MoveL randomPathTarget40,randomPath_Speed,z100,tool0\WObj:=wobj0;
+        MoveJ randomPathTarget60,randomPath_Speed,z100,tool0\WObj:=wobj0;
+    ENDPROC
+    
+ENDMODULE

@@ -1,0 +1,1 @@
+{ "_links" : { "base" : { "href" : "https://192.168.125.1:443/ctrl/identity/" }, "self" : { "href" : "" } }  , "state" : [ { "_type" : "ctrl-identity-info", "_title" : "identity", "ctrl-name" : "15000-500126" , "ctrl-id" : "15000-500126", "ctrl-type" : "c30" ,"ctrl-mac":"00:30:64:69:e4:5f" } ]}

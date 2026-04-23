@@ -1,0 +1,1 @@
+{ "_links" : { "base" : { "href" : "https://192.168.125.1:443/ctrl/safety/cbc/" }, "self" : { "href" : "?drivenum=1" } }  , "state" : [ { "_type" : "cbc-status", "_title" : "status", "next-brake-check-time" : "0", "last-brake-check-status" : "ok", "status" : "required" } ]}
