@@ -103,9 +103,9 @@ def main() -> int:
             robot.header.mtype = egm_pb2.EgmHeader.MSGTYPE_DATA
             if joints:
                 robot.feedBack.joints.joints.extend(joints)
-                robot.measured.joints.joints.extend(joints)
+                robot.planned.joints.joints.extend(joints)
             robot.motorState.state = egm_pb2.EgmMotorState.MOTORS_ON
-            robot.mciState.state = egm_pb2.EgmMCIState.EGM_RUNNING
+            robot.mciState.state = egm_pb2.EgmMCIState.MCI_RUNNING
             robot.rapidExecState.state = egm_pb2.EgmRapidCtrlExecState.RAPID_RUNNING
 
             sock.sendto(robot.SerializeToString(), addr)
