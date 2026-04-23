@@ -98,3 +98,8 @@ docs/markers/__pycache__/
 
 # Python bytecode in mounted ROS2 workspace
 ros2/docker/metamove_bridge/**/__pycache__/
+
+# RobotStudio local VC workspace (auto-generated, per-developer)
+robotstudio/station/
+# RWS-Mock python cache
+ai-services/rws-mock/__pycache__/
