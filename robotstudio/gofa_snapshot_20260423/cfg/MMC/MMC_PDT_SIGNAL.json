@@ -1,0 +1,152 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "MMC/MMC_PDT_SIGNAL/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_PDT_SIGNAL/instances/signaldi"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "signaldi",
+        "rdonly": "true",
+        "instanceid": "7497320",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "signaldi"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "typ",
+            "value": "dattyp"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_PDT_SIGNAL/instances/signaldo"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "signaldo",
+        "rdonly": "true",
+        "instanceid": "7497104",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "signaldo"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "typ",
+            "value": "dattyp"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_PDT_SIGNAL/instances/signalgi"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "signalgi",
+        "rdonly": "true",
+        "instanceid": "7496888",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "signalgi"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "typ",
+            "value": "dattyp"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_PDT_SIGNAL/instances/signalgo"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "signalgo",
+        "rdonly": "true",
+        "instanceid": "7496672",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "signalgo"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "typ",
+            "value": "dattyp"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_PDT_SIGNAL/instances/signalai"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "signalai",
+        "rdonly": "true",
+        "instanceid": "7496456",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "signalai"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "typ",
+            "value": "dattyp"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_PDT_SIGNAL/instances/signalao"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "signalao",
+        "rdonly": "true",
+        "instanceid": "7496240",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "signalao"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "typ",
+            "value": "dattyp"
+          }
+        ]
+      }
+    ]
+  }
+}

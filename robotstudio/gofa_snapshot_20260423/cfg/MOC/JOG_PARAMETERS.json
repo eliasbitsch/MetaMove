@@ -1,0 +1,52 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "MOC/JOG_PARAMETERS/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/JOG_PARAMETERS/instances/motion_planner_1"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "motion_planner_1",
+        "rdonly": "false",
+        "instanceid": "6496568",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "motion_planner_1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "linear_step_size",
+            "value": "0.0049999999"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "reorient_step_size",
+            "value": "0.00050000002"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "joint_step_size",
+            "value": "9.9999997E-05"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "jog_mode",
+            "value": "1"
+          }
+        ]
+      }
+    ]
+  }
+}

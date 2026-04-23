@@ -1,0 +1,581 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "SYS/SYSSIG_OUT/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/SYSSIG_OUT/instances/MotLmpPB"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "MotLmpPB",
+        "rdonly": "true",
+        "instanceid": "7615608",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "MotLmpPB"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Status",
+            "value": "MotorOn"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Arg1",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Arg2",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Arg3",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Arg4",
+            "value": "250"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Arg5",
+            "value": "0.050000001"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Arg6",
+            "value": "1.5700001"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Arg7",
+            "value": "0.050000001"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Arg8",
+            "value": "1.5700001"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/SYSSIG_OUT/instances/AutoModeStatus"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "AutoModeStatus",
+        "rdonly": "true",
+        "instanceid": "7615176",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "AutoModeStatus"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Status",
+            "value": "AutoOn"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Arg1",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Arg2",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Arg3",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Arg4",
+            "value": "250"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Arg5",
+            "value": "0.050000001"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Arg6",
+            "value": "1.5700001"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Arg7",
+            "value": "0.050000001"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Arg8",
+            "value": "1.5700001"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/SYSSIG_OUT/instances/EStopStatus"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "EStopStatus",
+        "rdonly": "true",
+        "instanceid": "7614744",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "EStopStatus"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Status",
+            "value": "EmStop"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Arg1",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Arg2",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Arg3",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Arg4",
+            "value": "250"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Arg5",
+            "value": "0.050000001"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Arg6",
+            "value": "1.5700001"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Arg7",
+            "value": "0.050000001"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Arg8",
+            "value": "1.5700001"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/SYSSIG_OUT/instances/SysFailStatus"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "SysFailStatus",
+        "rdonly": "true",
+        "instanceid": "7614312",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "SysFailStatus"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Status",
+            "value": "SysFail"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Arg1",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Arg2",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Arg3",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Arg4",
+            "value": "250"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Arg5",
+            "value": "0.050000001"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Arg6",
+            "value": "1.5700001"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Arg7",
+            "value": "0.050000001"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Arg8",
+            "value": "1.5700001"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/SYSSIG_OUT/instances/GOFA_EStop"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "GOFA_EStop",
+        "rdonly": "true",
+        "instanceid": "6427136",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "GOFA_EStop"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Status",
+            "value": "EmStop"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Arg1",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Arg2",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Arg3",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Arg4",
+            "value": "250"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Arg5",
+            "value": "0.050000001"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Arg6",
+            "value": "1.5700001"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Arg7",
+            "value": "0.050000001"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Arg8",
+            "value": "1.5700001"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/SYSSIG_OUT/instances/GOFA_MotorsOff"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "GOFA_MotorsOff",
+        "rdonly": "true",
+        "instanceid": "6426704",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "GOFA_MotorsOff"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Status",
+            "value": "MotOffState"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Arg1",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Arg2",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Arg3",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Arg4",
+            "value": "250"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Arg5",
+            "value": "0.050000001"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Arg6",
+            "value": "1.5700001"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Arg7",
+            "value": "0.050000001"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Arg8",
+            "value": "1.5700001"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/SYSSIG_OUT/instances/GOFA_MotorsOn"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "GOFA_MotorsOn",
+        "rdonly": "true",
+        "instanceid": "6426272",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "GOFA_MotorsOn"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Status",
+            "value": "MotOnState"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Arg1",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Arg2",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Arg3",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Arg4",
+            "value": "250"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Arg5",
+            "value": "0.050000001"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Arg6",
+            "value": "1.5700001"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Arg7",
+            "value": "0.050000001"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Arg8",
+            "value": "1.5700001"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/SYSSIG_OUT/instances/GOFA_ProgramState"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "GOFA_ProgramState",
+        "rdonly": "true",
+        "instanceid": "6425840",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "GOFA_ProgramState"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Status",
+            "value": "CycleOn"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Arg1",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Arg2",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Arg3",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Arg4",
+            "value": "250"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Arg5",
+            "value": "0.050000001"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Arg6",
+            "value": "1.5700001"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Arg7",
+            "value": "0.050000001"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Arg8",
+            "value": "1.5700001"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/SYSSIG_OUT/instances/GOFA1_MovingState"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "GOFA1_MovingState",
+        "rdonly": "true",
+        "instanceid": "6425408",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "GOFA1_MovingState"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Status",
+            "value": "MechUnitNotMoving"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Arg1",
+            "value": "ROB_1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Arg2",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Arg3",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Arg4",
+            "value": "250"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Arg5",
+            "value": "0.050000001"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Arg6",
+            "value": "1.5700001"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Arg7",
+            "value": "0.050000001"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Arg8",
+            "value": "1.5700001"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/rapid/"
+    },
+    "self": {
+      "href": "tasks/T_ROB1/modules/BASE/text"
+    }
+  },
+  "state": [
+    {
+      "_type": "rap-module-text",
+      "_title": "moduletext",
+      "change-count": " 59438 ",
+      "module-text": "MODULE BASE (SYSMODULE, NOSTEPIN, VIEWONLY)\n\n ! System module with basic predefined system data.\n ! NOTE: This RAPID module is not stored in a backup.\n ! It is a VIEWONLY module and should not be edited.\n !************************************************\n\n ! System data tool0, wobj0 and load0\n ! Do not translate or delete tool0, wobj0, load0\n PERS tooldata tool0 := [TRUE, [[0, 0, 0], [1, 0, 0, 0]],\n                        [0.001, [0, 0, 0.001],[1, 0, 0, 0], 0, 0, 0]];\n\n PERS wobjdata wobj0 := [FALSE, TRUE, \"\", [[0, 0, 0],[1, 0, 0, 0]],\n                        [[0, 0, 0],[1, 0, 0, 0]]];\n\n PERS loaddata load0 := [0.001, [0, 0, 0.001],[1, 0, 0, 0], 0, 0, 0];\n \nENDMODULE\n",
+      "module-length": "1368"
+    }
+  ]
+}

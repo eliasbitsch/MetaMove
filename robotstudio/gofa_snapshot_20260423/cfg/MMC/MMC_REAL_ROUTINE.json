@@ -1,0 +1,1977 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "MMC/MMC_REAL_ROUTINE/instances?limit=70"
+    },
+    "next": {
+      "href": "MMC/MMC_REAL_ROUTINE/instances?start=70&limit=70"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_ROUTINE/instances/RaiseToUser"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "RaiseToUser",
+        "rdonly": "true",
+        "instanceid": "7610168",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "RaiseToUser"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "default_struct",
+            "value": "2"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "hidden",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_ROUTINE/instances/cirpathmode"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "cirpathmode",
+        "rdonly": "true",
+        "instanceid": "7603552",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "cirpathmode"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "default_struct",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "hidden",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_ROUTINE/instances/confj"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "confj",
+        "rdonly": "true",
+        "instanceid": "7603360",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "confj"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "default_struct",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "hidden",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_ROUTINE/instances/confl"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "confl",
+        "rdonly": "true",
+        "instanceid": "7603168",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "confl"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "default_struct",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "hidden",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_ROUTINE/instances/pathacclim"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "pathacclim",
+        "rdonly": "true",
+        "instanceid": "7602976",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "pathacclim"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "default_struct",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "hidden",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_ROUTINE/instances/singarea"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "singarea",
+        "rdonly": "true",
+        "instanceid": "7602784",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "singarea"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "default_struct",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "hidden",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_ROUTINE/instances/storepath"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "storepath",
+        "rdonly": "true",
+        "instanceid": "7602592",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "storepath"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "default_struct",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "hidden",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_ROUTINE/instances/syncmoveoff"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "syncmoveoff",
+        "rdonly": "true",
+        "instanceid": "7602400",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "syncmoveoff"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "default_struct",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "hidden",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_ROUTINE/instances/syncmoveon"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "syncmoveon",
+        "rdonly": "true",
+        "instanceid": "7602208",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "syncmoveon"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "default_struct",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "hidden",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_ROUTINE/instances/worldacclim"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "worldacclim",
+        "rdonly": "true",
+        "instanceid": "7602016",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "worldacclim"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "default_struct",
+            "value": "2"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "hidden",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_ROUTINE/instances/procerrrecovery"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "procerrrecovery",
+        "rdonly": "true",
+        "instanceid": "7601824",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "procerrrecovery"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "default_struct",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "hidden",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_ROUTINE/instances/cornerpathwarning"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "cornerpathwarning",
+        "rdonly": "true",
+        "instanceid": "7601632",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "cornerpathwarning"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "default_struct",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "hidden",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_ROUTINE/instances/moveabsj"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "moveabsj",
+        "rdonly": "true",
+        "instanceid": "7594032",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "moveabsj"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "default_struct",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "hidden",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_ROUTINE/instances/movec"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "movec",
+        "rdonly": "true",
+        "instanceid": "7593840",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "movec"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "default_struct",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "hidden",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_ROUTINE/instances/movej"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "movej",
+        "rdonly": "true",
+        "instanceid": "7593648",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "movej"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "default_struct",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "hidden",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_ROUTINE/instances/movel"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "movel",
+        "rdonly": "true",
+        "instanceid": "7593456",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "movel"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "default_struct",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "hidden",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_ROUTINE/instances/moveextj"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "moveextj",
+        "rdonly": "true",
+        "instanceid": "7593264",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "moveextj"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "default_struct",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "hidden",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_ROUTINE/instances/stop"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "stop",
+        "rdonly": "true",
+        "instanceid": "7568272",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "stop"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "default_struct",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "hidden",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_ROUTINE/instances/waittime"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "waittime",
+        "rdonly": "true",
+        "instanceid": "7568080",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "waittime"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "default_struct",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "hidden",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_ROUTINE/instances/waituntil"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "waituntil",
+        "rdonly": "true",
+        "instanceid": "7567888",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "waituntil"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "default_struct",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "hidden",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_ROUTINE/instances/waitdi"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "waitdi",
+        "rdonly": "true",
+        "instanceid": "7567696",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "waitdi"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "default_struct",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "hidden",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_ROUTINE/instances/waitdo"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "waitdo",
+        "rdonly": "true",
+        "instanceid": "7567504",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "waitdo"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "default_struct",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "hidden",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_ROUTINE/instances/waitgi"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "waitgi",
+        "rdonly": "true",
+        "instanceid": "7567312",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "waitgi"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "default_struct",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "hidden",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_ROUTINE/instances/waitgo"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "waitgo",
+        "rdonly": "true",
+        "instanceid": "7567120",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "waitgo"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "default_struct",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "hidden",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_ROUTINE/instances/waitai"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "waitai",
+        "rdonly": "true",
+        "instanceid": "7566928",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "waitai"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "default_struct",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "hidden",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_ROUTINE/instances/waitao"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "waitao",
+        "rdonly": "true",
+        "instanceid": "7566736",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "waitao"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "default_struct",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "hidden",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_ROUTINE/instances/uimsgwrite"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "uimsgwrite",
+        "rdonly": "true",
+        "instanceid": "7566544",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "uimsgwrite"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "default_struct",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "hidden",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_ROUTINE/instances/open"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "open",
+        "rdonly": "true",
+        "instanceid": "7527120",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "open"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "default_struct",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "hidden",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_ROUTINE/instances/write"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "write",
+        "rdonly": "true",
+        "instanceid": "7526928",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "write"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "default_struct",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "hidden",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_ROUTINE/instances/writestrbin"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "writestrbin",
+        "rdonly": "true",
+        "instanceid": "7526736",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "writestrbin"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "default_struct",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "hidden",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_ROUTINE/instances/readanybin"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "readanybin",
+        "rdonly": "true",
+        "instanceid": "7526544",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "readanybin"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "default_struct",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "hidden",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_ROUTINE/instances/writerawbytes"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "writerawbytes",
+        "rdonly": "true",
+        "instanceid": "7526352",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "writerawbytes"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "default_struct",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "hidden",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_ROUTINE/instances/readrawbytes"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "readrawbytes",
+        "rdonly": "true",
+        "instanceid": "7526160",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "readrawbytes"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "default_struct",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "hidden",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_ROUTINE/instances/socketcreate"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "socketcreate",
+        "rdonly": "true",
+        "instanceid": "7517448",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "socketcreate"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "default_struct",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "hidden",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_ROUTINE/instances/socketclose"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "socketclose",
+        "rdonly": "true",
+        "instanceid": "7517256",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "socketclose"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "default_struct",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "hidden",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_ROUTINE/instances/socketconnect"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "socketconnect",
+        "rdonly": "true",
+        "instanceid": "7517064",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "socketconnect"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "default_struct",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "hidden",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_ROUTINE/instances/socketbind"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "socketbind",
+        "rdonly": "true",
+        "instanceid": "7516872",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "socketbind"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "default_struct",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "hidden",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_ROUTINE/instances/socketlisten"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "socketlisten",
+        "rdonly": "true",
+        "instanceid": "7516680",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "socketlisten"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "default_struct",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "hidden",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_ROUTINE/instances/socketaccept"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "socketaccept",
+        "rdonly": "true",
+        "instanceid": "7516488",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "socketaccept"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "default_struct",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "hidden",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_ROUTINE/instances/socketsend"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "socketsend",
+        "rdonly": "true",
+        "instanceid": "7516296",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "socketsend"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "default_struct",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "hidden",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_ROUTINE/instances/socketsendto"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "socketsendto",
+        "rdonly": "true",
+        "instanceid": "7516104",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "socketsendto"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "default_struct",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "hidden",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_ROUTINE/instances/socketreceive"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "socketreceive",
+        "rdonly": "true",
+        "instanceid": "7515912",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "socketreceive"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "default_struct",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "hidden",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_ROUTINE/instances/socketreceivefrom"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "socketreceivefrom",
+        "rdonly": "true",
+        "instanceid": "7515720",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "socketreceivefrom"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "default_struct",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "hidden",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_ROUTINE/instances/pulsedo"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "pulsedo",
+        "rdonly": "true",
+        "instanceid": "7499312",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "pulsedo"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "default_struct",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "hidden",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_ROUTINE/instances/setdo"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "setdo",
+        "rdonly": "true",
+        "instanceid": "7499120",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "setdo"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "default_struct",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "hidden",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_ROUTINE/instances/setgo"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "setgo",
+        "rdonly": "true",
+        "instanceid": "7498928",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "setgo"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "default_struct",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "hidden",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_ROUTINE/instances/getgroupsignalinfo"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "getgroupsignalinfo",
+        "rdonly": "true",
+        "instanceid": "7498736",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "getgroupsignalinfo"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "default_struct",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "hidden",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_ROUTINE/instances/isignaldi"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "isignaldi",
+        "rdonly": "true",
+        "instanceid": "7485160",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "isignaldi"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "default_struct",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "hidden",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_ROUTINE/instances/isignaldo"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "isignaldo",
+        "rdonly": "true",
+        "instanceid": "7484968",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "isignaldo"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "default_struct",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "hidden",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_ROUTINE/instances/isignalgi"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "isignalgi",
+        "rdonly": "true",
+        "instanceid": "7484776",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "isignalgi"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "default_struct",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "hidden",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_ROUTINE/instances/isignalgo"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "isignalgo",
+        "rdonly": "true",
+        "instanceid": "7484584",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "isignalgo"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "default_struct",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "hidden",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_ROUTINE/instances/itimer"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "itimer",
+        "rdonly": "true",
+        "instanceid": "7484392",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "itimer"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "default_struct",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "hidden",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_ROUTINE/instances/isignalai"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "isignalai",
+        "rdonly": "true",
+        "instanceid": "7484200",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "isignalai"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "default_struct",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "hidden",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_ROUTINE/instances/isignalao"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "isignalao",
+        "rdonly": "true",
+        "instanceid": "7484008",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "isignalao"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "default_struct",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "hidden",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_ROUTINE/instances/ierror"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "ierror",
+        "rdonly": "true",
+        "instanceid": "7483816",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "ierror"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "default_struct",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "hidden",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_ROUTINE/instances/gettrapdata"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "gettrapdata",
+        "rdonly": "true",
+        "instanceid": "7483624",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "gettrapdata"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "default_struct",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "hidden",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_ROUTINE/instances/readerrdata"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "readerrdata",
+        "rdonly": "true",
+        "instanceid": "7483432",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "readerrdata"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "default_struct",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "hidden",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_ROUTINE/instances/pdispon"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "pdispon",
+        "rdonly": "true",
+        "instanceid": "7475080",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "pdispon"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "default_struct",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "hidden",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_ROUTINE/instances/eoffson"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "eoffson",
+        "rdonly": "true",
+        "instanceid": "7474888",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "eoffson"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "default_struct",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "hidden",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_ROUTINE/instances/waitrob"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "waitrob",
+        "rdonly": "true",
+        "instanceid": "7474696",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "waitrob"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "default_struct",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "hidden",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_ROUTINE/instances/resetaxismovetime"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "resetaxismovetime",
+        "rdonly": "true",
+        "instanceid": "7474504",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "resetaxismovetime"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "default_struct",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "hidden",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_ROUTINE/instances/resetaxisdistance"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "resetaxisdistance",
+        "rdonly": "true",
+        "instanceid": "7474312",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "resetaxisdistance"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "default_struct",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "hidden",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_ROUTINE/instances/getjointdata"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "getjointdata",
+        "rdonly": "true",
+        "instanceid": "7474120",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "getjointdata"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "default_struct",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "hidden",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_ROUTINE/instances/resettorquemargin"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "resettorquemargin",
+        "rdonly": "true",
+        "instanceid": "7473928",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "resettorquemargin"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "default_struct",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "hidden",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_ROUTINE/instances/readcfgdata"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "readcfgdata",
+        "rdonly": "true",
+        "instanceid": "7465040",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "readcfgdata"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "default_struct",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "hidden",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_ROUTINE/instances/writecfgdata"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "writecfgdata",
+        "rdonly": "true",
+        "instanceid": "7464848",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "writecfgdata"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "default_struct",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "hidden",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_ROUTINE/instances/savecfgdata"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "savecfgdata",
+        "rdonly": "true",
+        "instanceid": "7464656",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "savecfgdata"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "default_struct",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "hidden",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_ROUTINE/instances/load"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "load",
+        "rdonly": "true",
+        "instanceid": "7458312",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "load"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "default_struct",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "hidden",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_ROUTINE/instances/startload"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "startload",
+        "rdonly": "true",
+        "instanceid": "7458120",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "startload"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "default_struct",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "hidden",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_ROUTINE/instances/waitload"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "waitload",
+        "rdonly": "true",
+        "instanceid": "7457928",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "waitload"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "default_struct",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "hidden",
+            "value": "false"
+          }
+        ]
+      }
+    ]
+  }
+}

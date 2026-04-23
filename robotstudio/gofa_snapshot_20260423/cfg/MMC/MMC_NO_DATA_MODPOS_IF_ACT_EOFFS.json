@@ -1,0 +1,32 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "MMC/MMC_NO_DATA_MODPOS_IF_ACT_EOFFS/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_NO_DATA_MODPOS_IF_ACT_EOFFS/instances/jointtarget"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "jointtarget",
+        "rdonly": "true",
+        "instanceid": "7569352",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "jointtarget"
+          }
+        ]
+      }
+    ]
+  }
+}

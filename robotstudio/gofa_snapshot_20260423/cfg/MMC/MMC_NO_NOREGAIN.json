@@ -1,0 +1,194 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "MMC/MMC_NO_NOREGAIN/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_NO_NOREGAIN/instances/movec"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "movec",
+        "rdonly": "true",
+        "instanceid": "7569920",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "movec"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_NO_NOREGAIN/instances/searchc"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "searchc",
+        "rdonly": "true",
+        "instanceid": "7441024",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "searchc"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_NO_NOREGAIN/instances/triggc"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "triggc",
+        "rdonly": "true",
+        "instanceid": "7383064",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "triggc"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_NO_NOREGAIN/instances/MoveCDO"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "MoveCDO",
+        "rdonly": "true",
+        "instanceid": "7283808",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "MoveCDO"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_NO_NOREGAIN/instances/MoveCGO"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "MoveCGO",
+        "rdonly": "true",
+        "instanceid": "7283624",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "MoveCGO"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_NO_NOREGAIN/instances/MoveCAO"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "MoveCAO",
+        "rdonly": "true",
+        "instanceid": "7283440",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "MoveCAO"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_NO_NOREGAIN/instances/MoveCSync"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "MoveCSync",
+        "rdonly": "true",
+        "instanceid": "7283256",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "MoveCSync"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_NO_NOREGAIN/instances/startmove"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "startmove",
+        "rdonly": "true",
+        "instanceid": "7261168",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "startmove"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_NO_NOREGAIN/instances/startmoveretry"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "startmoveretry",
+        "rdonly": "true",
+        "instanceid": "7260984",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "startmoveretry"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_NO_NOREGAIN/instances/EGMMoveC"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "EGMMoveC",
+        "rdonly": "true",
+        "instanceid": "6535856",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "EGMMoveC"
+          }
+        ]
+      }
+    ]
+  }
+}

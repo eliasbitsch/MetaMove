@@ -1,0 +1,500 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "MMC"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_ROUTINE"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "MMC_REAL_ROUTINE"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_PARAM"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "MMC_REAL_PARAM"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_PARAM_SEQ_METHOD"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "MMC_REAL_PARAM_SEQ_METHOD"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_DATATYPE"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "MMC_REAL_DATATYPE"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_COMMON_PARAM"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "MMC_COMMON_PARAM"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_INST_NOT_REUSING_PREV_OPT_ARG"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "MMC_INST_NOT_REUSING_PREV_OPT_ARG"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_INSTR_WITH_WOBJ"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "MMC_INSTR_WITH_WOBJ"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_INSTR_WITH_TLOAD"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "MMC_INSTR_WITH_TLOAD"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_INSTR_WITH_CIR_POINT"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "MMC_INSTR_WITH_CIR_POINT"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_NO_NOREGAIN"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "MMC_NO_NOREGAIN"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_NO_MODPOS"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "MMC_NO_MODPOS"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_NO_DATA_MODPOS_IF_ACT_EOFFS"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "MMC_NO_DATA_MODPOS_IF_ACT_EOFFS"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_USE_ACT_EOFFS_IN_MODPOS"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "MMC_USE_ACT_EOFFS_IN_MODPOS"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_NO_PC_MOVEMENT"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "MMC_NO_PC_MOVEMENT"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_NO_PC_MOVEMENT_CLEAR_PATH"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "MMC_NO_PC_MOVEMENT_CLEAR_PATH"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_SELECT_PARAM"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "MMC_SELECT_PARAM"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_CHANGE_MOTION_MODE"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "MMC_CHANGE_MOTION_MODE"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_PREFDATTYP"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "MMC_REAL_PREFDATTYP"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_PALETTE_HEAD"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "MMC_PALETTE_HEAD"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_PALETTE"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "MMC_PALETTE"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_SERV_ROUT_STRUCT"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "MMC_SERV_ROUT_STRUCT"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/IO_MOST_COMMON"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "IO_MOST_COMMON"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/IOVIEW_BLOCK"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "IOVIEW_BLOCK"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/PROD_PERMISSION"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "PROD_PERMISSION"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/WARN_AT_START"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "WARN_AT_START"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/AUTO_SWITCH_OF_JOG_UNIT"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "AUTO_SWITCH_OF_JOG_UNIT"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/BACKUP_DEFAULT"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "BACKUP_DEFAULT"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_PDT_BOOL"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "MMC_PDT_BOOL"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_PDT_SIGNAL"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "MMC_PDT_SIGNAL"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_PDT_SIGNAL2"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "MMC_PDT_SIGNAL2"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_PDT_CFG"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "MMC_PDT_CFG"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_MOTION"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "MMC_MOTION"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_COMMUNICATE"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "MMC_COMMUNICATE"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_PROG_FLOW"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "MMC_PROG_FLOW"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_MOTIONADV"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "MMC_MOTIONADV"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_MATH"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "MMC_MATH"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_PDT_SYSDATA"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "MMC_PDT_SYSDATA"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_PDT_PACKDATA"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "MMC_PDT_PACKDATA"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_COMMON"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "MMC_COMMON"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_VARIOUS"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "MMC_VARIOUS"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_SETTINGS"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "MMC_SETTINGS"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_IO"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "MMC_IO"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_INTER"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "MMC_INTER"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_ERROR"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "MMC_ERROR"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_SYSTEM"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "MMC_SYSTEM"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_MOTSETADV"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "MMC_MOTSETADV"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_EXTCOMP"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "MMC_EXTCOMP"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_MULTI"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "MMC_MULTI"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_RAPID"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "MMC_RAPID"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_SERVICE"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "MMC_SERVICE"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_MC1"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "MMC_MC1"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_MC2"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "MMC_MC2"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_MC3"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "MMC_MC3"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_EGM"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "MMC_EGM"
+      }
+    ]
+  }
+}

@@ -1,0 +1,367 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "MOC/PMC_SENSOR_SETUP/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/PMC_SENSOR_SETUP/instances/ATI_ACROMAG1"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "ATI_ACROMAG1",
+        "rdonly": "false",
+        "instanceid": "6771664",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "ATI_ACROMAG1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "board_type",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "link",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "board",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "first_node",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "sensor_type",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "last_node",
+            "value": "10"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "schedule_mask",
+            "value": "34850"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "saturation_check_disabled",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_time_in_sat_warn",
+            "value": "0.5"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_time_in_sat_err",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_voltage",
+            "value": "10"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_sensor_output_voltage",
+            "value": "5"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "saturation_check_percentage",
+            "value": "99"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "serial_number",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "number_of_gages",
+            "value": "6"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ati_output_range",
+            "value": "20"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "hw_temp_comp",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "safety_channel_disabled",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "safety_channel_level",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fx_value1",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fx_value2",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fx_value3",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fx_value4",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fx_value5",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fx_value6",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fy_value1",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fy_value2",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fy_value3",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fy_value4",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fy_value5",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fy_value6",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fz_value1",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fz_value2",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fz_value3",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fz_value4",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fz_value5",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fz_value6",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "tx_value1",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "tx_value2",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "tx_value3",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "tx_value4",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "tx_value5",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "tx_value6",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ty_value1",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ty_value2",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ty_value3",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ty_value4",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ty_value5",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ty_value6",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "tz_value1",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "tz_value2",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "tz_value3",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "tz_value4",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "tz_value5",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "tz_value6",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fx_scale",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fy_scale",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fz_scale",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "tx_scale",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ty_scale",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "tz_scale",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fx_value_max",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fy_value_max",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fz_value_max",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "tx_value_max",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ty_value_max",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "tz_value_max",
+            "value": "0"
+          }
+        ]
+      }
+    ]
+  }
+}

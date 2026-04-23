@@ -1,0 +1,175 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "MOC/TRANSMISSION/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/TRANSMISSION/instances/LOCKED"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "LOCKED",
+        "rdonly": "true",
+        "instanceid": "6964936",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "rotating_move",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "transm_joint",
+            "value": "1"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/TRANSMISSION/instances/rob1_1"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "rob1_1",
+        "rdonly": "true",
+        "instanceid": "6874432",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "rotating_move",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "transm_joint",
+            "value": "120"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/TRANSMISSION/instances/rob1_2"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "rob1_2",
+        "rdonly": "true",
+        "instanceid": "6874256",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "rotating_move",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "transm_joint",
+            "value": "-120"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/TRANSMISSION/instances/rob1_3"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "rob1_3",
+        "rdonly": "true",
+        "instanceid": "6874080",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "rotating_move",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "transm_joint",
+            "value": "120"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/TRANSMISSION/instances/rob1_4"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "rob1_4",
+        "rdonly": "true",
+        "instanceid": "6873904",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "rotating_move",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "transm_joint",
+            "value": "80"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/TRANSMISSION/instances/rob1_5"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "rob1_5",
+        "rdonly": "true",
+        "instanceid": "6873728",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "rotating_move",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "transm_joint",
+            "value": "-80"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/TRANSMISSION/instances/rob1_6"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "rob1_6",
+        "rdonly": "true",
+        "instanceid": "6873552",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "rotating_move",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "transm_joint",
+            "value": "80"
+          }
+        ]
+      }
+    ]
+  }
+}

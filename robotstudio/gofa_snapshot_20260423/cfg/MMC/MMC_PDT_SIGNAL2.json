@@ -1,0 +1,60 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "MMC/MMC_PDT_SIGNAL2/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_PDT_SIGNAL2/instances/signalgi"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "signalgi",
+        "rdonly": "true",
+        "instanceid": "7495824",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "signalgi"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "typ",
+            "value": "dattyp"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_PDT_SIGNAL2/instances/signalgo"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "signalgo",
+        "rdonly": "true",
+        "instanceid": "7495608",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "signalgo"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "typ",
+            "value": "dattyp"
+          }
+        ]
+      }
+    ]
+  }
+}

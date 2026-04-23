@@ -1,0 +1,167 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "SIO"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "SIO/FIREWALL_MANAGEMENT"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "FIREWALL_MANAGEMENT"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SIO/SYSLOG"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "SYSLOG"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SIO/IP_SETTING"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "IP_SETTING"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SIO/ROUTE"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "ROUTE"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SIO/DNSC"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "DNSC"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SIO/PORT_FORWARD"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "PORT_FORWARD"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SIO/CSE_CONFIG"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "CSE_CONFIG"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SIO/CSGW_CELLULAR"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "CSGW_CELLULAR"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SIO/CSGW_WIRELESS"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "CSGW_WIRELESS"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SIO/CSGW_WIRED"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "CSGW_WIRED"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SIO/UDPUC_HOST_TYPE"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "UDPUC_HOST_TYPE"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SIO/UDPUC_HOST"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "UDPUC_HOST"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SIO/FTP_HOST_TYPE"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "FTP_HOST_TYPE"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SIO/FTP_HOST"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "FTP_HOST"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SIO/SFTP_HOST_TYPE"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "SFTP_HOST_TYPE"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SIO/SFTP_HOST"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "SFTP_HOST"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SIO/OPC_UA_SERVER"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "OPC_UA_SERVER"
+      }
+    ]
+  }
+}

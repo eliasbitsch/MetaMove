@@ -1,0 +1,27 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/rapid/"
+    },
+    "self": {
+      "href": "tasks/T_GOFA_LED/modules"
+    }
+  },
+  "status": {
+    "code": 294912
+  },
+  "state": [
+    {
+      "_type": "rap-module-info-li",
+      "_title": "T_GOFA_LED/GOFA_Main",
+      "name": "GOFA_Main",
+      "type": "SysMod"
+    },
+    {
+      "_type": "rap-module-info-li",
+      "_title": "T_GOFA_LED/BASE",
+      "name": "BASE",
+      "type": "SysMod"
+    }
+  ]
+}

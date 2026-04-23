@@ -1,0 +1,242 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "MOC/MEASUREMENT_CHANNEL/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/MEASUREMENT_CHANNEL/instances/rob1_1"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "rob1_1",
+        "rdonly": "true",
+        "instanceid": "6887584",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "rob1_1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_measurement_board_type",
+            "value": "DSQC313"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measurement_link",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "board_position",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measurement_node",
+            "value": "1"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/MEASUREMENT_CHANNEL/instances/rob1_2"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "rob1_2",
+        "rdonly": "true",
+        "instanceid": "6887096",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "rob1_2"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_measurement_board_type",
+            "value": "DSQC313"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measurement_link",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "board_position",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measurement_node",
+            "value": "1"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/MEASUREMENT_CHANNEL/instances/rob1_3"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "rob1_3",
+        "rdonly": "true",
+        "instanceid": "6886608",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "rob1_3"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_measurement_board_type",
+            "value": "DSQC313"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measurement_link",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "board_position",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measurement_node",
+            "value": "1"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/MEASUREMENT_CHANNEL/instances/rob1_4"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "rob1_4",
+        "rdonly": "true",
+        "instanceid": "6886120",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "rob1_4"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_measurement_board_type",
+            "value": "DSQC313"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measurement_link",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "board_position",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measurement_node",
+            "value": "1"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/MEASUREMENT_CHANNEL/instances/rob1_5"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "rob1_5",
+        "rdonly": "true",
+        "instanceid": "6885632",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "rob1_5"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_measurement_board_type",
+            "value": "DSQC313"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measurement_link",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "board_position",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measurement_node",
+            "value": "1"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/MEASUREMENT_CHANNEL/instances/rob1_6"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "rob1_6",
+        "rdonly": "true",
+        "instanceid": "6885144",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "rob1_6"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_measurement_board_type",
+            "value": "DSQC313"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measurement_link",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "board_position",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measurement_node",
+            "value": "1"
+          }
+        ]
+      }
+    ]
+  }
+}

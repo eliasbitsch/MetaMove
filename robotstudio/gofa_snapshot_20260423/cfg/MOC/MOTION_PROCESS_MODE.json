@@ -1,0 +1,3694 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "MOC/MOTION_PROCESS_MODE/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/MOTION_PROCESS_MODE/instances/rob1_optimal_cycle_time_mode"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "rob1_optimal_cycle_time_mode",
+        "rdonly": "false",
+        "instanceid": "6778800",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "rob1_optimal_cycle_time_mode"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "mode_id",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_motion_process_mode_type",
+            "value": "rob1_optimal_cycle_time_mode"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "dh_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "accset_acc_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "accset_ramp_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "accset_fp_ramp_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "acc_joint_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "acc_joint_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "acc_joint_factor_3",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "acc_joint_factor_4",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "acc_joint_factor_5",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "acc_joint_factor_6",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "acc_joint_factor_7",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_max_joint_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_max_joint_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_max_joint_factor_3",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_max_joint_factor_4",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_max_joint_factor_5",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_max_joint_factor_6",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_max_joint_factor_7",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "world_acc_factor",
+            "value": "-1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "geometric_accuracy_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "df_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "df_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "df_factor_3",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "df_factor_4",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "df_factor_5",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "df_factor_6",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "df_factor_7",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kp_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kp_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kp_factor_3",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kp_factor_4",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kp_factor_5",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kp_factor_6",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kp_factor_7",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kv_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kv_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kv_factor_3",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kv_factor_4",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kv_factor_5",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kv_factor_6",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kv_factor_7",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ti_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ti_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ti_factor_3",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ti_factor_4",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ti_factor_5",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ti_factor_6",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ti_factor_7",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "mounting_stiffness_factor_x",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "mounting_stiffness_factor_y",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "mounting_stiffness_factor_z",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fdb_filter_fp_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fdb_filter_fp_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fdb_filter_fp_factor_3",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fdb_filter_fp_factor_4",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fdb_filter_fp_factor_5",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fdb_filter_fp_factor_6",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fdb_filter_fp_factor_7",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fp_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fp_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fp_factor_3",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fp_factor_4",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fp_factor_5",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fp_factor_6",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fp_factor_7",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fz_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fz_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fz_factor_3",
+            "value": "1"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/MOTION_PROCESS_MODE/instances/rob1_low_speed_accuracy_mode"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "rob1_low_speed_accuracy_mode",
+        "rdonly": "false",
+        "instanceid": "6778104",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "rob1_low_speed_accuracy_mode"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "mode_id",
+            "value": "2"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_motion_process_mode_type",
+            "value": "rob1_low_speed_accuracy_mode"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "dh_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "accset_acc_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "accset_ramp_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "accset_fp_ramp_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "acc_joint_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "acc_joint_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "acc_joint_factor_3",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "acc_joint_factor_4",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "acc_joint_factor_5",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "acc_joint_factor_6",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "acc_joint_factor_7",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_max_joint_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_max_joint_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_max_joint_factor_3",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_max_joint_factor_4",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_max_joint_factor_5",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_max_joint_factor_6",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_max_joint_factor_7",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "world_acc_factor",
+            "value": "-1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "geometric_accuracy_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "df_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "df_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "df_factor_3",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "df_factor_4",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "df_factor_5",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "df_factor_6",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "df_factor_7",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kp_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kp_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kp_factor_3",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kp_factor_4",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kp_factor_5",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kp_factor_6",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kp_factor_7",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kv_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kv_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kv_factor_3",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kv_factor_4",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kv_factor_5",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kv_factor_6",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kv_factor_7",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ti_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ti_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ti_factor_3",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ti_factor_4",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ti_factor_5",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ti_factor_6",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ti_factor_7",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "mounting_stiffness_factor_x",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "mounting_stiffness_factor_y",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "mounting_stiffness_factor_z",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fdb_filter_fp_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fdb_filter_fp_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fdb_filter_fp_factor_3",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fdb_filter_fp_factor_4",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fdb_filter_fp_factor_5",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fdb_filter_fp_factor_6",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fdb_filter_fp_factor_7",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fp_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fp_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fp_factor_3",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fp_factor_4",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fp_factor_5",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fp_factor_6",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fp_factor_7",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fz_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fz_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fz_factor_3",
+            "value": "1"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/MOTION_PROCESS_MODE/instances/rob1_low_speed_stiff_mode"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "rob1_low_speed_stiff_mode",
+        "rdonly": "false",
+        "instanceid": "6777408",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "rob1_low_speed_stiff_mode"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "mode_id",
+            "value": "3"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_motion_process_mode_type",
+            "value": "rob1_low_speed_stiff_mode"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "dh_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "accset_acc_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "accset_ramp_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "accset_fp_ramp_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "acc_joint_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "acc_joint_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "acc_joint_factor_3",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "acc_joint_factor_4",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "acc_joint_factor_5",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "acc_joint_factor_6",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "acc_joint_factor_7",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_max_joint_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_max_joint_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_max_joint_factor_3",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_max_joint_factor_4",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_max_joint_factor_5",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_max_joint_factor_6",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_max_joint_factor_7",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "world_acc_factor",
+            "value": "-1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "geometric_accuracy_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "df_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "df_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "df_factor_3",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "df_factor_4",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "df_factor_5",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "df_factor_6",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "df_factor_7",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kp_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kp_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kp_factor_3",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kp_factor_4",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kp_factor_5",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kp_factor_6",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kp_factor_7",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kv_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kv_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kv_factor_3",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kv_factor_4",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kv_factor_5",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kv_factor_6",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kv_factor_7",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ti_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ti_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ti_factor_3",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ti_factor_4",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ti_factor_5",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ti_factor_6",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ti_factor_7",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "mounting_stiffness_factor_x",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "mounting_stiffness_factor_y",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "mounting_stiffness_factor_z",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fdb_filter_fp_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fdb_filter_fp_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fdb_filter_fp_factor_3",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fdb_filter_fp_factor_4",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fdb_filter_fp_factor_5",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fdb_filter_fp_factor_6",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fdb_filter_fp_factor_7",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fp_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fp_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fp_factor_3",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fp_factor_4",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fp_factor_5",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fp_factor_6",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fp_factor_7",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fz_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fz_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fz_factor_3",
+            "value": "1"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/MOTION_PROCESS_MODE/instances/rob1_accuracy_mode"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "rob1_accuracy_mode",
+        "rdonly": "false",
+        "instanceid": "6776712",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "rob1_accuracy_mode"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "mode_id",
+            "value": "4"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_motion_process_mode_type",
+            "value": "rob1_accuracy_mode"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "dh_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "accset_acc_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "accset_ramp_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "accset_fp_ramp_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "acc_joint_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "acc_joint_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "acc_joint_factor_3",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "acc_joint_factor_4",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "acc_joint_factor_5",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "acc_joint_factor_6",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "acc_joint_factor_7",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_max_joint_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_max_joint_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_max_joint_factor_3",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_max_joint_factor_4",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_max_joint_factor_5",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_max_joint_factor_6",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_max_joint_factor_7",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "world_acc_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "geometric_accuracy_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "df_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "df_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "df_factor_3",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "df_factor_4",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "df_factor_5",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "df_factor_6",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "df_factor_7",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kp_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kp_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kp_factor_3",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kp_factor_4",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kp_factor_5",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kp_factor_6",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kp_factor_7",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kv_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kv_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kv_factor_3",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kv_factor_4",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kv_factor_5",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kv_factor_6",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kv_factor_7",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ti_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ti_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ti_factor_3",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ti_factor_4",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ti_factor_5",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ti_factor_6",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ti_factor_7",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "mounting_stiffness_factor_x",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "mounting_stiffness_factor_y",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "mounting_stiffness_factor_z",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fdb_filter_fp_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fdb_filter_fp_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fdb_filter_fp_factor_3",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fdb_filter_fp_factor_4",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fdb_filter_fp_factor_5",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fdb_filter_fp_factor_6",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fdb_filter_fp_factor_7",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fp_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fp_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fp_factor_3",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fp_factor_4",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fp_factor_5",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fp_factor_6",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fp_factor_7",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fz_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fz_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fz_factor_3",
+            "value": "1"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/MOTION_PROCESS_MODE/instances/rob1_mpm_user_mode_1"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "rob1_mpm_user_mode_1",
+        "rdonly": "false",
+        "instanceid": "6776016",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "rob1_mpm_user_mode_1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "mode_id",
+            "value": "5"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_motion_process_mode_type",
+            "value": "rob1_optimal_cycle_time_mode"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "dh_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "accset_acc_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "accset_ramp_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "accset_fp_ramp_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "acc_joint_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "acc_joint_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "acc_joint_factor_3",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "acc_joint_factor_4",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "acc_joint_factor_5",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "acc_joint_factor_6",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "acc_joint_factor_7",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_max_joint_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_max_joint_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_max_joint_factor_3",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_max_joint_factor_4",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_max_joint_factor_5",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_max_joint_factor_6",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_max_joint_factor_7",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "world_acc_factor",
+            "value": "-1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "geometric_accuracy_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "df_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "df_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "df_factor_3",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "df_factor_4",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "df_factor_5",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "df_factor_6",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "df_factor_7",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kp_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kp_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kp_factor_3",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kp_factor_4",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kp_factor_5",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kp_factor_6",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kp_factor_7",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kv_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kv_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kv_factor_3",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kv_factor_4",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kv_factor_5",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kv_factor_6",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kv_factor_7",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ti_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ti_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ti_factor_3",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ti_factor_4",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ti_factor_5",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ti_factor_6",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ti_factor_7",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "mounting_stiffness_factor_x",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "mounting_stiffness_factor_y",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "mounting_stiffness_factor_z",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fdb_filter_fp_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fdb_filter_fp_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fdb_filter_fp_factor_3",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fdb_filter_fp_factor_4",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fdb_filter_fp_factor_5",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fdb_filter_fp_factor_6",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fdb_filter_fp_factor_7",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fp_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fp_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fp_factor_3",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fp_factor_4",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fp_factor_5",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fp_factor_6",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fp_factor_7",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fz_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fz_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fz_factor_3",
+            "value": "1"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/MOTION_PROCESS_MODE/instances/rob1_mpm_user_mode_2"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "rob1_mpm_user_mode_2",
+        "rdonly": "false",
+        "instanceid": "6775320",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "rob1_mpm_user_mode_2"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "mode_id",
+            "value": "6"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_motion_process_mode_type",
+            "value": "rob1_optimal_cycle_time_mode"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "dh_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "accset_acc_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "accset_ramp_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "accset_fp_ramp_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "acc_joint_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "acc_joint_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "acc_joint_factor_3",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "acc_joint_factor_4",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "acc_joint_factor_5",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "acc_joint_factor_6",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "acc_joint_factor_7",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_max_joint_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_max_joint_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_max_joint_factor_3",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_max_joint_factor_4",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_max_joint_factor_5",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_max_joint_factor_6",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_max_joint_factor_7",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "world_acc_factor",
+            "value": "-1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "geometric_accuracy_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "df_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "df_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "df_factor_3",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "df_factor_4",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "df_factor_5",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "df_factor_6",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "df_factor_7",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kp_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kp_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kp_factor_3",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kp_factor_4",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kp_factor_5",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kp_factor_6",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kp_factor_7",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kv_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kv_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kv_factor_3",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kv_factor_4",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kv_factor_5",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kv_factor_6",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kv_factor_7",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ti_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ti_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ti_factor_3",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ti_factor_4",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ti_factor_5",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ti_factor_6",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ti_factor_7",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "mounting_stiffness_factor_x",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "mounting_stiffness_factor_y",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "mounting_stiffness_factor_z",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fdb_filter_fp_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fdb_filter_fp_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fdb_filter_fp_factor_3",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fdb_filter_fp_factor_4",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fdb_filter_fp_factor_5",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fdb_filter_fp_factor_6",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fdb_filter_fp_factor_7",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fp_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fp_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fp_factor_3",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fp_factor_4",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fp_factor_5",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fp_factor_6",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fp_factor_7",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fz_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fz_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fz_factor_3",
+            "value": "1"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/MOTION_PROCESS_MODE/instances/rob1_mpm_user_mode_3"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "rob1_mpm_user_mode_3",
+        "rdonly": "false",
+        "instanceid": "6774624",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "rob1_mpm_user_mode_3"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "mode_id",
+            "value": "7"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_motion_process_mode_type",
+            "value": "rob1_optimal_cycle_time_mode"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "dh_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "accset_acc_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "accset_ramp_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "accset_fp_ramp_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "acc_joint_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "acc_joint_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "acc_joint_factor_3",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "acc_joint_factor_4",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "acc_joint_factor_5",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "acc_joint_factor_6",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "acc_joint_factor_7",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_max_joint_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_max_joint_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_max_joint_factor_3",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_max_joint_factor_4",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_max_joint_factor_5",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_max_joint_factor_6",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_max_joint_factor_7",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "world_acc_factor",
+            "value": "-1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "geometric_accuracy_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "df_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "df_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "df_factor_3",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "df_factor_4",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "df_factor_5",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "df_factor_6",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "df_factor_7",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kp_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kp_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kp_factor_3",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kp_factor_4",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kp_factor_5",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kp_factor_6",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kp_factor_7",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kv_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kv_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kv_factor_3",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kv_factor_4",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kv_factor_5",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kv_factor_6",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kv_factor_7",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ti_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ti_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ti_factor_3",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ti_factor_4",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ti_factor_5",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ti_factor_6",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ti_factor_7",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "mounting_stiffness_factor_x",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "mounting_stiffness_factor_y",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "mounting_stiffness_factor_z",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fdb_filter_fp_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fdb_filter_fp_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fdb_filter_fp_factor_3",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fdb_filter_fp_factor_4",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fdb_filter_fp_factor_5",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fdb_filter_fp_factor_6",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fdb_filter_fp_factor_7",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fp_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fp_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fp_factor_3",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fp_factor_4",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fp_factor_5",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fp_factor_6",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fp_factor_7",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fz_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fz_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fz_factor_3",
+            "value": "1"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/MOTION_PROCESS_MODE/instances/rob1_mpm_user_mode_4"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "rob1_mpm_user_mode_4",
+        "rdonly": "false",
+        "instanceid": "6773928",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "rob1_mpm_user_mode_4"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "mode_id",
+            "value": "8"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_motion_process_mode_type",
+            "value": "rob1_optimal_cycle_time_mode"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "dh_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "accset_acc_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "accset_ramp_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "accset_fp_ramp_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "acc_joint_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "acc_joint_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "acc_joint_factor_3",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "acc_joint_factor_4",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "acc_joint_factor_5",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "acc_joint_factor_6",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "acc_joint_factor_7",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_max_joint_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_max_joint_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_max_joint_factor_3",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_max_joint_factor_4",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_max_joint_factor_5",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_max_joint_factor_6",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_max_joint_factor_7",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "world_acc_factor",
+            "value": "-1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "geometric_accuracy_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "df_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "df_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "df_factor_3",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "df_factor_4",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "df_factor_5",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "df_factor_6",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "df_factor_7",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kp_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kp_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kp_factor_3",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kp_factor_4",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kp_factor_5",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kp_factor_6",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kp_factor_7",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kv_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kv_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kv_factor_3",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kv_factor_4",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kv_factor_5",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kv_factor_6",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kv_factor_7",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ti_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ti_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ti_factor_3",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ti_factor_4",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ti_factor_5",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ti_factor_6",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ti_factor_7",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "mounting_stiffness_factor_x",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "mounting_stiffness_factor_y",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "mounting_stiffness_factor_z",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fdb_filter_fp_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fdb_filter_fp_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fdb_filter_fp_factor_3",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fdb_filter_fp_factor_4",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fdb_filter_fp_factor_5",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fdb_filter_fp_factor_6",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fdb_filter_fp_factor_7",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fp_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fp_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fp_factor_3",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fp_factor_4",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fp_factor_5",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fp_factor_6",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fp_factor_7",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fz_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fz_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fz_factor_3",
+            "value": "1"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/MOTION_PROCESS_MODE/instances/rob1_press_tending_mode"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "rob1_press_tending_mode",
+        "rdonly": "false",
+        "instanceid": "6773232",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "rob1_press_tending_mode"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "mode_id",
+            "value": "9"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_motion_process_mode_type",
+            "value": "rob1_press_tending_mode"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "dh_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "accset_acc_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "accset_ramp_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "accset_fp_ramp_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "acc_joint_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "acc_joint_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "acc_joint_factor_3",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "acc_joint_factor_4",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "acc_joint_factor_5",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "acc_joint_factor_6",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "acc_joint_factor_7",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_max_joint_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_max_joint_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_max_joint_factor_3",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_max_joint_factor_4",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_max_joint_factor_5",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_max_joint_factor_6",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_max_joint_factor_7",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "world_acc_factor",
+            "value": "-1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "geometric_accuracy_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "df_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "df_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "df_factor_3",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "df_factor_4",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "df_factor_5",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "df_factor_6",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "df_factor_7",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kp_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kp_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kp_factor_3",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kp_factor_4",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kp_factor_5",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kp_factor_6",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kp_factor_7",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kv_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kv_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kv_factor_3",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kv_factor_4",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kv_factor_5",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kv_factor_6",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kv_factor_7",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ti_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ti_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ti_factor_3",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ti_factor_4",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ti_factor_5",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ti_factor_6",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ti_factor_7",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "mounting_stiffness_factor_x",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "mounting_stiffness_factor_y",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "mounting_stiffness_factor_z",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fdb_filter_fp_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fdb_filter_fp_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fdb_filter_fp_factor_3",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fdb_filter_fp_factor_4",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fdb_filter_fp_factor_5",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fdb_filter_fp_factor_6",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fdb_filter_fp_factor_7",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fp_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fp_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fp_factor_3",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fp_factor_4",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fp_factor_5",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fp_factor_6",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fp_factor_7",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fz_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fz_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fz_factor_3",
+            "value": "1"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/MOTION_PROCESS_MODE/instances/rob1_collaborative_mode"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "rob1_collaborative_mode",
+        "rdonly": "false",
+        "instanceid": "6772536",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "rob1_collaborative_mode"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "mode_id",
+            "value": "10"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_motion_process_mode_type",
+            "value": "rob1_collaborative_mode"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "dh_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "accset_acc_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "accset_ramp_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "accset_fp_ramp_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "acc_joint_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "acc_joint_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "acc_joint_factor_3",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "acc_joint_factor_4",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "acc_joint_factor_5",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "acc_joint_factor_6",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "acc_joint_factor_7",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_max_joint_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_max_joint_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_max_joint_factor_3",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_max_joint_factor_4",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_max_joint_factor_5",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_max_joint_factor_6",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_max_joint_factor_7",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "world_acc_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "geometric_accuracy_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "df_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "df_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "df_factor_3",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "df_factor_4",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "df_factor_5",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "df_factor_6",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "df_factor_7",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kp_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kp_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kp_factor_3",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kp_factor_4",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kp_factor_5",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kp_factor_6",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kp_factor_7",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kv_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kv_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kv_factor_3",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kv_factor_4",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kv_factor_5",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kv_factor_6",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kv_factor_7",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ti_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ti_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ti_factor_3",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ti_factor_4",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ti_factor_5",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ti_factor_6",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ti_factor_7",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "mounting_stiffness_factor_x",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "mounting_stiffness_factor_y",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "mounting_stiffness_factor_z",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fdb_filter_fp_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fdb_filter_fp_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fdb_filter_fp_factor_3",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fdb_filter_fp_factor_4",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fdb_filter_fp_factor_5",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fdb_filter_fp_factor_6",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fdb_filter_fp_factor_7",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fp_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fp_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fp_factor_3",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fp_factor_4",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fp_factor_5",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fp_factor_6",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fp_factor_7",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fz_factor_1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fz_factor_2",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_filter_fz_factor_3",
+            "value": "1"
+          }
+        ]
+      }
+    ]
+  }
+}

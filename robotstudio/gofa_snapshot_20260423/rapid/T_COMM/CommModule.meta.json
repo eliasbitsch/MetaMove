@@ -1,0 +1,19 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/rapid/"
+    },
+    "self": {
+      "href": "tasks/T_COMM/modules/CommModule/text"
+    }
+  },
+  "state": [
+    {
+      "_type": "rap-module-text",
+      "_title": "moduletext",
+      "change-count": " 60392 ",
+      "file-path": "/TEMP/pusres.205071",
+      "module-length": "1368"
+    }
+  ]
+}

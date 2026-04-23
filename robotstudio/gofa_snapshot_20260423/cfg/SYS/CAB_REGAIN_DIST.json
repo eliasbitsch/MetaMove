@@ -1,0 +1,128 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "SYS/CAB_REGAIN_DIST/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/CAB_REGAIN_DIST/instances/MAN"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "MAN",
+        "rdonly": "false",
+        "instanceid": "6555744",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "MAN"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Tcp_dist",
+            "value": "0.050000001"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Tcp_rot",
+            "value": "0.2"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Ext_dist",
+            "value": "0.050000001"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Ext_rot",
+            "value": "0.2"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/CAB_REGAIN_DIST/instances/AUTO"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "AUTO",
+        "rdonly": "false",
+        "instanceid": "7679184",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "AUTO"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Tcp_dist",
+            "value": "0.5"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Tcp_rot",
+            "value": "1.5700001"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Ext_dist",
+            "value": "0.5"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Ext_rot",
+            "value": "1.5700001"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/CAB_REGAIN_DIST/instances/StartMove"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "StartMove",
+        "rdonly": "false",
+        "instanceid": "7029672",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "StartMove"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Tcp_dist",
+            "value": "0.0099999998"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Tcp_rot",
+            "value": "0.34999999"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Ext_dist",
+            "value": "0.0099999998"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Ext_rot",
+            "value": "0.34999999"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,117 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "MOC/FC_SENSOR/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/FC_SENSOR/instances/fc_sensor1"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "fc_sensor1",
+        "rdonly": "false",
+        "instanceid": "6492992",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "fc_sensor1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "force_sensor_mount_unit_name",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "force_sensor_type",
+            "value": "3"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "force_sensor_noise",
+            "value": "25"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "force_sensor_frame_pos_x",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "force_sensor_frame_pos_y",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "force_sensor_frame_pos_z",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "force_sensor_frame_orient_u0",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "force_sensor_frame_orient_u1",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "force_sensor_frame_orient_u2",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "force_sensor_frame_orient_u3",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "force_sensor_scaling_factor_fx",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "force_sensor_scaling_factor_fy",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "force_sensor_scaling_factor_fz",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "force_sensor_scaling_factor_tx",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "force_sensor_scaling_factor_ty",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "force_sensor_scaling_factor_tz",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "force_sensor_load_est_cutoff_freq",
+            "value": "2"
+          }
+        ]
+      }
+    ]
+  }
+}

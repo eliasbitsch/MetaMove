@@ -1,0 +1,497 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "MMC/MMC_PALETTE_HEAD/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_PALETTE_HEAD/instances/Common"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "Common",
+        "rdonly": "true",
+        "instanceid": "7151280",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "Common"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "type",
+            "value": "MMC_COMMON"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_PALETTE_HEAD/instances/Prog.Flow"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "Prog.Flow",
+        "rdonly": "true",
+        "instanceid": "7151016",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "Prog.Flow"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "type",
+            "value": "MMC_PROG_FLOW"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_PALETTE_HEAD/instances/Various"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "Various",
+        "rdonly": "true",
+        "instanceid": "7150752",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "Various"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "type",
+            "value": "MMC_VARIOUS"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_PALETTE_HEAD/instances/Settings"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "Settings",
+        "rdonly": "true",
+        "instanceid": "7150488",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "Settings"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "type",
+            "value": "MMC_SETTINGS"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_PALETTE_HEAD/instances/Motion%26Proc."
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "Motion&Proc.",
+        "rdonly": "true",
+        "instanceid": "7150224",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "Motion&Proc."
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "type",
+            "value": "MMC_MOTION"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_PALETTE_HEAD/instances/I/O"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "I/O",
+        "rdonly": "true",
+        "instanceid": "7149960",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "I/O"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "type",
+            "value": "MMC_IO"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_PALETTE_HEAD/instances/Communicate"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "Communicate",
+        "rdonly": "true",
+        "instanceid": "7149696",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "Communicate"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "type",
+            "value": "MMC_COMMUNICATE"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_PALETTE_HEAD/instances/Interrupts"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "Interrupts",
+        "rdonly": "true",
+        "instanceid": "7149432",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "Interrupts"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "type",
+            "value": "MMC_INTER"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_PALETTE_HEAD/instances/Error%20Rec."
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "Error Rec.",
+        "rdonly": "true",
+        "instanceid": "7149168",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "Error Rec."
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "type",
+            "value": "MMC_ERROR"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_PALETTE_HEAD/instances/System%26Time"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "System&Time",
+        "rdonly": "true",
+        "instanceid": "7148904",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "System&Time"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "type",
+            "value": "MMC_SYSTEM"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_PALETTE_HEAD/instances/Mathematics"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "Mathematics",
+        "rdonly": "true",
+        "instanceid": "7148640",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "Mathematics"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "type",
+            "value": "MMC_MATH"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_PALETTE_HEAD/instances/MotionSetAdv"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "MotionSetAdv",
+        "rdonly": "true",
+        "instanceid": "7148376",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "MotionSetAdv"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "type",
+            "value": "MMC_MOTSETADV"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_PALETTE_HEAD/instances/Motion%20Adv."
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "Motion Adv.",
+        "rdonly": "true",
+        "instanceid": "7148112",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "Motion Adv."
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "type",
+            "value": "MMC_MOTIONADV"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_PALETTE_HEAD/instances/Ext.Computer"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "Ext.Computer",
+        "rdonly": "true",
+        "instanceid": "7147848",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "Ext.Computer"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "type",
+            "value": "MMC_EXTCOMP"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_PALETTE_HEAD/instances/MultiTasking%26MultiMove"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "MultiTasking&MultiMove",
+        "rdonly": "true",
+        "instanceid": "7147584",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "MultiTasking&MultiMove"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "type",
+            "value": "MMC_MULTI"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_PALETTE_HEAD/instances/RAPIDsupport"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "RAPIDsupport",
+        "rdonly": "true",
+        "instanceid": "7147320",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "RAPIDsupport"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "type",
+            "value": "MMC_RAPID"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_PALETTE_HEAD/instances/Calib%26Service"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "Calib&Service",
+        "rdonly": "true",
+        "instanceid": "7147056",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "Calib&Service"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "type",
+            "value": "MMC_SERVICE"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_PALETTE_HEAD/instances/EGM"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "EGM",
+        "rdonly": "true",
+        "instanceid": "6533304",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "EGM"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "type",
+            "value": "MMC_EGM"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_PALETTE_HEAD/instances/M.C%201"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "M.C 1",
+        "rdonly": "false",
+        "instanceid": "7130752",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "M.C 1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "type",
+            "value": "MMC_MC1"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_PALETTE_HEAD/instances/M.C%202"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "M.C 2",
+        "rdonly": "false",
+        "instanceid": "7130488",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "M.C 2"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "type",
+            "value": "MMC_MC2"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_PALETTE_HEAD/instances/M.C%203"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "M.C 3",
+        "rdonly": "false",
+        "instanceid": "7130224",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "M.C 3"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "type",
+            "value": "MMC_MC3"
+          }
+        ]
+      }
+    ]
+  }
+}

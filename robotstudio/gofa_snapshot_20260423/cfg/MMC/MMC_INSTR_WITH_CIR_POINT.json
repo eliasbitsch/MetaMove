@@ -1,0 +1,198 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "MMC/MMC_INSTR_WITH_CIR_POINT/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_INSTR_WITH_CIR_POINT/instances/movec"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "movec",
+        "rdonly": "true",
+        "instanceid": "7570672",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "movec"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_nr",
+            "value": "2"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_INSTR_WITH_CIR_POINT/instances/searchc"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "searchc",
+        "rdonly": "true",
+        "instanceid": "7441880",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "searchc"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_nr",
+            "value": "5"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_INSTR_WITH_CIR_POINT/instances/triggc"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "triggc",
+        "rdonly": "true",
+        "instanceid": "7383816",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "triggc"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_nr",
+            "value": "2"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_INSTR_WITH_CIR_POINT/instances/MoveCDO"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "MoveCDO",
+        "rdonly": "true",
+        "instanceid": "7286816",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "MoveCDO"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_nr",
+            "value": "1"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_INSTR_WITH_CIR_POINT/instances/MoveCGO"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "MoveCGO",
+        "rdonly": "true",
+        "instanceid": "7286632",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "MoveCGO"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_nr",
+            "value": "1"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_INSTR_WITH_CIR_POINT/instances/MoveCAO"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "MoveCAO",
+        "rdonly": "true",
+        "instanceid": "7286448",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "MoveCAO"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_nr",
+            "value": "1"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_INSTR_WITH_CIR_POINT/instances/MoveCSync"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "MoveCSync",
+        "rdonly": "true",
+        "instanceid": "7286264",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "MoveCSync"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_nr",
+            "value": "1"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_INSTR_WITH_CIR_POINT/instances/EGMMoveC"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "EGMMoveC",
+        "rdonly": "true",
+        "instanceid": "6536208",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "EGMMoveC"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_nr",
+            "value": "2"
+          }
+        ]
+      }
+    ]
+  }
+}

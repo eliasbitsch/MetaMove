@@ -1,0 +1,47 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "MOC/DEF_COMP/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/DEF_COMP/instances/rob1"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "rob1",
+        "rdonly": "false",
+        "instanceid": "6771200",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "rob1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_comp_fdb",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_comp_activate_threshold",
+            "value": "80"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_comp_filter_bw",
+            "value": "10"
+          }
+        ]
+      }
+    ]
+  }
+}

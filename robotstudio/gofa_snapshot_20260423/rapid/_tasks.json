@@ -1,0 +1,97 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/rapid/"
+    },
+    "self": {
+      "href": "tasks"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "tasks/spy"
+          }
+        },
+        "_type": "rap-tasks-spy-li",
+        "_title": "spy"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "tasks/syncstate/program-pointer"
+          }
+        },
+        "_type": "rap-tasks-syncstate-pp-li",
+        "_title": "program-pointer"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "tasks/syncstate/motion-pointer"
+          }
+        },
+        "_type": "rap-tasks-syncstate-mp-li",
+        "_title": "motion-pointer"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "tasks/SC_CBC"
+          }
+        },
+        "_type": "rap-task-li",
+        "_title": "SC_CBC",
+        "name": "SC_CBC",
+        "type": "semistatic",
+        "taskstate": "initiated",
+        "excstate": "started"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "tasks/T_ROB1"
+          }
+        },
+        "_type": "rap-task-li",
+        "_title": "T_ROB1",
+        "name": "T_ROB1",
+        "type": "normal",
+        "taskstate": "initiated",
+        "excstate": "started",
+        "active": "On",
+        "motiontask": "TRUE"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "tasks/T_GOFA_LED"
+          }
+        },
+        "_type": "rap-task-li",
+        "_title": "T_GOFA_LED",
+        "name": "T_GOFA_LED",
+        "type": "semistatic",
+        "taskstate": "initiated",
+        "excstate": "started"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "tasks/T_COMM"
+          }
+        },
+        "_type": "rap-task-li",
+        "_title": "T_COMM",
+        "name": "T_COMM",
+        "type": "semistatic",
+        "taskstate": "initiated",
+        "excstate": "started",
+        "active": "Off",
+        "motiontask": "FALSE"
+      }
+    ]
+  }
+}

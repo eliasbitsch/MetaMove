@@ -1,0 +1,405 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "SYS/PRESENT_OPTIONS/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/PRESENT_OPTIONS/instances/RemoteService"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "RemoteService",
+        "rdonly": "true",
+        "instanceid": "7698264",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "RemoteService"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "desc",
+            "value": "Remote Service"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/PRESENT_OPTIONS/instances/CSGateway"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "CSGateway",
+        "rdonly": "true",
+        "instanceid": "7697880",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "CSGateway"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "desc",
+            "value": "Connected Services Gateway"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/PRESENT_OPTIONS/instances/SAFETYMODULE"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "SAFETYMODULE",
+        "rdonly": "true",
+        "instanceid": "7697496",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "SAFETYMODULE"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "desc",
+            "value": "Safety Module"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/PRESENT_OPTIONS/instances/ProfinetDevice"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "ProfinetDevice",
+        "rdonly": "true",
+        "instanceid": "7697112",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "ProfinetDevice"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "desc",
+            "value": "3020-2 PROFINET Device"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/PRESENT_OPTIONS/instances/UDPUC"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "UDPUC",
+        "rdonly": "true",
+        "instanceid": "7696728",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "UDPUC"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "desc",
+            "value": "UDPUC Driver"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/PRESENT_OPTIONS/instances/worldzones"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "worldzones",
+        "rdonly": "true",
+        "instanceid": "7696344",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "worldzones"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "desc",
+            "value": "3106-1 World Zones"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/PRESENT_OPTIONS/instances/pathrecover"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "pathrecover",
+        "rdonly": "true",
+        "instanceid": "7695960",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "pathrecover"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "desc",
+            "value": "3113-1 Path Recovery"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/PRESENT_OPTIONS/instances/colldect"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "colldect",
+        "rdonly": "true",
+        "instanceid": "7695576",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "colldect"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "desc",
+            "value": "3107-1 Collision Detection"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/PRESENT_OPTIONS/instances/FTPClient"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "FTPClient",
+        "rdonly": "true",
+        "instanceid": "7695192",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "FTPClient"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "desc",
+            "value": "3116-1 FTP client"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/PRESENT_OPTIONS/instances/SFTPClient"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "SFTPClient",
+        "rdonly": "true",
+        "instanceid": "7694808",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "SFTPClient"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "desc",
+            "value": "3116-1 SFTP client"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/PRESENT_OPTIONS/instances/IOTDATAGATEWAY"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "IOTDATAGATEWAY",
+        "rdonly": "true",
+        "instanceid": "7694424",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "IOTDATAGATEWAY"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "desc",
+            "value": "3154-1 IoT Data Gateway"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/PRESENT_OPTIONS/instances/multask"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "multask",
+        "rdonly": "true",
+        "instanceid": "7694040",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "multask"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "desc",
+            "value": "3114-1 Multitasking"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/PRESENT_OPTIONS/instances/EGM"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "EGM",
+        "rdonly": "true",
+        "instanceid": "7693656",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "EGM"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "desc",
+            "value": "3124-1 Externally Guided Motion (EGM)"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/PRESENT_OPTIONS/instances/SAFEMOVEPRO"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "SAFEMOVEPRO",
+        "rdonly": "true",
+        "instanceid": "7693272",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "SAFEMOVEPRO"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "desc",
+            "value": "3043-3 SafeMove Collaborative"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/PRESENT_OPTIONS/instances/Leadthrough"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "Leadthrough",
+        "rdonly": "true",
+        "instanceid": "7692888",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "Leadthrough"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "desc",
+            "value": "Leadthrough"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/PRESENT_OPTIONS/instances/MOTCOM"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "MOTCOM",
+        "rdonly": "true",
+        "instanceid": "7692504",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "MOTCOM"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "desc",
+            "value": "Motor Commutation"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/PRESENT_OPTIONS/instances/SIS"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "SIS",
+        "rdonly": "true",
+        "instanceid": "7692120",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "SIS"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "desc",
+            "value": "Service Info System"
+          }
+        ]
+      }
+    ]
+  }
+}

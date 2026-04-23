@@ -1,0 +1,62 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "SIO/CSGW_WIRED/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "SIO/CSGW_WIRED/instances/CSGW"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "CSGW",
+        "rdonly": "false",
+        "instanceid": "6613768",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "CSGW"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Enabled",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Address",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "SubnetMask",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Gateway",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "PrimaryDNS",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "SecondaryDNS",
+            "value": ""
+          }
+        ]
+      }
+    ]
+  }
+}

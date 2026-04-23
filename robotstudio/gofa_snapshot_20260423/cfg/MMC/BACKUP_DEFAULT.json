@@ -1,0 +1,52 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "MMC/BACKUP_DEFAULT/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/BACKUP_DEFAULT/instances/Backup"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "Backup",
+        "rdonly": "false",
+        "instanceid": "7129224",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "Backup"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "backup_name",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "backup_path",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "unique_name",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "disable_name_change",
+            "value": "0"
+          }
+        ]
+      }
+    ]
+  }
+}

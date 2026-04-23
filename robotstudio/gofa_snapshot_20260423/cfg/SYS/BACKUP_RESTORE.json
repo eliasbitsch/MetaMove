@@ -1,0 +1,67 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "SYS/BACKUP_RESTORE/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/BACKUP_RESTORE/instances/"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "",
+        "rdonly": "true",
+        "instanceid": "7630240",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ExcludeFileFromHomeAtBackup",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ExcludeDirFromHomeAtBackup",
+            "value": "RECOVERY"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "IncludeFileAtBackup",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "IncludeDirAtBackup",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "IncludeInternalFileAtRestore",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "IncludeInternalDirAtRestore",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ExcludeFileFromHomeAtRestore",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ExcludeDirFromHomeAtRestore",
+            "value": ""
+          }
+        ]
+      }
+    ]
+  }
+}

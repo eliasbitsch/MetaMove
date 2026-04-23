@@ -1,0 +1,197 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "MOC/FC_KINEMATICS/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/FC_KINEMATICS/instances/fc_kinematics1"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "fc_kinematics1",
+        "rdonly": "false",
+        "instanceid": "6492760",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "fc_kinematics1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "update_critera_joint_dist",
+            "value": "9.9999997E-05"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "tolerance_for_inverse_jac",
+            "value": "0.07"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "damping_fx",
+            "value": "800"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "damping_fy",
+            "value": "800"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "damping_fz",
+            "value": "800"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "lt_damping_fx",
+            "value": "800"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "lt_damping_fy",
+            "value": "800"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "lt_damping_fz",
+            "value": "800"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "damping_tx",
+            "value": "40"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "damping_ty",
+            "value": "40"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "damping_tz",
+            "value": "20"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_motor_diff_for_pos_control",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "path_pose_lp_bandwidth",
+            "value": "5"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "disable_damp_inc_due_to_tcp_dist",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "force_loop_filter_bandwidth",
+            "value": "3"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_general_filter0",
+            "value": "ONE"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_general_filter1",
+            "value": "ONE"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "activate_general_filters",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "force_frame_filter_bandwidth",
+            "value": "10"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "tool_speed_filter_bandwidth",
+            "value": "10"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "reference_path_frame_velocity_error",
+            "value": "50"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_allowed_path_frame_velocity_error",
+            "value": "100"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "path_frame_speed_ratio_change",
+            "value": "500"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "deadband_scaling_trans",
+            "value": "10"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "lt_deadband_scaling_trans",
+            "value": "10"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "deadband_scaling_rot",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "derivative_gain_scaling_factor",
+            "value": "0.1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_translation_speed_fc",
+            "value": "0.075000003"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "derivative_deadband_scaling_trans",
+            "value": "0.1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "gain_scaling_factor",
+            "value": "0.5"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_ref_filter_cutoff_freq",
+            "value": "3"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_ref_lag_filter_T",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_ref_lag_filter_beta",
+            "value": "4"
+          }
+        ]
+      }
+    ]
+  }
+}

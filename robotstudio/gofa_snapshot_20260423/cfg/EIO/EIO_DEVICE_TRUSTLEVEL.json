@@ -1,0 +1,173 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "EIO/EIO_DEVICE_TRUSTLEVEL/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "EIO/EIO_DEVICE_TRUSTLEVEL/instances/DefaultTrustLevel"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "DefaultTrustLevel",
+        "rdonly": "true",
+        "instanceid": "7617024",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "DefaultTrustLevel"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "DenyDeactivate",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "EnergySavingActive",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ActionWhenLost",
+            "value": "None"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ReportWhenLost",
+            "value": "Error"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ReportWhenReconnected",
+            "value": "Info"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ActionWhenFaulty",
+            "value": "None"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ReportWhenFaulty",
+            "value": "Error"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "EIO/EIO_DEVICE_TRUSTLEVEL/instances/SafetyTrustLevel"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "SafetyTrustLevel",
+        "rdonly": "true",
+        "instanceid": "7616728",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "SafetyTrustLevel"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "DenyDeactivate",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "EnergySavingActive",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ActionWhenLost",
+            "value": "None"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ReportWhenLost",
+            "value": "None"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ReportWhenReconnected",
+            "value": "None"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ActionWhenFaulty",
+            "value": "None"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ReportWhenFaulty",
+            "value": "Error"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "EIO/EIO_DEVICE_TRUSTLEVEL/instances/InternalDeviceTrustLevel"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "InternalDeviceTrustLevel",
+        "rdonly": "true",
+        "instanceid": "7616432",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "InternalDeviceTrustLevel"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "DenyDeactivate",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "EnergySavingActive",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ActionWhenLost",
+            "value": "None"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ReportWhenLost",
+            "value": "None"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ReportWhenReconnected",
+            "value": "None"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ActionWhenFaulty",
+            "value": "None"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ReportWhenFaulty",
+            "value": "Error"
+          }
+        ]
+      }
+    ]
+  }
+}

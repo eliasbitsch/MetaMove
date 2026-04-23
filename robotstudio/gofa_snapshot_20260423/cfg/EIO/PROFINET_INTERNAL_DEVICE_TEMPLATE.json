@@ -1,0 +1,127 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "EIO/PROFINET_INTERNAL_DEVICE_TEMPLATE/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "EIO/PROFINET_INTERNAL_DEVICE_TEMPLATE/instances/PN_Internal_Device"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "PN_Internal_Device",
+        "rdonly": "true",
+        "instanceid": "6625480",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "PN_Internal_Device"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Network",
+            "value": "PROFINET"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "StationName",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "InterfacePort",
+            "value": "WAN"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Simulated",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Label",
+            "value": "PROFINET Internal Device"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "OutputSize",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "InputSize",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ModuleSlot1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ModuleSlot2",
+            "value": "2"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ModuleSlot3",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ModuleSlot4",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "SafetyParamSize",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "SafetyParam00",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "SafetyParam01",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "SafetyParam02",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "IM1_Function",
+            "value": "                                "
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "IM1_Location",
+            "value": "                      "
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "IM2_InstallationDate",
+            "value": "                "
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "IM3_Description",
+            "value": "                                                      "
+          }
+        ]
+      }
+    ]
+  }
+}

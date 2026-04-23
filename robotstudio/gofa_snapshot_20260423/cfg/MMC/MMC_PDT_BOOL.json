@@ -1,0 +1,198 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "MMC/MMC_PDT_BOOL/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_PDT_BOOL/instances/bool"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "bool",
+        "rdonly": "true",
+        "instanceid": "7564872",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "bool"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "typ",
+            "value": "dattyp"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_PDT_BOOL/instances/num"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "num",
+        "rdonly": "true",
+        "instanceid": "7564656",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "num"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "typ",
+            "value": "dattyp"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_PDT_BOOL/instances/signaldi"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "signaldi",
+        "rdonly": "true",
+        "instanceid": "7564440",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "signaldi"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "typ",
+            "value": "dattyp"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_PDT_BOOL/instances/signaldo"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "signaldo",
+        "rdonly": "true",
+        "instanceid": "7564224",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "signaldo"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "typ",
+            "value": "dattyp"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_PDT_BOOL/instances/signalgi"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "signalgi",
+        "rdonly": "true",
+        "instanceid": "7564008",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "signalgi"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "typ",
+            "value": "dattyp"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_PDT_BOOL/instances/signalgo"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "signalgo",
+        "rdonly": "true",
+        "instanceid": "7563792",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "signalgo"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "typ",
+            "value": "dattyp"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_PDT_BOOL/instances/signalai"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "signalai",
+        "rdonly": "true",
+        "instanceid": "7563576",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "signalai"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "typ",
+            "value": "dattyp"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_PDT_BOOL/instances/signalao"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "signalao",
+        "rdonly": "true",
+        "instanceid": "7563360",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "signalao"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "typ",
+            "value": "dattyp"
+          }
+        ]
+      }
+    ]
+  }
+}

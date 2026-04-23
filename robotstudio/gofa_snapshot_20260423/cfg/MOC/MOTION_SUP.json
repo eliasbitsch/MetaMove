@@ -1,0 +1,127 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "MOC/MOTION_SUP/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/MOTION_SUP/instances/rob1"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "rob1",
+        "rdonly": "false",
+        "instanceid": "6771120",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "rob1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "path_col_detect_on",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "jog_col_detect_on",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "path_col_detect_level",
+            "value": "100"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "jog_col_detect_level",
+            "value": "125"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia_tolerance",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "gravity_tolerance",
+            "value": "0.2"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "friction_tolerance",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "disturbance_tolerance",
+            "value": "0.5"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "collision_detection_memory",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "manipulator_supervision_on",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "manipulator_supervision_level",
+            "value": "100"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "prog_load_supervision_on",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "prog_load_supervision_level",
+            "value": "100"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "prog_load_sup_warning_time",
+            "value": "600"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "prog_load_sup_warning_on",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "col_detect_at_standstill",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "safety_force_limit_avoidance_level",
+            "value": "80"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "collision_detection_zero_speed_time",
+            "value": "0.40000001"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "requires_option_colldect",
+            "value": "colldect"
+          }
+        ]
+      }
+    ]
+  }
+}

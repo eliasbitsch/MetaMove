@@ -1,0 +1,392 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "MOC/ARM_TYPE/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/ARM_TYPE/instances/ROB1_1"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "ROB1_1",
+        "rdonly": "true",
+        "instanceid": "6884656",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "ROB1_1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "joint_model_offset",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "rot_axis_pose_pos_x",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "rot_axis_pose_pos_y",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "rot_axis_pose_pos_z",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "rot_axis_pose_orient_u0",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "rot_axis_pose_orient_u1",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "rot_axis_pose_orient_u2",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "rot_axis_pose_orient_u3",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "transm_inertia",
+            "value": "0.35749999"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/ARM_TYPE/instances/ROB1_2"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "ROB1_2",
+        "rdonly": "true",
+        "instanceid": "6883928",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "ROB1_2"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "joint_model_offset",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "rot_axis_pose_pos_x",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "rot_axis_pose_pos_y",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "rot_axis_pose_pos_z",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "rot_axis_pose_orient_u0",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "rot_axis_pose_orient_u1",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "rot_axis_pose_orient_u2",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "rot_axis_pose_orient_u3",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "transm_inertia",
+            "value": "0.35749999"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/ARM_TYPE/instances/ROB1_3"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "ROB1_3",
+        "rdonly": "true",
+        "instanceid": "6883200",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "ROB1_3"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "joint_model_offset",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "rot_axis_pose_pos_x",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "rot_axis_pose_pos_y",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "rot_axis_pose_pos_z",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "rot_axis_pose_orient_u0",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "rot_axis_pose_orient_u1",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "rot_axis_pose_orient_u2",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "rot_axis_pose_orient_u3",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "transm_inertia",
+            "value": "0.35749999"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/ARM_TYPE/instances/ROB1_4"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "ROB1_4",
+        "rdonly": "true",
+        "instanceid": "6882472",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "ROB1_4"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "joint_model_offset",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "rot_axis_pose_pos_x",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "rot_axis_pose_pos_y",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "rot_axis_pose_pos_z",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "rot_axis_pose_orient_u0",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "rot_axis_pose_orient_u1",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "rot_axis_pose_orient_u2",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "rot_axis_pose_orient_u3",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "transm_inertia",
+            "value": "0.1"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/ARM_TYPE/instances/ROB1_5"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "ROB1_5",
+        "rdonly": "true",
+        "instanceid": "6881744",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "ROB1_5"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "joint_model_offset",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "rot_axis_pose_pos_x",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "rot_axis_pose_pos_y",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "rot_axis_pose_pos_z",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "rot_axis_pose_orient_u0",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "rot_axis_pose_orient_u1",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "rot_axis_pose_orient_u2",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "rot_axis_pose_orient_u3",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "transm_inertia",
+            "value": "0.1"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/ARM_TYPE/instances/ROB1_6"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "ROB1_6",
+        "rdonly": "true",
+        "instanceid": "6881016",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "ROB1_6"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "joint_model_offset",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "rot_axis_pose_pos_x",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "rot_axis_pose_pos_y",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "rot_axis_pose_pos_z",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "rot_axis_pose_orient_u0",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "rot_axis_pose_orient_u1",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "rot_axis_pose_orient_u2",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "rot_axis_pose_orient_u3",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "transm_inertia",
+            "value": "0.1"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "SIO/SFTP_HOST_TYPE/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "SIO/SFTP_HOST_TYPE/instances/SFTP"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "SFTP",
+        "rdonly": "true",
+        "instanceid": "6556600",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "SFTP"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Driver",
+            "value": "mc/sftp"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Data1",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Data2",
+            "value": "1"
+          }
+        ]
+      }
+    ]
+  }
+}

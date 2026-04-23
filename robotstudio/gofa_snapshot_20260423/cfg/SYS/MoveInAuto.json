@@ -1,0 +1,37 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "SYS/MoveInAuto/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/MoveInAuto/instances/Timeout"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "Timeout",
+        "rdonly": "false",
+        "instanceid": "7032032",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "Timeout"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Value",
+            "value": "30"
+          }
+        ]
+      }
+    ]
+  }
+}

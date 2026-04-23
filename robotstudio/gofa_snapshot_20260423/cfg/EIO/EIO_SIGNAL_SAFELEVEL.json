@@ -1,0 +1,90 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "EIO/EIO_SIGNAL_SAFELEVEL/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "EIO/EIO_SIGNAL_SAFELEVEL/instances/DefaultSafeLevel"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "DefaultSafeLevel",
+        "rdonly": "true",
+        "instanceid": "7616136",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "DefaultSafeLevel"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ActionWhenStartup",
+            "value": "Default"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ActionWhenAccessible",
+            "value": "Last"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ActionWhenNotAccessible",
+            "value": "Default"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ActionWhenShutdown",
+            "value": "Last"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "EIO/EIO_SIGNAL_SAFELEVEL/instances/SafetySafeLevel"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "SafetySafeLevel",
+        "rdonly": "true",
+        "instanceid": "7615872",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "SafetySafeLevel"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ActionWhenStartup",
+            "value": "Default"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ActionWhenAccessible",
+            "value": "Default"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ActionWhenNotAccessible",
+            "value": "Default"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ActionWhenShutdown",
+            "value": "Last"
+          }
+        ]
+      }
+    ]
+  }
+}

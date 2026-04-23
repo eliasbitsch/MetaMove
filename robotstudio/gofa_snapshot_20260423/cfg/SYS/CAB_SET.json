@@ -1,0 +1,32 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "SYS/CAB_SET/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/CAB_SET/instances/"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "",
+        "rdonly": "true",
+        "instanceid": "7631640",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Lang",
+            "value": "1"
+          }
+        ]
+      }
+    ]
+  }
+}

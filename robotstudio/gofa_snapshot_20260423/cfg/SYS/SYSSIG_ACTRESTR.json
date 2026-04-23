@@ -1,0 +1,558 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "SYS/SYSSIG_ACTRESTR/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/SYSSIG_ACTRESTR/instances/"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "",
+        "rdonly": "true",
+        "instanceid": "7613880",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Action",
+            "value": "MotorOn"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Restr1",
+            "value": "MotorOff"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Restr2",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Restr3",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Restr4",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Restr5",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Restr6",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Restr7",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Restr8",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Restr9",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Restr10",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/SYSSIG_ACTRESTR/instances/"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "",
+        "rdonly": "true",
+        "instanceid": "7613416",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Action",
+            "value": "Start"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Restr1",
+            "value": "StopCycle"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Restr2",
+            "value": "StopInstr"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Restr3",
+            "value": "SoftStop"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Restr4",
+            "value": "QuickStop"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Restr5",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Restr6",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Restr7",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Restr8",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Restr9",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Restr10",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/SYSSIG_ACTRESTR/instances/"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "",
+        "rdonly": "true",
+        "instanceid": "7612952",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Action",
+            "value": "StartMain"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Restr1",
+            "value": "StopCycle"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Restr2",
+            "value": "StopInstr"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Restr3",
+            "value": "SoftStop"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Restr4",
+            "value": "QuickStop"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Restr5",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Restr6",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Restr7",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Restr8",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Restr9",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Restr10",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/SYSSIG_ACTRESTR/instances/"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "",
+        "rdonly": "true",
+        "instanceid": "7612488",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Action",
+            "value": "LoadStart"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Restr1",
+            "value": "StopCycle"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Restr2",
+            "value": "StopInstr"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Restr3",
+            "value": "SoftStop"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Restr4",
+            "value": "QuickStop"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Restr5",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Restr6",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Restr7",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Restr8",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Restr9",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Restr10",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/SYSSIG_ACTRESTR/instances/"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "",
+        "rdonly": "true",
+        "instanceid": "7612024",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Action",
+            "value": "Interrupt"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Restr1",
+            "value": "StopCycle"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Restr2",
+            "value": "StopInstr"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Restr3",
+            "value": "SoftStop"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Restr4",
+            "value": "QuickStop"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Restr5",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Restr6",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Restr7",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Restr8",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Restr9",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Restr10",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/SYSSIG_ACTRESTR/instances/"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "",
+        "rdonly": "true",
+        "instanceid": "7611560",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Action",
+            "value": "MotOnStart"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Restr1",
+            "value": "MotorOff"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Restr2",
+            "value": "StopCycle"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Restr3",
+            "value": "StopInstr"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Restr4",
+            "value": "SoftStop"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Restr5",
+            "value": "QuickStop"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Restr6",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Restr7",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Restr8",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Restr9",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Restr10",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/SYSSIG_ACTRESTR/instances/"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "",
+        "rdonly": "true",
+        "instanceid": "7611096",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Action",
+            "value": "Backup"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Restr1",
+            "value": "DisableBackup"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Restr2",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Restr3",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Restr4",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Restr5",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Restr6",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Restr7",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Restr8",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Restr9",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Restr10",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/SYSSIG_ACTRESTR/instances/"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "",
+        "rdonly": "true",
+        "instanceid": "7610632",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Action",
+            "value": "SetSpeed"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Restr1",
+            "value": "SetSpeed"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Restr2",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Restr3",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Restr4",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Restr5",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Restr6",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Restr7",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Restr8",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Restr9",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Restr10",
+            "value": ""
+          }
+        ]
+      }
+    ]
+  }
+}

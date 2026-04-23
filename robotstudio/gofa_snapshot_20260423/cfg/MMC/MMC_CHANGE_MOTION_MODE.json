@@ -1,0 +1,476 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "MMC/MMC_CHANGE_MOTION_MODE/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_CHANGE_MOTION_MODE/instances/MoveL"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "MoveL",
+        "rdonly": "true",
+        "instanceid": "7570488",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "MoveL"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "shift_name",
+            "value": "MoveJ"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "shift_mode",
+            "value": "joint"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_restr",
+            "value": "13"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_CHANGE_MOTION_MODE/instances/MoveJ"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "MoveJ",
+        "rdonly": "true",
+        "instanceid": "7570288",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "MoveJ"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "shift_name",
+            "value": "MoveL"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "shift_mode",
+            "value": "lin"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_restr",
+            "value": "0"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_CHANGE_MOTION_MODE/instances/TriggL"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "TriggL",
+        "rdonly": "true",
+        "instanceid": "7383632",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "TriggL"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "shift_name",
+            "value": "TriggJ"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "shift_mode",
+            "value": "joint"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_restr",
+            "value": "20"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_CHANGE_MOTION_MODE/instances/TriggJ"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "TriggJ",
+        "rdonly": "true",
+        "instanceid": "7383432",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "TriggJ"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "shift_name",
+            "value": "TriggL"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "shift_mode",
+            "value": "lin"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_restr",
+            "value": "0"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_CHANGE_MOTION_MODE/instances/MoveLDO"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "MoveLDO",
+        "rdonly": "true",
+        "instanceid": "7286080",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "MoveLDO"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "shift_name",
+            "value": "MoveJDO"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "shift_mode",
+            "value": "joint"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_restr",
+            "value": "0"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_CHANGE_MOTION_MODE/instances/MoveJDO"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "MoveJDO",
+        "rdonly": "true",
+        "instanceid": "7285880",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "MoveJDO"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "shift_name",
+            "value": "MoveLDO"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "shift_mode",
+            "value": "lin"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_restr",
+            "value": "0"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_CHANGE_MOTION_MODE/instances/MoveLGO"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "MoveLGO",
+        "rdonly": "true",
+        "instanceid": "7285680",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "MoveLGO"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "shift_name",
+            "value": "MoveJGO"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "shift_mode",
+            "value": "joint"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_restr",
+            "value": "0"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_CHANGE_MOTION_MODE/instances/MoveJGO"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "MoveJGO",
+        "rdonly": "true",
+        "instanceid": "7285480",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "MoveJGO"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "shift_name",
+            "value": "MoveLGO"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "shift_mode",
+            "value": "lin"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_restr",
+            "value": "0"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_CHANGE_MOTION_MODE/instances/MoveLAO"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "MoveLAO",
+        "rdonly": "true",
+        "instanceid": "7285280",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "MoveLAO"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "shift_name",
+            "value": "MoveJAO"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "shift_mode",
+            "value": "joint"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_restr",
+            "value": "0"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_CHANGE_MOTION_MODE/instances/MoveJAO"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "MoveJAO",
+        "rdonly": "true",
+        "instanceid": "7285080",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "MoveJAO"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "shift_name",
+            "value": "MoveLAO"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "shift_mode",
+            "value": "lin"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_restr",
+            "value": "0"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_CHANGE_MOTION_MODE/instances/MoveLSync"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "MoveLSync",
+        "rdonly": "true",
+        "instanceid": "7284880",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "MoveLSync"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "shift_name",
+            "value": "MoveJSync"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "shift_mode",
+            "value": "joint"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_restr",
+            "value": "0"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_CHANGE_MOTION_MODE/instances/MoveJSync"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "MoveJSync",
+        "rdonly": "true",
+        "instanceid": "7284680",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "MoveJSync"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "shift_name",
+            "value": "MoveLSync"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "shift_mode",
+            "value": "lin"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_restr",
+            "value": "0"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_CHANGE_MOTION_MODE/instances/TriggLIOs"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "TriggLIOs",
+        "rdonly": "true",
+        "instanceid": "7156072",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "TriggLIOs"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "shift_name",
+            "value": "TriggJIOs"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "shift_mode",
+            "value": "joint"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_restr",
+            "value": "13"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_CHANGE_MOTION_MODE/instances/TriggJIOs"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "TriggJIOs",
+        "rdonly": "true",
+        "instanceid": "7155872",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "TriggJIOs"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "shift_name",
+            "value": "TriggLIOs"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "shift_mode",
+            "value": "lin"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_restr",
+            "value": "0"
+          }
+        ]
+      }
+    ]
+  }
+}

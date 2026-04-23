@@ -1,0 +1,158 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "MMC/MMC_NO_PC_MOVEMENT/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_NO_PC_MOVEMENT/instances/movec_cirpoint"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "movec_cirpoint",
+        "rdonly": "true",
+        "instanceid": "7570088",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "movec_cirpoint"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_NO_PC_MOVEMENT/instances/searchc_cirpoint"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "searchc_cirpoint",
+        "rdonly": "true",
+        "instanceid": "7441696",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "searchc_cirpoint"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_NO_PC_MOVEMENT/instances/triggc_cirpoint"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "triggc_cirpoint",
+        "rdonly": "true",
+        "instanceid": "7383232",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "triggc_cirpoint"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_NO_PC_MOVEMENT/instances/MoveCDO_CirPoint"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "MoveCDO_CirPoint",
+        "rdonly": "true",
+        "instanceid": "7284480",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "MoveCDO_CirPoint"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_NO_PC_MOVEMENT/instances/MoveCGO_CirPoint"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "MoveCGO_CirPoint",
+        "rdonly": "true",
+        "instanceid": "7284312",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "MoveCGO_CirPoint"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_NO_PC_MOVEMENT/instances/MoveCAO_CirPoint"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "MoveCAO_CirPoint",
+        "rdonly": "true",
+        "instanceid": "7284144",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "MoveCAO_CirPoint"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_NO_PC_MOVEMENT/instances/MoveCSync_CirPoint"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "MoveCSync_CirPoint",
+        "rdonly": "true",
+        "instanceid": "7283976",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "MoveCSync_CirPoint"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_NO_PC_MOVEMENT/instances/EGMMoveC_cirpoint"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "EGMMoveC_cirpoint",
+        "rdonly": "true",
+        "instanceid": "6536024",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "EGMMoveC_cirpoint"
+          }
+        ]
+      }
+    ]
+  }
+}

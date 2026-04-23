@@ -1,0 +1,37 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "SIO/OPC_UA_SERVER/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "SIO/OPC_UA_SERVER/instances/OPC%20UA%20Server"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "OPC UA Server",
+        "rdonly": "false",
+        "instanceid": "7131296",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "OPC UA Server"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Enabled",
+            "value": "true"
+          }
+        ]
+      }
+    ]
+  }
+}

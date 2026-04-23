@@ -1,0 +1,47 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "MOC/ARM_CHECK_POINT/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/ARM_CHECK_POINT/instances/rob1_3"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "rob1_3",
+        "rdonly": "false",
+        "instanceid": "6763256",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "rob1_3"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "position_x",
+            "value": "-0.050000001"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "position_y",
+            "value": "-0.050000001"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "position_z",
+            "value": "0.050000001"
+          }
+        ]
+      }
+    ]
+  }
+}

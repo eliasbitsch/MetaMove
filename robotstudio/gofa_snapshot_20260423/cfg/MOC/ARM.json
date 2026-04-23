@@ -1,0 +1,1412 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "MOC/ARM/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/ARM/instances/rob1_1"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "rob1_1",
+        "rdonly": "false",
+        "instanceid": "6770888",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "rob1_1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_arm_type",
+            "value": "ROB1_1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_thermal_comp",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "delta_q_gain",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "delta_q_hyst_gain",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_acc_data",
+            "value": "rob1_1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_check_point",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_customer_arm_load",
+            "value": "r1_load_1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_arm_calib",
+            "value": "rob1_1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "independent_joint_on",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "upper_joint_bound",
+            "value": "3.141593"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "lower_joint_bound",
+            "value": "-3.141593"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "upper_joint_bound_max",
+            "value": "3.141593"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "lower_joint_bound_min",
+            "value": "-3.141593"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ind_upper_joint_bound",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ind_lower_joint_bound",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "upper_coupled_joint_bound_2",
+            "value": "100000"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "lower_coupled_joint_bound_2",
+            "value": "-100000"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "upper_joint_coupl_bound",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "lower_joint_coupl_bound",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "cal_position",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "load_id_acc_ratio",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "angle_acc_ratio",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "performance_quota",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "brake_applied_movement_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "supervision_jam_time_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "supervision_load_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "supervision_speed_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "supervision_pos_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "supervision_motors_off_speed_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "thermal_supervision_sensitivity_ratio",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "sync_speed_high",
+            "value": "0.2"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "sync_speed_low",
+            "value": "0.016000001"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ext_const_torque",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ext_prop_torque",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ext_prop_zero_angle",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "deactivate_cyclic_brake_check_arm",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "change_to_logical_axis",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "joint_id",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "safemove_skip_axis",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "lt_arm_torque_control_gains_scale",
+            "value": "0.80000001"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "lt_load_comp_deadband",
+            "value": "10"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ultra_accuracy_stability_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "requires_option_indepmove",
+            "value": "indepmove"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/ARM/instances/rob1_2"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "rob1_2",
+        "rdonly": "false",
+        "instanceid": "6769616",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "rob1_2"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_arm_type",
+            "value": "ROB1_2"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_thermal_comp",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "delta_q_gain",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "delta_q_hyst_gain",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_acc_data",
+            "value": "rob1_2"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_check_point",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_customer_arm_load",
+            "value": "r1_load_2"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_arm_calib",
+            "value": "rob1_2"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "independent_joint_on",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "upper_joint_bound",
+            "value": "3.141593"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "lower_joint_bound",
+            "value": "-3.141593"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "upper_joint_bound_max",
+            "value": "3.141593"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "lower_joint_bound_min",
+            "value": "-3.141593"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ind_upper_joint_bound",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ind_lower_joint_bound",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "upper_coupled_joint_bound_2",
+            "value": "100000"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "lower_coupled_joint_bound_2",
+            "value": "-100000"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "upper_joint_coupl_bound",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "lower_joint_coupl_bound",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "cal_position",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "load_id_acc_ratio",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "angle_acc_ratio",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "performance_quota",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "brake_applied_movement_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "supervision_jam_time_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "supervision_load_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "supervision_speed_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "supervision_pos_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "supervision_motors_off_speed_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "thermal_supervision_sensitivity_ratio",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "sync_speed_high",
+            "value": "0.2"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "sync_speed_low",
+            "value": "0.016000001"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ext_const_torque",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ext_prop_torque",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ext_prop_zero_angle",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "deactivate_cyclic_brake_check_arm",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "change_to_logical_axis",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "joint_id",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "safemove_skip_axis",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "lt_arm_torque_control_gains_scale",
+            "value": "0.80000001"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "lt_load_comp_deadband",
+            "value": "10"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ultra_accuracy_stability_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "requires_option_indepmove",
+            "value": "indepmove"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/ARM/instances/rob1_3"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "rob1_3",
+        "rdonly": "false",
+        "instanceid": "6768344",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "rob1_3"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_arm_type",
+            "value": "ROB1_3"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_thermal_comp",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "delta_q_gain",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "delta_q_hyst_gain",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_acc_data",
+            "value": "rob1_3"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_check_point",
+            "value": "rob1_3"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_customer_arm_load",
+            "value": "r1_load_3"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_arm_calib",
+            "value": "rob1_3"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "independent_joint_on",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "upper_joint_bound",
+            "value": "1.48353"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "lower_joint_bound",
+            "value": "-3.926991"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "upper_joint_bound_max",
+            "value": "1.48353"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "lower_joint_bound_min",
+            "value": "-3.926991"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ind_upper_joint_bound",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ind_lower_joint_bound",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "upper_coupled_joint_bound_2",
+            "value": "100000"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "lower_coupled_joint_bound_2",
+            "value": "-100000"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "upper_joint_coupl_bound",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "lower_joint_coupl_bound",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "cal_position",
+            "value": "-1.3962634"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "load_id_acc_ratio",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "angle_acc_ratio",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "performance_quota",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "brake_applied_movement_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "supervision_jam_time_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "supervision_load_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "supervision_speed_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "supervision_pos_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "supervision_motors_off_speed_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "thermal_supervision_sensitivity_ratio",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "sync_speed_high",
+            "value": "0.2"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "sync_speed_low",
+            "value": "0.016000001"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ext_const_torque",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ext_prop_torque",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ext_prop_zero_angle",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "deactivate_cyclic_brake_check_arm",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "change_to_logical_axis",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "joint_id",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "safemove_skip_axis",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "lt_arm_torque_control_gains_scale",
+            "value": "0.80000001"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "lt_load_comp_deadband",
+            "value": "10"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ultra_accuracy_stability_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "requires_option_indepmove",
+            "value": "indepmove"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/ARM/instances/rob1_4"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "rob1_4",
+        "rdonly": "false",
+        "instanceid": "6767072",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "rob1_4"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_arm_type",
+            "value": "ROB1_4"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_thermal_comp",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "delta_q_gain",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "delta_q_hyst_gain",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_acc_data",
+            "value": "rob1_4"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_check_point",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_customer_arm_load",
+            "value": "r1_load_4"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_arm_calib",
+            "value": "rob1_4"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "independent_joint_on",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "upper_joint_bound",
+            "value": "3.141593"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "lower_joint_bound",
+            "value": "-3.141593"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "upper_joint_bound_max",
+            "value": "3.141593"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "lower_joint_bound_min",
+            "value": "-3.141593"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ind_upper_joint_bound",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ind_lower_joint_bound",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "upper_coupled_joint_bound_2",
+            "value": "100000"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "lower_coupled_joint_bound_2",
+            "value": "-100000"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "upper_joint_coupl_bound",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "lower_joint_coupl_bound",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "cal_position",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "load_id_acc_ratio",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "angle_acc_ratio",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "performance_quota",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "brake_applied_movement_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "supervision_jam_time_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "supervision_load_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "supervision_speed_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "supervision_pos_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "supervision_motors_off_speed_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "thermal_supervision_sensitivity_ratio",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "sync_speed_high",
+            "value": "0.2"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "sync_speed_low",
+            "value": "0.016000001"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ext_const_torque",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ext_prop_torque",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ext_prop_zero_angle",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "deactivate_cyclic_brake_check_arm",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "change_to_logical_axis",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "joint_id",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "safemove_skip_axis",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "lt_arm_torque_control_gains_scale",
+            "value": "0.80000001"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "lt_load_comp_deadband",
+            "value": "10"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ultra_accuracy_stability_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "requires_option_indepmove",
+            "value": "indepmove"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/ARM/instances/rob1_5"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "rob1_5",
+        "rdonly": "false",
+        "instanceid": "6765800",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "rob1_5"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_arm_type",
+            "value": "ROB1_5"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_thermal_comp",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "delta_q_gain",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "delta_q_hyst_gain",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_acc_data",
+            "value": "rob1_5"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_check_point",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_customer_arm_load",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_arm_calib",
+            "value": "rob1_5"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "independent_joint_on",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "upper_joint_bound",
+            "value": "3.141593"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "lower_joint_bound",
+            "value": "-3.141593"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "upper_joint_bound_max",
+            "value": "3.141593"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "lower_joint_bound_min",
+            "value": "-3.141593"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ind_upper_joint_bound",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ind_lower_joint_bound",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "upper_coupled_joint_bound_2",
+            "value": "100000"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "lower_coupled_joint_bound_2",
+            "value": "-100000"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "upper_joint_coupl_bound",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "lower_joint_coupl_bound",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "cal_position",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "load_id_acc_ratio",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "angle_acc_ratio",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "performance_quota",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "brake_applied_movement_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "supervision_jam_time_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "supervision_load_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "supervision_speed_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "supervision_pos_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "supervision_motors_off_speed_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "thermal_supervision_sensitivity_ratio",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "sync_speed_high",
+            "value": "0.2"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "sync_speed_low",
+            "value": "0.016000001"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ext_const_torque",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ext_prop_torque",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ext_prop_zero_angle",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "deactivate_cyclic_brake_check_arm",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "change_to_logical_axis",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "joint_id",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "safemove_skip_axis",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "lt_arm_torque_control_gains_scale",
+            "value": "0.80000001"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "lt_load_comp_deadband",
+            "value": "10"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ultra_accuracy_stability_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "requires_option_indepmove",
+            "value": "indepmove"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/ARM/instances/rob1_6"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "rob1_6",
+        "rdonly": "false",
+        "instanceid": "6764528",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "rob1_6"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_arm_type",
+            "value": "ROB1_6"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_thermal_comp",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "delta_q_gain",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "delta_q_hyst_gain",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_acc_data",
+            "value": "rob1_6"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_check_point",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_customer_arm_load",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_arm_calib",
+            "value": "rob1_6"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "independent_joint_on",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "upper_joint_bound",
+            "value": "4.712389"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "lower_joint_bound",
+            "value": "-4.712389"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "upper_joint_bound_max",
+            "value": "4.712389"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "lower_joint_bound_min",
+            "value": "-4.712389"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ind_upper_joint_bound",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ind_lower_joint_bound",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "upper_coupled_joint_bound_2",
+            "value": "100000"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "lower_coupled_joint_bound_2",
+            "value": "-100000"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "upper_joint_coupl_bound",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "lower_joint_coupl_bound",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "cal_position",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "load_id_acc_ratio",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "angle_acc_ratio",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "performance_quota",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "brake_applied_movement_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "supervision_jam_time_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "supervision_load_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "supervision_speed_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "supervision_pos_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "supervision_motors_off_speed_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "thermal_supervision_sensitivity_ratio",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "sync_speed_high",
+            "value": "0.2"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "sync_speed_low",
+            "value": "0.016000001"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ext_const_torque",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ext_prop_torque",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ext_prop_zero_angle",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "deactivate_cyclic_brake_check_arm",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "change_to_logical_axis",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "joint_id",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "safemove_skip_axis",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "lt_arm_torque_control_gains_scale",
+            "value": "0.80000001"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "lt_load_comp_deadband",
+            "value": "10"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ultra_accuracy_stability_factor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "requires_option_indepmove",
+            "value": "indepmove"
+          }
+        ]
+      }
+    ]
+  }
+}

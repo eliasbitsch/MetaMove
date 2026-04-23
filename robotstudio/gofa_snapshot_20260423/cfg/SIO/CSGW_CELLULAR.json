@@ -1,0 +1,87 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "SIO/CSGW_CELLULAR/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "SIO/CSGW_CELLULAR/instances/CSGW"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "CSGW",
+        "rdonly": "false",
+        "instanceid": "7039216",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "CSGW"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Enabled",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Pin",
+            "value": "JPLmfcaN9bxt1ysrvKdPdM0FnHyqqrL8Ia2eqqnPD6uXPDSB"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "APN",
+            "value": "abbrobotics.com"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "User",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Password",
+            "value": "/3+nVNYR4Iqy+R7EBUBV3IAuQpRwfZyCvqk/F0gltf0qvcHz"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Operator",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Band",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Auth",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Roaming",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Idle",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Delay",
+            "value": "0"
+          }
+        ]
+      }
+    ]
+  }
+}

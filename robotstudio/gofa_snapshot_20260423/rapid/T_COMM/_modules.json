@@ -1,0 +1,27 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/rapid/"
+    },
+    "self": {
+      "href": "tasks/T_COMM/modules"
+    }
+  },
+  "status": {
+    "code": 294912
+  },
+  "state": [
+    {
+      "_type": "rap-module-info-li",
+      "_title": "T_COMM/BASE",
+      "name": "BASE",
+      "type": "SysMod"
+    },
+    {
+      "_type": "rap-module-info-li",
+      "_title": "T_COMM/CommModule",
+      "name": "CommModule",
+      "type": "ProgMod"
+    }
+  ]
+}

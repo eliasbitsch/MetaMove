@@ -1,0 +1,47 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "MOC/FOOT_INTERFACE/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/FOOT_INTERFACE/instances/r1_foot"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "r1_foot",
+        "rdonly": "false",
+        "instanceid": "6493968",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "r1_foot"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "error_offset_x",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "error_offset_y",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "error_offset_z",
+            "value": "0"
+          }
+        ]
+      }
+    ]
+  }
+}

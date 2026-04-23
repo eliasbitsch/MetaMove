@@ -1,0 +1,358 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "MOC/RIGID_BODY/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/RIGID_BODY/instances/r1_a_fot"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "r1_a_fot",
+        "rdonly": "true",
+        "instanceid": "6899504",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kinvec1_1",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kinvec1_2",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kinvec1_3",
+            "value": "0.1679"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kinvec2_1",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kinvec2_2",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kinvec2_3",
+            "value": "0"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/RIGID_BODY/instances/r1_b_stat"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "r1_b_stat",
+        "rdonly": "true",
+        "instanceid": "6899304",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kinvec1_1",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kinvec1_2",
+            "value": "-0.060899999"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kinvec1_3",
+            "value": "0.097099997"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kinvec2_1",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kinvec2_2",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kinvec2_3",
+            "value": "0"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/RIGID_BODY/instances/r1_c_uarm"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "r1_c_uarm",
+        "rdonly": "true",
+        "instanceid": "6899104",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kinvec1_1",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kinvec1_2",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kinvec1_3",
+            "value": "0.44400001"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kinvec2_1",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kinvec2_2",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kinvec2_3",
+            "value": "0"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/RIGID_BODY/instances/r1_d_ahus"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "r1_d_ahus",
+        "rdonly": "true",
+        "instanceid": "6898904",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kinvec1_1",
+            "value": "0.113"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kinvec1_2",
+            "value": "0.060899999"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kinvec1_3",
+            "value": "0.11"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kinvec2_1",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kinvec2_2",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kinvec2_3",
+            "value": "0"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/RIGID_BODY/instances/r1_e_rax"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "r1_e_rax",
+        "rdonly": "true",
+        "instanceid": "6898704",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kinvec1_1",
+            "value": "0.35699999"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kinvec1_2",
+            "value": "0.056499999"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kinvec1_3",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kinvec2_1",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kinvec2_2",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kinvec2_3",
+            "value": "0"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/RIGID_BODY/instances/r1_f_thus"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "r1_f_thus",
+        "rdonly": "true",
+        "instanceid": "6898504",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kinvec1_1",
+            "value": "0.101"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kinvec1_2",
+            "value": "-0.056499999"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kinvec1_3",
+            "value": "0.079999998"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kinvec2_1",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kinvec2_2",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kinvec2_3",
+            "value": "0"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/RIGID_BODY/instances/r1_g_vsk"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "r1_g_vsk",
+        "rdonly": "true",
+        "instanceid": "6898304",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kinvec1_1",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kinvec1_2",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kinvec1_3",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kinvec2_1",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kinvec2_2",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kinvec2_3",
+            "value": "0"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/RIGID_BODY/instances/r1_h_track"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "r1_h_track",
+        "rdonly": "true",
+        "instanceid": "6898104",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kinvec1_1",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kinvec1_2",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kinvec1_3",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kinvec2_1",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kinvec2_2",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kinvec2_3",
+            "value": "0"
+          }
+        ]
+      }
+    ]
+  }
+}

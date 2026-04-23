@@ -1,0 +1,37 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "EIO/SC_FEEDBACK_NETWORK/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "EIO/SC_FEEDBACK_NETWORK/instances/SC_Feedback_Net"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "SC_Feedback_Net",
+        "rdonly": "true",
+        "instanceid": "6603464",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "SC_Feedback_Net"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Label",
+            "value": "Safety Controller Feedback Network"
+          }
+        ]
+      }
+    ]
+  }
+}

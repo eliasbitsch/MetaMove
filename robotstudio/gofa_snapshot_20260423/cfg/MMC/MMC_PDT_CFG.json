@@ -1,0 +1,83 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "MMC/MMC_PDT_CFG/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_PDT_CFG/instances/bool"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "bool",
+        "rdonly": "true",
+        "instanceid": "7464264",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "bool"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "typ",
+            "value": "dattyp"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_PDT_CFG/instances/num"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "num",
+        "rdonly": "true",
+        "instanceid": "7464048",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "num"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "typ",
+            "value": "dattyp"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_PDT_CFG/instances/string"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "string",
+        "rdonly": "true",
+        "instanceid": "7463832",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "string"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "typ",
+            "value": "dattyp"
+          }
+        ]
+      }
+    ]
+  }
+}

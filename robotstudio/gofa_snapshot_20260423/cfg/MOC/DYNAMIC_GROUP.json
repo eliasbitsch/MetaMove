@@ -1,0 +1,32 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "MOC/DYNAMIC_GROUP/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/DYNAMIC_GROUP/instances/dynamic_group_rob1"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "dynamic_group_rob1",
+        "rdonly": "true",
+        "instanceid": "6912448",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_mimo_cm",
+            "value": "rob1"
+          }
+        ]
+      }
+    ]
+  }
+}

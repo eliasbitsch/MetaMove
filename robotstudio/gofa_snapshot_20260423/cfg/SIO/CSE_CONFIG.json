@@ -1,0 +1,307 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "SIO/CSE_CONFIG/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "SIO/CSE_CONFIG/instances/RSCON"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "RSCON",
+        "rdonly": "false",
+        "instanceid": "6614272",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "RSCON"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "CSEID",
+            "value": "15000-500126"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "DCNotify",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "DCNotifyPeriod",
+            "value": "60"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Enabled",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConnectionType",
+            "value": "Ability"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "InternetGWIP",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "InternetDNSIP",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ProxyUsed",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ProxyName",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ProxyPort",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ProxyAuth",
+            "value": "None"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ProxyUser",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ProxyPwd",
+            "value": "gE3OLSUpNDCmU2T8y0FgKz7JwCgl+M/FNQl6y3BVGDIwpao6"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ServerPolling",
+            "value": "Slow"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "DebugMode",
+            "value": "Disabled"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConnectOnStage",
+            "value": "Disabled"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "TraceLevel",
+            "value": "Normal"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "CSMode",
+            "value": "IRC5 Compatibility"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "CustomerStorage",
+            "value": "None"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "DiskPath",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "IoTScheme",
+            "value": "HTTPS"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "HTTPScheme",
+            "value": "HTTPS"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "MQTTScheme",
+            "value": "MQTT"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "MQTTWebSocket",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Host",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Port",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "URL",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "URLFile",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "MQTTAuthType",
+            "value": "Basic"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "HTTPAuthType",
+            "value": "No Auth"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "HTTPUser",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "HTTPPassword",
+            "value": "ZfKxFTUQg2xk6s6OamgsSAfOwmHIZ14sgz4D0rqWmGzJch5G"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "MQTTUser",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "MQTTPassword",
+            "value": "Lz55uVxZNqmHTpcrm8w/XQd4fRsgD5mtFg4nBNjfvmyoc1r6"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "MSIoTPort",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "IoTHubDeviceID",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "DPS",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "DPSHost",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "DPSScopeID",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "IoTHubHost",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "IoTAuthType",
+            "value": "CSE"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "SASToken",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "SASKey",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "HTTPCertPath",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "HTTPKeyPath",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "MQTTCertPath",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "MQTTKeyPath",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "IoTHubCertPath",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "IoTHubKeyPath",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ServerCheck",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "CAPath",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "CSERouting",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "HTTPSPolling",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Ability",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ModuleUpdate",
+            "value": "Enabled"
+          }
+        ]
+      }
+    ]
+  }
+}

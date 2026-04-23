@@ -1,0 +1,2275 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "MOC/MOTION_PLANNER/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/MOTION_PLANNER/instances/motion_planner_1"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "motion_planner_1",
+        "rdonly": "false",
+        "instanceid": "6780136",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "motion_planner_1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "brake_on_timeout",
+            "value": "120"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "brake_chk_zero_spd_interval",
+            "value": "9"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "dynamic_resolution",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "path_resolution",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "std_servo_queue_time",
+            "value": "0.193536"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "group_queue_time",
+            "value": "0.048"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "linear_max_speed",
+            "value": "2.2"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "reorient_max_speed",
+            "value": "1000"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ext_linear_max_speed",
+            "value": "5"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ext_reorient_max_speed",
+            "value": "1000"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "teach_mode_max_speed",
+            "value": "0.25"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_teach_mode_cp_world_lim",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "process_linearization_time",
+            "value": "0.048384"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ipol_prefetch_time",
+            "value": "0.1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "event_preset_time",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_motion_sup",
+            "value": "rob1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "motion_sup_permanent_off",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "motion_sup_max_level",
+            "value": "300"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "emergency_stop_delay_time",
+            "value": "0.02"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "require_event_accuracy",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "interpolation_priority",
+            "value": "30"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "high_interpolation_priority",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "deact_medium_ipol_priority",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_jog_parameters",
+            "value": "motion_planner_1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_for_jogging",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "repos_installed",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_control_warning",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_control_percent",
+            "value": "90"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "dyn_ipol_type",
+            "value": "2"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "geosp_time_res",
+            "value": "2"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_spline_parameters",
+            "value": "motion_planner_1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "reference_supervision_off",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "disable_boost_priority_at_start",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "restricted_circlepoint",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "extended_dec_dist",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "weave_path_pose_filter_bandwidth",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "tcp_log_filter_bandwidth",
+            "value": "15"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "movement_order_history",
+            "value": "5"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "number_of_event_objects",
+            "value": "100"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "reference_queue_optimization",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ipol_sensor_adjustments_disallowed",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "enable_high_accuracy_pos_sync",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "optimized_start_from_finepoint",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "wc_acc_dec_int_lim_disabled",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "absacc_speed_adjust",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ipol_buffer_startup_adj",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ipol_margin_for_servo_queue_time",
+            "value": "0.5"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_path_correction",
+            "value": "0.050000001"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "short_segment_length_cartesian",
+            "value": "9.9999997E-05"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "short_segment_length_rotating_axis",
+            "value": "0.001"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "short_segment_length_linear_axis",
+            "value": "9.9999997E-05"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_consecutive_short_segments",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_old_zone_behaviour",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "limit_speed_acc_lim",
+            "value": "10"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "movepnp_no_of_chk_points",
+            "value": "10"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "movepnp_sing_cross_benefit",
+            "value": "5"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_ann_cfg",
+            "value": "not_used_default"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_ann_sing_cross_cfg",
+            "value": "not_used_default"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "singularity_damping",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "remove_servo_delay_for_cnv_tracking",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "requires_option_colldect",
+            "value": "colldect"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/MOTION_PLANNER/instances/motion_planner_2"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "motion_planner_2",
+        "rdonly": "false",
+        "instanceid": "6779544",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "motion_planner_2"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "brake_on_timeout",
+            "value": "120"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "brake_chk_zero_spd_interval",
+            "value": "9"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "dynamic_resolution",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "path_resolution",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "std_servo_queue_time",
+            "value": "0.096000001"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "group_queue_time",
+            "value": "0.048"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "linear_max_speed",
+            "value": "7"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "reorient_max_speed",
+            "value": "1000"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ext_linear_max_speed",
+            "value": "5"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ext_reorient_max_speed",
+            "value": "1000"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "teach_mode_max_speed",
+            "value": "0.25"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_teach_mode_cp_world_lim",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "process_linearization_time",
+            "value": "0.048384"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ipol_prefetch_time",
+            "value": "0.1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "event_preset_time",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_motion_sup",
+            "value": "default"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "motion_sup_permanent_off",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "motion_sup_max_level",
+            "value": "300"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "emergency_stop_delay_time",
+            "value": "0.02"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "require_event_accuracy",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "interpolation_priority",
+            "value": "30"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "high_interpolation_priority",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "deact_medium_ipol_priority",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_jog_parameters",
+            "value": "not_used_default"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_for_jogging",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "repos_installed",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_control_warning",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_control_percent",
+            "value": "90"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "dyn_ipol_type",
+            "value": "2"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "geosp_time_res",
+            "value": "2"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_spline_parameters",
+            "value": "not_used_default"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "reference_supervision_off",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "disable_boost_priority_at_start",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "restricted_circlepoint",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "extended_dec_dist",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "weave_path_pose_filter_bandwidth",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "tcp_log_filter_bandwidth",
+            "value": "15"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "movement_order_history",
+            "value": "5"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "number_of_event_objects",
+            "value": "100"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "reference_queue_optimization",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ipol_sensor_adjustments_disallowed",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "enable_high_accuracy_pos_sync",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "optimized_start_from_finepoint",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "wc_acc_dec_int_lim_disabled",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "absacc_speed_adjust",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ipol_buffer_startup_adj",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ipol_margin_for_servo_queue_time",
+            "value": "0.5"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_path_correction",
+            "value": "0.050000001"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "short_segment_length_cartesian",
+            "value": "9.9999997E-05"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "short_segment_length_rotating_axis",
+            "value": "0.001"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "short_segment_length_linear_axis",
+            "value": "9.9999997E-05"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_consecutive_short_segments",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_old_zone_behaviour",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "limit_speed_acc_lim",
+            "value": "10"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "movepnp_no_of_chk_points",
+            "value": "10"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "movepnp_sing_cross_benefit",
+            "value": "5"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_ann_cfg",
+            "value": "not_used_default"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_ann_sing_cross_cfg",
+            "value": "not_used_default"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "singularity_damping",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "remove_servo_delay_for_cnv_tracking",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "requires_option_colldect",
+            "value": "colldect"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/MOTION_PLANNER/instances/motion_planner_3"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "motion_planner_3",
+        "rdonly": "false",
+        "instanceid": "6778952",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "motion_planner_3"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "brake_on_timeout",
+            "value": "120"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "brake_chk_zero_spd_interval",
+            "value": "9"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "dynamic_resolution",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "path_resolution",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "std_servo_queue_time",
+            "value": "0.096000001"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "group_queue_time",
+            "value": "0.048"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "linear_max_speed",
+            "value": "7"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "reorient_max_speed",
+            "value": "1000"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ext_linear_max_speed",
+            "value": "5"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ext_reorient_max_speed",
+            "value": "1000"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "teach_mode_max_speed",
+            "value": "0.25"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_teach_mode_cp_world_lim",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "process_linearization_time",
+            "value": "0.048384"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ipol_prefetch_time",
+            "value": "0.1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "event_preset_time",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_motion_sup",
+            "value": "default"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "motion_sup_permanent_off",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "motion_sup_max_level",
+            "value": "300"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "emergency_stop_delay_time",
+            "value": "0.02"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "require_event_accuracy",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "interpolation_priority",
+            "value": "30"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "high_interpolation_priority",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "deact_medium_ipol_priority",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_jog_parameters",
+            "value": "not_used_default"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_for_jogging",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "repos_installed",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_control_warning",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_control_percent",
+            "value": "90"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "dyn_ipol_type",
+            "value": "2"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "geosp_time_res",
+            "value": "2"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_spline_parameters",
+            "value": "not_used_default"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "reference_supervision_off",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "disable_boost_priority_at_start",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "restricted_circlepoint",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "extended_dec_dist",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "weave_path_pose_filter_bandwidth",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "tcp_log_filter_bandwidth",
+            "value": "15"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "movement_order_history",
+            "value": "5"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "number_of_event_objects",
+            "value": "100"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "reference_queue_optimization",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ipol_sensor_adjustments_disallowed",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "enable_high_accuracy_pos_sync",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "optimized_start_from_finepoint",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "wc_acc_dec_int_lim_disabled",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "absacc_speed_adjust",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ipol_buffer_startup_adj",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ipol_margin_for_servo_queue_time",
+            "value": "0.5"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_path_correction",
+            "value": "0.050000001"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "short_segment_length_cartesian",
+            "value": "9.9999997E-05"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "short_segment_length_rotating_axis",
+            "value": "0.001"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "short_segment_length_linear_axis",
+            "value": "9.9999997E-05"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_consecutive_short_segments",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_old_zone_behaviour",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "limit_speed_acc_lim",
+            "value": "10"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "movepnp_no_of_chk_points",
+            "value": "10"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "movepnp_sing_cross_benefit",
+            "value": "5"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_ann_cfg",
+            "value": "not_used_default"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_ann_sing_cross_cfg",
+            "value": "not_used_default"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "singularity_damping",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "remove_servo_delay_for_cnv_tracking",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "requires_option_colldect",
+            "value": "colldect"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/MOTION_PLANNER/instances/motion_planner_4"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "motion_planner_4",
+        "rdonly": "false",
+        "instanceid": "6498936",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "motion_planner_4"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "brake_on_timeout",
+            "value": "120"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "brake_chk_zero_spd_interval",
+            "value": "9"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "dynamic_resolution",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "path_resolution",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "std_servo_queue_time",
+            "value": "0.096000001"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "group_queue_time",
+            "value": "0.048"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "linear_max_speed",
+            "value": "7"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "reorient_max_speed",
+            "value": "1000"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ext_linear_max_speed",
+            "value": "5"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ext_reorient_max_speed",
+            "value": "1000"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "teach_mode_max_speed",
+            "value": "0.25"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_teach_mode_cp_world_lim",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "process_linearization_time",
+            "value": "0.048384"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ipol_prefetch_time",
+            "value": "0.1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "event_preset_time",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_motion_sup",
+            "value": "default"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "motion_sup_permanent_off",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "motion_sup_max_level",
+            "value": "300"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "emergency_stop_delay_time",
+            "value": "0.02"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "require_event_accuracy",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "interpolation_priority",
+            "value": "30"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "high_interpolation_priority",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "deact_medium_ipol_priority",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_jog_parameters",
+            "value": "not_used_default"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_for_jogging",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "repos_installed",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_control_warning",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_control_percent",
+            "value": "90"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "dyn_ipol_type",
+            "value": "2"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "geosp_time_res",
+            "value": "2"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_spline_parameters",
+            "value": "not_used_default"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "reference_supervision_off",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "disable_boost_priority_at_start",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "restricted_circlepoint",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "extended_dec_dist",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "weave_path_pose_filter_bandwidth",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "tcp_log_filter_bandwidth",
+            "value": "15"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "movement_order_history",
+            "value": "5"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "number_of_event_objects",
+            "value": "100"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "reference_queue_optimization",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ipol_sensor_adjustments_disallowed",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "enable_high_accuracy_pos_sync",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "optimized_start_from_finepoint",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "wc_acc_dec_int_lim_disabled",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "absacc_speed_adjust",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ipol_buffer_startup_adj",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ipol_margin_for_servo_queue_time",
+            "value": "0.5"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_path_correction",
+            "value": "0.050000001"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "short_segment_length_cartesian",
+            "value": "9.9999997E-05"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "short_segment_length_rotating_axis",
+            "value": "0.001"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "short_segment_length_linear_axis",
+            "value": "9.9999997E-05"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_consecutive_short_segments",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_old_zone_behaviour",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "limit_speed_acc_lim",
+            "value": "10"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "movepnp_no_of_chk_points",
+            "value": "10"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "movepnp_sing_cross_benefit",
+            "value": "5"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_ann_cfg",
+            "value": "not_used_default"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_ann_sing_cross_cfg",
+            "value": "not_used_default"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "singularity_damping",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "remove_servo_delay_for_cnv_tracking",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "requires_option_colldect",
+            "value": "colldect"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/MOTION_PLANNER/instances/motion_planner_5"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "motion_planner_5",
+        "rdonly": "false",
+        "instanceid": "6498344",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "motion_planner_5"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "brake_on_timeout",
+            "value": "120"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "brake_chk_zero_spd_interval",
+            "value": "9"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "dynamic_resolution",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "path_resolution",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "std_servo_queue_time",
+            "value": "0.096000001"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "group_queue_time",
+            "value": "0.048"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "linear_max_speed",
+            "value": "7"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "reorient_max_speed",
+            "value": "1000"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ext_linear_max_speed",
+            "value": "5"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ext_reorient_max_speed",
+            "value": "1000"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "teach_mode_max_speed",
+            "value": "0.25"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_teach_mode_cp_world_lim",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "process_linearization_time",
+            "value": "0.048384"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ipol_prefetch_time",
+            "value": "0.1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "event_preset_time",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_motion_sup",
+            "value": "default"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "motion_sup_permanent_off",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "motion_sup_max_level",
+            "value": "300"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "emergency_stop_delay_time",
+            "value": "0.02"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "require_event_accuracy",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "interpolation_priority",
+            "value": "30"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "high_interpolation_priority",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "deact_medium_ipol_priority",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_jog_parameters",
+            "value": "not_used_default"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_for_jogging",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "repos_installed",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_control_warning",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_control_percent",
+            "value": "90"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "dyn_ipol_type",
+            "value": "2"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "geosp_time_res",
+            "value": "2"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_spline_parameters",
+            "value": "not_used_default"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "reference_supervision_off",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "disable_boost_priority_at_start",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "restricted_circlepoint",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "extended_dec_dist",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "weave_path_pose_filter_bandwidth",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "tcp_log_filter_bandwidth",
+            "value": "15"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "movement_order_history",
+            "value": "5"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "number_of_event_objects",
+            "value": "100"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "reference_queue_optimization",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ipol_sensor_adjustments_disallowed",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "enable_high_accuracy_pos_sync",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "optimized_start_from_finepoint",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "wc_acc_dec_int_lim_disabled",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "absacc_speed_adjust",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ipol_buffer_startup_adj",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ipol_margin_for_servo_queue_time",
+            "value": "0.5"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_path_correction",
+            "value": "0.050000001"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "short_segment_length_cartesian",
+            "value": "9.9999997E-05"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "short_segment_length_rotating_axis",
+            "value": "0.001"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "short_segment_length_linear_axis",
+            "value": "9.9999997E-05"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_consecutive_short_segments",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_old_zone_behaviour",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "limit_speed_acc_lim",
+            "value": "10"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "movepnp_no_of_chk_points",
+            "value": "10"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "movepnp_sing_cross_benefit",
+            "value": "5"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_ann_cfg",
+            "value": "not_used_default"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_ann_sing_cross_cfg",
+            "value": "not_used_default"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "singularity_damping",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "remove_servo_delay_for_cnv_tracking",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "requires_option_colldect",
+            "value": "colldect"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/MOTION_PLANNER/instances/motion_planner_6"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "motion_planner_6",
+        "rdonly": "false",
+        "instanceid": "6497752",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "motion_planner_6"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "brake_on_timeout",
+            "value": "120"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "brake_chk_zero_spd_interval",
+            "value": "9"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "dynamic_resolution",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "path_resolution",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "std_servo_queue_time",
+            "value": "0.096000001"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "group_queue_time",
+            "value": "0.048"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "linear_max_speed",
+            "value": "7"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "reorient_max_speed",
+            "value": "1000"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ext_linear_max_speed",
+            "value": "5"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ext_reorient_max_speed",
+            "value": "1000"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "teach_mode_max_speed",
+            "value": "0.25"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_teach_mode_cp_world_lim",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "process_linearization_time",
+            "value": "0.048384"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ipol_prefetch_time",
+            "value": "0.1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "event_preset_time",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_motion_sup",
+            "value": "default"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "motion_sup_permanent_off",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "motion_sup_max_level",
+            "value": "300"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "emergency_stop_delay_time",
+            "value": "0.02"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "require_event_accuracy",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "interpolation_priority",
+            "value": "30"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "high_interpolation_priority",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "deact_medium_ipol_priority",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_jog_parameters",
+            "value": "not_used_default"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_for_jogging",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "repos_installed",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_control_warning",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_control_percent",
+            "value": "90"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "dyn_ipol_type",
+            "value": "2"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "geosp_time_res",
+            "value": "2"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_spline_parameters",
+            "value": "not_used_default"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "reference_supervision_off",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "disable_boost_priority_at_start",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "restricted_circlepoint",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "extended_dec_dist",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "weave_path_pose_filter_bandwidth",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "tcp_log_filter_bandwidth",
+            "value": "15"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "movement_order_history",
+            "value": "5"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "number_of_event_objects",
+            "value": "100"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "reference_queue_optimization",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ipol_sensor_adjustments_disallowed",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "enable_high_accuracy_pos_sync",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "optimized_start_from_finepoint",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "wc_acc_dec_int_lim_disabled",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "absacc_speed_adjust",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ipol_buffer_startup_adj",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ipol_margin_for_servo_queue_time",
+            "value": "0.5"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_path_correction",
+            "value": "0.050000001"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "short_segment_length_cartesian",
+            "value": "9.9999997E-05"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "short_segment_length_rotating_axis",
+            "value": "0.001"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "short_segment_length_linear_axis",
+            "value": "9.9999997E-05"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_consecutive_short_segments",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_old_zone_behaviour",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "limit_speed_acc_lim",
+            "value": "10"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "movepnp_no_of_chk_points",
+            "value": "10"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "movepnp_sing_cross_benefit",
+            "value": "5"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_ann_cfg",
+            "value": "not_used_default"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_ann_sing_cross_cfg",
+            "value": "not_used_default"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "singularity_damping",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "remove_servo_delay_for_cnv_tracking",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "requires_option_colldect",
+            "value": "colldect"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/MOTION_PLANNER/instances/motion_planner_7"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "motion_planner_7",
+        "rdonly": "false",
+        "instanceid": "6497160",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "motion_planner_7"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "brake_on_timeout",
+            "value": "120"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "brake_chk_zero_spd_interval",
+            "value": "9"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "dynamic_resolution",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "path_resolution",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "std_servo_queue_time",
+            "value": "0.096000001"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "group_queue_time",
+            "value": "0.048"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "linear_max_speed",
+            "value": "7"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "reorient_max_speed",
+            "value": "1000"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ext_linear_max_speed",
+            "value": "5"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ext_reorient_max_speed",
+            "value": "1000"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "teach_mode_max_speed",
+            "value": "0.25"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_teach_mode_cp_world_lim",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "process_linearization_time",
+            "value": "0.048384"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ipol_prefetch_time",
+            "value": "0.1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "event_preset_time",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_motion_sup",
+            "value": "default"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "motion_sup_permanent_off",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "motion_sup_max_level",
+            "value": "300"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "emergency_stop_delay_time",
+            "value": "0.02"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "require_event_accuracy",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "interpolation_priority",
+            "value": "30"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "high_interpolation_priority",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "deact_medium_ipol_priority",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_jog_parameters",
+            "value": "not_used_default"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_for_jogging",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "repos_installed",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_control_warning",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_control_percent",
+            "value": "90"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "dyn_ipol_type",
+            "value": "2"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "geosp_time_res",
+            "value": "2"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_spline_parameters",
+            "value": "not_used_default"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "reference_supervision_off",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "disable_boost_priority_at_start",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "restricted_circlepoint",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "extended_dec_dist",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "weave_path_pose_filter_bandwidth",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "tcp_log_filter_bandwidth",
+            "value": "15"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "movement_order_history",
+            "value": "5"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "number_of_event_objects",
+            "value": "100"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "reference_queue_optimization",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ipol_sensor_adjustments_disallowed",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "enable_high_accuracy_pos_sync",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "optimized_start_from_finepoint",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "wc_acc_dec_int_lim_disabled",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "absacc_speed_adjust",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ipol_buffer_startup_adj",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ipol_margin_for_servo_queue_time",
+            "value": "0.5"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_path_correction",
+            "value": "0.050000001"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "short_segment_length_cartesian",
+            "value": "9.9999997E-05"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "short_segment_length_rotating_axis",
+            "value": "0.001"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "short_segment_length_linear_axis",
+            "value": "9.9999997E-05"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_consecutive_short_segments",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_old_zone_behaviour",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "limit_speed_acc_lim",
+            "value": "10"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "movepnp_no_of_chk_points",
+            "value": "10"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "movepnp_sing_cross_benefit",
+            "value": "5"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_ann_cfg",
+            "value": "not_used_default"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_ann_sing_cross_cfg",
+            "value": "not_used_default"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "singularity_damping",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "remove_servo_delay_for_cnv_tracking",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "requires_option_colldect",
+            "value": "colldect"
+          }
+        ]
+      }
+    ]
+  }
+}

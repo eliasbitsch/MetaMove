@@ -1,0 +1,1 @@
+{ "_links" : { "base" : { "href" : "https://192.168.125.1:443/rw/panel/ctrl-state/" }, "self" : { "href" : "" } } ,"status" : {"code":294912} , "state" : [ { "_type" : "pnl-ctrlstate", "_title" : "ctrl-state", "ctrlstate" : "motoron" } ]}
