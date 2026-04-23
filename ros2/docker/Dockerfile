@@ -28,6 +28,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         ros-jazzy-rqt-graph ros-jazzy-rqt-plot ros-jazzy-rqt-topic \
         ros-jazzy-rosbag2 ros-jazzy-rosbag2-storage-mcap \
         ros-jazzy-foxglove-bridge \
+        ros-jazzy-rosbridge-suite \
         ros-jazzy-ros-testing \
         iputils-ping iproute2 curl jq tmux nano \
     && rm -rf /var/lib/apt/lists/*

@@ -39,6 +39,7 @@ x-ros2-common: &ros2-common
   ports:
     - "6511:6511/udp"            # EGM feedback/command channel
     - "8765:8765/tcp"            # foxglove-bridge (optional web viz)
+    - "9090:9090/tcp"            # rosbridge_websocket (Jarvis tool-call path)
   volumes:
     # ---- Source tree (host → container) ---------------------------------
     - ../abb_libegm:/opt/metamove_ws/src/abb_libegm
