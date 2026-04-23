@@ -1,0 +1,157 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "MOC/FC_SPEED_CHANGE/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/FC_SPEED_CHANGE/instances/fc_speed_change1"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "fc_speed_change1",
+        "rdonly": "false",
+        "instanceid": "6492216",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "fc_speed_change1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ctrl_type",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_ratio_min",
+            "value": "0.1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "no_of_speed_levels",
+            "value": "2"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_ratio_delta",
+            "value": "0.07"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_max_update_period",
+            "value": "0.079999998"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fdb_type",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fdb_dac_channel",
+            "value": "7"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fdb_offset",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fdb_lp_active",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fdb_lp_bandwidth",
+            "value": "30"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_tcp_speed",
+            "value": "0.30000001"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "recover_rule_fdb_ratio",
+            "value": "1.3"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "dec_rule_safety_fdb_to_ref_ratio",
+            "value": "1.5"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "dec_rule_safety_fdb_time",
+            "value": "0.1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "fdb_trend_step_size",
+            "value": "8"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "dec_rule1_fdb_to_ref_ratio",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "dec_rule1_fdb_trend",
+            "value": "-1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "dec_rule2_fdb_to_ref_ratio",
+            "value": "1.5"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "dec_rule2_fdb_trend",
+            "value": "-1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inc_rule1_fdb_to_ref_ratio",
+            "value": "0.5"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inc_rule1_fdb_trend",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inc_rule2_fdb_to_ref_ratio",
+            "value": "0.1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inc_rule2_fdb_trend",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ctrl_pid_kp",
+            "value": "10"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ctrl_pid_ki",
+            "value": "10"
+          }
+        ]
+      }
+    ]
+  }
+}

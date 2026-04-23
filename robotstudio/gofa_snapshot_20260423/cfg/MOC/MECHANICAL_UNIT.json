@@ -1,0 +1,152 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "MOC/MECHANICAL_UNIT/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/MECHANICAL_UNIT/instances/ROB_1"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "ROB_1",
+        "rdonly": "true",
+        "instanceid": "6787680",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "ROB_1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_activation_relay",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_brake_relay",
+            "value": "rob1_brake"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_connection_relay",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_robot",
+            "value": "ROB_1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_single_0",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_single_1",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_single_2",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_single_3",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_single_4",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_single_5",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_mobile_platform",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "allow_move_of_user_frame",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_offset_adjustment",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "activate_at_start_up",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "activate_relay_during_init",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "deactivation_forbidden",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "deactivate_ptc_at_disconnect",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "allow_activation_from_any_motion_task",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "safe_move_sbr_delay",
+            "value": "0.2"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "safe_move_sbr_start_spd_offset",
+            "value": "0.1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "dead_time_compensation_ratio",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "only_handle_activation_state_from_rapid",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "deactivate_brake_short_supervsion",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "has_no_brake",
+            "value": "false"
+          }
+        ]
+      }
+    ]
+  }
+}

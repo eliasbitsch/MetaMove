@@ -1,0 +1,52 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "SIO/SYSLOG/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "SIO/SYSLOG/instances/SYSLOG"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "SYSLOG",
+        "rdonly": "false",
+        "instanceid": "6605680",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "SYSLOG"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Enabled",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Protocol",
+            "value": "UDP"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "SyslogServer",
+            "value": "127.0.0.1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "PortNumber",
+            "value": "514"
+          }
+        ]
+      }
+    ]
+  }
+}

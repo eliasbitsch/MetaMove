@@ -1,0 +1,3727 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "MMC/MMC_REAL_PARAM/instances?limit=70"
+    },
+    "next": {
+      "href": "MMC/MMC_REAL_PARAM/instances?start=70&limit=70"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_PARAM/instances/common_interrupt"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "common_interrupt",
+        "rdonly": "true",
+        "instanceid": "7609976",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "common_interrupt"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name_rule",
+            "value": "LAST"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "prefdattyp",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_PARAM/instances/accset_acc"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "accset_acc",
+        "rdonly": "true",
+        "instanceid": "7600416",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "accset_acc"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name_rule",
+            "value": "DEF"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": "100"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "prefdattyp",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_PARAM/instances/accset_ramp"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "accset_ramp",
+        "rdonly": "true",
+        "instanceid": "7599960",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "accset_ramp"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name_rule",
+            "value": "DEF"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": "100"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "prefdattyp",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_PARAM/instances/gripload_load"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "gripload_load",
+        "rdonly": "true",
+        "instanceid": "7599504",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "gripload_load"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name_rule",
+            "value": "DEF"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": "load0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "prefdattyp",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_PARAM/instances/pathacclim_acclim"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "pathacclim_acclim",
+        "rdonly": "true",
+        "instanceid": "7599048",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "pathacclim_acclim"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name_rule",
+            "value": "DEF"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": "FALSE"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "prefdattyp",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_PARAM/instances/pathacclim_decellim"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "pathacclim_decellim",
+        "rdonly": "true",
+        "instanceid": "7598592",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "pathacclim_decellim"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name_rule",
+            "value": "DEF"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": "FALSE"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "prefdattyp",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_PARAM/instances/velset_override"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "velset_override",
+        "rdonly": "true",
+        "instanceid": "7598136",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "velset_override"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name_rule",
+            "value": "DEF"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": "100"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "prefdattyp",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_PARAM/instances/velset_max"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "velset_max",
+        "rdonly": "true",
+        "instanceid": "7597680",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "velset_max"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name_rule",
+            "value": "DEF"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": "5000"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "prefdattyp",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_PARAM/instances/syncmoveoff_syncid"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "syncmoveoff_syncid",
+        "rdonly": "true",
+        "instanceid": "7597224",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "syncmoveoff_syncid"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name_rule",
+            "value": "NONE"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "prefdattyp",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_PARAM/instances/syncmoveoff_timeout"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "syncmoveoff_timeout",
+        "rdonly": "true",
+        "instanceid": "7596768",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "syncmoveoff_timeout"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name_rule",
+            "value": "LAST"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "prefdattyp",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_PARAM/instances/syncmoveon_syncid"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "syncmoveon_syncid",
+        "rdonly": "true",
+        "instanceid": "7596312",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "syncmoveon_syncid"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name_rule",
+            "value": "NONE"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "prefdattyp",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_PARAM/instances/syncmoveon_tasklist"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "syncmoveon_tasklist",
+        "rdonly": "true",
+        "instanceid": "7595856",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "syncmoveon_tasklist"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name_rule",
+            "value": "NONE"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "prefdattyp",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_PARAM/instances/syncmoveon_timeout"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "syncmoveon_timeout",
+        "rdonly": "true",
+        "instanceid": "7595400",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "syncmoveon_timeout"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name_rule",
+            "value": "LAST"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "prefdattyp",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_PARAM/instances/procerrrecovery_procsignal"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "procerrrecovery_procsignal",
+        "rdonly": "true",
+        "instanceid": "7594944",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "procerrrecovery_procsignal"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name_rule",
+            "value": "LAST"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "prefdattyp",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_PARAM/instances/cornerpathwarning_active"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "cornerpathwarning_active",
+        "rdonly": "true",
+        "instanceid": "7594488",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "cornerpathwarning_active"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name_rule",
+            "value": "DEF"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": "FALSE"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "prefdattyp",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_PARAM/instances/moveabsj_tojointpos"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "moveabsj_tojointpos",
+        "rdonly": "true",
+        "instanceid": "7591792",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "moveabsj_tojointpos"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name_rule",
+            "value": "SEQ"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": "hirule_jointtarget"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "prefdattyp",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_PARAM/instances/moveabsj_v"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "moveabsj_v",
+        "rdonly": "true",
+        "instanceid": "7591336",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "moveabsj_v"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name_rule",
+            "value": "LAST"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": "1000"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "prefdattyp",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_PARAM/instances/moveabsj_t"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "moveabsj_t",
+        "rdonly": "true",
+        "instanceid": "7590880",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "moveabsj_t"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name_rule",
+            "value": "DEF"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": "5"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "prefdattyp",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_PARAM/instances/moveabsj_z"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "moveabsj_z",
+        "rdonly": "true",
+        "instanceid": "7590424",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "moveabsj_z"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name_rule",
+            "value": "LAST"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": "50"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "prefdattyp",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_PARAM/instances/moveabsj_tool"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "moveabsj_tool",
+        "rdonly": "true",
+        "instanceid": "7589968",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "moveabsj_tool"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name_rule",
+            "value": "CUR"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": "hirule_tooldata"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "prefdattyp",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_PARAM/instances/moveabsj_wobj"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "moveabsj_wobj",
+        "rdonly": "true",
+        "instanceid": "7589512",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "moveabsj_wobj"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name_rule",
+            "value": "CUR"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": "hirule_wobjdata"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "prefdattyp",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_PARAM/instances/moveabsj_tload"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "moveabsj_tload",
+        "rdonly": "true",
+        "instanceid": "7589056",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "moveabsj_tload"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name_rule",
+            "value": "CUR"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": "hirule_tloaddata"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "prefdattyp",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_PARAM/instances/movec_v"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "movec_v",
+        "rdonly": "true",
+        "instanceid": "7588600",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "movec_v"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name_rule",
+            "value": "LAST"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": "1000"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "prefdattyp",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_PARAM/instances/movec_t"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "movec_t",
+        "rdonly": "true",
+        "instanceid": "7588144",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "movec_t"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name_rule",
+            "value": "DEF"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": "5"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "prefdattyp",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_PARAM/instances/movec_z"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "movec_z",
+        "rdonly": "true",
+        "instanceid": "7587688",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "movec_z"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name_rule",
+            "value": "LAST"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": "10"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "prefdattyp",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_PARAM/instances/movec_tool"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "movec_tool",
+        "rdonly": "true",
+        "instanceid": "7587232",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "movec_tool"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name_rule",
+            "value": "CUR"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": "hirule_tooldata"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "prefdattyp",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_PARAM/instances/movec_wobj"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "movec_wobj",
+        "rdonly": "true",
+        "instanceid": "7586776",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "movec_wobj"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name_rule",
+            "value": "CUR"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": "hirule_wobjdata"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "prefdattyp",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_PARAM/instances/movec_tload"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "movec_tload",
+        "rdonly": "true",
+        "instanceid": "7586320",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "movec_tload"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name_rule",
+            "value": "CUR"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": "hirule_tloaddata"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "prefdattyp",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_PARAM/instances/movej_v"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "movej_v",
+        "rdonly": "true",
+        "instanceid": "7585864",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "movej_v"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name_rule",
+            "value": "LAST"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": "1000"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "prefdattyp",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_PARAM/instances/movej_t"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "movej_t",
+        "rdonly": "true",
+        "instanceid": "7585408",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "movej_t"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name_rule",
+            "value": "DEF"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": "5"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "prefdattyp",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_PARAM/instances/movej_z"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "movej_z",
+        "rdonly": "true",
+        "instanceid": "7584952",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "movej_z"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name_rule",
+            "value": "LAST"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": "50"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "prefdattyp",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_PARAM/instances/movej_tool"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "movej_tool",
+        "rdonly": "true",
+        "instanceid": "7584496",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "movej_tool"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name_rule",
+            "value": "CUR"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": "hirule_tooldata"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "prefdattyp",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_PARAM/instances/movej_wobj"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "movej_wobj",
+        "rdonly": "true",
+        "instanceid": "7584040",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "movej_wobj"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name_rule",
+            "value": "CUR"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": "hirule_wobjdata"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "prefdattyp",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_PARAM/instances/movej_tload"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "movej_tload",
+        "rdonly": "true",
+        "instanceid": "7583584",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "movej_tload"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name_rule",
+            "value": "CUR"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": "hirule_tloaddata"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "prefdattyp",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_PARAM/instances/movel_v"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "movel_v",
+        "rdonly": "true",
+        "instanceid": "7583128",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "movel_v"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name_rule",
+            "value": "LAST"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": "1000"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "prefdattyp",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_PARAM/instances/movel_t"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "movel_t",
+        "rdonly": "true",
+        "instanceid": "7582672",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "movel_t"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name_rule",
+            "value": "DEF"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": "5"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "prefdattyp",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_PARAM/instances/movel_z"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "movel_z",
+        "rdonly": "true",
+        "instanceid": "7582216",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "movel_z"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name_rule",
+            "value": "LAST"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": "50"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "prefdattyp",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_PARAM/instances/movel_tool"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "movel_tool",
+        "rdonly": "true",
+        "instanceid": "7581760",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "movel_tool"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name_rule",
+            "value": "CUR"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": "hirule_tooldata"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "prefdattyp",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_PARAM/instances/movel_wobj"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "movel_wobj",
+        "rdonly": "true",
+        "instanceid": "7581304",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "movel_wobj"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name_rule",
+            "value": "CUR"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": "hirule_wobjdata"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "prefdattyp",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_PARAM/instances/movel_tload"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "movel_tload",
+        "rdonly": "true",
+        "instanceid": "7580848",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "movel_tload"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name_rule",
+            "value": "CUR"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": "hirule_tloaddata"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "prefdattyp",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_PARAM/instances/moveextj_tojointpos"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "moveextj_tojointpos",
+        "rdonly": "true",
+        "instanceid": "7580392",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "moveextj_tojointpos"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name_rule",
+            "value": "SEQ"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": "hirule_jointtarget"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "prefdattyp",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_PARAM/instances/moveextj_t"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "moveextj_t",
+        "rdonly": "true",
+        "instanceid": "7579936",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "moveextj_t"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name_rule",
+            "value": "DEF"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": "5"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "prefdattyp",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_PARAM/instances/moveextj_speed"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "moveextj_speed",
+        "rdonly": "true",
+        "instanceid": "7579480",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "moveextj_speed"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name_rule",
+            "value": "NONE"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "prefdattyp",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_PARAM/instances/common_point"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "common_point",
+        "rdonly": "true",
+        "instanceid": "7579024",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "common_point"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name_rule",
+            "value": "SEQ"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": "hirule_robtarget"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "prefdattyp",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_PARAM/instances/common_id"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "common_id",
+        "rdonly": "true",
+        "instanceid": "7578568",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "common_id"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name_rule",
+            "value": "VAL"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "prefdattyp",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_PARAM/instances/common_speed"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "common_speed",
+        "rdonly": "true",
+        "instanceid": "7578112",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "common_speed"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name_rule",
+            "value": "LAST"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": "v1000"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "prefdattyp",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_PARAM/instances/common_zone"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "common_zone",
+        "rdonly": "true",
+        "instanceid": "7577656",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "common_zone"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name_rule",
+            "value": "LAST"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": "z50"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "prefdattyp",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_PARAM/instances/common_cir_zone"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "common_cir_zone",
+        "rdonly": "true",
+        "instanceid": "7577200",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "common_cir_zone"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name_rule",
+            "value": "LAST"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": "z10"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "prefdattyp",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_PARAM/instances/stepbwdpath_steplength"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "stepbwdpath_steplength",
+        "rdonly": "true",
+        "instanceid": "7569184",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "stepbwdpath_steplength"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name_rule",
+            "value": "DEF"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": "30"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "prefdattyp",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_PARAM/instances/stepbwdpath_steptime"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "stepbwdpath_steptime",
+        "rdonly": "true",
+        "instanceid": "7568728",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "stepbwdpath_steptime"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name_rule",
+            "value": "DEF"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "prefdattyp",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_PARAM/instances/waituntil_cond"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "waituntil_cond",
+        "rdonly": "true",
+        "instanceid": "7563144",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "waituntil_cond"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name_rule",
+            "value": "NONE"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "prefdattyp",
+            "value": "MMC_PDT_BOOL"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_PARAM/instances/waituntil_maxtime"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "waituntil_maxtime",
+        "rdonly": "true",
+        "instanceid": "7562688",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "waituntil_maxtime"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name_rule",
+            "value": "LAST"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": "60"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "prefdattyp",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_PARAM/instances/waituntil_timeflag"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "waituntil_timeflag",
+        "rdonly": "true",
+        "instanceid": "7562232",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "waituntil_timeflag"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name_rule",
+            "value": "LAST"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "prefdattyp",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_PARAM/instances/waituntil_pollrate"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "waituntil_pollrate",
+        "rdonly": "true",
+        "instanceid": "7561776",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "waituntil_pollrate"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name_rule",
+            "value": "LAST"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "prefdattyp",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_PARAM/instances/waituntil_header"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "waituntil_header",
+        "rdonly": "true",
+        "instanceid": "7561320",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "waituntil_header"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name_rule",
+            "value": "DEF"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": "stEmpty"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "prefdattyp",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_PARAM/instances/waituntil_message"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "waituntil_message",
+        "rdonly": "true",
+        "instanceid": "7560864",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "waituntil_message"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name_rule",
+            "value": "DEF"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": "stEmpty"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "prefdattyp",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_PARAM/instances/waituntil_wrap"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "waituntil_wrap",
+        "rdonly": "true",
+        "instanceid": "7560408",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "waituntil_wrap"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name_rule",
+            "value": "LAST"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "prefdattyp",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_PARAM/instances/waituntil_icon"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "waituntil_icon",
+        "rdonly": "true",
+        "instanceid": "7559952",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "waituntil_icon"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name_rule",
+            "value": "LAST"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "prefdattyp",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_PARAM/instances/waituntil_image"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "waituntil_image",
+        "rdonly": "true",
+        "instanceid": "7559496",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "waituntil_image"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name_rule",
+            "value": "DEF"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": "\"\""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "prefdattyp",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_PARAM/instances/waituntil_visualizetime"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "waituntil_visualizetime",
+        "rdonly": "true",
+        "instanceid": "7559040",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "waituntil_visualizetime"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name_rule",
+            "value": "LAST"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": "5"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "prefdattyp",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_PARAM/instances/waitdi_value"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "waitdi_value",
+        "rdonly": "true",
+        "instanceid": "7558584",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "waitdi_value"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name_rule",
+            "value": "DEF"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "prefdattyp",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_PARAM/instances/waitdi_maxtime"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "waitdi_maxtime",
+        "rdonly": "true",
+        "instanceid": "7558128",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "waitdi_maxtime"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name_rule",
+            "value": "LAST"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": "60"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "prefdattyp",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_PARAM/instances/waitdi_timeflag"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "waitdi_timeflag",
+        "rdonly": "true",
+        "instanceid": "7557672",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "waitdi_timeflag"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name_rule",
+            "value": "LAST"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "prefdattyp",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_PARAM/instances/waitdi_header"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "waitdi_header",
+        "rdonly": "true",
+        "instanceid": "7557216",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "waitdi_header"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name_rule",
+            "value": "DEF"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": "stEmpty"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "prefdattyp",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_PARAM/instances/waitdi_message"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "waitdi_message",
+        "rdonly": "true",
+        "instanceid": "7556760",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "waitdi_message"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name_rule",
+            "value": "DEF"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": "stEmpty"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "prefdattyp",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_PARAM/instances/waitdi_wrap"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "waitdi_wrap",
+        "rdonly": "true",
+        "instanceid": "7556304",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "waitdi_wrap"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name_rule",
+            "value": "LAST"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "prefdattyp",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_PARAM/instances/waitdi_icon"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "waitdi_icon",
+        "rdonly": "true",
+        "instanceid": "7555848",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "waitdi_icon"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name_rule",
+            "value": "LAST"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "prefdattyp",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_PARAM/instances/waitdi_image"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "waitdi_image",
+        "rdonly": "true",
+        "instanceid": "7555392",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "waitdi_image"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name_rule",
+            "value": "DEF"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": "\"\""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "prefdattyp",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_PARAM/instances/waitdi_visualizetime"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "waitdi_visualizetime",
+        "rdonly": "true",
+        "instanceid": "7554936",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "waitdi_visualizetime"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name_rule",
+            "value": "LAST"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": "5"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "prefdattyp",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_PARAM/instances/waitdi_uiactivesignal"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "waitdi_uiactivesignal",
+        "rdonly": "true",
+        "instanceid": "7554480",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "waitdi_uiactivesignal"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name_rule",
+            "value": "LAST"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "prefdattyp",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          }
+        ]
+      }
+    ]
+  }
+}

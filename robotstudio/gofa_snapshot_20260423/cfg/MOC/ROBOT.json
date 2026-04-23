@@ -1,0 +1,382 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "MOC/ROBOT/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/ROBOT/instances/ROB_1"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "ROB_1",
+        "rdonly": "false",
+        "instanceid": "6496272",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "ROB_1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_old_smb",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_robot_serial_number",
+            "value": "rob_1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_robot_type",
+            "value": "ROB1_15000_0_95_5"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_robot_calib",
+            "value": "r1_uncalib"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_joint_0",
+            "value": "rob1_1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_joint_1",
+            "value": "rob1_2"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_joint_2",
+            "value": "rob1_3"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_joint_3",
+            "value": "rob1_4"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_joint_4",
+            "value": "rob1_5"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_joint_5",
+            "value": "rob1_6"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "base_frame_pos_x",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "base_frame_pos_y",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "base_frame_pos_z",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "allow_trans_of_baseframe",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "base_frame_orient_u0",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "base_frame_orient_u1",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "base_frame_orient_u2",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "base_frame_orient_u3",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "base_frame_coordinated",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "gravity_alpha",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "gravity_beta",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "gamma_rotation",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "base_mass",
+            "value": "3.812"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "base_mass_centre_x",
+            "value": "-0.00069999998"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "base_mass_centre_y",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "base_mass_centre_z",
+            "value": "0.098700002"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "rot_x_tol",
+            "value": "9.9999997E-05"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "rot_y_tol",
+            "value": "9.9999997E-05"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "rot_z_tol",
+            "value": "9.9999997E-05"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "pos_x_tol",
+            "value": "9.9999997E-06"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "pos_y_tol",
+            "value": "9.9999997E-06"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "pos_z_tol",
+            "value": "9.9999997E-06"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ori_superv_off",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "upper_work_area_x",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "lower_work_area_x",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "upper_work_area_y",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "lower_work_area_y",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "upper_work_area_z",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "lower_work_area_z",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "cp_bound_limit_outside",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "lower_arm_cp_bound_x",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "lower_arm_cp_bound_y",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "lower_arm_cp_bound_z",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "upper_arm_cp_bound_x",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "upper_arm_cp_bound_y",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "upper_arm_cp_bound_z",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "track_convey_with_robot",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_css",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_fc_master",
+            "value": "fc_master1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_def_comp",
+            "value": "rob1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_pmc_sensor",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "corvec_correction_level",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "seven_axes_hp_motion",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "time_to_inpos",
+            "value": "0.079999998"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "joint_max_angle",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "mi_pos_x",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "mi_pos_y",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "mi_pos_z",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "mi_orient_u0",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "mi_orient_u1",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "mi_orient_u2",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "mi_orient_u3",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "initial_jx_config",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "utilization_rate_limit",
+            "value": "1.1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "check_cross_section_limits",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_external_pos_adjustment",
+            "value": "0.2"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "not_moving_speed_level",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_accel_to_track_conveyor",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_motion_process_mode",
+            "value": "rob1_collaborative_mode"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "load_id_test_speed_factor",
+            "value": "4"
+          }
+        ]
+      }
+    ]
+  }
+}

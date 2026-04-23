@@ -1,0 +1,60 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "SYS/RUN_MODE_SETTINGS/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/RUN_MODE_SETTINGS/instances/AutoToManual"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "AutoToManual",
+        "rdonly": "false",
+        "instanceid": "7629104",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "AutoToManual"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "SwitchTo",
+            "value": "Keep"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/RUN_MODE_SETTINGS/instances/ManualToAuto"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "ManualToAuto",
+        "rdonly": "false",
+        "instanceid": "6634864",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "ManualToAuto"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "SwitchTo",
+            "value": "Keep"
+          }
+        ]
+      }
+    ]
+  }
+}

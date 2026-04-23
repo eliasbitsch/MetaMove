@@ -1,0 +1,19 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/rapid/"
+    },
+    "self": {
+      "href": "tasks/T_ROB1/modules/Morobot_Assembly/text"
+    }
+  },
+  "state": [
+    {
+      "_type": "rap-module-text",
+      "_title": "moduletext",
+      "change-count": " 60107 ",
+      "file-path": "/TEMP/pusres.870082",
+      "module-length": "1368"
+    }
+  ]
+}

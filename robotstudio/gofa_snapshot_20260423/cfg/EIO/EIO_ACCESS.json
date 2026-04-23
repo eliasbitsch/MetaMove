@@ -1,0 +1,186 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "EIO/EIO_ACCESS/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "EIO/EIO_ACCESS/instances/Internal"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "Internal",
+        "rdonly": "true",
+        "instanceid": "7617568",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "Internal"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Rapid",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "LocalManual",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "LocalAuto",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "RemoteManual",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "RemoteAuto",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "EIO/EIO_ACCESS/instances/Default"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "Default",
+        "rdonly": "true",
+        "instanceid": "7617432",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "Default"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Rapid",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "LocalManual",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "LocalAuto",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "RemoteManual",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "RemoteAuto",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "EIO/EIO_ACCESS/instances/ReadOnly"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "ReadOnly",
+        "rdonly": "true",
+        "instanceid": "7617296",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "ReadOnly"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Rapid",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "LocalManual",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "LocalAuto",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "RemoteManual",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "RemoteAuto",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "EIO/EIO_ACCESS/instances/All"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "All",
+        "rdonly": "true",
+        "instanceid": "7617160",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "All"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Rapid",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "LocalManual",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "LocalAuto",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "RemoteManual",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "RemoteAuto",
+            "value": "true"
+          }
+        ]
+      }
+    ]
+  }
+}

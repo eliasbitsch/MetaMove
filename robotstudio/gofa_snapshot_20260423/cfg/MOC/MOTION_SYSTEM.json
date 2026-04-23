@@ -1,0 +1,132 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "MOC/MOTION_SYSTEM/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/MOTION_SYSTEM/instances/system_1"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "system_1",
+        "rdonly": "false",
+        "instanceid": "6780408",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "system_1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "axis_control_sampling_time",
+            "value": "0.00050000002"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_temp_ambient_cabinet",
+            "value": "5"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_temp_ambient_cabinet",
+            "value": "45"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_temp_ambient_robot",
+            "value": "5"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_temp_ambient_robot",
+            "value": "45"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "power_regain_limitation_active",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "sens_mem_mode",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "smb_memory_update_time",
+            "value": "43200"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "coll_pred_default_safety_distance",
+            "value": "0.001"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "independent_coll_stop_no_brake",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_old_track_motion_behavior",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "cfg_errors_as_warnings",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "absacc_system_version",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "safemove_assistance_disable",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "safemove_assistance_speed_factor",
+            "value": "0.95999998"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "safemove_assistance_zone_margin",
+            "value": "0.0099999998"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "safemove_assistance_max_steps",
+            "value": "4"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "drive_unit_detach_signal",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ext_motion_high_freq_fdb",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "requires_option_AbsAcc",
+            "value": "AbsAcc"
+          }
+        ]
+      }
+    ]
+  }
+}

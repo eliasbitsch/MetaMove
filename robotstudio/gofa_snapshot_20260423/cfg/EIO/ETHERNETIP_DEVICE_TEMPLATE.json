@@ -1,0 +1,1832 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "EIO/ETHERNETIP_DEVICE_TEMPLATE/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "EIO/ETHERNETIP_DEVICE_TEMPLATE/instances/ABB_Scalable_IO"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "ABB_Scalable_IO",
+        "rdonly": "true",
+        "instanceid": "6987688",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "ABB_Scalable_IO"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Network",
+            "value": "EtherNetIP"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "StateWhenStartup",
+            "value": "Activated"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "TrustLevel",
+            "value": "DefaultTrustLevel"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Simulated",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "VendorName",
+            "value": "ABB Robotics"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ProductName",
+            "value": "DSQC1030"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "MajorRev",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Compatibility",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "MinorRev",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Label",
+            "value": "ABB Scalable I/O Device"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Address",
+            "value": "0.0.0.0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "VendorId",
+            "value": "75"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ProductCode",
+            "value": "29"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "DeviceType",
+            "value": "12"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "OutputAssembly",
+            "value": "100"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "InputAssembly",
+            "value": "101"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationAssembly",
+            "value": "102"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Ownership",
+            "value": "EXCLUSIVE"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "InputConnectionType",
+            "value": "POINT2POINT"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConnectionPriority",
+            "value": "SCHEDULE"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "OutputSize",
+            "value": "2"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "InputSize",
+            "value": "2"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationSize",
+            "value": "8"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData00",
+            "value": "01 02 09 10 01 08 10 01 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData01",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData02",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData03",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData04",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData05",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData06",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData07",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData08",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData09",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData10",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData11",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData12",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData13",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData14",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData15",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData16",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData17",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData18",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData19",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData20",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData21",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData22",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData23",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData24",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "O2T_RPI",
+            "value": "40000"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "T2O_RPI",
+            "value": "40000"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConnectionTimeoutMultiplier",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ProductionTrigger",
+            "value": "CYCLIC"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ProductionInhibitTime",
+            "value": "10000"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "SafetyDevice",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "StandardConnection",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "SafeOutputConnection",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "SafeInputConnection",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "EIO/ETHERNETIP_DEVICE_TEMPLATE/instances/ABB_Scalable_IO_Digital"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "ABB_Scalable_IO_Digital",
+        "rdonly": "true",
+        "instanceid": "6985584",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "ABB_Scalable_IO_Digital"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Network",
+            "value": "EtherNetIP"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "StateWhenStartup",
+            "value": "Activated"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "TrustLevel",
+            "value": "DefaultTrustLevel"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Simulated",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "VendorName",
+            "value": "ABB Robotics"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ProductName",
+            "value": "DSQC1030"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "MajorRev",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Compatibility",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "MinorRev",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Label",
+            "value": "ABB Scalable I/O Device + Digital"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Address",
+            "value": "0.0.0.0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "VendorId",
+            "value": "75"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ProductCode",
+            "value": "29"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "DeviceType",
+            "value": "12"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "OutputAssembly",
+            "value": "100"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "InputAssembly",
+            "value": "101"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationAssembly",
+            "value": "102"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Ownership",
+            "value": "EXCLUSIVE"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "InputConnectionType",
+            "value": "POINT2POINT"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConnectionPriority",
+            "value": "SCHEDULE"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "OutputSize",
+            "value": "4"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "InputSize",
+            "value": "4"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationSize",
+            "value": "15"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData00",
+            "value": "02 02 09 10 01 08 10 01 02 09 10 01 08 10 01 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData01",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData02",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData03",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData04",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData05",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData06",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData07",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData08",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData09",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData10",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData11",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData12",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData13",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData14",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData15",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData16",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData17",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData18",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData19",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData20",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData21",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData22",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData23",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData24",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "O2T_RPI",
+            "value": "40000"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "T2O_RPI",
+            "value": "40000"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConnectionTimeoutMultiplier",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ProductionTrigger",
+            "value": "CYCLIC"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ProductionInhibitTime",
+            "value": "10000"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "SafetyDevice",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "StandardConnection",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "SafeOutputConnection",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "SafeInputConnection",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "EIO/ETHERNETIP_DEVICE_TEMPLATE/instances/ABB_Scalable_IO_Analog"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "ABB_Scalable_IO_Analog",
+        "rdonly": "true",
+        "instanceid": "6983480",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "ABB_Scalable_IO_Analog"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Network",
+            "value": "EtherNetIP"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "StateWhenStartup",
+            "value": "Activated"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "TrustLevel",
+            "value": "DefaultTrustLevel"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Simulated",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "VendorName",
+            "value": "ABB Robotics"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ProductName",
+            "value": "DSQC1030"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "MajorRev",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Compatibility",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "MinorRev",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Label",
+            "value": "ABB Scalable I/O Device + Analog"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Address",
+            "value": "0.0.0.0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "VendorId",
+            "value": "75"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ProductCode",
+            "value": "29"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "DeviceType",
+            "value": "12"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "OutputAssembly",
+            "value": "100"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "InputAssembly",
+            "value": "101"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationAssembly",
+            "value": "102"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Ownership",
+            "value": "EXCLUSIVE"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "InputConnectionType",
+            "value": "POINT2POINT"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConnectionPriority",
+            "value": "SCHEDULE"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "OutputSize",
+            "value": "10"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "InputSize",
+            "value": "10"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationSize",
+            "value": "15"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData00",
+            "value": "02 02 09 10 01 08 10 01 02 0b 04 10 0a 04 10 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData01",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData02",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData03",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData04",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData05",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData06",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData07",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData08",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData09",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData10",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData11",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData12",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData13",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData14",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData15",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData16",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData17",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData18",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData19",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData20",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData21",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData22",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData23",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData24",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "O2T_RPI",
+            "value": "40000"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "T2O_RPI",
+            "value": "40000"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConnectionTimeoutMultiplier",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ProductionTrigger",
+            "value": "CYCLIC"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ProductionInhibitTime",
+            "value": "10000"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "SafetyDevice",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "StandardConnection",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "SafeOutputConnection",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "SafeInputConnection",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "EIO/ETHERNETIP_DEVICE_TEMPLATE/instances/ABB_Scalable_IO_Relay"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "ABB_Scalable_IO_Relay",
+        "rdonly": "true",
+        "instanceid": "6981376",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "ABB_Scalable_IO_Relay"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Network",
+            "value": "EtherNetIP"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "StateWhenStartup",
+            "value": "Activated"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "TrustLevel",
+            "value": "DefaultTrustLevel"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Simulated",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "VendorName",
+            "value": "ABB Robotics"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ProductName",
+            "value": "DSQC1030"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "MajorRev",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Compatibility",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "MinorRev",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Label",
+            "value": "ABB Scalable I/O Device + Relay"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Address",
+            "value": "0.0.0.0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "VendorId",
+            "value": "75"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ProductCode",
+            "value": "29"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "DeviceType",
+            "value": "12"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "OutputAssembly",
+            "value": "100"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "InputAssembly",
+            "value": "101"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationAssembly",
+            "value": "102"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Ownership",
+            "value": "EXCLUSIVE"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "InputConnectionType",
+            "value": "POINT2POINT"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConnectionPriority",
+            "value": "SCHEDULE"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "OutputSize",
+            "value": "3"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "InputSize",
+            "value": "3"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationSize",
+            "value": "15"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData00",
+            "value": "02 02 09 10 01 08 10 01 02 09 08 01 08 08 01 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData01",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData02",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData03",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData04",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData05",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData06",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData07",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData08",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData09",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData10",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData11",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData12",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData13",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData14",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData15",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData16",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData17",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData18",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData19",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData20",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData21",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData22",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData23",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData24",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "O2T_RPI",
+            "value": "40000"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "T2O_RPI",
+            "value": "40000"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConnectionTimeoutMultiplier",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ProductionTrigger",
+            "value": "CYCLIC"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ProductionInhibitTime",
+            "value": "10000"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "SafetyDevice",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "StandardConnection",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "SafeOutputConnection",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "SafeInputConnection",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "EIO/ETHERNETIP_DEVICE_TEMPLATE/instances/ABB_Safe_Scalable_IO"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "ABB_Safe_Scalable_IO",
+        "rdonly": "true",
+        "instanceid": "6979272",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "ABB_Safe_Scalable_IO"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Network",
+            "value": "EtherNetIP"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "StateWhenStartup",
+            "value": "Activated"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "TrustLevel",
+            "value": "DefaultTrustLevel"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Simulated",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "VendorName",
+            "value": "ABB Robotics"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ProductName",
+            "value": "DSQC1042"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "MajorRev",
+            "value": "2"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Compatibility",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "MinorRev",
+            "value": "5"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Label",
+            "value": "ABB Safe Scalable I/O Device"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Address",
+            "value": "0.0.0.0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "VendorId",
+            "value": "75"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ProductCode",
+            "value": "29"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "DeviceType",
+            "value": "999"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "OutputAssembly",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "InputAssembly",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationAssembly",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Ownership",
+            "value": "EXCLUSIVE"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "InputConnectionType",
+            "value": "POINT2POINT"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConnectionPriority",
+            "value": "LOW"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "OutputSize",
+            "value": "8"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "InputSize",
+            "value": "8"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationSize",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData00",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData01",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData02",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData03",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData04",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData05",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData06",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData07",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData08",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData09",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData10",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData11",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData12",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData13",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData14",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData15",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData16",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData17",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData18",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData19",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData20",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData21",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData22",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData23",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData24",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "O2T_RPI",
+            "value": "50000"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "T2O_RPI",
+            "value": "50000"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConnectionTimeoutMultiplier",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ProductionTrigger",
+            "value": "CYCLIC"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ProductionInhibitTime",
+            "value": "10000"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "SafetyDevice",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "StandardConnection",
+            "value": "ABB_Safe_Scalable_IO_Standard"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "SafeOutputConnection",
+            "value": "ABB_Safe_Scalable_IO_Output"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "SafeInputConnection",
+            "value": "ABB_Safe_Scalable_IO_Input"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "EIO/ETHERNETIP_DEVICE_TEMPLATE/instances/ABB_Safe_24V_Switching_Device"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "ABB_Safe_24V_Switching_Device",
+        "rdonly": "true",
+        "instanceid": "6977168",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "ABB_Safe_24V_Switching_Device"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Network",
+            "value": "EtherNetIP"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "StateWhenStartup",
+            "value": "Activated"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "TrustLevel",
+            "value": "DefaultTrustLevel"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Simulated",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "VendorName",
+            "value": "ABB Robotics"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ProductName",
+            "value": "DSQC1092"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "MajorRev",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Compatibility",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "MinorRev",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Label",
+            "value": "ABB Safe 24V Switching Device"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Address",
+            "value": "0.0.0.0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "VendorId",
+            "value": "75"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ProductCode",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "DeviceType",
+            "value": "1000"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "OutputAssembly",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "InputAssembly",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationAssembly",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Ownership",
+            "value": "EXCLUSIVE"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "InputConnectionType",
+            "value": "POINT2POINT"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConnectionPriority",
+            "value": "LOW"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "OutputSize",
+            "value": "8"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "InputSize",
+            "value": "8"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationSize",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData00",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData01",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData02",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData03",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData04",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData05",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData06",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData07",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData08",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData09",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData10",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData11",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData12",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData13",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData14",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData15",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData16",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData17",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData18",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData19",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData20",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData21",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData22",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData23",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConfigurationData24",
+            "value": "00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "O2T_RPI",
+            "value": "50000"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "T2O_RPI",
+            "value": "50000"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ConnectionTimeoutMultiplier",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ProductionTrigger",
+            "value": "CYCLIC"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ProductionInhibitTime",
+            "value": "10000"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "SafetyDevice",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "StandardConnection",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "SafeOutputConnection",
+            "value": "Safe_24V_Switching_Device_Output"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "SafeInputConnection",
+            "value": ""
+          }
+        ]
+      }
+    ]
+  }
+}

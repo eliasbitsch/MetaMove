@@ -1,0 +1,226 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "SIO/IP_SETTING/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "SIO/IP_SETTING/instances/Ability%20Network"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "Ability Network",
+        "rdonly": "true",
+        "instanceid": "7030632",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "Ability Network"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Address",
+            "value": "192.168.126.2"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "SubnetMask",
+            "value": "255.255.255.252"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "DHCP",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Flags",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "PortSpeed",
+            "value": "Auto"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ACD",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "VR",
+            "value": "0"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SIO/IP_SETTING/instances/Private%20Network"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "Private Network",
+        "rdonly": "false",
+        "instanceid": "6605400",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "Private Network"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Address",
+            "value": "0.0.0.0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "SubnetMask",
+            "value": "0.0.0.0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "DHCP",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Flags",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "PortSpeed",
+            "value": "Auto"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ACD",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "VR",
+            "value": "0"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SIO/IP_SETTING/instances/Public%20Network"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "Public Network",
+        "rdonly": "false",
+        "instanceid": "6605032",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "Public Network"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Address",
+            "value": "0.0.0.0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "SubnetMask",
+            "value": "0.0.0.0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "DHCP",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Flags",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "PortSpeed",
+            "value": "100"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ACD",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "VR",
+            "value": "0"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SIO/IP_SETTING/instances/IO%20Network"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "IO Network",
+        "rdonly": "false",
+        "instanceid": "6615328",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "IO Network"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Address",
+            "value": "192.168.1.211"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "SubnetMask",
+            "value": "255.255.255.0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "DHCP",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Flags",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "PortSpeed",
+            "value": "Auto"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ACD",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "VR",
+            "value": "0"
+          }
+        ]
+      }
+    ]
+  }
+}

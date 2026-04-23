@@ -1,0 +1,128 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "MMC/MMC_MOTIONADV/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_MOTIONADV/instances/MoveCSync"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "MoveCSync",
+        "rdonly": "true",
+        "instanceid": "7376536",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "MoveCSync"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_nr",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "alt_nr",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "instr_name",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "only_mec_task",
+            "value": "true"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_MOTIONADV/instances/MoveJSync"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "MoveJSync",
+        "rdonly": "true",
+        "instanceid": "7376264",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "MoveJSync"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_nr",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "alt_nr",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "instr_name",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "only_mec_task",
+            "value": "true"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_MOTIONADV/instances/MoveLSync"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "MoveLSync",
+        "rdonly": "true",
+        "instanceid": "7375992",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "MoveLSync"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_nr",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "alt_nr",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "instr_name",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "only_mec_task",
+            "value": "true"
+          }
+        ]
+      }
+    ]
+  }
+}

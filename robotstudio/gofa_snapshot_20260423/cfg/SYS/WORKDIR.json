@@ -1,0 +1,83 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "SYS/WORKDIR/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/WORKDIR/instances/SYS_DIR"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "SYS_DIR",
+        "rdonly": "true",
+        "instanceid": "7631536",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "SYS_DIR"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "path",
+            "value": "RELEASE:/system"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/WORKDIR/instances/LOG_DIR"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "LOG_DIR",
+        "rdonly": "true",
+        "instanceid": "7631104",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "LOG_DIR"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "path",
+            "value": "HOME:"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/WORKDIR/instances/INT_DIR"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "INT_DIR",
+        "rdonly": "true",
+        "instanceid": "7630672",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "INT_DIR"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "path",
+            "value": "INTERNAL:"
+          }
+        ]
+      }
+    ]
+  }
+}

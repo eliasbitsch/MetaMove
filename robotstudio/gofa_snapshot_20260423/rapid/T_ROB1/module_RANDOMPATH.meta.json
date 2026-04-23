@@ -1,0 +1,19 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/rapid/"
+    },
+    "self": {
+      "href": "tasks/T_ROB1/modules/module_RANDOMPATH/text"
+    }
+  },
+  "state": [
+    {
+      "_type": "rap-module-text",
+      "_title": "moduletext",
+      "change-count": " 59960 ",
+      "file-path": "/TEMP/pusres.422146",
+      "module-length": "1368"
+    }
+  ]
+}

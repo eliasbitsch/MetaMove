@@ -1,0 +1,52 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "SIO/CSGW_WIRELESS/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "SIO/CSGW_WIRELESS/instances/CSGW"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "CSGW",
+        "rdonly": "false",
+        "instanceid": "7038376",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "CSGW"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Enabled",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "SSID",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Key",
+            "value": "165X/dScgd3yvMpkhrvQ1li7VMJdmVcGgzywXSp25egObhYt"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Security",
+            "value": ""
+          }
+        ]
+      }
+    ]
+  }
+}

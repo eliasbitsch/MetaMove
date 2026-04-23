@@ -1,0 +1,42 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "MOC/ROBOT_SERIAL_NUMBER/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/ROBOT_SERIAL_NUMBER/instances/rob_1"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "rob_1",
+        "rdonly": "false",
+        "instanceid": "6494144",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "rob_1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "robot_serial_number_high_part",
+            "value": "15000"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "robot_serial_number_low_part",
+            "value": "500126"
+          }
+        ]
+      }
+    ]
+  }
+}

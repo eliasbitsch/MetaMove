@@ -1,0 +1,52 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "EIO/PROFINET_NETWORK/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "EIO/PROFINET_NETWORK/instances/PROFINET"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "PROFINET",
+        "rdonly": "false",
+        "instanceid": "6395368",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "PROFINET"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Label",
+            "value": "PROFINET Controller/Device Network"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "StationName",
+            "value": "abbcobot"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Simulated",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "InterfacePort",
+            "value": "WAN"
+          }
+        ]
+      }
+    ]
+  }
+}

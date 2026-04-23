@@ -1,0 +1,318 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "MMC/MMC_COMMUNICATE/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_COMMUNICATE/instances/TPReadFK"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "TPReadFK",
+        "rdonly": "true",
+        "instanceid": "7379384",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "TPReadFK"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_nr",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "alt_nr",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "instr_name",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "only_mec_task",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_COMMUNICATE/instances/TPReadNum"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "TPReadNum",
+        "rdonly": "true",
+        "instanceid": "7379112",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "TPReadNum"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_nr",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "alt_nr",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "instr_name",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "only_mec_task",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_COMMUNICATE/instances/TPReadDnum"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "TPReadDnum",
+        "rdonly": "true",
+        "instanceid": "7378840",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "TPReadDnum"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_nr",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "alt_nr",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "instr_name",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "only_mec_task",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_COMMUNICATE/instances/TPErase"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "TPErase",
+        "rdonly": "true",
+        "instanceid": "7378568",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "TPErase"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_nr",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "alt_nr",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "instr_name",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "only_mec_task",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_COMMUNICATE/instances/TPShow"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "TPShow",
+        "rdonly": "true",
+        "instanceid": "7378296",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "TPShow"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_nr",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "alt_nr",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "instr_name",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "only_mec_task",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_COMMUNICATE/instances/UIMsgBox"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "UIMsgBox",
+        "rdonly": "true",
+        "instanceid": "7378024",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "UIMsgBox"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_nr",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "alt_nr",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "instr_name",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "only_mec_task",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_COMMUNICATE/instances/UIDisplay"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "UIDisplay",
+        "rdonly": "true",
+        "instanceid": "7377752",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "UIDisplay"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_nr",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "alt_nr",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "instr_name",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "only_mec_task",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_COMMUNICATE/instances/PackDNHeader"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "PackDNHeader",
+        "rdonly": "true",
+        "instanceid": "7377480",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "PackDNHeader"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_nr",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "alt_nr",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "instr_name",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "only_mec_task",
+            "value": "false"
+          }
+        ]
+      }
+    ]
+  }
+}

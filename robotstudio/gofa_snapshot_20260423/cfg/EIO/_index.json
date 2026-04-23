@@ -1,0 +1,248 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "EIO"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "EIO/SYSSIG_OUT"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "SYSSIG_OUT"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "EIO/SYSSIG_IN"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "SYSSIG_IN"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "EIO/SYSSIG_ACTRESTR"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "SYSSIG_ACTRESTR"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "EIO/EIO_CROSS"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "EIO_CROSS"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "EIO/EIO_ACCESS"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "EIO_ACCESS"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "EIO/EIO_DEVICE_TRUSTLEVEL"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "EIO_DEVICE_TRUSTLEVEL"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "EIO/EIO_SIGNAL_SAFELEVEL"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "EIO_SIGNAL_SAFELEVEL"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "EIO/EIO_DEVICE_TRANSFER_DATA"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "EIO_DEVICE_TRANSFER_DATA"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "EIO/ETHERNETIP_NETWORK"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "ETHERNETIP_NETWORK"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "EIO/ETHERNETIP_IO_CONNECTION"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "ETHERNETIP_IO_CONNECTION"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "EIO/ETHERNETIP_IO_CONNECTION_TEMPLATE"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "ETHERNETIP_IO_CONNECTION_TEMPLATE"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "EIO/ETHERNETIP_DEVICE"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "ETHERNETIP_DEVICE"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "EIO/ETHERNETIP_DEVICE_TEMPLATE"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "ETHERNETIP_DEVICE_TEMPLATE"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "EIO/ETHERNETIP_COMMAND"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "ETHERNETIP_COMMAND"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "EIO/ETHERNETIP_COMMAND_TEMPLATE"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "ETHERNETIP_COMMAND_TEMPLATE"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "EIO/VIRTUAL_NETWORK"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "VIRTUAL_NETWORK"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "EIO/VIRTUAL_DEVICE"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "VIRTUAL_DEVICE"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "EIO/PROFINET_NETWORK"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "PROFINET_NETWORK"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "EIO/PROFINET_DRIVER"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "PROFINET_DRIVER"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "EIO/PROFINET_INTERNAL_DEVICE"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "PROFINET_INTERNAL_DEVICE"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "EIO/PROFINET_INTERNAL_DEVICE_TEMPLATE"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "PROFINET_INTERNAL_DEVICE_TEMPLATE"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "EIO/SC_FEEDBACK_NETWORK"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "SC_FEEDBACK_NETWORK"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "EIO/SC_FEEDBACK_DEVICE"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "SC_FEEDBACK_DEVICE"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "EIO/INT_BUS_NETWORK"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "INT_BUS_NETWORK"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "EIO/INT_BUS_DEVICE"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "INT_BUS_DEVICE"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "EIO/EIO_SIGNAL"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "EIO_SIGNAL"
+      }
+    ]
+  }
+}

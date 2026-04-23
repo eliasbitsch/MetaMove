@@ -1,0 +1,647 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "MOC"
+    },
+    "next": {
+      "href": "MOC?start=70&amp;limit=70"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/MOTION_SYSTEM"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "MOTION_SYSTEM"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/MOTION_PLANNER"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "MOTION_PLANNER"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/JOG_PARAMETERS"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "JOG_PARAMETERS"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/ANN_CFG"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "ANN_CFG"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/DYNAMIC_GROUP"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "DYNAMIC_GROUP"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/DYNAMIC_MODEL"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "DYNAMIC_MODEL"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/CROSS_SECTION_GROUP"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "CROSS_SECTION_GROUP"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/CROSS_SECTION"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "CROSS_SECTION"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/SPEED_DEP_CROSS_SECTION"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "SPEED_DEP_CROSS_SECTION"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/RIGID_BODY_GROUP"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "RIGID_BODY_GROUP"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/RIGID_BODY"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "RIGID_BODY"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/DYNAMICS_BASE_PARAMETERS"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "DYNAMICS_BASE_PARAMETERS"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/EXTENDED_DYNAMIC_MODEL"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "EXTENDED_DYNAMIC_MODEL"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/EXTENDED_DYNAMIC_MODEL_TYPE"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "EXTENDED_DYNAMIC_MODEL_TYPE"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/MECH_UNIT_GROUP"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "MECH_UNIT_GROUP"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/MECHANICAL_UNIT"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "MECHANICAL_UNIT"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/MOBILE_PLATFORM"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "MOBILE_PLATFORM"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/MOBILE_PLATFORM_TYPE"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "MOBILE_PLATFORM_TYPE"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/RELAY"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "RELAY"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/ROBOT"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "ROBOT"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/ROBOT_SERIAL_NUMBER"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "ROBOT_SERIAL_NUMBER"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/ROBOT_TYPE"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "ROBOT_TYPE"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/ROBOT_CALIB"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "ROBOT_CALIB"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/FOOT_INTERFACE"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "FOOT_INTERFACE"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/TOOL_INTERFACE"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "TOOL_INTERFACE"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/CARTESIAN_SPEED_SUPERVISION"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "CARTESIAN_SPEED_SUPERVISION"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/CSS"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "CSS"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/FC_MASTER"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "FC_MASTER"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/FC_SENSOR"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "FC_SENSOR"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/FC_KINEMATICS"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "FC_KINEMATICS"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/FC_APPLICATION"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "FC_APPLICATION"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/FC_SPEED_CHANGE"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "FC_SPEED_CHANGE"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/PMC_SENSOR"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "PMC_SENSOR"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/PMC_SENSOR_SETUP"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "PMC_SENSOR_SETUP"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/MOTION_PROCESS_MODE"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "MOTION_PROCESS_MODE"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/MOTION_PROCESS_MODE_TYPE"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "MOTION_PROCESS_MODE_TYPE"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/DEF_COMP"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "DEF_COMP"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/MOTION_SUP"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "MOTION_SUP"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/SINGLE"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "SINGLE"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/SINGLE_TYPE"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "SINGLE_TYPE"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/PATH_SENSOR_SYNC"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "PATH_SENSOR_SYNC"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/EXTCTL_PROC_DATA"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "EXTCTL_PROC_DATA"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/JOINT"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "JOINT"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/DRIVE_MODULE"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "DRIVE_MODULE"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/MEASUREMENT_CHANNEL"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "MEASUREMENT_CHANNEL"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/MEASUREMENT_BOARD"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "MEASUREMENT_BOARD"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/MEASUREMENT_BOARD_TYPE"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "MEASUREMENT_BOARD_TYPE"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/ARM"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "ARM"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/THERMAL_COMP"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "THERMAL_COMP"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/THERMAL_COMP_TYPE"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "THERMAL_COMP_TYPE"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/ARM_TYPE"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "ARM_TYPE"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/PARALLEL_ARM_LOAD"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "PARALLEL_ARM_LOAD"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/PARALLEL_ARM_CALIB"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "PARALLEL_ARM_CALIB"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/BALANCE_TORQUE_TABLE"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "BALANCE_TORQUE_TABLE"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/BALANCE_REACTION_TABLE_1"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "BALANCE_REACTION_TABLE_1"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/BALANCE_REACTION_TABLE_2"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "BALANCE_REACTION_TABLE_2"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/FRIC_EST"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "FRIC_EST"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/FRIC_EST_TYPE"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "FRIC_EST_TYPE"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/ARM_CHECK_POINT"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "ARM_CHECK_POINT"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/ARM_LOAD"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "ARM_LOAD"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/ACC_DATA"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "ACC_DATA"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/ARM_CALIB"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "ARM_CALIB"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/WHEEL"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "WHEEL"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/WHEEL_TYPE"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "WHEEL_TYPE"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/JOINT_CALIB"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "JOINT_CALIB"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/TRANSMISSION"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "TRANSMISSION"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/PARAMETER_ID"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "PARAMETER_ID"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/BRAKE"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "BRAKE"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/BRAKE_TYPE"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "BRAKE_TYPE"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/MOTION_SUP_DATA"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "MOTION_SUP_DATA"
+      }
+    ]
+  }
+}

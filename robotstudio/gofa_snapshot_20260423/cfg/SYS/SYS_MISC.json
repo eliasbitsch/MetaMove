@@ -1,0 +1,622 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "SYS/SYS_MISC/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/SYS_MISC/instances/RapidSocketMemSize"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "RapidSocketMemSize",
+        "rdonly": "false",
+        "instanceid": "6634784",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "RapidSocketMemSize"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Value",
+            "value": "5000"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "NoOfRetry",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "SimulateMenu",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "MultiStop",
+            "value": "0"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/SYS_MISC/instances/RapidInstrucionsPerMs"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "RapidInstrucionsPerMs",
+        "rdonly": "false",
+        "instanceid": "6636272",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "RapidInstrucionsPerMs"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Value",
+            "value": "15"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "NoOfRetry",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "SimulateMenu",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "MultiStop",
+            "value": "0"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/SYS_MISC/instances/PrioritizeRapidInstructionsPerMs"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "PrioritizeRapidInstructionsPerMs",
+        "rdonly": "false",
+        "instanceid": "6918184",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "PrioritizeRapidInstructionsPerMs"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "NoOfRetry",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "SimulateMenu",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "MultiStop",
+            "value": "0"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/SYS_MISC/instances/MathLibMemSize"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "MathLibMemSize",
+        "rdonly": "false",
+        "instanceid": "6918104",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "MathLibMemSize"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Value",
+            "value": "500000"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "NoOfRetry",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "SimulateMenu",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "MultiStop",
+            "value": "0"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/SYS_MISC/instances/NoOfRetry"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "NoOfRetry",
+        "rdonly": "false",
+        "instanceid": "6917952",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "NoOfRetry"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Value",
+            "value": "4"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "NoOfRetry",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "SimulateMenu",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "MultiStop",
+            "value": "0"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/SYS_MISC/instances/SimulateMenu"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "SimulateMenu",
+        "rdonly": "false",
+        "instanceid": "6917800",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "SimulateMenu"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Value",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "NoOfRetry",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "SimulateMenu",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "MultiStop",
+            "value": "0"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/SYS_MISC/instances/ModalPayLoadMode"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "ModalPayLoadMode",
+        "rdonly": "false",
+        "instanceid": "6428032",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "ModalPayLoadMode"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Value",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "NoOfRetry",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "SimulateMenu",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "MultiStop",
+            "value": "0"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/SYS_MISC/instances/PayloadsInWristCoords"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "PayloadsInWristCoords",
+        "rdonly": "false",
+        "instanceid": "6427880",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "PayloadsInWristCoords"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Value",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "NoOfRetry",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "SimulateMenu",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "MultiStop",
+            "value": "0"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/SYS_MISC/instances/StationaryPayLoadMode"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "StationaryPayLoadMode",
+        "rdonly": "false",
+        "instanceid": "6427728",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "StationaryPayLoadMode"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "NoOfRetry",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "SimulateMenu",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "MultiStop",
+            "value": "0"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/SYS_MISC/instances/CollisionErrorHandling"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "CollisionErrorHandling",
+        "rdonly": "false",
+        "instanceid": "6427576",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "CollisionErrorHandling"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "NoOfRetry",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "SimulateMenu",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "MultiStop",
+            "value": "0"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/SYS_MISC/instances/BrakeMaintenance"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "BrakeMaintenance",
+        "rdonly": "false",
+        "instanceid": "6427424",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "BrakeMaintenance"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Value",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "NoOfRetry",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "SimulateMenu",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "MultiStop",
+            "value": "0"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/SYS_MISC/instances/RapidLogging"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "RapidLogging",
+        "rdonly": "false",
+        "instanceid": "6427272",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "RapidLogging"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Value",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "NoOfRetry",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "SimulateMenu",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "MultiStop",
+            "value": "0"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/SYS_MISC/instances/StepOutNoStepin"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "StepOutNoStepin",
+        "rdonly": "false",
+        "instanceid": "6633592",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "StepOutNoStepin"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "NoOfRetry",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "SimulateMenu",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "MultiStop",
+            "value": "0"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/SYS_MISC/instances/QueueBackup"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "QueueBackup",
+        "rdonly": "false",
+        "instanceid": "6633440",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "QueueBackup"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "NoOfRetry",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "SimulateMenu",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "MultiStop",
+            "value": "0"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/SYS_MISC/instances/TruncateLongRapidStrings"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "TruncateLongRapidStrings",
+        "rdonly": "false",
+        "instanceid": "6633288",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "TruncateLongRapidStrings"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "NoOfRetry",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "SimulateMenu",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "MultiStop",
+            "value": "0"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/SYS_MISC/instances/ReportNonActiveSingles"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "ReportNonActiveSingles",
+        "rdonly": "false",
+        "instanceid": "6633136",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "ReportNonActiveSingles"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "NoOfRetry",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "SimulateMenu",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "MultiStop",
+            "value": "0"
+          }
+        ]
+      }
+    ]
+  }
+}

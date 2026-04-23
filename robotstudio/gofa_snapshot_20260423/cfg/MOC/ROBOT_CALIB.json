@@ -1,0 +1,103 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "MOC/ROBOT_CALIB/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/ROBOT_CALIB/instances/not_used_uncalib"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "not_used_uncalib",
+        "rdonly": "true",
+        "instanceid": "6968136",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "not_used_uncalib"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "absacc",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/ROBOT_CALIB/instances/r1_uncalib"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "r1_uncalib",
+        "rdonly": "true",
+        "instanceid": "6787128",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "r1_uncalib"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "absacc",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_tool_interface",
+            "value": "r1_tool"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_foot_interface",
+            "value": "r1_foot"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/ROBOT_CALIB/instances/r1_calib"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "r1_calib",
+        "rdonly": "true",
+        "instanceid": "6786920",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "r1_calib"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "absacc",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_tool_interface",
+            "value": "r1_tool"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_foot_interface",
+            "value": "r1_foot"
+          }
+        ]
+      }
+    ]
+  }
+}

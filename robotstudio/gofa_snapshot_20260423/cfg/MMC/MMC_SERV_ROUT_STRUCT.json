@@ -1,0 +1,212 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "MMC/MMC_SERV_ROUT_STRUCT/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_SERV_ROUT_STRUCT/instances/SkipTaskExec"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "SkipTaskExec",
+        "rdonly": "true",
+        "instanceid": "7382688",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "SkipTaskExec"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_SERV_ROUT_STRUCT/instances/LoadIdentify"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "LoadIdentify",
+        "rdonly": "true",
+        "instanceid": "7155672",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "LoadIdentify"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_SERV_ROUT_STRUCT/instances/ManLoadIdentify"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "ManLoadIdentify",
+        "rdonly": "true",
+        "instanceid": "7155488",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "ManLoadIdentify"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_SERV_ROUT_STRUCT/instances/WristOptimization"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "WristOptimization",
+        "rdonly": "true",
+        "instanceid": "7151464",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "WristOptimization"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_SERV_ROUT_STRUCT/instances/BatteryShutdown"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "BatteryShutdown",
+        "rdonly": "true",
+        "instanceid": "7120424",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "BatteryShutdown"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_SERV_ROUT_STRUCT/instances/CyclicBrakeCheck"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "CyclicBrakeCheck",
+        "rdonly": "true",
+        "instanceid": "7049040",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "CyclicBrakeCheck"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_SERV_ROUT_STRUCT/instances/TorqueSensorCal"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "TorqueSensorCal",
+        "rdonly": "true",
+        "instanceid": "7047760",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "TorqueSensorCal"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_SERV_ROUT_STRUCT/instances/ConnectedServiceReset"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "ConnectedServiceReset",
+        "rdonly": "true",
+        "instanceid": "6612688",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "ConnectedServiceReset"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_SERV_ROUT_STRUCT/instances/Commutation"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "Commutation",
+        "rdonly": "true",
+        "instanceid": "6524472",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "Commutation"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_SERV_ROUT_STRUCT/instances/ServiceInfo"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "ServiceInfo",
+        "rdonly": "true",
+        "instanceid": "6522096",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "ServiceInfo"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_SERV_ROUT_STRUCT/instances/ScmCallRoutine"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "ScmCallRoutine",
+        "rdonly": "false",
+        "instanceid": "7129960",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "ScmCallRoutine"
+          }
+        ]
+      }
+    ]
+  }
+}

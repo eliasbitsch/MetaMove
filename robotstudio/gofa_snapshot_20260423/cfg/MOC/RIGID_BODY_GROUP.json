@@ -1,0 +1,102 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "MOC/RIGID_BODY_GROUP/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/RIGID_BODY_GROUP/instances/r1_rbg_s_link"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "r1_rbg_s_link",
+        "rdonly": "true",
+        "instanceid": "6900360",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_rigid_body_1",
+            "value": "r1_a_fot"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_rigid_body_2",
+            "value": "r1_b_stat"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_rigid_body_3",
+            "value": "r1_c_uarm"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_rigid_body_4",
+            "value": "r1_d_ahus"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_rigid_body_5",
+            "value": "r1_e_rax"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_rigid_body_6",
+            "value": "r1_f_thus"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_rigid_body_7",
+            "value": "r1_g_vsk"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_rigid_body_8",
+            "value": "r1_h_track"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_rigid_body_9",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_rigid_body_10",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_rigid_body_11",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_rigid_body_12",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_rigid_body_13",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_rigid_body_14",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_rigid_body_15",
+            "value": ""
+          }
+        ]
+      }
+    ]
+  }
+}

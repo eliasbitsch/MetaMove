@@ -1,0 +1,2786 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "MMC/MMC_REAL_DATATYPE/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_DATATYPE/instances/num"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "num",
+        "rdonly": "true",
+        "instanceid": "7609024",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "num"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": "reg"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "value_rule",
+            "value": "DEF"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "object_type",
+            "value": "VAR"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "validate_hook",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_DATATYPE/instances/dnum"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "dnum",
+        "rdonly": "true",
+        "instanceid": "7608416",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "dnum"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": "reg"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "value_rule",
+            "value": "DEF"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "object_type",
+            "value": "VAR"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "validate_hook",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_DATATYPE/instances/bool"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "bool",
+        "rdonly": "true",
+        "instanceid": "7607808",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "bool"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": "flag"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "value_rule",
+            "value": "DEF"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_value",
+            "value": "FALSE"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "object_type",
+            "value": "VAR"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "validate_hook",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_DATATYPE/instances/string"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "string",
+        "rdonly": "true",
+        "instanceid": "7607200",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "string"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": "string"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "value_rule",
+            "value": "DEF"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_value",
+            "value": "\"\""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "object_type",
+            "value": "CONST"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "validate_hook",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_DATATYPE/instances/pos"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "pos",
+        "rdonly": "true",
+        "instanceid": "7606592",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "pos"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": "pos"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "value_rule",
+            "value": "DEF"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_value",
+            "value": "[0,0,0]"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "object_type",
+            "value": "VAR"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "validate_hook",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_DATATYPE/instances/orient"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "orient",
+        "rdonly": "true",
+        "instanceid": "7605984",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "orient"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": "orient"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "value_rule",
+            "value": "DEF"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_value",
+            "value": "[1,0,0,0]"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "object_type",
+            "value": "VAR"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "validate_hook",
+            "value": "hirule_validate_orient"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_DATATYPE/instances/pose"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "pose",
+        "rdonly": "true",
+        "instanceid": "7605376",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "pose"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": "pose"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "value_rule",
+            "value": "DEF"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_value",
+            "value": "[[0,0,0],[1,0,0,0]]"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "object_type",
+            "value": "PERS"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "validate_hook",
+            "value": "hirule_validate_pose"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_DATATYPE/instances/errnum"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "errnum",
+        "rdonly": "true",
+        "instanceid": "7604768",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "errnum"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": "errno"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "value_rule",
+            "value": "DEF"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "object_type",
+            "value": "CONST"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "validate_hook",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_DATATYPE/instances/intnum"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "intnum",
+        "rdonly": "true",
+        "instanceid": "7604160",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "intnum"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": "intno"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "value_rule",
+            "value": "NONE"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_value",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "object_type",
+            "value": "VAR"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "validate_hook",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_DATATYPE/instances/listitem"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "listitem",
+        "rdonly": "true",
+        "instanceid": "7283072",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "listitem"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": "list"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "value_rule",
+            "value": "DEF"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_value",
+            "value": "[\"\",\"\"]"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "object_type",
+            "value": "VAR"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "validate_hook",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_DATATYPE/instances/corrdescr"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "corrdescr",
+        "rdonly": "true",
+        "instanceid": "7192464",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "corrdescr"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": "corrdescr"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "value_rule",
+            "value": "NONE"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_value",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "object_type",
+            "value": "VAR"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "validate_hook",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_DATATYPE/instances/iodev"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "iodev",
+        "rdonly": "true",
+        "instanceid": "7190952",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "iodev"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": "iodev"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "value_rule",
+            "value": "NONE"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_value",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "object_type",
+            "value": "VAR"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "validate_hook",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_DATATYPE/instances/dir"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "dir",
+        "rdonly": "true",
+        "instanceid": "7190344",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "dir"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": "dir"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "value_rule",
+            "value": "NONE"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_value",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "object_type",
+            "value": "VAR"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "validate_hook",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_DATATYPE/instances/dionum"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "dionum",
+        "rdonly": "true",
+        "instanceid": "7189736",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "dionum"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": "dioval"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "value_rule",
+            "value": "DEF"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "object_type",
+            "value": "CONST"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "validate_hook",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_DATATYPE/instances/loadsession"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "loadsession",
+        "rdonly": "true",
+        "instanceid": "7189128",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "loadsession"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": "loadid"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "value_rule",
+            "value": "NONE"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_value",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "object_type",
+            "value": "VAR"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "validate_hook",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_DATATYPE/instances/progdisp"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "progdisp",
+        "rdonly": "true",
+        "instanceid": "7188520",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "progdisp"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": "pdisp"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "value_rule",
+            "value": "DEF"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_value",
+            "value": "[[[0,0,0],[1,0,0,0]],[0,0,0,0,0,0]]"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "object_type",
+            "value": "TASK PERS"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "validate_hook",
+            "value": "hirule_validate_progdisp"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_DATATYPE/instances/identno"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "identno",
+        "rdonly": "true",
+        "instanceid": "7187912",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "identno"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": "id"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "value_rule",
+            "value": "SEQ"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_value",
+            "value": "10"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "object_type",
+            "value": "CONST"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "validate_hook",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_DATATYPE/instances/robtarget"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "robtarget",
+        "rdonly": "true",
+        "instanceid": "7187304",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "robtarget"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": "p"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "value_rule",
+            "value": "CUR"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": "hirule_robtarget"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_value",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "object_type",
+            "value": "CONST"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "validate_hook",
+            "value": "hirule_validate_robtarget"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_DATATYPE/instances/jointtarget"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "jointtarget",
+        "rdonly": "true",
+        "instanceid": "7186696",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "jointtarget"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": "jpos"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "value_rule",
+            "value": "CUR"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": "hirule_jointtarget"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_value",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "object_type",
+            "value": "CONST"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "validate_hook",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_DATATYPE/instances/confdata"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "confdata",
+        "rdonly": "true",
+        "instanceid": "7186088",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "confdata"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": "robconf"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "value_rule",
+            "value": "DEF"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_value",
+            "value": "[0,0,0,0]"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "object_type",
+            "value": "VAR"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "validate_hook",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_DATATYPE/instances/extjoint"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "extjoint",
+        "rdonly": "true",
+        "instanceid": "7185480",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "extjoint"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": "extjoint"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "value_rule",
+            "value": "DEF"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_value",
+            "value": "[9E9,9E9,9E9,9E9,9E9,9E9]"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "object_type",
+            "value": "VAR"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "validate_hook",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_DATATYPE/instances/robjoint"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "robjoint",
+        "rdonly": "true",
+        "instanceid": "7184872",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "robjoint"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": "robjoint"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "value_rule",
+            "value": "DEF"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_value",
+            "value": "[0,0,0,0,0,0]"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "object_type",
+            "value": "VAR"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "validate_hook",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_DATATYPE/instances/speeddata"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "speeddata",
+        "rdonly": "true",
+        "instanceid": "7184264",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "speeddata"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": "speed"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "value_rule",
+            "value": "DEF"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_value",
+            "value": "[1000,500,5000,1000]"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "object_type",
+            "value": "CONST"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "validate_hook",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_DATATYPE/instances/zonedata"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "zonedata",
+        "rdonly": "true",
+        "instanceid": "7183656",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "zonedata"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": "zone"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "value_rule",
+            "value": "DEF"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_value",
+            "value": "[FALSE,50,75,75,7.5,75,7.5]"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "object_type",
+            "value": "CONST"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "validate_hook",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_DATATYPE/instances/stoppoint"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "stoppoint",
+        "rdonly": "true",
+        "instanceid": "7183048",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "stoppoint"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": "stoptype"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "value_rule",
+            "value": "DEF"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_value",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "object_type",
+            "value": "CONST"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "validate_hook",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_DATATYPE/instances/stoppointdata"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "stoppointdata",
+        "rdonly": "true",
+        "instanceid": "7182440",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "stoppointdata"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": "stoppoint"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "value_rule",
+            "value": "DEF"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_value",
+            "value": "[1,TRUE,[100,100,0,20],0,0]"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "object_type",
+            "value": "CONST"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "validate_hook",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_DATATYPE/instances/tooldata"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "tooldata",
+        "rdonly": "true",
+        "instanceid": "7181832",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "tooldata"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": "tool"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "value_rule",
+            "value": "DEF"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": "hirule_tooldata"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_value",
+            "value": "[TRUE,[[0,0,0],[1,0,0,0]],[-1,[0,0,0],[1,0,0,0],0,0,0]]"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "object_type",
+            "value": "TASK PERS"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "validate_hook",
+            "value": "hirule_validate_tooldata"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_DATATYPE/instances/wobjdata"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "wobjdata",
+        "rdonly": "true",
+        "instanceid": "7181224",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "wobjdata"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": "wobj"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "value_rule",
+            "value": "DEF"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_value",
+            "value": "[FALSE,TRUE,\"\",[[0,0,0],[1,0,0,0]],[[0,0,0],[1,0,0,0]]]"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "object_type",
+            "value": "TASK PERS"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "validate_hook",
+            "value": "hirule_validate_wobjdata"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_DATATYPE/instances/loaddata"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "loaddata",
+        "rdonly": "true",
+        "instanceid": "7180616",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "loaddata"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": "load"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "value_rule",
+            "value": "DEF"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_value",
+            "value": "[0,[0,0,0],[1,0,0,0],0,0,0]"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "object_type",
+            "value": "TASK PERS"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "validate_hook",
+            "value": "hirule_validate_loaddata"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_DATATYPE/instances/syncident"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "syncident",
+        "rdonly": "true",
+        "instanceid": "7180008",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "syncident"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": "sync"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "value_rule",
+            "value": "NONE"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_value",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "object_type",
+            "value": "VAR"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "validate_hook",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_DATATYPE/instances/tasks"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "tasks",
+        "rdonly": "true",
+        "instanceid": "7179400",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "tasks"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": "tasklist"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "value_rule",
+            "value": "NONE"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_value",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "object_type",
+            "value": "PERS"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "validate_hook",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_DATATYPE/instances/socketdev"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "socketdev",
+        "rdonly": "true",
+        "instanceid": "7178792",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "socketdev"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": "socket"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "value_rule",
+            "value": "NONE"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_value",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "object_type",
+            "value": "VAR"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "validate_hook",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_DATATYPE/instances/clock"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "clock",
+        "rdonly": "true",
+        "instanceid": "7178184",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "clock"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": "clock"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "value_rule",
+            "value": "NONE"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_value",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "object_type",
+            "value": "VAR"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "validate_hook",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_DATATYPE/instances/errdomain"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "errdomain",
+        "rdonly": "true",
+        "instanceid": "7177576",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "errdomain"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": "errdomain"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "value_rule",
+            "value": "DEF"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "object_type",
+            "value": "VAR"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "validate_hook",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_DATATYPE/instances/errtype"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "errtype",
+        "rdonly": "true",
+        "instanceid": "7176968",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "errtype"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": "errtype"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "value_rule",
+            "value": "DEF"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "object_type",
+            "value": "VAR"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "validate_hook",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_DATATYPE/instances/trapdata"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "trapdata",
+        "rdonly": "true",
+        "instanceid": "7176360",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "trapdata"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": "trapdata"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "value_rule",
+            "value": "NONE"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_value",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "object_type",
+            "value": "VAR"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "validate_hook",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_DATATYPE/instances/triggdata"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "triggdata",
+        "rdonly": "true",
+        "instanceid": "7175752",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "triggdata"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": "trigg"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "value_rule",
+            "value": "NONE"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_value",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "object_type",
+            "value": "VAR"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "validate_hook",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_DATATYPE/instances/wztemporary"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "wztemporary",
+        "rdonly": "true",
+        "instanceid": "7175144",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "wztemporary"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": "wztemp"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "value_rule",
+            "value": "DEF"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_value",
+            "value": "[0]"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "object_type",
+            "value": "VAR"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "validate_hook",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_DATATYPE/instances/wzstationary"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "wzstationary",
+        "rdonly": "true",
+        "instanceid": "7174536",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "wzstationary"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": "wzstat"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "value_rule",
+            "value": "DEF"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_value",
+            "value": "[0]"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "object_type",
+            "value": "VAR"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "validate_hook",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_DATATYPE/instances/shapedata"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "shapedata",
+        "rdonly": "true",
+        "instanceid": "7173928",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "shapedata"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": "shape"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "value_rule",
+            "value": "NONE"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_value",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "object_type",
+            "value": "VAR"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "validate_hook",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_DATATYPE/instances/indcnvdata"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "indcnvdata",
+        "rdonly": "true",
+        "instanceid": "7173320",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "indcnvdata"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": "indcnvdata"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "value_rule",
+            "value": "DEF"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_value",
+            "value": "[2000,25000,5,1,0,0,0]"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "object_type",
+            "value": "VAR"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "validate_hook",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_DATATYPE/instances/cameratarget"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "cameratarget",
+        "rdonly": "true",
+        "instanceid": "7172712",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "cameratarget"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": "cameratarget"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "value_rule",
+            "value": "DEF"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_value",
+            "value": "[\"\",[[0,0,0],[1,0,0,0]],0,0,0,0,0,\"\",\"\",0,\"\",0]"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "object_type",
+            "value": "VAR"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "validate_hook",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_DATATYPE/instances/egm_minmax"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "egm_minmax",
+        "rdonly": "true",
+        "instanceid": "6535672",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "egm_minmax"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": "limit"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "value_rule",
+            "value": "DEF"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_value",
+            "value": "[-1,1]"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "object_type",
+            "value": "CONST"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "validate_hook",
+            "value": ""
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_REAL_DATATYPE/instances/egmident"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "egmident",
+        "rdonly": "true",
+        "instanceid": "6535064",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "egmident"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "def_name",
+            "value": "egmID"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "value_rule",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "method",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_value",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "object_type",
+            "value": "VAR"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "min_value",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "measure",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "validate_hook",
+            "value": ""
+          }
+        ]
+      }
+    ]
+  }
+}

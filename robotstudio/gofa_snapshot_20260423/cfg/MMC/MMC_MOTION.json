@@ -1,0 +1,394 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "MMC/MMC_MOTION/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_MOTION/instances/MoveCDO"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "MoveCDO",
+        "rdonly": "true",
+        "instanceid": "7382304",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "MoveCDO"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_nr",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "alt_nr",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "instr_name",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "only_mec_task",
+            "value": "true"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_MOTION/instances/MoveJDO"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "MoveJDO",
+        "rdonly": "true",
+        "instanceid": "7382032",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "MoveJDO"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_nr",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "alt_nr",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "instr_name",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "only_mec_task",
+            "value": "true"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_MOTION/instances/MoveLDO"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "MoveLDO",
+        "rdonly": "true",
+        "instanceid": "7381760",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "MoveLDO"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_nr",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "alt_nr",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "instr_name",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "only_mec_task",
+            "value": "true"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_MOTION/instances/MoveCGO"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "MoveCGO",
+        "rdonly": "true",
+        "instanceid": "7381488",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "MoveCGO"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_nr",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "alt_nr",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "instr_name",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "only_mec_task",
+            "value": "true"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_MOTION/instances/MoveJGO"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "MoveJGO",
+        "rdonly": "true",
+        "instanceid": "7381216",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "MoveJGO"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_nr",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "alt_nr",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "instr_name",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "only_mec_task",
+            "value": "true"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_MOTION/instances/MoveLGO"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "MoveLGO",
+        "rdonly": "true",
+        "instanceid": "7380944",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "MoveLGO"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_nr",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "alt_nr",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "instr_name",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "only_mec_task",
+            "value": "true"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_MOTION/instances/MoveCAO"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "MoveCAO",
+        "rdonly": "true",
+        "instanceid": "7380672",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "MoveCAO"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_nr",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "alt_nr",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "instr_name",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "only_mec_task",
+            "value": "true"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_MOTION/instances/MoveJAO"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "MoveJAO",
+        "rdonly": "true",
+        "instanceid": "7380400",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "MoveJAO"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_nr",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "alt_nr",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "instr_name",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "only_mec_task",
+            "value": "true"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_MOTION/instances/MoveLAO"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "MoveLAO",
+        "rdonly": "true",
+        "instanceid": "7380128",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "MoveLAO"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_nr",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "alt_nr",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "instr_name",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "only_mec_task",
+            "value": "true"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_MOTION/instances/MoveAbsL"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "MoveAbsL",
+        "rdonly": "true",
+        "instanceid": "7379856",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "MoveAbsL"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_nr",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "alt_nr",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "instr_name",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "only_mec_task",
+            "value": "true"
+          }
+        ]
+      }
+    ]
+  }
+}

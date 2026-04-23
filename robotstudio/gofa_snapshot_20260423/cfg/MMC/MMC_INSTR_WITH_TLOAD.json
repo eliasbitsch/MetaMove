@@ -1,0 +1,681 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "MMC/MMC_INSTR_WITH_TLOAD/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_INSTR_WITH_TLOAD/instances/moveabsj"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "moveabsj",
+        "rdonly": "true",
+        "instanceid": "7571544",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "moveabsj"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_nr",
+            "value": "14"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_INSTR_WITH_TLOAD/instances/movec"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "movec",
+        "rdonly": "true",
+        "instanceid": "7571360",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "movec"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_nr",
+            "value": "15"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_INSTR_WITH_TLOAD/instances/movej"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "movej",
+        "rdonly": "true",
+        "instanceid": "7571176",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "movej"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_nr",
+            "value": "13"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_INSTR_WITH_TLOAD/instances/movel"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "movel",
+        "rdonly": "true",
+        "instanceid": "7570992",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "movel"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_nr",
+            "value": "14"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_INSTR_WITH_TLOAD/instances/searchc"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "searchc",
+        "rdonly": "true",
+        "instanceid": "7442384",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "searchc"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_nr",
+            "value": "13"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_INSTR_WITH_TLOAD/instances/searchl"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "searchl",
+        "rdonly": "true",
+        "instanceid": "7442200",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "searchl"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_nr",
+            "value": "12"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_INSTR_WITH_TLOAD/instances/triggc"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "triggc",
+        "rdonly": "true",
+        "instanceid": "7384688",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "triggc"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_nr",
+            "value": "22"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_INSTR_WITH_TLOAD/instances/triggj"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "triggj",
+        "rdonly": "true",
+        "instanceid": "7384504",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "triggj"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_nr",
+            "value": "20"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_INSTR_WITH_TLOAD/instances/triggabsj"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "triggabsj",
+        "rdonly": "true",
+        "instanceid": "7384320",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "triggabsj"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_nr",
+            "value": "21"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_INSTR_WITH_TLOAD/instances/triggl"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "triggl",
+        "rdonly": "true",
+        "instanceid": "7384136",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "triggl"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_nr",
+            "value": "21"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_INSTR_WITH_TLOAD/instances/MoveCDO"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "MoveCDO",
+        "rdonly": "true",
+        "instanceid": "7289752",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "MoveCDO"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_nr",
+            "value": "13"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_INSTR_WITH_TLOAD/instances/MoveJDO"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "MoveJDO",
+        "rdonly": "true",
+        "instanceid": "7289568",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "MoveJDO"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_nr",
+            "value": "12"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_INSTR_WITH_TLOAD/instances/MoveLDO"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "MoveLDO",
+        "rdonly": "true",
+        "instanceid": "7289384",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "MoveLDO"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_nr",
+            "value": "12"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_INSTR_WITH_TLOAD/instances/MoveCGO"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "MoveCGO",
+        "rdonly": "true",
+        "instanceid": "7289200",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "MoveCGO"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_nr",
+            "value": "13"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_INSTR_WITH_TLOAD/instances/MoveJGO"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "MoveJGO",
+        "rdonly": "true",
+        "instanceid": "7289016",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "MoveJGO"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_nr",
+            "value": "12"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_INSTR_WITH_TLOAD/instances/MoveLGO"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "MoveLGO",
+        "rdonly": "true",
+        "instanceid": "7288832",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "MoveLGO"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_nr",
+            "value": "12"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_INSTR_WITH_TLOAD/instances/MoveCAO"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "MoveCAO",
+        "rdonly": "true",
+        "instanceid": "7288648",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "MoveCAO"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_nr",
+            "value": "13"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_INSTR_WITH_TLOAD/instances/MoveJAO"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "MoveJAO",
+        "rdonly": "true",
+        "instanceid": "7288464",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "MoveJAO"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_nr",
+            "value": "12"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_INSTR_WITH_TLOAD/instances/MoveLAO"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "MoveLAO",
+        "rdonly": "true",
+        "instanceid": "7288280",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "MoveLAO"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_nr",
+            "value": "12"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_INSTR_WITH_TLOAD/instances/MoveCSync"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "MoveCSync",
+        "rdonly": "true",
+        "instanceid": "7288096",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "MoveCSync"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_nr",
+            "value": "12"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_INSTR_WITH_TLOAD/instances/MoveJSync"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "MoveJSync",
+        "rdonly": "true",
+        "instanceid": "7287912",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "MoveJSync"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_nr",
+            "value": "11"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_INSTR_WITH_TLOAD/instances/MoveLSync"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "MoveLSync",
+        "rdonly": "true",
+        "instanceid": "7287728",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "MoveLSync"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_nr",
+            "value": "11"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_INSTR_WITH_TLOAD/instances/MoveAbsL"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "MoveAbsL",
+        "rdonly": "true",
+        "instanceid": "7287544",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "MoveAbsL"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_nr",
+            "value": "14"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_INSTR_WITH_TLOAD/instances/triggjios"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "triggjios",
+        "rdonly": "true",
+        "instanceid": "7156440",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "triggjios"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_nr",
+            "value": "14"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_INSTR_WITH_TLOAD/instances/trigglios"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "trigglios",
+        "rdonly": "true",
+        "instanceid": "7156256",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "trigglios"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_nr",
+            "value": "15"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_INSTR_WITH_TLOAD/instances/EGMActJoint_tload"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "EGMActJoint_tload",
+        "rdonly": "true",
+        "instanceid": "6537080",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "EGMActJoint_tload"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_nr",
+            "value": "4"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_INSTR_WITH_TLOAD/instances/EGMActPose_tload"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "EGMActPose_tload",
+        "rdonly": "true",
+        "instanceid": "6536896",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "EGMActPose_tload"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_nr",
+            "value": "4"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_INSTR_WITH_TLOAD/instances/EGMMoveL_tload"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "EGMMoveL_tload",
+        "rdonly": "true",
+        "instanceid": "6536712",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "EGMMoveL_tload"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_nr",
+            "value": "7"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_INSTR_WITH_TLOAD/instances/EGMMoveC_tload"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "EGMMoveC_tload",
+        "rdonly": "true",
+        "instanceid": "6536528",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "EGMMoveC_tload"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_nr",
+            "value": "8"
+          }
+        ]
+      }
+    ]
+  }
+}

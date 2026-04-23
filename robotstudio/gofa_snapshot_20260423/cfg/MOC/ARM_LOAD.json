@@ -1,0 +1,246 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "MOC/ARM_LOAD/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/ARM_LOAD/instances/r1_load_1"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "r1_load_1",
+        "rdonly": "false",
+        "instanceid": "6763176",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "r1_load_1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "length",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "mass",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "mass_centre_x",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "mass_centre_y",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "mass_centre_z",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia_x",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia_y",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia_z",
+            "value": "0"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/ARM_LOAD/instances/r1_load_2"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "r1_load_2",
+        "rdonly": "false",
+        "instanceid": "6763008",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "r1_load_2"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "length",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "mass",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "mass_centre_x",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "mass_centre_y",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "mass_centre_z",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia_x",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia_y",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia_z",
+            "value": "0"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/ARM_LOAD/instances/r1_load_3"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "r1_load_3",
+        "rdonly": "false",
+        "instanceid": "6762840",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "r1_load_3"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "length",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "mass",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "mass_centre_x",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "mass_centre_y",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "mass_centre_z",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia_x",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia_y",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia_z",
+            "value": "0"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/ARM_LOAD/instances/r1_load_4"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "r1_load_4",
+        "rdonly": "false",
+        "instanceid": "6762672",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "r1_load_4"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "length",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "mass",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "mass_centre_x",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "mass_centre_y",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "mass_centre_z",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia_x",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia_y",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia_z",
+            "value": "0"
+          }
+        ]
+      }
+    ]
+  }
+}

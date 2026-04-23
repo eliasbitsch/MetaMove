@@ -1,0 +1,57 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "SYS/CAB_EXEC_HOOKS/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/CAB_EXEC_HOOKS/instances/"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "",
+        "rdonly": "false",
+        "instanceid": "7629184",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Routine",
+            "value": "my_power_on"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Shelf",
+            "value": "POWER_ON"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Task",
+            "value": "T_ROB1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "AllTask",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "AllMotionTask",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "SeqNo",
+            "value": "0"
+          }
+        ]
+      }
+    ]
+  }
+}

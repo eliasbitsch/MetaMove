@@ -1,0 +1,107 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "MOC/TOOL_INTERFACE/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/TOOL_INTERFACE/instances/r1_tool"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "r1_tool",
+        "rdonly": "false",
+        "instanceid": "6493888",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "r1_tool"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Compl",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "mass",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "mass_centre_x",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "mass_centre_y",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "mass_centre_z",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia_x",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia_y",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia_z",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "offset_x",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "offset_y",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "offset_z",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "orient_u0",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "orient_u1",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "orient_u2",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "orient_u3",
+            "value": "0"
+          }
+        ]
+      }
+    ]
+  }
+}

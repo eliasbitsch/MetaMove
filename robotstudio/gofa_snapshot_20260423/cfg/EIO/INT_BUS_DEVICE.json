@@ -1,0 +1,204 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "EIO/INT_BUS_DEVICE/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "EIO/INT_BUS_DEVICE/instances/IoPanel"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "IoPanel",
+        "rdonly": "true",
+        "instanceid": "6601256",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "IoPanel"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Network",
+            "value": "IntBus"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Label",
+            "value": "IoPanel"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "OutputSize",
+            "value": "16"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "InputSize",
+            "value": "16"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "EIO/INT_BUS_DEVICE/instances/ScLocIO"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "ScLocIO",
+        "rdonly": "true",
+        "instanceid": "6601000",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "ScLocIO"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Network",
+            "value": "IntBus"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Label",
+            "value": "ScLocIO"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "OutputSize",
+            "value": "64"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "InputSize",
+            "value": "16"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "EIO/INT_BUS_DEVICE/instances/DrvSys"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "DrvSys",
+        "rdonly": "true",
+        "instanceid": "6600744",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "DrvSys"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Network",
+            "value": "IntBus"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Label",
+            "value": "DrvSys"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "OutputSize",
+            "value": "16"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "InputSize",
+            "value": "16"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "EIO/INT_BUS_DEVICE/instances/EPanel"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "EPanel",
+        "rdonly": "true",
+        "instanceid": "6600488",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "EPanel"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Network",
+            "value": "IntBus"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Label",
+            "value": "EPanel"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "OutputSize",
+            "value": "16"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "InputSize",
+            "value": "0"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "EIO/INT_BUS_DEVICE/instances/Asi"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "Asi",
+        "rdonly": "true",
+        "instanceid": "6515088",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "Asi"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Network",
+            "value": "IntBus"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Label",
+            "value": "ASI"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "OutputSize",
+            "value": "32"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "InputSize",
+            "value": "2"
+          }
+        ]
+      }
+    ]
+  }
+}

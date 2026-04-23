@@ -1,0 +1,98 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "MMC/MMC_USE_ACT_EOFFS_IN_MODPOS/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_USE_ACT_EOFFS_IN_MODPOS/instances/MoveAbsJ"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "MoveAbsJ",
+        "rdonly": "true",
+        "instanceid": "7569736",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "MoveAbsJ"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_nr",
+            "value": "4"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_if_present",
+            "value": "0"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_USE_ACT_EOFFS_IN_MODPOS/instances/MoveExtJ"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "MoveExtJ",
+        "rdonly": "true",
+        "instanceid": "7569544",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "MoveExtJ"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_nr",
+            "value": "4"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_if_present",
+            "value": "1"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_USE_ACT_EOFFS_IN_MODPOS/instances/TriggAbsJ"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "TriggAbsJ",
+        "rdonly": "true",
+        "instanceid": "7382880",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "TriggAbsJ"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_nr",
+            "value": "4"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_if_present",
+            "value": "0"
+          }
+        ]
+      }
+    ]
+  }
+}

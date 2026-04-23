@@ -1,0 +1,126 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "SYS/MASTER_BOOL/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/MASTER_BOOL/instances/RMMP"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "RMMP",
+        "rdonly": "true",
+        "instanceid": "7629496",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "RMMP"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Select",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "TimeOut",
+            "value": "2000"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/MASTER_BOOL/instances/AllowMoveRobAuto"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "AllowMoveRobAuto",
+        "rdonly": "false",
+        "instanceid": "6527848",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "AllowMoveRobAuto"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Select",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "TimeOut",
+            "value": "2000"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/MASTER_BOOL/instances/HoldToRun"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "HoldToRun",
+        "rdonly": "false",
+        "instanceid": "6915400",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "HoldToRun"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Select",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "TimeOut",
+            "value": "2000"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/MASTER_BOOL/instances/HeartBeat"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "HeartBeat",
+        "rdonly": "false",
+        "instanceid": "6915272",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "HeartBeat"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Select",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "TimeOut",
+            "value": "2000"
+          }
+        ]
+      }
+    ]
+  }
+}

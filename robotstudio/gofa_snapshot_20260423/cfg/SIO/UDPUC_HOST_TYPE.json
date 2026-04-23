@@ -1,0 +1,37 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "SIO/UDPUC_HOST_TYPE/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "SIO/UDPUC_HOST_TYPE/instances/UDPUC"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "UDPUC",
+        "rdonly": "true",
+        "instanceid": "6564936",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "UDPUC"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Driver",
+            "value": "mc/udpuc"
+          }
+        ]
+      }
+    ]
+  }
+}

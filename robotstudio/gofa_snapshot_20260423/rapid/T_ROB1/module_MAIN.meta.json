@@ -1,0 +1,19 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/rapid/"
+    },
+    "self": {
+      "href": "tasks/T_ROB1/modules/module_MAIN/text"
+    }
+  },
+  "state": [
+    {
+      "_type": "rap-module-text",
+      "_title": "moduletext",
+      "change-count": " 59853 ",
+      "module-text": "MODULE module_MAIN \n!    \n!       ---------------------------------   \n!                   GoHolo    \n!       ---------------------------------\n!\n!       Copyright (C)   2021 Jakob H\u00f6rbst\n!       author:         Jakob H\u00f6rbst\n!       email:          jakob@hoerbst.net\n!       year:           2021\n!\n!       ---------------------------------   \n!                  Extension   \n!       ---------------------------------\n!\n!       Copyright (C)   2022 Alexander Korn\n!       author:         Alexander Korn\n!       email:          alexander-korn@gmx.at\n!       year:           2022\n!\n\n!PROC main()\n!    !mainGoHolo;\n!\tEGM_StreamStart;\n!\tEGM_Init;\n!\tEGM_RunPose; ! Go GoFa\n!ENDPROC\nENDMODULE",
+      "module-length": "1368"
+    }
+  ]
+}

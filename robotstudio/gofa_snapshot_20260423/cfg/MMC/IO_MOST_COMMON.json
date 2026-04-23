@@ -1,0 +1,13 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "MMC/IO_MOST_COMMON/instances"
+    }
+  },
+  "_embedded": {
+    "resources": []
+  }
+}

@@ -1,0 +1,132 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "MOC/FC_APPLICATION/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/FC_APPLICATION/instances/fc_application1"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "fc_application1",
+        "rdonly": "false",
+        "instanceid": "6492432",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "fc_application1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_force",
+            "value": "50"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_force_change",
+            "value": "500"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_torque",
+            "value": "10"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_torque_change",
+            "value": "200"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_lin_speed",
+            "value": "0.5"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_rot_speed",
+            "value": "4"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_lin_acc",
+            "value": "2"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_rot_acc",
+            "value": "5"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "spd_superv_override_factor",
+            "value": "4"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "axc_force_min",
+            "value": "6"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "axc_force_max",
+            "value": "100000"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "axc_torque_min",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "axc_torque_max",
+            "value": "100000"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "disable_max_force_check",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_lin_speed_press",
+            "value": "0.1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_rot_speed_press",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "k_ramp_up_time",
+            "value": "0.050000001"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "keep_contact_when_deactivating_fc",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "quick_ramp_time",
+            "value": "0.050000001"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "auto_reactivation_disabled",
+            "value": "false"
+          }
+        ]
+      }
+    ]
+  }
+}

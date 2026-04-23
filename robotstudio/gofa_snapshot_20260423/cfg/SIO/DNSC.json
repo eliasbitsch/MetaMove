@@ -1,0 +1,82 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "SIO/DNSC/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "SIO/DNSC/instances/DNSC"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "DNSC",
+        "rdonly": "false",
+        "instanceid": "6614960",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "DNSC"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Enabled",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "DomainName",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "PrimaryNameServer",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "SecondaryNameServer",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "TertiaryNameServer",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "QuaternaryNameServer",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ServerPort",
+            "value": "53"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Retries",
+            "value": "2"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Timeout",
+            "value": "10"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Ip4Zone",
+            "value": "in-addr.arpa"
+          }
+        ]
+      }
+    ]
+  }
+}

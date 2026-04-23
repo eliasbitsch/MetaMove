@@ -1,0 +1,1 @@
+{ "_links" : { "base" : { "href" : "https://192.168.125.1:443/rw/panel/opmode/" }, "self" : { "href" : "" } } ,"status" : {"code":294912} , "state" : [ { "_type" : "pnl-opmode", "_title" : "opmode", "opmode" : "AUTO" } ], "_embedded" : { "resources" : [ { "_links" : { "self" : { "href" : "lock-state" } }, "_type" : "pnl-lockstate-li", "_title" : "lock-sate" } ] }}

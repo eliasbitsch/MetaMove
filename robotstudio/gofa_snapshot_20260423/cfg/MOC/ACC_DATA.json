@@ -1,0 +1,13 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "MOC/ACC_DATA/instances"
+    }
+  },
+  "_embedded": {
+    "resources": []
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/rapid/"
+    },
+    "self": {
+      "href": "tasks/SC_CBC/modules"
+    }
+  },
+  "status": {
+    "code": 294912
+  },
+  "state": []
+}

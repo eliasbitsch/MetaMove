@@ -1,0 +1,47 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "EIO/SC_FEEDBACK_DEVICE/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "EIO/SC_FEEDBACK_DEVICE/instances/SC_Feedback_Dev"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "SC_Feedback_Dev",
+        "rdonly": "true",
+        "instanceid": "6603248",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "SC_Feedback_Dev"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Network",
+            "value": "SC_Feedback_Net"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Label",
+            "value": "Safety Controller Feedback Device"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "InputSize",
+            "value": "256"
+          }
+        ]
+      }
+    ]
+  }
+}

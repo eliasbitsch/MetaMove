@@ -1,0 +1,698 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "MMC/MMC_COMMON/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_COMMON/instances/MoveJ"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "MoveJ",
+        "rdonly": "true",
+        "instanceid": "7146592",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "MoveJ"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_nr",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "alt_nr",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "instr_name",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "only_mec_task",
+            "value": "true"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_COMMON/instances/MoveL"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "MoveL",
+        "rdonly": "true",
+        "instanceid": "7146320",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "MoveL"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_nr",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "alt_nr",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "instr_name",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "only_mec_task",
+            "value": "true"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_COMMON/instances/%3A%3D"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": ":=",
+        "rdonly": "true",
+        "instanceid": "7146048",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": ":="
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_nr",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "alt_nr",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "instr_name",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "only_mec_task",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_COMMON/instances/ProcCall"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "ProcCall",
+        "rdonly": "true",
+        "instanceid": "7145776",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "ProcCall"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_nr",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "alt_nr",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "instr_name",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "only_mec_task",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_COMMON/instances/RETURN"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "RETURN",
+        "rdonly": "true",
+        "instanceid": "7145504",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "RETURN"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_nr",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "alt_nr",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "instr_name",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "only_mec_task",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_COMMON/instances/IF"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "IF",
+        "rdonly": "true",
+        "instanceid": "7145232",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "IF"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_nr",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "alt_nr",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "instr_name",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "only_mec_task",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_COMMON/instances/Set"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "Set",
+        "rdonly": "true",
+        "instanceid": "7144960",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "Set"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_nr",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "alt_nr",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "instr_name",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "only_mec_task",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_COMMON/instances/Reset"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "Reset",
+        "rdonly": "true",
+        "instanceid": "7144688",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "Reset"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_nr",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "alt_nr",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "instr_name",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "only_mec_task",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_COMMON/instances/WaitDI"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "WaitDI",
+        "rdonly": "true",
+        "instanceid": "7144416",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "WaitDI"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_nr",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "alt_nr",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "instr_name",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "only_mec_task",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_COMMON/instances/WaitDO"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "WaitDO",
+        "rdonly": "true",
+        "instanceid": "7144144",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "WaitDO"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_nr",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "alt_nr",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "instr_name",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "only_mec_task",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_COMMON/instances/WaitUntil"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "WaitUntil",
+        "rdonly": "true",
+        "instanceid": "7143872",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "WaitUntil"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_nr",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "alt_nr",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "instr_name",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "only_mec_task",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_COMMON/instances/WaitTime"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "WaitTime",
+        "rdonly": "true",
+        "instanceid": "7143600",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "WaitTime"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_nr",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "alt_nr",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "instr_name",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "only_mec_task",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_COMMON/instances/Compact%20IF"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "Compact IF",
+        "rdonly": "true",
+        "instanceid": "7143328",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "Compact IF"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_nr",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "alt_nr",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "instr_name",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "only_mec_task",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_COMMON/instances/FOR"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "FOR",
+        "rdonly": "true",
+        "instanceid": "7143056",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "FOR"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_nr",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "alt_nr",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "instr_name",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "only_mec_task",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_COMMON/instances/WHILE"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "WHILE",
+        "rdonly": "true",
+        "instanceid": "7142784",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "WHILE"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_nr",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "alt_nr",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "instr_name",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "only_mec_task",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_COMMON/instances/MoveC"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "MoveC",
+        "rdonly": "true",
+        "instanceid": "7142512",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "MoveC"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_nr",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "alt_nr",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "instr_name",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "only_mec_task",
+            "value": "true"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_COMMON/instances/MoveAbsJ"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "MoveAbsJ",
+        "rdonly": "true",
+        "instanceid": "7142240",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "MoveAbsJ"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_nr",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "alt_nr",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "instr_name",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "only_mec_task",
+            "value": "true"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_COMMON/instances/TPWrite"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "TPWrite",
+        "rdonly": "true",
+        "instanceid": "7141968",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "TPWrite"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_nr",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "alt_nr",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "instr_name",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "only_mec_task",
+            "value": "false"
+          }
+        ]
+      }
+    ]
+  }
+}

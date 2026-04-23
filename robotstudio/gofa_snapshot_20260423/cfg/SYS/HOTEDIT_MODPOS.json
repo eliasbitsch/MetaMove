@@ -1,0 +1,72 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "SYS/HOTEDIT_MODPOS/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/HOTEDIT_MODPOS/instances/modpos"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "modpos",
+        "rdonly": "false",
+        "instanceid": "6528048",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "modpos"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "type",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "mode",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "tuning_in_auto",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "limittrans",
+            "value": "5"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "limitrot",
+            "value": "10"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "limitexttrans",
+            "value": "50"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "limitextrot",
+            "value": "10"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "userlevel",
+            "value": "false"
+          }
+        ]
+      }
+    ]
+  }
+}

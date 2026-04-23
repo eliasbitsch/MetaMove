@@ -1,0 +1,356 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "MMC/MMC_NO_MODPOS/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_NO_MODPOS/instances/pdispon_exep"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "pdispon_exep",
+        "rdonly": "true",
+        "instanceid": "7465376",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "pdispon_exep"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_NO_MODPOS/instances/eoffson_exep"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "eoffson_exep",
+        "rdonly": "true",
+        "instanceid": "7465208",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "eoffson_exep"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_NO_MODPOS/instances/searchc_searchpoint"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "searchc_searchpoint",
+        "rdonly": "true",
+        "instanceid": "7441528",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "searchc_searchpoint"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_NO_MODPOS/instances/searchl_searchpoint"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "searchl_searchpoint",
+        "rdonly": "true",
+        "instanceid": "7441360",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "searchl_searchpoint"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_NO_MODPOS/instances/searchextj_searchpoint"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "searchextj_searchpoint",
+        "rdonly": "true",
+        "instanceid": "7441192",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "searchextj_searchpoint"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_NO_MODPOS/instances/mtooltcpcalib_pos1"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "mtooltcpcalib_pos1",
+        "rdonly": "true",
+        "instanceid": "7224840",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "mtooltcpcalib_pos1"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_NO_MODPOS/instances/mtooltcpcalib_pos2"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "mtooltcpcalib_pos2",
+        "rdonly": "true",
+        "instanceid": "7224672",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "mtooltcpcalib_pos2"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_NO_MODPOS/instances/mtooltcpcalib_pos3"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "mtooltcpcalib_pos3",
+        "rdonly": "true",
+        "instanceid": "7224504",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "mtooltcpcalib_pos3"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_NO_MODPOS/instances/mtooltcpcalib_pos4"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "mtooltcpcalib_pos4",
+        "rdonly": "true",
+        "instanceid": "7224336",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "mtooltcpcalib_pos4"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_NO_MODPOS/instances/mtoolrotcalib_xpos"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "mtoolrotcalib_xpos",
+        "rdonly": "true",
+        "instanceid": "7224168",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "mtoolrotcalib_xpos"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_NO_MODPOS/instances/mtoolrotcalib_zpos"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "mtoolrotcalib_zpos",
+        "rdonly": "true",
+        "instanceid": "7224000",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "mtoolrotcalib_zpos"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_NO_MODPOS/instances/mtoolrotcalib_reftip"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "mtoolrotcalib_reftip",
+        "rdonly": "true",
+        "instanceid": "7223832",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "mtoolrotcalib_reftip"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_NO_MODPOS/instances/stoolrotcalib_xpos"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "stoolrotcalib_xpos",
+        "rdonly": "true",
+        "instanceid": "7223664",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "stoolrotcalib_xpos"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_NO_MODPOS/instances/stoolrotcalib_zpos"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "stoolrotcalib_zpos",
+        "rdonly": "true",
+        "instanceid": "7223496",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "stoolrotcalib_zpos"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_NO_MODPOS/instances/stoolrotcalib_reftip"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "stoolrotcalib_reftip",
+        "rdonly": "true",
+        "instanceid": "7223328",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "stoolrotcalib_reftip"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_NO_MODPOS/instances/stooltcpcalib_pos1"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "stooltcpcalib_pos1",
+        "rdonly": "true",
+        "instanceid": "7223160",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "stooltcpcalib_pos1"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_NO_MODPOS/instances/stooltcpcalib_pos2"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "stooltcpcalib_pos2",
+        "rdonly": "true",
+        "instanceid": "7222992",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "stooltcpcalib_pos2"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_NO_MODPOS/instances/stooltcpcalib_pos3"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "stooltcpcalib_pos3",
+        "rdonly": "true",
+        "instanceid": "7222824",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "stooltcpcalib_pos3"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_NO_MODPOS/instances/stooltcpcalib_pos4"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "stooltcpcalib_pos4",
+        "rdonly": "true",
+        "instanceid": "7222656",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "stooltcpcalib_pos4"
+          }
+        ]
+      }
+    ]
+  }
+}

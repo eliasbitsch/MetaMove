@@ -1,0 +1,19 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/rapid/"
+    },
+    "self": {
+      "href": "tasks/T_ROB1/modules/GOFA_ASI_Procedures/text"
+    }
+  },
+  "state": [
+    {
+      "_type": "rap-module-text",
+      "_title": "moduletext",
+      "change-count": " 59801 ",
+      "module-text": "MODULE GOFA_ASI_Procedures(SYSMODULE)\n    \n!    LOCAL PERS bool toggle := TRUE;\n!    PERS tooldata tool2 := [TRUE,[[0,0,0],[1,0,0,0]],[1,[0,0,0],[1,0,0,0],0,0,0]];\n    \n    \n!    PROC ASI_Routine1()\n!        !Example of Customized routine that can be connected with ASI buttons\n!        !MoveJ [[0,0,0],[1,0,0,0],[0,0,0,0],[9E9,9E9,9E9,9E9,9E9,9E9]],v100,z0,tool0;\n        \n!        TPWrite \"Gripper\" \\Bool:=toggle;\n!        reset ox_single_vac_greifer_oeffnen;\n!        reset ox_multi_vac_greifer_schliessen;\n!        WaitTime 0.1;\n!        IF (toggle = TRUE) THEN\n!            TPWrite \"open\";\n!            toggle:=FALSE;\n!            reset ox_kupplung_schliessen;\n!            set ox_kupplung_oeffnen;\n!        ELSE\n!            TPWrite \"close\";\n!            toggle:=True;\n!            set ox_kupplung_schliessen;\n!            reset ox_kupplung_oeffnen;\n!        ENDIF\n        \n!    ENDPROC\n\n!    PROC ASI_Routine2()\n!        !Example of Customized routine that can be connected with ASI buttons\n!        !MoveJ [[0,0,0],[1,0,0,0],[0,0,0,0],[9E9,9E9,9E9,9E9,9E9,9E9]],v100,z0,tool0;\n!        TPWrite \"Example 2\";\n!\t\tMoveAbsJ sync_position\\NoEOffs,v100, fine, tool0;\n!    ENDPROC\nENDMODULE",
+      "module-length": "1368"
+    }
+  ]
+}

@@ -1,0 +1,92 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "MOC/FC_MASTER/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/FC_MASTER/instances/fc_master1"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "fc_master1",
+        "rdonly": "false",
+        "instanceid": "6493304",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "fc_master1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "valid",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_fc_sensor",
+            "value": "fc_sensor1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_fc_kinematics",
+            "value": "fc_kinematics1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_fc_application",
+            "value": "fc_application1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_fc_speed_change",
+            "value": "fc_speed_change1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "no_of_force_controlled_joints",
+            "value": "6"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "phys_joint_1_fc",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "phys_joint_2_fc",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "phys_joint_3_fc",
+            "value": "2"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "phys_joint_4_fc",
+            "value": "3"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "phys_joint_5_fc",
+            "value": "4"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "phys_joint_6_fc",
+            "value": "5"
+          }
+        ]
+      }
+    ]
+  }
+}

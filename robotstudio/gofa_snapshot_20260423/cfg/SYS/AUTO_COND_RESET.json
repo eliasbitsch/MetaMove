@@ -1,0 +1,37 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "SYS/AUTO_COND_RESET/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/AUTO_COND_RESET/instances/AllDebugSettings"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "AllDebugSettings",
+        "rdonly": "false",
+        "instanceid": "6915128",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "AllDebugSettings"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "reset",
+            "value": "YES"
+          }
+        ]
+      }
+    ]
+  }
+}

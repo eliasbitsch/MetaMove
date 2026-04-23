@@ -1,0 +1,47 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "MOC/PMC_SENSOR/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/PMC_SENSOR/instances/fc_sensor1"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "fc_sensor1",
+        "rdonly": "false",
+        "instanceid": "6771840",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "fc_sensor1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "valid",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "drive_module",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_pmc_sensor_setup",
+            "value": "ATI_ACROMAG1"
+          }
+        ]
+      }
+    ]
+  }
+}

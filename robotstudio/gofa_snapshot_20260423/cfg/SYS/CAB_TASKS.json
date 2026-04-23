@@ -1,0 +1,210 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "SYS/CAB_TASKS/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/CAB_TASKS/instances/T_ROB1"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "T_ROB1",
+        "rdonly": "false",
+        "instanceid": "6632984",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "T_ROB1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Task_in_forground",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Type",
+            "value": "NORMAL"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "StackSize",
+            "value": "20000"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "BindRef",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Entry",
+            "value": "main"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Option",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "TrustLevel",
+            "value": "SysFail"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "RewERIfStop",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "UseMechanicalUnitGroup",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "MotionTask",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Hidden",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "RmqType",
+            "value": "None"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "RmqMode",
+            "value": "Interrupt"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "RmqMaxMsgSize",
+            "value": "448"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "RmqMaxNoOfMsg",
+            "value": "5"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ExcludeFromLoadModulesInAllTask",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/CAB_TASKS/instances/T_COMM"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "T_COMM",
+        "rdonly": "false",
+        "instanceid": "6632904",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "T_COMM"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Task_in_forground",
+            "value": "T_ROB1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Type",
+            "value": "SEMISTATIC"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "StackSize",
+            "value": "20000"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "BindRef",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Entry",
+            "value": "comm"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Option",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "TrustLevel",
+            "value": "None"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "RewERIfStop",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "UseMechanicalUnitGroup",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "MotionTask",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Hidden",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "RmqType",
+            "value": "None"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "RmqMode",
+            "value": "Interrupt"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "RmqMaxMsgSize",
+            "value": "448"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "RmqMaxNoOfMsg",
+            "value": "5"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ExcludeFromLoadModulesInAllTask",
+            "value": "false"
+          }
+        ]
+      }
+    ]
+  }
+}

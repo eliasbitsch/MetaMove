@@ -1,0 +1,52 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "MMC/MMC_SETTINGS/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/MMC_SETTINGS/instances/SetLeadThrough"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "SetLeadThrough",
+        "rdonly": "true",
+        "instanceid": "6526416",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "SetLeadThrough"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "param_nr",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "alt_nr",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "instr_name",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "only_mec_task",
+            "value": "false"
+          }
+        ]
+      }
+    ]
+  }
+}

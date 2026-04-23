@@ -1,0 +1,83 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "SYS/CYCLIC_BOOL/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/CYCLIC_BOOL/instances/RemoveAtPpToMain"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "RemoveAtPpToMain",
+        "rdonly": "false",
+        "instanceid": "7632528",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "RemoveAtPpToMain"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Value",
+            "value": "0"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/CYCLIC_BOOL/instances/ErrorMode"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "ErrorMode",
+        "rdonly": "false",
+        "instanceid": "7632432",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "ErrorMode"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Value",
+            "value": "0"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/CYCLIC_BOOL/instances/RecoveryMode"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "RecoveryMode",
+        "rdonly": "false",
+        "instanceid": "7032216",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "RecoveryMode"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Value",
+            "value": "1"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,362 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "MOC/CSS/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/CSS/instances/rob1"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "rob1",
+        "rdonly": "false",
+        "instanceid": "6493696",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "rob1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "valid",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "use_posref_as_spring_ref",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "smooth_activation_during_movement",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "linear_comp_Kv",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "act_smoothness_time",
+            "value": "0.1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "deact_smoothness_time",
+            "value": "0.1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "gravity_ffw_bandwidth",
+            "value": "25"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "tolerance_for_inverse_jac",
+            "value": "0.050000001"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "speed_supervision_override_factor",
+            "value": "3"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_motor_diff_for_pos_control",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "gain_ramp_step",
+            "value": "0.050000001"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_pos_error_x",
+            "value": "0.5"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_pos_error_y",
+            "value": "0.5"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_pos_error_z",
+            "value": "0.5"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_pos_error_rx",
+            "value": "0.5"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_pos_error_ry",
+            "value": "0.5"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_pos_error_rz",
+            "value": "0.5"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_pos_error_ra",
+            "value": "0.5"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_speed_error_x",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_speed_error_y",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_speed_error_z",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_speed_error_rx",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_speed_error_ry",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_speed_error_rz",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "max_speed_error_ra",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "stiffness_diagonal_min",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "stiffness_diagonal_max",
+            "value": "5"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "stiffness_coupling_max",
+            "value": "5"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "minimized_damping_off",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "damping_increment_factor",
+            "value": "1.1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "damping_stability_limit",
+            "value": "0.0099999998"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "damping_diagonal_max",
+            "value": "5"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "damping_coupling_max",
+            "value": "5"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kx_min",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ky_min",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kz_min",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "krx_min",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kry_min",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "krz_min",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kra_min",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kx_max",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ky_max",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kz_max",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "krx_max",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kry_max",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "krz_max",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "kra_max",
+            "value": "1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "force_offset_bandwidth",
+            "value": "25"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "force_offset_ramp",
+            "value": "1000"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "dynamic_to_static_fric_ratio",
+            "value": "0.69999999"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "damping_min",
+            "value": "5"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "stiffness_non_soft_dir_min",
+            "value": "5"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "damping_max",
+            "value": "20"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "stiffness_non_soft_dir_max",
+            "value": "20"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "stiffness_min",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "stiffness_max",
+            "value": "10"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "stiffness_to_damping_ratio",
+            "value": "0.5"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "damping_min_move",
+            "value": "10"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "stiffness_non_soft_dir_min_move",
+            "value": "10"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "damping_max_move",
+            "value": "20"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "stiffness_non_soft_dir_max_move",
+            "value": "20"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "stiffness_min_move",
+            "value": "2"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "stiffness_max_move",
+            "value": "10"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "stiffness_to_damping_ratio_move",
+            "value": "0.5"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "auto_reactivation_disabled",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "friction_comp_css_factor",
+            "value": "0"
+          }
+        ]
+      }
+    ]
+  }
+}

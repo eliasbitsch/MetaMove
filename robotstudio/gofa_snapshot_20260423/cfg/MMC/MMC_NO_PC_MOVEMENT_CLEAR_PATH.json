@@ -1,0 +1,13 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "MMC/MMC_NO_PC_MOVEMENT_CLEAR_PATH/instances"
+    }
+  },
+  "_embedded": {
+    "resources": []
+  }
+}

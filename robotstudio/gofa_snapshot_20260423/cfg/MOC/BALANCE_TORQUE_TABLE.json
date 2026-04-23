@@ -1,0 +1,13 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "MOC/BALANCE_TORQUE_TABLE/instances"
+    }
+  },
+  "_embedded": {
+    "resources": []
+  }
+}

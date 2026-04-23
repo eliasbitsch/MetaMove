@@ -1,0 +1,19 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/rapid/"
+    },
+    "self": {
+      "href": "tasks/T_ROB1/modules/Calib_Def1_wobj_kiste_1/text"
+    }
+  },
+  "state": [
+    {
+      "_type": "rap-module-text",
+      "_title": "moduletext",
+      "change-count": " 59980 ",
+      "file-path": "/TEMP/pusres.018425",
+      "module-length": "1368"
+    }
+  ]
+}

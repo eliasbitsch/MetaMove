@@ -1,0 +1,147 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/rapid/"
+    },
+    "self": {
+      "href": "tasks/T_ROB1/modules"
+    }
+  },
+  "status": {
+    "code": 294912
+  },
+  "state": [
+    {
+      "_type": "rap-module-info-li",
+      "_title": "T_ROB1/GOFA_ASI_Procedures",
+      "name": "GOFA_ASI_Procedures",
+      "type": "SysMod"
+    },
+    {
+      "_type": "rap-module-info-li",
+      "_title": "T_ROB1/Calib_Def_wobj_kiste_5",
+      "name": "Calib_Def_wobj_kiste_5",
+      "type": "ProgMod"
+    },
+    {
+      "_type": "rap-module-info-li",
+      "_title": "T_ROB1/module_mr19m010_copy",
+      "name": "module_mr19m010_copy",
+      "type": "ProgMod"
+    },
+    {
+      "_type": "rap-module-info-li",
+      "_title": "T_ROB1/Wizard_LoadData",
+      "name": "Wizard_LoadData",
+      "type": "ProgMod"
+    },
+    {
+      "_type": "rap-module-info-li",
+      "_title": "T_ROB1/module_MAIN",
+      "name": "module_MAIN",
+      "type": "ProgMod"
+    },
+    {
+      "_type": "rap-module-info-li",
+      "_title": "T_ROB1/BASE",
+      "name": "BASE",
+      "type": "SysMod"
+    },
+    {
+      "_type": "rap-module-info-li",
+      "_title": "T_ROB1/module_WIZARD",
+      "name": "module_WIZARD",
+      "type": "ProgMod"
+    },
+    {
+      "_type": "rap-module-info-li",
+      "_title": "T_ROB1/Calib_Def_wobj_kiste_3",
+      "name": "Calib_Def_wobj_kiste_3",
+      "type": "ProgMod"
+    },
+    {
+      "_type": "rap-module-info-li",
+      "_title": "T_ROB1/MainModule",
+      "name": "MainModule",
+      "type": "ProgMod"
+    },
+    {
+      "_type": "rap-module-info-li",
+      "_title": "T_ROB1/module_RANDOMPATH",
+      "name": "module_RANDOMPATH",
+      "type": "SysMod"
+    },
+    {
+      "_type": "rap-module-info-li",
+      "_title": "T_ROB1/module_HOLOPATH",
+      "name": "module_HOLOPATH",
+      "type": "SysMod"
+    },
+    {
+      "_type": "rap-module-info-li",
+      "_title": "T_ROB1/Calib_Def_wobj_kiste_1",
+      "name": "Calib_Def_wobj_kiste_1",
+      "type": "ProgMod"
+    },
+    {
+      "_type": "rap-module-info-li",
+      "_title": "T_ROB1/Calib_Def1_wobj_kiste_1",
+      "name": "Calib_Def1_wobj_kiste_1",
+      "type": "ProgMod"
+    },
+    {
+      "_type": "rap-module-info-li",
+      "_title": "T_ROB1/module_EGM",
+      "name": "module_EGM",
+      "type": "SysMod"
+    },
+    {
+      "_type": "rap-module-info-li",
+      "_title": "T_ROB1/module_mr22m012",
+      "name": "module_mr22m012",
+      "type": "ProgMod"
+    },
+    {
+      "_type": "rap-module-info-li",
+      "_title": "T_ROB1/Calib_Def_wobj_kiste_6",
+      "name": "Calib_Def_wobj_kiste_6",
+      "type": "ProgMod"
+    },
+    {
+      "_type": "rap-module-info-li",
+      "_title": "T_ROB1/Calib_Def_wobj_kiste_4",
+      "name": "Calib_Def_wobj_kiste_4",
+      "type": "ProgMod"
+    },
+    {
+      "_type": "rap-module-info-li",
+      "_title": "T_ROB1/module_MAIN_GOHOLO",
+      "name": "module_MAIN_GOHOLO",
+      "type": "SysMod"
+    },
+    {
+      "_type": "rap-module-info-li",
+      "_title": "T_ROB1/Wizard_Params",
+      "name": "Wizard_Params",
+      "type": "SysMod"
+    },
+    {
+      "_type": "rap-module-info-li",
+      "_title": "T_ROB1/Calib_Def_wobj_kiste_2",
+      "name": "Calib_Def_wobj_kiste_2",
+      "type": "ProgMod"
+    },
+    {
+      "_type": "rap-module-info-li",
+      "_title": "T_ROB1/Morobot_Assembly",
+      "name": "Morobot_Assembly",
+      "type": "ProgMod"
+    },
+    {
+      "_type": "rap-module-info-li",
+      "_title": "T_ROB1/Calib_Def_wobj_kiste_7",
+      "name": "Calib_Def_wobj_kiste_7",
+      "type": "ProgMod"
+    }
+  ]
+}

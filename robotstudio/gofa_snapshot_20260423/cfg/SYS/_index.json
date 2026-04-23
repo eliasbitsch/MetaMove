@@ -1,0 +1,266 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "SYS"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/LANGUAGE"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "LANGUAGE"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/LOCALIZATION"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "LOCALIZATION"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/PRESENT_OPTIONS"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "PRESENT_OPTIONS"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/CAB_REGAIN_DIST"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "CAB_REGAIN_DIST"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/MANFS_LIMIT"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "MANFS_LIMIT"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/HOTEDIT_MODPOS"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "HOTEDIT_MODPOS"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/MASTER_BOOL"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "MASTER_BOOL"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/AUTO_COND_RESET"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "AUTO_COND_RESET"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/SYSSIG_OUT"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "SYSSIG_OUT"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/SYSSIG_IN"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "SYSSIG_IN"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/SYSSIG_ACTRESTR"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "SYSSIG_ACTRESTR"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/BACKUP_RESTORE"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "BACKUP_RESTORE"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/RESTORE_EXCLUDE"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "RESTORE_EXCLUDE"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/CAB_EXEC_HOOKS"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "CAB_EXEC_HOOKS"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/CAB_REAL_PACKETS"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "CAB_REAL_PACKETS"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/CAB_TASK_MODULES"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "CAB_TASK_MODULES"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/CAB_OLD_TASK_MODULES"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "CAB_OLD_TASK_MODULES"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/RUN_MODE_SETTINGS"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "RUN_MODE_SETTINGS"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/WORKDIR"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "WORKDIR"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/CAB_SET"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "CAB_SET"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/SYS_MISC"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "SYS_MISC"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/CAB_TASKS"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "CAB_TASKS"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/CAB_OLD_TASKS"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "CAB_OLD_TASKS"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/MECHANICAL_UNIT_GROUP"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "MECHANICAL_UNIT_GROUP"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/SUPPRESS_ELOG"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "SUPPRESS_ELOG"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/CYCLIC_BOOL"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "CYCLIC_BOOL"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/MoveInAuto"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "MoveInAuto"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/FAN_CONTROL"
+          }
+        },
+        "_type": "cfg-dt-li",
+        "_title": "FAN_CONTROL"
+      }
+    ]
+  }
+}

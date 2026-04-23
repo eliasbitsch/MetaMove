@@ -1,0 +1,1277 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "MOC/BRAKE_TYPE/instances?limit=70"
+    },
+    "next": {
+      "href": "MOC/BRAKE_TYPE/instances?start=70&limit=70"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/BRAKE_TYPE/instances/default"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "default",
+        "rdonly": "true",
+        "instanceid": "6964760",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia",
+            "value": "0"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/BRAKE_TYPE/instances/LOCKED"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "LOCKED",
+        "rdonly": "true",
+        "instanceid": "6964576",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia",
+            "value": "0"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/BRAKE_TYPE/instances/NO_MECHANICAL_BRAKE"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "NO_MECHANICAL_BRAKE",
+        "rdonly": "true",
+        "instanceid": "6964392",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia",
+            "value": "0"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/BRAKE_TYPE/instances/3HAC081045-001"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "3HAC081045-001",
+        "rdonly": "true",
+        "instanceid": "6755240",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia",
+            "value": "0"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/BRAKE_TYPE/instances/3HAC081042-001"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "3HAC081042-001",
+        "rdonly": "true",
+        "instanceid": "6755056",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia",
+            "value": "0"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/BRAKE_TYPE/instances/3HAC074320-001"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "3HAC074320-001",
+        "rdonly": "true",
+        "instanceid": "6754872",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia",
+            "value": "0"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/BRAKE_TYPE/instances/3HAC074321-001"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "3HAC074321-001",
+        "rdonly": "true",
+        "instanceid": "6754688",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia",
+            "value": "0"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/BRAKE_TYPE/instances/3HAC17339-1"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "3HAC17339-1",
+        "rdonly": "true",
+        "instanceid": "6754504",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia",
+            "value": "2.3799999E-05"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/BRAKE_TYPE/instances/3HAC17340-1"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "3HAC17340-1",
+        "rdonly": "true",
+        "instanceid": "6754320",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia",
+            "value": "1.5699999E-05"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/BRAKE_TYPE/instances/3HAC17341-1"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "3HAC17341-1",
+        "rdonly": "true",
+        "instanceid": "6754136",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia",
+            "value": "1.76E-06"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/BRAKE_TYPE/instances/3HAC17342-1"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "3HAC17342-1",
+        "rdonly": "true",
+        "instanceid": "6753952",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia",
+            "value": "1.76E-06"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/BRAKE_TYPE/instances/3HAC5883-1"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "3HAC5883-1",
+        "rdonly": "true",
+        "instanceid": "6753768",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia",
+            "value": "6.0000002E-06"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/BRAKE_TYPE/instances/3HAC5885-1"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "3HAC5885-1",
+        "rdonly": "true",
+        "instanceid": "6753584",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia",
+            "value": "6.0000002E-06"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/BRAKE_TYPE/instances/3HAC5887-1"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "3HAC5887-1",
+        "rdonly": "true",
+        "instanceid": "6753400",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia",
+            "value": "1E-06"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/BRAKE_TYPE/instances/3HAC5889-1"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "3HAC5889-1",
+        "rdonly": "true",
+        "instanceid": "6753216",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia",
+            "value": "1E-06"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/BRAKE_TYPE/instances/3HAC17345-1"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "3HAC17345-1",
+        "rdonly": "true",
+        "instanceid": "6753032",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia",
+            "value": "3.5199999E-05"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/BRAKE_TYPE/instances/3HAC17346-1"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "3HAC17346-1",
+        "rdonly": "true",
+        "instanceid": "6752848",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia",
+            "value": "1.1E-05"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/BRAKE_TYPE/instances/3HAC17347-1"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "3HAC17347-1",
+        "rdonly": "true",
+        "instanceid": "6752664",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia",
+            "value": "3.5199999E-05"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/BRAKE_TYPE/instances/3HAB3124-2"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "3HAB3124-2",
+        "rdonly": "true",
+        "instanceid": "6752480",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia",
+            "value": "1.5E-05"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/BRAKE_TYPE/instances/3HAB3125-2"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "3HAB3125-2",
+        "rdonly": "true",
+        "instanceid": "6752296",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia",
+            "value": "6.0000002E-06"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/BRAKE_TYPE/instances/3HAB3359-2"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "3HAB3359-2",
+        "rdonly": "true",
+        "instanceid": "6752112",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia",
+            "value": "1.5E-05"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/BRAKE_TYPE/instances/3HAC17326-1"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "3HAC17326-1",
+        "rdonly": "true",
+        "instanceid": "6751928",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia",
+            "value": "3.5199999E-05"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/BRAKE_TYPE/instances/3HAC17327-1"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "3HAC17327-1",
+        "rdonly": "true",
+        "instanceid": "6751744",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia",
+            "value": "3.5199999E-05"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/BRAKE_TYPE/instances/3HAC17328-1"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "3HAC17328-1",
+        "rdonly": "true",
+        "instanceid": "6751560",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia",
+            "value": "1.1E-05"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/BRAKE_TYPE/instances/3HAC17330-1"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "3HAC17330-1",
+        "rdonly": "true",
+        "instanceid": "6751376",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia",
+            "value": "1.1E-05"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/BRAKE_TYPE/instances/3HAC17331-1"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "3HAC17331-1",
+        "rdonly": "true",
+        "instanceid": "6751192",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia",
+            "value": "3.5199999E-05"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/BRAKE_TYPE/instances/3HAB5506-1"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "3HAB5506-1",
+        "rdonly": "true",
+        "instanceid": "6751008",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia",
+            "value": "1.5E-05"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/BRAKE_TYPE/instances/3HAB5557-1"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "3HAB5557-1",
+        "rdonly": "true",
+        "instanceid": "6750824",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia",
+            "value": "6.0000002E-06"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/BRAKE_TYPE/instances/3HAB5558-1"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "3HAB5558-1",
+        "rdonly": "true",
+        "instanceid": "6750640",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia",
+            "value": "6.0000002E-06"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/BRAKE_TYPE/instances/3HAB5890-1"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "3HAB5890-1",
+        "rdonly": "true",
+        "instanceid": "6750456",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia",
+            "value": "6.0000002E-06"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/BRAKE_TYPE/instances/3HAC2206-1"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "3HAC2206-1",
+        "rdonly": "true",
+        "instanceid": "6750272",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia",
+            "value": "1.5E-05"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/BRAKE_TYPE/instances/1FT3043"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "1FT3043",
+        "rdonly": "true",
+        "instanceid": "6750088",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia",
+            "value": "9.9999997E-06"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/BRAKE_TYPE/instances/1FT6032"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "1FT6032",
+        "rdonly": "true",
+        "instanceid": "6749904",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia",
+            "value": "9.9999997E-06"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/BRAKE_TYPE/instances/3HAC17332-1"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "3HAC17332-1",
+        "rdonly": "true",
+        "instanceid": "6749720",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia",
+            "value": "0.00028189999"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/BRAKE_TYPE/instances/3HAC17333-1"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "3HAC17333-1",
+        "rdonly": "true",
+        "instanceid": "6749536",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia",
+            "value": "0.00028189999"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/BRAKE_TYPE/instances/3HAC17334-1"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "3HAC17334-1",
+        "rdonly": "true",
+        "instanceid": "6749352",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia",
+            "value": "5.0999999E-05"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/BRAKE_TYPE/instances/3HAC17335-1"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "3HAC17335-1",
+        "rdonly": "true",
+        "instanceid": "6749168",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia",
+            "value": "5.0999999E-05"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/BRAKE_TYPE/instances/3HAC17336-1"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "3HAC17336-1",
+        "rdonly": "true",
+        "instanceid": "6748984",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia",
+            "value": "5.0999999E-05"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/BRAKE_TYPE/instances/3HAC17337-1"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "3HAC17337-1",
+        "rdonly": "true",
+        "instanceid": "6748800",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia",
+            "value": "2.3799999E-05"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/BRAKE_TYPE/instances/3HAC17338-1"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "3HAC17338-1",
+        "rdonly": "true",
+        "instanceid": "6748616",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia",
+            "value": "0.00028189999"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/BRAKE_TYPE/instances/3HAC3696-2"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "3HAC3696-2",
+        "rdonly": "true",
+        "instanceid": "6748432",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia",
+            "value": "5.3E-05"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/BRAKE_TYPE/instances/3HAC3697-2"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "3HAC3697-2",
+        "rdonly": "true",
+        "instanceid": "6748248",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia",
+            "value": "5.3E-05"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/BRAKE_TYPE/instances/3HAB3655-2"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "3HAB3655-2",
+        "rdonly": "true",
+        "instanceid": "6748064",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia",
+            "value": "9.9999997E-05"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/BRAKE_TYPE/instances/3HAB3656-2"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "3HAB3656-2",
+        "rdonly": "true",
+        "instanceid": "6747880",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia",
+            "value": "9.9999997E-05"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/BRAKE_TYPE/instances/3HAB9667-2"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "3HAB9667-2",
+        "rdonly": "true",
+        "instanceid": "6747696",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia",
+            "value": "1.8000001E-05"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/BRAKE_TYPE/instances/3HAC14673-1"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "3HAC14673-1",
+        "rdonly": "true",
+        "instanceid": "6747512",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia",
+            "value": "0.00101"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/BRAKE_TYPE/instances/3HAC14673-2"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "3HAC14673-2",
+        "rdonly": "true",
+        "instanceid": "6747328",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia",
+            "value": "0.00101"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/BRAKE_TYPE/instances/3HAC14673-3"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "3HAC14673-3",
+        "rdonly": "true",
+        "instanceid": "6747144",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia",
+            "value": "0.000279"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/BRAKE_TYPE/instances/3HAC14673-6"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "3HAC14673-6",
+        "rdonly": "true",
+        "instanceid": "6746960",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia",
+            "value": "0.00101"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/BRAKE_TYPE/instances/3HAC14673-7"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "3HAC14673-7",
+        "rdonly": "true",
+        "instanceid": "6746776",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia",
+            "value": "0.000279"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/BRAKE_TYPE/instances/3HAC14673-8"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "3HAC14673-8",
+        "rdonly": "true",
+        "instanceid": "6746592",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia",
+            "value": "0.000279"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/BRAKE_TYPE/instances/3HAC14673-9"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "3HAC14673-9",
+        "rdonly": "true",
+        "instanceid": "6746408",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia",
+            "value": "0.00101"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/BRAKE_TYPE/instances/3HAC14673-10"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "3HAC14673-10",
+        "rdonly": "true",
+        "instanceid": "6746224",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia",
+            "value": "0.000279"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/BRAKE_TYPE/instances/3HAC3243-15"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "3HAC3243-15",
+        "rdonly": "true",
+        "instanceid": "6746040",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia",
+            "value": "0.00033000001"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/BRAKE_TYPE/instances/CR_1"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "CR_1",
+        "rdonly": "true",
+        "instanceid": "6745856",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia",
+            "value": "0.00188"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/BRAKE_TYPE/instances/CR_23"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "CR_23",
+        "rdonly": "true",
+        "instanceid": "6745672",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia",
+            "value": "0.00085000001"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/BRAKE_TYPE/instances/CR_456"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "CR_456",
+        "rdonly": "true",
+        "instanceid": "6745488",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia",
+            "value": "0.00021"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/BRAKE_TYPE/instances/3HAC1569-2"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "3HAC1569-2",
+        "rdonly": "true",
+        "instanceid": "6745304",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia",
+            "value": "1.3E-05"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/BRAKE_TYPE/instances/3HAC14673-11"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "3HAC14673-11",
+        "rdonly": "true",
+        "instanceid": "6745120",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia",
+            "value": "0.00101"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/BRAKE_TYPE/instances/3HAC12638-1"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "3HAC12638-1",
+        "rdonly": "true",
+        "instanceid": "6744936",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia",
+            "value": "0.00015000001"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/BRAKE_TYPE/instances/3HAC12638-3"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "3HAC12638-3",
+        "rdonly": "true",
+        "instanceid": "6744752",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia",
+            "value": "0.00015000001"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/BRAKE_TYPE/instances/1FK7103"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "1FK7103",
+        "rdonly": "true",
+        "instanceid": "6744568",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia",
+            "value": "0"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/BRAKE_TYPE/instances/1FK7105"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "1FK7105",
+        "rdonly": "true",
+        "instanceid": "6744384",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia",
+            "value": "0"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/BRAKE_TYPE/instances/1FK7085"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "1FK7085",
+        "rdonly": "true",
+        "instanceid": "6744200",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia",
+            "value": "0"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/BRAKE_TYPE/instances/1FK7063"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "1FK7063",
+        "rdonly": "true",
+        "instanceid": "6744016",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia",
+            "value": "0"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/BRAKE_TYPE/instances/1FK7061_45"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "1FK7061_45",
+        "rdonly": "true",
+        "instanceid": "6743832",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia",
+            "value": "0"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/BRAKE_TYPE/instances/1FK7044"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "1FK7044",
+        "rdonly": "true",
+        "instanceid": "6743648",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia",
+            "value": "0"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/BRAKE_TYPE/instances/3HAC14673-MX"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "3HAC14673-MX",
+        "rdonly": "true",
+        "instanceid": "6743464",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia",
+            "value": "0.00101"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/BRAKE_TYPE/instances/3HAC12638-1R"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "3HAC12638-1R",
+        "rdonly": "true",
+        "instanceid": "6743280",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia",
+            "value": "6.6000001E-05"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "MOC/BRAKE_TYPE/instances/3HAC12638-3R"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "3HAC12638-3R",
+        "rdonly": "true",
+        "instanceid": "6743096",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "inertia",
+            "value": "6.6000001E-05"
+          }
+        ]
+      }
+    ]
+  }
+}

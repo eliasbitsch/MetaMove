@@ -1,0 +1,37 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "MMC/IOVIEW_BLOCK/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "MMC/IOVIEW_BLOCK/instances/IOViewBlockIfMotorsOff"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "IOViewBlockIfMotorsOff",
+        "rdonly": "false",
+        "instanceid": "7129776",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "name",
+            "value": "IOViewBlockIfMotorsOff"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "enabled",
+            "value": "0"
+          }
+        ]
+      }
+    ]
+  }
+}

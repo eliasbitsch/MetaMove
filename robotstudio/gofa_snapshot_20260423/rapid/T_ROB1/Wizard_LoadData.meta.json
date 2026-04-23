@@ -1,0 +1,19 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/rapid/"
+    },
+    "self": {
+      "href": "tasks/T_ROB1/modules/Wizard_LoadData/text"
+    }
+  },
+  "state": [
+    {
+      "_type": "rap-module-text",
+      "_title": "moduletext",
+      "change-count": " 59839 ",
+      "module-text": "MODULE Wizard_LoadData\nENDMODULE",
+      "module-length": "1368"
+    }
+  ]
+}

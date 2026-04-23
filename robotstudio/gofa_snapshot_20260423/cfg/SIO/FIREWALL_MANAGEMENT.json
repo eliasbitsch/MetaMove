@@ -1,0 +1,377 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "SIO/FIREWALL_MANAGEMENT/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "SIO/FIREWALL_MANAGEMENT/instances/Bonjour"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "Bonjour",
+        "rdonly": "true",
+        "instanceid": "7031664",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "Bonjour"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "EnableOnPublicNet",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "EnableOnPrivateNet",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "EnableOnIONet",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SIO/FIREWALL_MANAGEMENT/instances/EtherNetIP"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "EtherNetIP",
+        "rdonly": "true",
+        "instanceid": "7031472",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "EtherNetIP"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "EnableOnPublicNet",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "EnableOnPrivateNet",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "EnableOnIONet",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SIO/FIREWALL_MANAGEMENT/instances/PROFINET"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "PROFINET",
+        "rdonly": "true",
+        "instanceid": "7031280",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "PROFINET"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "EnableOnPublicNet",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "EnableOnPrivateNet",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "EnableOnIONet",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SIO/FIREWALL_MANAGEMENT/instances/RapidSockets"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "RapidSockets",
+        "rdonly": "true",
+        "instanceid": "7031088",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "RapidSockets"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "EnableOnPublicNet",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "EnableOnPrivateNet",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "EnableOnIONet",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SIO/FIREWALL_MANAGEMENT/instances/RobotWebServices"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "RobotWebServices",
+        "rdonly": "true",
+        "instanceid": "7030896",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "RobotWebServices"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "EnableOnPublicNet",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "EnableOnPrivateNet",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "EnableOnIONet",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SIO/FIREWALL_MANAGEMENT/instances/UDPUC"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "UDPUC",
+        "rdonly": "true",
+        "instanceid": "6606832",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "UDPUC"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "EnableOnPublicNet",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "EnableOnPrivateNet",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "EnableOnIONet",
+            "value": "true"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SIO/FIREWALL_MANAGEMENT/instances/Netscan"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "Netscan",
+        "rdonly": "true",
+        "instanceid": "6606640",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "Netscan"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "EnableOnPublicNet",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "EnableOnPrivateNet",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "EnableOnIONet",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SIO/FIREWALL_MANAGEMENT/instances/ConnectedServices"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "ConnectedServices",
+        "rdonly": "true",
+        "instanceid": "6606448",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "ConnectedServices"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "EnableOnPublicNet",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "EnableOnPrivateNet",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "EnableOnIONet",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SIO/FIREWALL_MANAGEMENT/instances/RobAPI"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "RobAPI",
+        "rdonly": "true",
+        "instanceid": "6606256",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "RobAPI"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "EnableOnPublicNet",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "EnableOnPrivateNet",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "EnableOnIONet",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SIO/FIREWALL_MANAGEMENT/instances/OpcUaServer"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "OpcUaServer",
+        "rdonly": "true",
+        "instanceid": "6606064",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "OpcUaServer"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "EnableOnPublicNet",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "EnableOnPrivateNet",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "EnableOnIONet",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SIO/FIREWALL_MANAGEMENT/instances/syslog"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "syslog",
+        "rdonly": "true",
+        "instanceid": "6605872",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "syslog"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "EnableOnPublicNet",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "EnableOnPrivateNet",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "EnableOnIONet",
+            "value": "false"
+          }
+        ]
+      }
+    ]
+  }
+}

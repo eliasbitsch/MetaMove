@@ -1,0 +1,1696 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "SYS/CAB_OLD_TASK_MODULES/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/CAB_OLD_TASK_MODULES/instances/"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "",
+        "rdonly": "true",
+        "instanceid": "6304288",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "File",
+            "value": "RELEASE:/system/base.sysx"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ModName",
+            "value": "BASE"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Task",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Install",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Txres",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Shared",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "AllTask",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "AllMotionTask",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Hidden",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/CAB_OLD_TASK_MODULES/instances/"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "",
+        "rdonly": "true",
+        "instanceid": "6304208",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "File",
+            "value": "RELEASE:/system/user.sysx"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ModName",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Task",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Install",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Txres",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Shared",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "AllTask",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "AllMotionTask",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Hidden",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/CAB_OLD_TASK_MODULES/instances/"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "",
+        "rdonly": "true",
+        "instanceid": "6304128",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "File",
+            "value": "RELEASE:/system/basehidden.sysx"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ModName",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Task",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Install",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Txres",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Shared",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "AllTask",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "AllMotionTask",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Hidden",
+            "value": "true"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/CAB_OLD_TASK_MODULES/instances/"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "",
+        "rdonly": "true",
+        "instanceid": "6304040",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "File",
+            "value": "RELEASE:/system/base_shared.sysx"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ModName",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Task",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Install",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Txres",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Shared",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "AllTask",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "AllMotionTask",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Hidden",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/CAB_OLD_TASK_MODULES/instances/"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "",
+        "rdonly": "true",
+        "instanceid": "6429248",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "File",
+            "value": "RELEASE:/system/basefun1data.sysx"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ModName",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Task",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Install",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Txres",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Shared",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "AllTask",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "AllMotionTask",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Hidden",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/CAB_OLD_TASK_MODULES/instances/"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "",
+        "rdonly": "true",
+        "instanceid": "6429168",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "File",
+            "value": "RELEASE:/system/basefun1hidden.sysx"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ModName",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Task",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Install",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Txres",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Shared",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "AllTask",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "AllMotionTask",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Hidden",
+            "value": "true"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/CAB_OLD_TASK_MODULES/instances/"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "",
+        "rdonly": "true",
+        "instanceid": "6429088",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "File",
+            "value": "RELEASE:/system/basefun1.sysx"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ModName",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Task",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Install",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Txres",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Shared",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "AllTask",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "AllMotionTask",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Hidden",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/CAB_OLD_TASK_MODULES/instances/"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "",
+        "rdonly": "true",
+        "instanceid": "6429008",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "File",
+            "value": "RELEASE:/system/basefun.sysx"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ModName",
+            "value": "BASEFUN"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Task",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Install",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Txres",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Shared",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "AllTask",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "AllMotionTask",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Hidden",
+            "value": "true"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/CAB_OLD_TASK_MODULES/instances/"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "",
+        "rdonly": "true",
+        "instanceid": "6454024",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "File",
+            "value": "RELEASE:/system/cbc_shared_data_cry.sysx"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ModName",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Task",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Install",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Txres",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Shared",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "AllTask",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "AllMotionTask",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Hidden",
+            "value": "true"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/CAB_OLD_TASK_MODULES/instances/"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "",
+        "rdonly": "true",
+        "instanceid": "6452928",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "File",
+            "value": "RELEASE:/system/cbc_main_cry.sysx"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ModName",
+            "value": "cbc_main"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Task",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Install",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Txres",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Shared",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "AllTask",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "AllMotionTask",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Hidden",
+            "value": "true"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/CAB_OLD_TASK_MODULES/instances/"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "",
+        "rdonly": "true",
+        "instanceid": "6451832",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "File",
+            "value": "RELEASE:/system/cbc_shared_cry.sysx"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ModName",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Task",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Install",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Txres",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Shared",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "AllTask",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "AllMotionTask",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Hidden",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/CAB_OLD_TASK_MODULES/instances/"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "",
+        "rdonly": "true",
+        "instanceid": "6450736",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "File",
+            "value": "RELEASE:/system/mathlib.sysx"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ModName",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Task",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Install",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Txres",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Shared",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "AllTask",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "AllMotionTask",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Hidden",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/CAB_OLD_TASK_MODULES/instances/"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "",
+        "rdonly": "true",
+        "instanceid": "6449640",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "File",
+            "value": "RELEASE:/system/calwrist.sysx"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ModName",
+            "value": "CAL_WRIST"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Task",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Install",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Txres",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Shared",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "AllTask",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "AllMotionTask",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Hidden",
+            "value": "true"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/CAB_OLD_TASK_MODULES/instances/"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "",
+        "rdonly": "true",
+        "instanceid": "6448544",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "File",
+            "value": "RELEASE:/system/bat_shutdown.sysx"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ModName",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Task",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Install",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Txres",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Shared",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "AllTask",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "AllMotionTask",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Hidden",
+            "value": "true"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/CAB_OLD_TASK_MODULES/instances/"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "",
+        "rdonly": "true",
+        "instanceid": "6447448",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "File",
+            "value": "RELEASE:/system/cbc_task_cry.sysx"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ModName",
+            "value": "cbc_task"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Task",
+            "value": "SC_CBC"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Install",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Txres",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Shared",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "AllTask",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "AllMotionTask",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Hidden",
+            "value": "true"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/CAB_OLD_TASK_MODULES/instances/"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "",
+        "rdonly": "true",
+        "instanceid": "6446352",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "File",
+            "value": "RELEASE:/system/fctrqsens/Torque_Sensor_Calibration.sysx"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ModName",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Task",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Install",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Txres",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Shared",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "AllTask",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "AllMotionTask",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Hidden",
+            "value": "true"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/CAB_OLD_TASK_MODULES/instances/"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "",
+        "rdonly": "true",
+        "instanceid": "6445256",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "File",
+            "value": "RELEASE:/system/linked_m_sup_base.sysx"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ModName",
+            "value": "LINKEDM_SUP_BASE"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Task",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Install",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Txres",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Shared",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "AllTask",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "AllMotionTask",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Hidden",
+            "value": "true"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/CAB_OLD_TASK_MODULES/instances/"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "",
+        "rdonly": "true",
+        "instanceid": "6444160",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "File",
+            "value": "RELEASE:/options/cse/cse_mod.sys"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ModName",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Task",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Install",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Txres",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Shared",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "AllTask",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "AllMotionTask",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Hidden",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/CAB_OLD_TASK_MODULES/instances/"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "",
+        "rdonly": "true",
+        "instanceid": "6443064",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "File",
+            "value": "RELEASE:/options/lt/leadthrough.sysx"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ModName",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Task",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Install",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Txres",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Shared",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "AllTask",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "AllMotionTask",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Hidden",
+            "value": "true"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/CAB_OLD_TASK_MODULES/instances/"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "",
+        "rdonly": "true",
+        "instanceid": "6441968",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "File",
+            "value": "RELEASE:/options/motcom/motcom.sysx"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ModName",
+            "value": "MOTCOM"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Task",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Install",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Txres",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Shared",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "AllTask",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "AllMotionTask",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Hidden",
+            "value": "true"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/CAB_OLD_TASK_MODULES/instances/"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "",
+        "rdonly": "true",
+        "instanceid": "6440872",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "File",
+            "value": "RELEASE:/options/sis/sis_instr.sysx"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ModName",
+            "value": "sis_instr"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Task",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Install",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Txres",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Shared",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "AllTask",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "AllMotionTask",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Hidden",
+            "value": "true"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/CAB_OLD_TASK_MODULES/instances/"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "",
+        "rdonly": "true",
+        "instanceid": "6439776",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "File",
+            "value": "RELEASE:/options/sis/sis_instr2.sysx"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ModName",
+            "value": "sis_instr2"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Task",
+            "value": ""
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Install",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Txres",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Shared",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "AllTask",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "AllMotionTask",
+            "value": "true"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Hidden",
+            "value": "true"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/CAB_OLD_TASK_MODULES/instances/"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "",
+        "rdonly": "true",
+        "instanceid": "6438680",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "File",
+            "value": "HOME:/Wizard/Wizard_Params.sysx"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ModName",
+            "value": "Wizard_Params"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Task",
+            "value": "T_ROB1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Install",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Txres",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Shared",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "AllTask",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "AllMotionTask",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Hidden",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/CAB_OLD_TASK_MODULES/instances/"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "",
+        "rdonly": "true",
+        "instanceid": "6437584",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "File",
+            "value": "WIZARD:/RAPID/Gripper_Common/Wizard_Gripper.sysx"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ModName",
+            "value": "Wizard_Gripper"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Task",
+            "value": "T_ROB1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Install",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Txres",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Shared",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "AllTask",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "AllMotionTask",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Hidden",
+            "value": "true"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/CAB_OLD_TASK_MODULES/instances/"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "",
+        "rdonly": "true",
+        "instanceid": "6436488",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "File",
+            "value": "WIZARD:/RAPID/Gripper_Common/Wizard_Installed.sysx"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ModName",
+            "value": "Wizard_Installed"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Task",
+            "value": "T_ROB1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Install",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Txres",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Shared",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "AllTask",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "AllMotionTask",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Hidden",
+            "value": "true"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/CAB_OLD_TASK_MODULES/instances/"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "",
+        "rdonly": "true",
+        "instanceid": "6435392",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "File",
+            "value": "WIZARD:/RAPID/Gripper_Common/Wizard_PickPlace.sysx"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ModName",
+            "value": "Wizard_PickPlace"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Task",
+            "value": "T_ROB1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Install",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Txres",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Shared",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "AllTask",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "AllMotionTask",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Hidden",
+            "value": "true"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/CAB_OLD_TASK_MODULES/instances/"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "",
+        "rdonly": "true",
+        "instanceid": "6434296",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "File",
+            "value": "HOME:/Wizard/Wizard_LoadData.modx"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ModName",
+            "value": "Wizard_LoadData"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Task",
+            "value": "T_ROB1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Install",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Txres",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Shared",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "AllTask",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "AllMotionTask",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Hidden",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/CAB_OLD_TASK_MODULES/instances/"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "",
+        "rdonly": "true",
+        "instanceid": "6433200",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "File",
+            "value": "ABB.ROBOTICS.ROBOTS_HOME:/GOFA_Main.sysx"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ModName",
+            "value": "GOFA_Main"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Task",
+            "value": "T_GOFA_LED"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Install",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Txres",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Shared",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "AllTask",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "AllMotionTask",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Hidden",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SYS/CAB_OLD_TASK_MODULES/instances/"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "",
+        "rdonly": "true",
+        "instanceid": "6432104",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "File",
+            "value": "ABB.ROBOTICS.ROBOTS_HOME:/GOFA_ASI_Procedures.sysx"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "ModName",
+            "value": "GOFA_ASI_Procedures"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Task",
+            "value": "T_ROB1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Install",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Txres",
+            "value": "0"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Shared",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "AllTask",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "AllMotionTask",
+            "value": "false"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Hidden",
+            "value": "false"
+          }
+        ]
+      }
+    ]
+  }
+}

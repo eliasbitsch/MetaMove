@@ -1,0 +1,166 @@
+{
+  "_links": {
+    "base": {
+      "href": "https://192.168.125.1:443/rw/cfg/"
+    },
+    "self": {
+      "href": "SIO/UDPUC_HOST/instances"
+    }
+  },
+  "_embedded": {
+    "resources": [
+      {
+        "_links": {
+          "self": {
+            "href": "SIO/UDPUC_HOST/instances/ROB_1"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "ROB_1",
+        "rdonly": "false",
+        "instanceid": "6613176",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "ROB_1"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Type",
+            "value": "UDPUC"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "RemoteAddress",
+            "value": "192.168.125.100"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "RemotePortNumber",
+            "value": "6515"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "LocalPortNumber",
+            "value": "6515"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SIO/UDPUC_HOST/instances/UCstream"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "UCstream",
+        "rdonly": "false",
+        "instanceid": "6612832",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "UCstream"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Type",
+            "value": "UDPUC"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "RemoteAddress",
+            "value": "192.168.125.10"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "RemotePortNumber",
+            "value": "6510"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "LocalPortNumber",
+            "value": "0"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SIO/UDPUC_HOST/instances/UCdevice"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "UCdevice",
+        "rdonly": "false",
+        "instanceid": "7131984",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "UCdevice"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Type",
+            "value": "UDPUC"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "RemoteAddress",
+            "value": "192.168.125.10"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "RemotePortNumber",
+            "value": "6510"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "LocalPortNumber",
+            "value": "6599"
+          }
+        ]
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "SIO/UDPUC_HOST/instances/ROB_Michi"
+          }
+        },
+        "_type": "cfg-dt-instance-li",
+        "_title": "ROB_Michi",
+        "rdonly": "false",
+        "instanceid": "7131640",
+        "attrib": [
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Name",
+            "value": "ROB_Michi"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "Type",
+            "value": "UDPUC"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "RemoteAddress",
+            "value": "192.168.125.99"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "RemotePortNumber",
+            "value": "6511"
+          },
+          {
+            "_type": "cfg-ia-t",
+            "_title": "LocalPortNumber",
+            "value": "6511"
+          }
+        ]
+      }
+    ]
+  }
+}
