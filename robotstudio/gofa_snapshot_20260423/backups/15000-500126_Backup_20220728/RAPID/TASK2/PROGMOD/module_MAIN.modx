@@ -1,0 +1,16 @@
+MODULE module_MAIN 
+!    
+!       ---------------------------------   
+!                   GoHolo    
+!       ---------------------------------
+!
+!       Copyright (C)   2021 Jakob Hörbst
+!       author:         Jakob Hörbst
+!       email:          jakob@hoerbst.net
+!       year:           2021
+!
+
+PROC main()
+    mainGoHolo; ! hola die Waldfee
+ENDPROC
+ENDMODULE

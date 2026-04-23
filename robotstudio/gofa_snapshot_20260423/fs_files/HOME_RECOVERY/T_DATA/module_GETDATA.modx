@@ -1,0 +1,31 @@
+MODULE module_GETDATA
+    
+    VAR num feedbackPosition{6};
+    VAR num feedbackSpeed{6};
+    VAR num feedbackTorque{6};
+    VAR num feedbackExtTorque{6};
+    
+    VAR clock timer;
+    VAR num duration;
+
+    PROC main()
+        GetData;    
+        WaitTime 0.015;
+    ENDPROC
+        
+    PROC GetData() ! Get Axis Data
+
+        !torque := GetMotorTorque(2);
+        FOR i FROM 1 TO 6 DO
+            GetJointData\MechUnit:=ROB_1,i\position:=feedbackPosition{i}\speed:=feedbackSpeed{i}\torque:=feedbackTorque{i}\ExtTorque:=feedbackExtTorque{i};          
+        ENDFOR
+                
+        ClkStop timer; 
+        duration := ClkRead(timer)*1000;
+        
+        ClkReset timer; 
+        ClkStart timer; 
+    ENDPROC
+    
+    
+ENDMODULE

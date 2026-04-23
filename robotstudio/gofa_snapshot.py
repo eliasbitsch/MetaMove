@@ -19,6 +19,7 @@ from __future__ import annotations
 
 import json
 import os
+import re
 import sys
 import time
 from base64 import b64encode
@@ -191,16 +192,44 @@ def snapshot_cfg() -> None:
 
 # -------------------------------------------------------------------- misc
 MISC_ENDPOINTS = [
+    # Core state
     ("/rw/system", "system.json"),
     ("/rw/panel/ctrl-state", "ctrl-state.json"),
     ("/rw/panel/opmode", "opmode.json"),
+    ("/rw/panel/speedratio", "speedratio.json"),
     ("/rw/rapid/execution", "rapid-execution.json"),
     ("/rw/rapid/tasks/T_ROB1/pcp", "rapid-pcp.json"),
+    ("/rw/mastership", "mastership.json"),
+    # Motion system
+    ("/rw/motionsystem", "motionsystem.json"),
+    ("/rw/motionsystem/mechunits", "mechunits.json"),
+    ("/rw/motionsystem/mechunits/ROB_1", "mechunit-rob1.json"),
     ("/rw/motionsystem/mechunits/ROB_1/robtarget", "robtarget.json"),
     ("/rw/motionsystem/mechunits/ROB_1/jointtarget", "jointtarget.json"),
+    ("/rw/motionsystem/mechunits/ROB_1/cartesian", "cartesian.json"),
+    ("/rw/motionsystem/mechunits/ROB_1/joints", "joints.json"),
+    ("/rw/motionsystem/mechunits/ROB_1/motionproperties", "motionproperties.json"),
+    # I/O
     ("/rw/iosystem/signals", "iosignals.json"),
     ("/rw/iosystem/networks", "ionetworks.json"),
-    ("/rw/elog/0?lang=en&limit=100", "elog.json"),
+    ("/rw/iosystem/devices", "iodevices.json"),
+    # Devices / vision / dipc
+    ("/rw/devices", "devices.json"),
+    ("/rw/vision", "vision.json"),
+    ("/rw/dipc", "dipc.json"),
+    # Event log
+    ("/rw/elog/0?lang=en&limit=200", "elog.json"),
+    # /ctrl — the big finds
+    ("/ctrl", "ctrl-index.json"),
+    ("/ctrl/clock", "ctrl-clock.json"),
+    ("/ctrl/identity", "ctrl-identity.json"),
+    ("/ctrl/system", "ctrl-system.json"),
+    ("/ctrl/network", "ctrl-network.json"),
+    ("/ctrl/safety", "ctrl-safety.json"),
+    ("/ctrl/options", "ctrl-options.json"),
+    ("/ctrl/features", "ctrl-features.json"),
+    ("/ctrl/diagnostics", "ctrl-diagnostics.json"),
+    ("/ctrl/certstore", "ctrl-certstore.json"),
 ]
 
 
@@ -212,7 +241,81 @@ def snapshot_misc() -> None:
             write(f"misc/{name}", b)
             print(f"[misc]   {name} ok ({len(b)} bytes)")
         except Exception as e:
-            print(f"[misc]   {name}: {e}")
+            print(f"[misc]   {name}: {str(e)[:60]}")
+
+
+def snapshot_safety() -> None:
+    """Explore /ctrl/safety subtree and pull SafeMove / safety config."""
+    print("[safety] exploring /ctrl/safety subtree")
+    seen: set[str] = set()
+    queue = ["/ctrl/safety"]
+    while queue:
+        path = queue.pop(0)
+        if path in seen:
+            continue
+        seen.add(path)
+        try:
+            body = req_bytes(path)
+        except Exception as e:
+            print(f"[safety]   {path}: {str(e)[:60]}")
+            continue
+        rel = path.lstrip("/").replace("/", "_")
+        # Windows-safe filename: strip/replace ?, =, &, :, etc.
+        rel = re.sub(r"[^\w.-]", "_", rel)
+        write(f"safety/{rel}.json", body)
+        print(f"[safety]   {path} ({len(body)} bytes)")
+        # Follow _embedded.resources[*]._links.self.href
+        try:
+            d = json.loads(body.decode("utf-8"))
+        except Exception:
+            continue
+        for r in d.get("_embedded", {}).get("resources", []):
+            href = r.get("_links", {}).get("self", {}).get("href", "")
+            if href and not href.startswith("http"):
+                # resolve relative
+                if href.startswith("/"):
+                    nxt = href
+                else:
+                    nxt = path.rstrip("/") + "/" + href
+                if nxt.startswith("/ctrl/safety"):
+                    queue.append(nxt)
+
+
+def snapshot_fileservice() -> None:
+    """Shallow listing of top-level filesystem dirs + HOME recursion (2 deep)."""
+    print("[fs] listing top-level dirs")
+    try:
+        top = req_bytes("/fileservice/")
+        write("fs/_root.json", top)
+    except Exception as e:
+        print(f"[fs] root failed: {e}")
+        return
+
+    # Recurse HOME (which has the interesting stuff — past project backups, configs)
+    def walk(relurl: str, depth: int, max_depth: int = 3) -> None:
+        if depth > max_depth:
+            return
+        try:
+            body = req_bytes(f"/fileservice/{relurl}")
+        except Exception as e:
+            print(f"[fs]   /{relurl}: {str(e)[:60]}")
+            return
+        safe = relurl.replace("$", "_").replace("/", "_") or "_root"
+        write(f"fs/listing_{safe}.json", body)
+        print(f"[fs]   /{relurl} ({len(body)} bytes)")
+        try:
+            d = json.loads(body.decode("utf-8"))
+        except Exception:
+            return
+        for r in d.get("_embedded", {}).get("resources", []):
+            typ = r.get("_type", "")
+            title = r.get("_title") or ""
+            if typ == "fs-dir" and title:
+                walk(f"{relurl}/{title}" if relurl else title, depth + 1, max_depth)
+            # Skip individual file content; too much data for a snapshot
+
+    walk("$HOME", 0, 3)
+    walk("$BACKUP", 0, 2)
 
 
 if __name__ == "__main__":
@@ -226,4 +329,8 @@ if __name__ == "__main__":
         snapshot_cfg()
     if SECTION in ("all", "misc"):
         snapshot_misc()
+    if SECTION in ("all", "safety"):
+        snapshot_safety()
+    if SECTION in ("all", "fs"):
+        snapshot_fileservice()
     print(f"\ndone. {OUT}")

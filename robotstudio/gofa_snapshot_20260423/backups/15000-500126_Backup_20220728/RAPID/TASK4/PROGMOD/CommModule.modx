@@ -1,0 +1,19 @@
+MODULE CommModule
+    PROC comm()
+        ! Add code for your procedure here.
+        
+        IF DInput(ix_live_sign)=1 THEN
+            set ox_live_sign;
+        ELSE
+            reset ox_live_sign;
+        ENDIF
+        
+        IF EStopStatus=1 THEN
+            Reset Scalable_IO_0_DO1;
+        ELSE
+            Set Scalable_IO_0_DO1;
+        ENDIF
+    
+        WaitTime 0.1;
+    ENDPROC
+ENDMODULE

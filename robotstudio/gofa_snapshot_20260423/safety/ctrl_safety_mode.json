@@ -1,0 +1,1 @@
+{ "_links" : { "base" : { "href" : "https://192.168.125.1:443/ctrl/safety/mode/" }, "self" : { "href" : "" } }  , "state" : [ { "_type" : "safetymodestatus", "_title" : "status", "userdata" : "121", "safetymode" : "active" } ]}
