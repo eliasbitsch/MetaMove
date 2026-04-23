@@ -1,0 +1,80 @@
+# MetaMove ROS2 Jazzy — docker-compose
+#
+# Image is dep-only. All ROS2 sources are bind-mounted from host as
+# /opt/metamove_ws/src/*. Build artefacts (build/, install/, log/) live in
+# named volumes so `colcon build` survives container restarts.
+#
+# Usage (from repo root):
+#   docker compose -f ros2/docker/docker-compose.yml build
+#   docker compose -f ros2/docker/docker-compose.yml run --rm ros2
+#
+# Windows notes:
+#   * Docker Desktop on Windows does NOT support network_mode: host.
+#     EGM UDP inbound is port-published (6511/udp). RWS outbound (HTTPS 443)
+#     works out of the box.
+#   * For RViz on Windows, use WSLg (WSL2 + Docker Desktop's WSL backend) or
+#     run the container inside WSL2 and set DISPLAY=:0.
+#   * For lowest EGM latency on Windows, prefer running this container inside
+#     WSL2 with mirrored networking (.wslconfig: networkingMode=mirrored).
+
+name: metamove-ros2
+
+x-ros2-common: &ros2-common
+  image: metamove/ros2:jazzy
+  build:
+    context: ../..              # repo root (build.sh / Dockerfile resolve paths from here)
+    dockerfile: ros2/docker/Dockerfile
+  hostname: metamove-ros2
+  stdin_open: true
+  tty: true
+  environment:
+    - ROS_DOMAIN_ID=42
+    - RMW_IMPLEMENTATION=rmw_fastrtps_cpp
+    - METAMOVE_RWS_IP=192.168.125.1
+    - METAMOVE_RWS_PORT=443
+    - METAMOVE_EGM_PORT=6511
+    - METAMOVE_AUTOBUILD=1
+    - DISPLAY=${DISPLAY:-:0}
+    - QT_X11_NO_MITSHM=1
+  ports:
+    - "6511:6511/udp"            # EGM feedback/command channel
+    - "8765:8765/tcp"            # foxglove-bridge (optional web viz)
+  volumes:
+    # ---- Source tree (host → container) ---------------------------------
+    - ../abb_libegm:/opt/metamove_ws/src/abb_libegm
+    - ../abb_librws:/opt/metamove_ws/src/abb_librws
+    - ../abb_egm_rws_managers:/opt/metamove_ws/src/abb_egm_rws_managers
+    - ../abb_ros2_msgs:/opt/metamove_ws/src/abb_ros2_msgs
+    - ../abb_ros2:/opt/metamove_ws/src/abb_ros2
+    - ../abb_gofa_custom:/opt/metamove_ws/src/abb_gofa_custom
+    - ./metamove_bridge:/opt/metamove_ws/src/metamove_bridge
+    # ros2/_archived/ is deliberately not mounted — see ros2/_archived/README.md
+    # ---- Build artefacts (persistent named volumes) ---------------------
+    - metamove_build:/opt/metamove_ws/build
+    - metamove_install:/opt/metamove_ws/install
+    - metamove_log:/opt/metamove_ws/log
+    # ---- Host extras ----------------------------------------------------
+    - /tmp/.X11-unix:/tmp/.X11-unix
+    - ./bags:/opt/metamove_ws/bags
+  working_dir: /opt/metamove_ws
+
+services:
+  # Interactive shell — recommended default
+  ros2:
+    <<: *ros2-common
+    command: bash
+
+  # Bridge only (headless)
+  bridge:
+    <<: *ros2-common
+    command: ros2 launch metamove_bridge bridge.launch.py
+
+  # RViz only, attached to same domain
+  rviz:
+    <<: *ros2-common
+    command: rviz2
+
+volumes:
+  metamove_build:
+  metamove_install:
+  metamove_log:
