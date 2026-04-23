@@ -95,3 +95,6 @@ desktop.ini
 
 # Python cache from QR generator
 docs/markers/__pycache__/
+
+# Python bytecode in mounted ROS2 workspace
+ros2/docker/metamove_bridge/**/__pycache__/
