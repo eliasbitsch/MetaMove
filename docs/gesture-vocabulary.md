@@ -8,14 +8,73 @@
 
 | Geste | Action | Modus |
 |-------|--------|-------|
-| **Pinch kurz** (< 200 ms Tap) | Waypoint an aktueller Hand-Pose setzen | Waypoint-Modus |
+| **Pinch kurz** (< 200 ms Tap, Hand in freier Luft) | Waypoint an aktueller Hand-Pose setzen | Waypoint-Modus |
+| **Spatial Pinch** (Zeigefinger zielt auf reale Oberfläche, Pinch-Tap) | Waypoint / Go-To-Target an Welt-Punkt wo Hand-Ray reale Oberfläche trifft (Tisch, Werkstück, Boden). Mit Voice-Query („was ist das?") → VLM-Beschreibung statt Waypoint (Step 13c4). | Waypoint- / Query-Modus |
 | **Pinch lang + Drag** (≥ 200 ms) | Endeffektor ziehen (Position) | Live-EGM-Teleop |
 | **Daumen-Point** (Hitchhiker) | Jog TCP in Daumen-Richtung, solange Geste aktiv | Jog-Modus |
 | **Flat-Hand horizontal, drehen** | TCP-Orientierung A4/A5/A6 (Wrist-Achsen) | Orientation |
-| **Handkante vor** (Stop-Hand) | Hold — Roboter friert ein, EGM hält Position | Soft-Stop |
+| **Palm zum Roboter — still halten** (Stop-Hand) | Hold — Roboter friert ein, EGM hält Position | Soft-Stop (nur in Teleop/Jog aktiv) |
 | **Beidhändige Faust** | 🛑 E-Stop — Motors off via RWS | Hard-Stop |
 | **OK-Ring** (Daumen + Zeigefinger zu Ring) | Commit / Aufgezeichneten Pfad abspielen | Commit |
 | **2-Hand Pinch-Spread** (beide Hände im Pinch, Abstand ändern) | Scale Path — aufgezeichneten Pfad räumlich skalieren | Path-Edit |
+| **Swipe (alle 6 Richtungen — unified rule)** | TCP im Welt-Frame einen Step in Palm-Richtung | Command-Mode |
+|   → Palm rechts + Flick | +X | |
+|   → Palm links + Flick | −X | |
+|   → Palm oben + Flick | +Z | |
+|   → Palm unten + Flick | −Z | |
+|   → Palm vorn (zum Roboter) + Flick | weg vom User (deckt „Shoo") | |
+|   → Palm hinten (zum User) + Flick | zum User zu | |
+| **Beckon / Come-Here** (Palm nach oben, Finger rollen zum Handballen ein — universelles „komm her") | TCP um Step-Distanz auf User zu (Safety-Clamp bei Min-Abstand) | Command-Mode |
+
+## Meta-OS-reservierte Gesten (nicht belegbar)
+
+Diese Gesten fängt das Quest-OS ab, bevor unsere App sie sieht — dürfen nicht belegt werden:
+
+| OS-Geste | Wirkung im OS | Konsequenz für uns |
+|---|---|---|
+| **Palm-to-Face + Pinch** (Wrist-Menu) | öffnet Universal Menu / Meta-Button-Äquivalent | Unsere Beckon ist **Palm-Up + Finger-Curl (kein Pinch)** — damit kein Overlap |
+| **Palm-Up + Pinch + Hold** (einige Systembuilds) | System-UI-Trigger | dito |
+| Doppel-Tap am Headset | Passthrough-Toggle | irrelevant, keine Hand-Geste |
+
+**Design-Regel:** Alle unsere Gesten müssen mit **Palm NICHT zum Gesicht** auskommen (oder ohne Pinch wenn Palm zum Gesicht). Wer das verletzt, verliert die Geste an die OS-Shell.
+
+## Mode-Gating (welche Geste in welchem Modus aktiv)
+
+Nicht alle Gesten werden gleichzeitig ausgewertet — sonst gibt's Palm-Orientierungs- und Velocity-Konflikte. Der `GestureRouter` hält einen **aktiven Modus** und routet nur passende Gesten:
+
+| Modus | Roboter-Zustand | Aktive Gesten | Soft-Stop nötig? |
+|---|---|---|---|
+| **Teleop** | folgt Hand kontinuierlich (Pinch-Drag aktiv) | Pinch-Drag, Handkante-Hold (Soft-Stop), E-Stop | **ja** |
+| **Jog** | fährt in Daumen-Richtung solange Geste hält | Daumen-Jog, Wrist-Rotation, Handkante-Hold, E-Stop | **ja** |
+| **Command** | steht still, wartet auf diskrete Kommandos | Swipe (alle 6 Richtungen via Palm-Normal), Beckon, E-Stop | **nein** (Palm-zum-Roboter ist hier Swipe-vorwärts statt Stop) |
+| **Waypoint** | steht still | Pinch-Tap (in-air), Spatial Pinch (on-surface), OK-Ring-Commit, 2-Hand-Scale, E-Stop | **nein** |
+
+**Wichtiger Effekt — Swipes sind atomar:** Jede Swipe/Beckon/Shoo-Geste löst **einen einzelnen Schritt** (default 10 cm) aus. Der Roboter fährt den Schritt, stoppt, wartet auf die nächste Geste. Dadurch:
+
+- Kein kontinuierliches Mitschleifen → vorhersagbar, ISO/TS-15066-freundlich
+- **Soft-Stop im Command-Mode überflüssig** — der Roboter steht zwischen Gesten sowieso. Das löst den Konflikt „Palm-zum-Roboter = Stop vs. Swipe-Frame" strukturell: Soft-Stop wird im Command-Mode **gar nicht erst ausgewertet**, Palm-Orientierung ist dort frei.
+- Step-Distanz skaliert mit Wisch-Amplitude (kleine Wisch = 5 cm, große Wisch = 20 cm), Clamp auf Safety-Range
+
+**E-Stop** (beidhändige Faust) ist **always-on** in allen Modi, nie gegated.
+
+**Unified Swipe-Regel:** Swipe-Richtung folgt **Palm-Normal** (wohin die Handfläche zeigt) + Flick in diese Richtung. Gilt für alle 6 Raumachsen, beide Hände, egal welche. Ein mentales Modell: *„Palme zeigt wohin ich will, flicken."*
+
+**Dual-Use „Palm zum Roboter":** Selbe Hand-Haltung, zwei Bedeutungen, disambiguiert durch Modus + Bewegung:
+- **Teleop/Jog + still halten** → Soft-Stop (Roboter friert)
+- **Command-Mode + Flick vorwärts** → Swipe-vorwärts (Step weg vom User)
+- **Command-Mode + still** → ignoriert (Roboter steht eh)
+
+Reale Intuition: ausgestreckte Handfläche heißt „Halt!" wenn etwas kommt, und „hau ab!" wenn man etwas wegscheucht — selbe Pose, Kontext trennt.
+
+**Erkenner-Priorität im Command-Mode** (first-match wins, verhindert Beckon/Swipe-Up-Kollision):
+1. **Beckon** — Palm-Up + Finger-Curl Shape-Transition bei stationärer Hand (Palm-Velocity < 0.3 m/s)
+2. **Swipe** — Palm-Normal definiert Richtung, Flick-Velocity > 1.2 m/s in Palm-Normal-Richtung, Dauer < 400 ms
+
+Modus-Wechsel automatisch:
+- `Pinch erkannt` → Teleop
+- `Daumen-Point erkannt` → Jog
+- `Keine aktive Teleop-Geste + Hand frei` → Command
+- `Pinch-Tap ohne Drag-Follow` → Waypoint
 
 ## Teleop-Modi (automatisch, distanzbasiert)
 
@@ -69,12 +128,16 @@ Siehe `Assets/Scripts/Gestures/`:
 
 - `GestureRouter.cs` — Dispatcher, hält Modus-State, feuert Events
 - `PinchTeleopController.cs` — Pinch-Tap vs. Pinch-Drag, Direct/Proxy-Switch
+- `SpatialPinchController.cs` — Hand-Ray + MRUK-Surface-Hit-Test, legt Waypoint/Go-To-Target am realen Welt-Punkt an den der Finger zeigt (Tisch, Werkstück, Boden); visuelles Reticle-Preview auf Oberfläche während Ziel-Phase
 - `ThumbJogController.cs` — Richtungs-Jog via Daumen
 - `WristRotationController.cs` — Flat-Hand → A4/A5/A6
 - `HoldStopController.cs` — Handkante Soft-Stop
 - `EmergencyStopHandler.cs` — Zwei-Hand-Faust Hard-Stop
 - `CommitGestureHandler.cs` — OK-Ring Commit/Play
 - `PathScaleController.cs` — 2-Hand-Spread Path-Scale
+- `SwipeGestureController.cs` — Palm-Normal-basierte Swipe-Detection: wenn Flick-Velocity in Richtung Palm-Normal > 1.2 m/s, feuert `OnSwipe(Vector3 palmNormalWorld)` — 6 Richtungen unified
+- `BeckonGestureController.cs` — Come-Here (Palm-Up → Finger-Curl Shape-Transition), feuert atomaren Step-User-zu-Event
+- `HoldStopController.cs` bekommt Dual-Mode: still + Teleop/Jog = Soft-Stop; Flick-vorwärts + Command-Mode = Step-weg-Event
 - `GhostRobotVisualizer.cs` — Ghost + Proxy + Trajectory Rendering
 - `WaypointSequence.cs` — Pfad-Datenmodell, Serialisierung
 - `EGMTeleopBridge.cs` — Interface zu `EGMClient.cs` (kommt in Phase 4)
