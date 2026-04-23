@@ -1,0 +1,38 @@
+# Build context is repo root; keep it small so image builds are fast.
+**/.git
+**/.vs
+**/.vscode
+**/.idea
+**/build
+**/install
+**/log
+**/__pycache__
+**/*.pyc
+
+# Unity — huge, irrelevant for ROS image
+unity-quest/Library
+unity-quest/Temp
+unity-quest/Logs
+unity-quest/obj
+unity-quest/Build
+unity-quest/Builds
+unity-quest/UserSettings
+
+# AI services
+ai-services/**/.venv
+ai-services/**/venv
+ai-services/**/models
+ai-services/**/*.safetensors
+ai-services/**/*.gguf
+ai-services/**/*.bin
+
+# Docs / planning
+docs/
+.planning/
+.claude/
+
+# ROS2 build artefacts
+ros2/**/build
+ros2/**/install
+ros2/**/log
+ros2/docker/bags

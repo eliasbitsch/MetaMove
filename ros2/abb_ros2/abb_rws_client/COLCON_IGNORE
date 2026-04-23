@@ -1,0 +1,19 @@
+# Skipped: abb_rws_client references `abb::rws::RWSStateMachineInterface`
+# without the v1_0/v2_0 namespace split that the vendored abb_librws now
+# enforces. 55 occurrences across mapping.hpp/.cpp + rws_service_provider_ros.cpp
+# + rws_state_publisher_ros.cpp would need to be namespaced (v2_0 for OmniCore
+# = our GoFa) and an `#include <abb_librws/v2_0/rws_state_machine_interface.h>`
+# added to mapping.hpp.
+#
+# Re-enable by:
+#   1. Deleting this file
+#   2. sed -i 's/rws::RWSStateMachineInterface/rws::v2_0::RWSStateMachineInterface/g' include/**/*.hpp src/*.cpp
+#   3. Adding the v2_0 state_machine_interface include in mapping.hpp
+#   4. Possibly reconciling EGMSettings struct diffs between v1_0 and v2_0
+#
+# Not on the critical path: metamove_bridge (Python) already covers the RWS
+# surface we need (demo start/abort, gripper, motors, state polling). Motion
+# goes Unity → EGM directly, not through this ros2_control-based stack.
+#
+# Upstream issue: abb_rws_client was extracted from a version that predates
+# the librws v1/v2 split. Fix belongs upstream in ros-industrial/abb_ros2.

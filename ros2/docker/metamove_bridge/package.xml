@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>metamove_bridge</name>
+  <version>0.1.0</version>
+  <description>Thin ROS2 bridge around ABB RWS + EGM for MetaMove. Mirrors state
+    to topics, exposes demo/control services. Motion path stays direct
+    Unity↔EGM; this bridge is for CLI debug, bag recording, and orchestration.</description>
+  <maintainer email="eliasbitsch@hotmail.com">Elias Bitsch</maintainer>
+  <license>Apache-2.0</license>
+
+  <depend>rclpy</depend>
+  <depend>std_msgs</depend>
+  <depend>std_srvs</depend>
+  <depend>sensor_msgs</depend>
+  <depend>geometry_msgs</depend>
+  <depend>diagnostic_msgs</depend>
+
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>

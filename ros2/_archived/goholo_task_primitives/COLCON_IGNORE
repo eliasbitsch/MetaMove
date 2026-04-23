@@ -1,0 +1,8 @@
+# Skipped on Jazzy: depends on moveit_task_constructor_core which is not yet
+# available as an apt package for ROS 2 Jazzy. Re-enable by deleting this file
+# once either:
+#   * ros-jazzy-moveit-task-constructor-core ships, OR
+#   * you vendor moveit_task_constructor from source into the workspace.
+#
+# Not on the critical path for the MetaMove stack — Unity drives motion via EGM
+# directly and demo scenarios live in RAPID, not MTC.
