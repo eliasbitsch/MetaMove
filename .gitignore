@@ -69,10 +69,19 @@ docker/volumes/
 
 # ── External references / large archives ────────────────────────────
 # Third-party sources live outside the repo — fetched / unzipped locally
-third_party/
+third_party/*
+# …except git submodules we explicitly track
+!third_party/bhaptics-unity
 
 # ── Staging area ─────────────────────────────────────────────────────
 .staging/
+
+# ── Secrets / credentials ────────────────────────────────────────────
+# bHaptics App-ID + API-Key (per-developer, never commit)
+**/bhaptics.json
+**/BhapticsSettings.asset
+**/BhapticsSettings.asset.meta
+secrets.local.*
 
 # ── OS / misc ────────────────────────────────────────────────────────
 .DS_Store
@@ -83,3 +92,6 @@ desktop.ini
 
 # ── Claude Code local settings ───────────────────────────────────────
 .claude/settings.local.json
+
+# Python cache from QR generator
+docs/markers/__pycache__/
