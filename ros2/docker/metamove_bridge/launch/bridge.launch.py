@@ -1,3 +1,4 @@
+"""Launch MetaMove bridge node + rosbridge_websocket for Jarvis tool-calls."""
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument
 from launch.substitutions import LaunchConfiguration, EnvironmentVariable
@@ -12,6 +13,8 @@ def generate_launch_description():
         DeclareLaunchArgument('rws_password', default_value='robotics'),
         DeclareLaunchArgument('scenario',     default_value='chess'),
         DeclareLaunchArgument('poll_hz',      default_value='2.0'),
+        DeclareLaunchArgument('rosbridge_port', default_value='9090',
+                              description='WS port for external clients (Jarvis, roslibjs)'),
 
         Node(
             package='metamove_bridge',
@@ -26,6 +29,19 @@ def generate_launch_description():
                 'rws_password': LaunchConfiguration('rws_password'),
                 'scenario':     LaunchConfiguration('scenario'),
                 'poll_hz':      LaunchConfiguration('poll_hz'),
+            }],
+        ),
+
+        # rosbridge_websocket — lets Python/JS clients call ROS services over WS
+        # without installing rclpy. Used by Jarvis for tool-call routing.
+        Node(
+            package='rosbridge_server',
+            executable='rosbridge_websocket',
+            name='rosbridge_websocket',
+            output='screen',
+            parameters=[{
+                'port': LaunchConfiguration('rosbridge_port'),
+                'address': '0.0.0.0',
             }],
         ),
     ])
