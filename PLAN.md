@@ -1,7 +1,50 @@
-# GoHolo → Meta Quest 3 — Session-Handoff
+# GoHolo → Meta Quest 3 — Projektplan
+
+**Datei umbenannt von HANDOFF.md → PLAN.md am 2026-04-23** (lebender Plan, kein einmaliger Session-Übergabe-Zettel).
+
+**Letzter Arbeitsschritt (2026-04-23):** Gesten-Vokabular finalisiert (Unified Swipe-Regel, Mode-Gating, Dual-Use Palm-zum-Roboter), Gesten-Stack + Ghost-Overlay-Kern + VLM-Service + Audio-Stack komplett scripted. Sieben Commits `fa9557b..d1209b5`.
+
+## Session-Stand 2026-04-23 — was neu drin ist
+
+**Docs:**
+- PLAN.md (dieser Text), [docs/gesture-vocabulary.md](docs/gesture-vocabulary.md) mit Mode-Gating + Erkenner-Priorität + Meta-OS-reservierten Gesten
+
+**Unity-Scripts (alle SDK-frei, kompilieren ohne Meta XR SDK dank Interface-Stubs):**
+- Gesten (`Scripts/Interaction/Gestures/`): `IHandPoseProvider`, `MockHandPoseProvider`, `OVRHandPoseProvider` (`#if METAMOVE_META_SDK`), `GestureRouter` mit Mode-State-Machine (Waypoint/Teleop/Jog/Command), `SwipeGestureController` (Unified Palm-Normal), `BeckonGestureController`, `HoldStopController` (Dual-Mode), `SpatialPinchController` + `IWorldSurfaceProbe`, `PhysicsSurfaceProbe` (Editor), `MRUKSurfaceProbe` (`#if METAMOVE_MRUK`), `GestureToGhostBridge`
+- Robot (`Scripts/Robot/`): `IRobotCommandSink`, `MockRobotSink`, `GhostRobotController` (Ghost-Overlay-Kern, Step 9), `EgmRobotSink` (Adapter über bestehenden `EgmClient`)
+- AI (`Scripts/AI/`): `VlmClient` (Gemma 3 HTTP-Client), `PassthroughFrameSource` (Editor-RTT + Meta-PCA-guarded), `JarvisVlmBridge` (Frame→VLM→TTS)
+- Audio (`Scripts/Audio/`): `MusicManager` (State-Crossfade), `RobotSoundFX` (3D-Servo-Whine), `AmbientFactoryLoop` (Teleop-Ducking)
+- Settings: `GestureConfig` ScriptableObject
+
+**Services:**
+- `ai-services/vlm-gemma/` — FastAPI-Proxy auf Ollama, Endpoints `/describe` + `/v1/chat/completions`, Port 8770
+
+**End-to-End-Loop im Editor testbar** (ohne Quest/SDK): `MockHandPoseProvider` Transforms bewegen → Gesten-Events → Ghost-Step → `MockRobotSink` Console-Log. Spatial Pinch gegen Plane mit Collider via `PhysicsSurfaceProbe`.
+
+## Was morgen als Erstes zu tun ist
+
+1. **Unity öffnen, Compile prüfen** — alle neuen Scripts compilen hoffentlich ohne Warnings. Meta-Files werden beim Import erzeugt. Wenn einzelne Scripts meckern: hier weitermachen.
+2. **Scene_GestureTest.unity anlegen** unter `Assets/MetaMove/Scenes/Playground/` — GameObjects: `GestureRouter`, `MockHandPoseProvider` mit zwei Child-Transforms (LeftHand/RightHand), `GhostRobotController` + `MockRobotSink`, alle Gesten-Controller, `GestureToGhostBridge` gewired, Plane mit Collider für SpatialPinch. **Manuelle Unity-Arbeit.**
+3. **Scripting Define Symbols setzen** sobald Meta SDK importiert: `METAMOVE_META_SDK`, `METAMOVE_MRUK`, `METAMOVE_META_PCA`.
+4. **Audio-Assets besorgen** — Jarvis-Soundtrack (royalty-free AC/DC-Alternative), Factory-Ambient-Loop, Servo-Whine — Freesound.org Starter-Set.
+5. **Offene Konflikte abarbeiten** falls Compile/Runtime-Probleme auftauchen.
+
+## Noch offene autonome Kandidaten (weiter autonom codebar)
+
+- `PathScaleController.cs` — 2-Hand-Spread-Math für Path-Scale (Step 8)
+- `RwsRobotSink.cs` — RWS-Parallel zu EgmRobotSink (Alternative Transport-Schicht)
+- `GoFaVisualFeedback.cs` — IK-Reachability-Farbcode (grün/gelb/rot) fürs SpatialPinch-Reticle
+- `JointArcPokeStepper` → Gesture-Mode-Aware machen (existiert schon, nur gaten)
+- Safety-Zone-Breach-Handler + HoldStop-Kopplung
+
+---
+
+---
+
+# Urspünglicher Plan (Stand 2026-04-17)
 
 **Datum:** 2026-04-17
-**Letzter Arbeitsschritt:** Docker/ROS 2 Jazzy Stack fertig, Gesten-Skeletons gelegt, Unity-Entscheidung auf 6.4 (6000.4.0f1) umgestellt
+**Letzter Arbeitsschritt (damals):** Docker/ROS 2 Jazzy Stack fertig, Gesten-Skeletons gelegt, Unity-Entscheidung auf 6.4 (6000.4.0f1) umgestellt
 
 ## Quick-Reference für neue Claude-Session
 
@@ -71,7 +114,7 @@ ros2 launch abb_bringup abb_control.launch.py \
 | 6 — RobotStudio Virtual Controller aus `.rspag` starten (EGM + RWS bit-identisch zum echten GoFa) | ⏳ |
 | 7 — EGM UDP-Client in Unity (protobuf) gegen VC testen | ⏳ |
 | 8 — ArUco-Kalibrierung + Spatial Anchor für Roboter-Basis | ⏳ |
-| 9 — **Ghost-Overlay (Kern-Architektur)** + Proxy-Handle + Trajectory-Rendering: solider Holo-Roboter zeigt IST-Pose (EGM-Feedback live), semi-transparenter Ghost zeigt SOLL-Pose (User-Editier-Zustand). Alle Joint-/TCP-Manipulationen laufen ausschließlich am Ghost. Kein Direct-Live-Control. Commit-Geste (OK-Ring) sendet Ghost-Pose an Roboter → IST-Hologramm holt auf | ⏳ |
+| 9 — **Ghost-Overlay (Kern-Architektur)** + Proxy-Handle + Trajectory-Rendering: solider Holo-Roboter zeigt IST-Pose (EGM-Feedback live), semi-transparenter Ghost zeigt SOLL-Pose (User-Editier-Zustand). Alle Joint-/TCP-Manipulationen laufen ausschließlich am Ghost. Kein Direct-Live-Control. Commit-Geste (OK-Ring) sendet Ghost-Pose an Roboter → IST-Hologramm holt auf | 🔄 Controller-Logik in `GhostRobotController.cs` + `IRobotCommandSink` + `EgmRobotSink`; Visualizer/Proxy-Handle-Mesh-Wiring fehlt |
 | 10 — Safety Zones (ISO/TS 15066) + Live-Teleop + Pfad-Recording | ⏳ |
 | 11 — Docker + ROS 2 Jazzy + MoveIt abb_crb15000_moveit | ✅ Image gebaut, alle 16 ABB-Pakete kompiliert |
 | 11b — Gazebo-Sim (optional, nur falls Physik/Payload/Kollisionen brauchen) | ⏳ optional |
@@ -82,7 +125,7 @@ ros2 launch abb_bringup abb_control.launch.py \
 | 13c1 — Objekt-Grounding Tier 1: ArUco-Marker (OpenCV, lokal, <50 ms) | ⏳ |
 | 13c2 — Objekt-Grounding Tier 2: Gaze+Pinch "das da" (Quest Depth Raycast) | ⏳ |
 | 13c3 — Objekt-Grounding Tier 3: Grounding DINO / SAM 2 auf RTX 3080 Laptop (optional Node) | 🔄 Skeleton angelegt |
-| 13c4 — **Objekt-Grounding Tier 4: VLM-Beschreibung (Gemma 3 Vision)** — natürlichsprachliche Objekt-Erkennung via lokales Vision-Language-Model. User hält Objekt hoch oder zeigt mit Spatial Pinch drauf + Voice „Was ist das?" / „Was halte ich da?" → Quest **Passthrough Camera API** (PCA, v74+, braucht `horizonos.permission.HEADSET_CAMERA`) liefert Frame → Frame + User-Prompt geht an lokalen Gemma-3-VLM-Service (Docker `goholo_vlm` auf RTX 3080, OpenAI-kompatibles API via vLLM oder ollama) → Antwort zurück → Jarvis-TTS (Step 13 Stack) spricht die Antwort. **Abgrenzung zu 13c3:** DINO/SAM gibt strukturierte Bounding-Boxes + Labels (für Pick-and-Place-Targets), Gemma gibt konversationelle Beschreibung (für User-Info, Disambiguierung, „welches davon meinst du?"). **Use-Cases:** Werkstück-Identifikation beim Teach-In, Fehler-Diagnose („was hängt da am Gripper?"), Safety-Check („sehe ich etwas im Arbeitsraum?"), Operator-Onboarding. Implementation: `VlmClient.cs` in `Assets/MetaMove/Scripts/AI/`, Service-Ordner `ai-services/vlm-gemma/`. Trigger-Geste optional: Objekt in Hand + Palm-Up-Curl-nach-Halten (länger als Beckon-Threshold) → „zeige mir was ich halte". Latenz-Ziel < 2 s End-to-End. Fallback bei Service-Down: „VLM nicht erreichbar, fallback auf DINO-Labels". | ⏳ |
+| 13c4 🔄 — **Objekt-Grounding Tier 4: VLM-Beschreibung (Gemma 3 Vision)** — natürlichsprachliche Objekt-Erkennung via lokales Vision-Language-Model. User hält Objekt hoch oder zeigt mit Spatial Pinch drauf + Voice „Was ist das?" / „Was halte ich da?" → Quest **Passthrough Camera API** (PCA, v74+, braucht `horizonos.permission.HEADSET_CAMERA`) liefert Frame → Frame + User-Prompt geht an lokalen Gemma-3-VLM-Service (Docker `goholo_vlm` auf RTX 3080, OpenAI-kompatibles API via vLLM oder ollama) → Antwort zurück → Jarvis-TTS (Step 13 Stack) spricht die Antwort. **Abgrenzung zu 13c3:** DINO/SAM gibt strukturierte Bounding-Boxes + Labels (für Pick-and-Place-Targets), Gemma gibt konversationelle Beschreibung (für User-Info, Disambiguierung, „welches davon meinst du?"). **Use-Cases:** Werkstück-Identifikation beim Teach-In, Fehler-Diagnose („was hängt da am Gripper?"), Safety-Check („sehe ich etwas im Arbeitsraum?"), Operator-Onboarding. Implementation: `VlmClient.cs` in `Assets/MetaMove/Scripts/AI/`, Service-Ordner `ai-services/vlm-gemma/`. Trigger-Geste optional: Objekt in Hand + Palm-Up-Curl-nach-Halten (länger als Beckon-Threshold) → „zeige mir was ich halte". Latenz-Ziel < 2 s End-to-End. Fallback bei Service-Down: „VLM nicht erreichbar, fallback auf DINO-Labels". | ⏳ |
 | 13d — MoveIt Task Constructor Pick-and-Place Primitive | ⏳ |
 | 13e — Voice-Confirmation-Loop: Kommando → Ghost zeigt Plan → OK-Ring Commit | ⏳ |
 | 14 — Visualization-Overlays (Port aus HoloLens, brauchen Live-EGM/RWS-Daten) | ⏳ |
@@ -100,8 +143,9 @@ ros2 launch abb_bringup abb_control.launch.py \
 | 17 — **AR Spatial Ruler + 3D Path Preview**: weiße Maßstabslinie (10 cm Minor-Ticks, 100 cm Major-Ticks + Label) Hand↔Roboter-Basis-Anchor. Waypoint-Pfad-Preview vor Commit mit IK-Farbcode (grün/gelb/rot) + optionalem Scrub-Ghost entlang Trajektorie | ⏳ |
 | 18 — **3-Layer UI (L1 Radial-Home / L2 Panels / L3 Physical Fixtures)**: Palm-Up öffnet Radial als **App-Home-Screen** mit 8 Sektions-Wedges (Status/Control/Path/Safety/Motors/Body/Voice/System). Wedge-Click spawnt passenden Floating-Panel-Set (L2, 14 Panels). L3 Physical Fixtures permanent im Raum: **Glass Pedestal** mit GoFa-Twin (`Desk.prefab` + URP Glass), **Physical E-Stop Mushroom** (`[BB] Pokeable Plane`), **Curved Scroll Lists** (`CanvasCylinder`), **3D Glass Poke-Buttons** (Meta `PokeButton.prefab`), **Spatial Anchor Pucks**, **Ambient Floor Grid** (MRUK). Alles Meta-native — Custom-Code nur für Radial-Math + Panel-Lifecycle. Details + Asset-Inventory → [docs/ui-panels.md](docs/ui-panels.md). | ⏳ |
 | 19 — **Body Pose / Ergonomics**: Meta **Movement SDK** + **Body Tracking SDK** (Upper-Body, Quest 3 v71+). Skeleton-Visualization toggle, Reach-/Twist-Warnings, Operator-in-Robot-Zone-Detection (koppelt Step 10 Safety + Step 16 bHaptics), Posture-Heatmap, optional RULA/REBA-Score. Panel: **Ergonomics / Body Panel** aus `docs/ui-panels.md`. | ⏳ |
-| 20a — **Spatial Pinch (Point-at-World)**: Waypoint/Go-To-Target direkt auf realen Oberflächen setzen. User zeigt mit Zeigefinger auf Tisch/Werkstück/Boden + Pinch-Tap → Hand-Ray trifft **MRUK-Scene-Mesh** (Room/Surface aus Meta Scene Understanding) → TCP-Target wird an exakt diesem Welt-Punkt angelegt, Höhe optional via Surface-Normal-Offset (z.B. +5 cm über Tischplatte für Greif-Approach). Während Ziel-Phase zeigt **Reticle-Preview** (Kreis/Crosshair) auf der Oberfläche, Farbcode nach IK-Reachability (grün/gelb/rot, live). Nutzt Meta `RayInteractor` aus `OVRInteractionComprehensive` + MRUK `RoomMeshAnchor` Surface-Hit-Test — kein Custom-Raycast. Implementierung: `SpatialPinchController.cs` in `Assets/MetaMove/Scripts/Gestures/`. Abgrenzung zu 13c2: dort Voice-Grounding („das da"), hier direkte Gesten-Primitive fürs Waypoint-Legen ohne Voice-Kontext. | ⏳ |
-| 20 — **Command-Mode-Gesten (Disney-Lamp-Style)**: semantische Kommando-Gesten ergänzen das präzise Pinch-Drag-Vokabular — Roboter wird wie Hund/Disney-Lampe dirigiert. **Unified Swipe** — Palm-Normal definiert Richtung, Flick in diese Richtung → TCP-Step dorthin. Ein Regel-Set für alle 6 Raumachsen (±X, ±Y, ±Z), beide Hände, egal welche. Mentales Modell: *„Palme zeigt wohin, flicken."* Deckt auch „Shoo" (Palm-vorn + Flick = Step weg) ab — kein eigener Shape. **Beckon** (Palm nach oben, Finger rollen ein — universelles „komm her") bleibt als **shape-basierte Alternative** für „zum User ziehen" wenn Bewegungsraum fehlt; unterscheidet sich von Swipe-nach-oben durch stationäre Hand (Velocity < 0.3 m/s) + Finger-Curl statt Translation. Erkennung: Meta `ShapeRecognition` (Flat-Hand / Palm-Up-Curl / Back-of-Hand) + Velocity-Threshold > 1.2 m/s < 400 ms auf dominanter Weltachse. Step-Distanz default 10 cm, skaliert mit Wisch-Amplitude (5–20 cm Clamp). **Atomar** — jede Geste = ein Einzel-Schritt, Roboter stoppt dazwischen selbst → ISO/TS-15066-freundlich, kein kontinuierliches Mitschleifen. **Mode-Gating** im `GestureRouter`: nur im Command-Mode aktiv (nicht während Pinch-Drag-Teleop oder Jog, sonst False-Positives durch Palm-Orientierungs-Konflikte mit Soft-Stop). Soft-Stop ist im Command-Mode redundant (Roboter steht eh) → Palm-zum-Roboter-Konflikt strukturell gelöst. Scripts: `SwipeGestureController.cs` + `BeckonGestureController.cs` in `Assets/MetaMove/Scripts/Gestures/`. bHaptics-Puls (Step 16) bestätigt jede erkannte Geste. Details → [docs/gesture-vocabulary.md](docs/gesture-vocabulary.md) Mode-Gating-Tabelle. | ⏳ |
+| 21 🔄 — **Audio-Stack (Soundtrack + spatial FX)**: `MusicManager` State-Crossfade für Szenen-Musik (Iron-Man-Style, Idle/Working/Alert/Celebration), `RobotSoundFX` 3D-Servo-Whine skaliert mit TCP-Velocity + Commit-Click + Abort-Beep, `AmbientFactoryLoop` Factory-Ambient mit Teleop-Ducking via `GestureRouter.OnModeChanged`. Meta XR Audio SDK für HRTF-Spatialization (drop-in). Audio-Assets (Soundtrack + Whine + Ambient) noch zu besorgen — Freesound.org + royalty-free Epidemic/Artlist für Soundtrack. | 🔄 Code fertig, Clips fehlen |
+| 20a 🔄 — **Spatial Pinch (Point-at-World)**: Waypoint/Go-To-Target direkt auf realen Oberflächen setzen. User zeigt mit Zeigefinger auf Tisch/Werkstück/Boden + Pinch-Tap → Hand-Ray trifft **MRUK-Scene-Mesh** (Room/Surface aus Meta Scene Understanding) → TCP-Target wird an exakt diesem Welt-Punkt angelegt, Höhe optional via Surface-Normal-Offset (z.B. +5 cm über Tischplatte für Greif-Approach). Während Ziel-Phase zeigt **Reticle-Preview** (Kreis/Crosshair) auf der Oberfläche, Farbcode nach IK-Reachability (grün/gelb/rot, live). Nutzt Meta `RayInteractor` aus `OVRInteractionComprehensive` + MRUK `RoomMeshAnchor` Surface-Hit-Test — kein Custom-Raycast. Implementierung: `SpatialPinchController.cs` in `Assets/MetaMove/Scripts/Gestures/`. Abgrenzung zu 13c2: dort Voice-Grounding („das da"), hier direkte Gesten-Primitive fürs Waypoint-Legen ohne Voice-Kontext. | ⏳ |
+| 20 🔄 — **Command-Mode-Gesten (Disney-Lamp-Style)**: semantische Kommando-Gesten ergänzen das präzise Pinch-Drag-Vokabular — Roboter wird wie Hund/Disney-Lampe dirigiert. **Unified Swipe** — Palm-Normal definiert Richtung, Flick in diese Richtung → TCP-Step dorthin. Ein Regel-Set für alle 6 Raumachsen (±X, ±Y, ±Z), beide Hände, egal welche. Mentales Modell: *„Palme zeigt wohin, flicken."* Deckt auch „Shoo" (Palm-vorn + Flick = Step weg) ab — kein eigener Shape. **Beckon** (Palm nach oben, Finger rollen ein — universelles „komm her") bleibt als **shape-basierte Alternative** für „zum User ziehen" wenn Bewegungsraum fehlt; unterscheidet sich von Swipe-nach-oben durch stationäre Hand (Velocity < 0.3 m/s) + Finger-Curl statt Translation. Erkennung: Meta `ShapeRecognition` (Flat-Hand / Palm-Up-Curl / Back-of-Hand) + Velocity-Threshold > 1.2 m/s < 400 ms auf dominanter Weltachse. Step-Distanz default 10 cm, skaliert mit Wisch-Amplitude (5–20 cm Clamp). **Atomar** — jede Geste = ein Einzel-Schritt, Roboter stoppt dazwischen selbst → ISO/TS-15066-freundlich, kein kontinuierliches Mitschleifen. **Mode-Gating** im `GestureRouter`: nur im Command-Mode aktiv (nicht während Pinch-Drag-Teleop oder Jog, sonst False-Positives durch Palm-Orientierungs-Konflikte mit Soft-Stop). Soft-Stop ist im Command-Mode redundant (Roboter steht eh) → Palm-zum-Roboter-Konflikt strukturell gelöst. Scripts: `SwipeGestureController.cs` + `BeckonGestureController.cs` in `Assets/MetaMove/Scripts/Gestures/`. bHaptics-Puls (Step 16) bestätigt jede erkannte Geste. Details → [docs/gesture-vocabulary.md](docs/gesture-vocabulary.md) Mode-Gating-Tabelle. | ⏳ |
 
 ## Meta Building Block Mapping
 
