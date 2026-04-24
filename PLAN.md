@@ -2,9 +2,84 @@
 
 **Datei umbenannt von HANDOFF.md → PLAN.md am 2026-04-23** (lebender Plan, kein einmaliger Session-Übergabe-Zettel).
 
-**Letzter Arbeitsschritt (2026-04-23):** Gesten-Vokabular finalisiert (Unified Swipe-Regel, Mode-Gating, Dual-Use Palm-zum-Roboter), Gesten-Stack + Ghost-Overlay-Kern + VLM-Service + Audio-Stack komplett scripted. Sieben Commits `fa9557b..d1209b5`.
+**Letzter Arbeitsschritt (2026-04-23 abends):** Lab-Session am echten GoFa + RAPID-Dispatcher nach GoHolo-Muster geschrieben + RWS-Mock gebaut. **Morgen: Deploy in VC + Smoke-Test.**
 
-## Session-Stand 2026-04-23 — was neu drin ist
+## Session-Stand 2026-04-23 Nachmittag/Abend — Robotics-Integration
+
+### Was neu seit Mittag dazukam
+
+**Lab-Session am echten GoFa** (192.168.125.1, RW 7.20.0, Serial 15000-500126):
+- MCP `abb-robotstudio` gegen echten Controller verbunden (Basic-Auth + self-signed cert via `NODE_TLS_REJECT_UNAUTHORIZED=0` in `~/.claude.json` env)
+- **RWS-Read komplett validiert:** 30+ Endpoints, 11 Live-RAPID-Module, Event-Log, I/O, Motion-State, SafeMove-Config
+- **RWS-Write validiert:** `ox_multi_vac_greifer_schliessen` 0→1→0, `pvalue` bestätigt (Bit wirklich auf PROFINET-Bus)
+- **Write-Permission-Model:** Controller akzeptiert Remote-Writes **nur in Manual-Mode** (kein Signal hat `RemoteAuto` in write-access). Für MetaMove: eigene `mm_*`-Signale mit `RemoteAuto`-Flag anlegen.
+- **Überraschung:** Live-RAPID auf echter GoFa läuft `MainModule.main` eines Fremdprojekts, **GoHolo-Code komplett auskommentiert**. Funktionierender EGM-Pfad vom Vorgänger nutzt UDPUC-Host `ROB_Michi → 192.168.125.99:6511` (aus Alex Korns ROS2/RViz/MoveIt-Setup).
+- **MCP-Bug gefixt** in `abb-robotstudio-mcp/src/index.ts`: `rws_write_io` nutzte falsche URL (`?action=set`) + Content-Type. Jetzt `/set-value` + `application/x-www-form-urlencoded;v=2.0`. Gebaut per `npm run build`.
+
+**Vollständiger Snapshot vom Lab-Roboter** — `robotstudio/gofa_snapshot_20260423/` (5 MB, 312 Dateien):
+- `rapid/` — 12 RAPID-Sources (MainModule 60KB, Morobot_Assembly 57KB, module_EGM, module_MAIN_GOHOLO, alle Calibs)
+- `cfg/` — 195 Config-Instances (EIO/MMC/MOC/PROC/SIO/SYS)
+- `misc/` — Controller-State, I/O, elog, ctrl/safety
+- `safety/` — SafeMove subtree
+- `fs_files/` — Live-Projektdateien (NewProgramdemoergo, Wizard, RECOVERY, Dap mit eg1bas/prc/tol.sysx)
+- `backups/` — 2× Restore-ready Controller-Backups (2022 + 2025-01)
+- Reusable Tool: `robotstudio/gofa_snapshot.py`
+
+**Entwicklungs-Infrastruktur ergänzt:**
+- **ROS2 Jazzy Docker** (`ros2/docker/`) — 17 ABB-Pakete clean, metamove_bridge + rosbridge_websocket
+- **`metamove_tools`** (`ai-services/metamove_tools/`) — Python-API für Jarvis über rosbridge → ROS services → metamove_bridge
+- **EGM-Mock** (`ai-services/egm-mock/`) — Python UDP, 100% Proto-Roundtrip
+- **RWS-Mock** (`ai-services/rws-mock/`) — FastAPI, 10 Endpoints (ctrl-state, rapid/execution, iosystem/signals, elog)
+- **Jarvis-TTS-Prompt** auf 6-Wörter-Sätze getrimmt (Streaming-Latenz)
+
+**RAPID-Seite finalisiert** (noch nicht deployed):
+- [robotstudio/rapid/MetaMoveDispatcher.mod](robotstudio/rapid/MetaMoveDispatcher.mod) — Adaption von GoHolos `module_MAIN_GOHOLO`, 7 Modi: 0=idle, 1-6=Demos, 9/90=EGM-teleop
+- PERS-vars: `metaMode`, `metaStart`, `metaAbort`, `metaSpeed`, `metaPickTarget`, `metaPlaceTarget`, `metaStoneClass`, `metaPinIndex`
+- Status-Readback: `metaState`, `metaStep`, `metaMsg`
+- Eigenes UDPUC-Device `MetaMoveUC` (ROB_Michi + UCdevice/UCstream bleiben unberührt als Fallback)
+- Chess-Demo vollständig (approach/grip/lift/place mit DO-Sequencing), 5 andere als Stubs
+- [robotstudio/rapid/README.md](robotstudio/rapid/README.md) — Deploy-Plan für VC + echte GoFa
+
+### Architektur-Entscheidungen (safety-motiviert)
+
+- **Pre-programmierte Demos (Mode 1-6)** → RAPID-seitig: deterministisches Timing, MoveL/MoveJ bewährt, WaitDI-Gripper-Sequencing
+- **Teleop / Pinch-to-Move (Mode 9)** → Unity via EGM: SafeMove + Deadbands + UDP-Timeout-Hold als Safety-Net
+- Unity = UI, HUD, Voice-Bridge, Demo-Trigger (PERS-Writes via RWS)
+- Jarvis = LLM + Tool-Calls
+- ROS2 = Beobachter/Integration (CLI-Debug, Bag-Recording, Jarvis-Tool-Routing) — **nicht im Motion-Hot-Path**
+
+**Verworfen nach Diskussion:** OPC UA (kein Mehrwert), reiner Unity-only-EGM-Ansatz (zu unsicher — GoHolo-Muster ist safer).
+
+### Commits Nachmittag
+
+- `robotstudio: snapshot real GoFa 15000-500126 at 2026-04-23` + extended
+- `egm-mock: fix proto field names, add loopback smoke test`
+- `jarvis: add metamove_tools — Python tool API routed through rosbridge`
+- `jarvis: tighten TTS sentence rule for streaming pipeline`
+- `ros2: add Jazzy Docker stack with ABB GoFa bridge`
+- `rapid: add MetaMoveDispatcher + RWS-Mock for safe demo architecture`
+
+### Morgen als Erstes
+
+1. **RobotStudio öffnen** — `GoHolo_Simulation`-Station mit `GoFa` VC starten (ClaudeBridge-AddIn muss auf :58080 lauschen — "ClaudeBridge HTTP server started" im Ausgabe-Fenster)
+2. **MetaMoveDispatcher deployen** via MCP `rs_write_module` in T_ROB1 des VC
+3. **UDPUC-Device `MetaMoveUC`** anlegen in Communication-Config (Remote 127.0.0.1, Port 6511)
+4. **I/O-Signale definieren:** `mm_gripper_close`, `mm_gripper_open` als virtuelle DOs mit `RemoteAuto` in write-access
+5. **Simulation starten** → via MCP `metaMode:=1`, `metaStart:=TRUE` setzen, beobachten dass Chess-Demo durchläuft (PP + metaState/metaStep pollen)
+6. **Unity EGM-Client** bauen — Sender 250 Hz + Receiver + URDF-Twin (gegen VC auf localhost:6511)
+7. **Unity RWS-Client** für Demo-Trigger + State-HUD (gegen `ai-services/rws-mock/` daheim)
+8. Demos 2-6 ausbauen sobald Pipeline läuft
+
+### Umgebungs-Status am Session-Ende
+
+- MCP-Env `ABB_RWS_URL=https://192.168.125.1:443` (Lab, nicht erreichbar daheim) → daheim `python C:\Users\BitschE\AppData\Local\Temp\set_mcp_rws_url.py local` um auf VC zu switchen, oder SDK-`rs_*`-Tools nutzen (brauchen keine RWS-URL)
+- RobotStudio zum Session-Ende geschlossen, ClaudeBridge :58080 nicht mehr erreichbar
+- Lab-GoFa nicht mehr erreichbar (nicht mehr im Lab)
+- `robotstudio/station/` lokal erhalten, via `.gitignore` ausgeschlossen (per-developer)
+
+---
+
+## Session-Stand 2026-04-23 Vormittag/Mittag — Gesten + Audio + VLM
 
 **Docs:**
 - PLAN.md (dieser Text), [docs/gesture-vocabulary.md](docs/gesture-vocabulary.md) mit Mode-Gating + Erkenner-Priorität + Meta-OS-reservierten Gesten
