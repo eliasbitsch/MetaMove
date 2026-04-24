@@ -101,6 +101,22 @@ namespace MetaMove.Interaction.Gestures
 
         public Vector3 HeadPosition => headTransform ? headTransform.position : Vector3.zero;
         public Vector3 HeadForward => headTransform ? headTransform.forward : Vector3.forward;
+
+        public Vector3 IndexPointDirection(GestureRouter.Hand h)
+        {
+            var hr = HandRef(h);
+            if (hr == null) return Vector3.forward;
+            // Vector from index proximal to index tip in world space — the
+            // direction the user is aiming with the extended index finger.
+            if (hr.GetJointPose(HandJointId.HandIndex1, out var prox) &&
+                hr.GetJointPose(HandJointId.HandIndexTip, out var tip))
+            {
+                Vector3 d = tip.position - prox.position;
+                if (d.sqrMagnitude > 1e-6f) return d.normalized;
+            }
+            // Fallback: palm-normal as a sane default.
+            return PalmNormal(h);
+        }
     }
 }
 #endif

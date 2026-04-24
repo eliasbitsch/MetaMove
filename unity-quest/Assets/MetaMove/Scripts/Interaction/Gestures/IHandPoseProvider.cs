@@ -26,6 +26,13 @@ namespace MetaMove.Interaction.Gestures
         // Order: thumb, index, middle, ring, little.
         void GetFingerCurl(GestureRouter.Hand hand, float[] outCurl5);
 
+        // World-space unit vector along the index finger from proximal to tip.
+        // Used by IndexPointJogController so the user can jog the robot by
+        // pointing in a direction. When the index is curled this still returns
+        // a defined vector (palm-forward fallback), but the jog controller
+        // gates on curl values before using it.
+        Vector3 IndexPointDirection(GestureRouter.Hand hand);
+
         // Head / centre-eye position and forward. Used by gesture code that needs
         // the user's reference frame (e.g. "palm towards user").
         Vector3 HeadPosition { get; }

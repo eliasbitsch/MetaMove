@@ -65,5 +65,11 @@ namespace MetaMove.Interaction.Gestures
 
         public Vector3 HeadPosition => head ? head.position : Vector3.zero;
         public Vector3 HeadForward => head ? head.forward : Vector3.forward;
+
+        // Mock pointing direction: the hand Transform's +Z (forward). For
+        // interactive editor tests rotate the hand transform so its forward
+        // axis points where you want to "aim" the index finger.
+        public Vector3 IndexPointDirection(GestureRouter.Hand h) =>
+            (h == GestureRouter.Hand.Left ? leftHand : rightHand)?.forward ?? Vector3.forward;
     }
 }
