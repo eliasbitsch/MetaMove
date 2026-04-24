@@ -51,6 +51,21 @@ namespace MetaMove.Interaction.Gestures
             ghost.StepBy(dir * step);
         }
 
+        // Atomic index-point step (default IndexPointJogController mode).
+        public void OnPointStep(Vector3 direction, float stepMetres)
+        {
+            if (ghost == null) return;
+            ghost.StepBy(direction.normalized * stepMetres);
+        }
+
+        // Continuous jog tick — IndexPointJogController fires this every frame
+        // while the gesture is held, with the per-frame world-space delta.
+        public void OnPointJogTick(Vector3 worldDelta)
+        {
+            if (ghost == null) return;
+            ghost.StepBy(worldDelta);
+        }
+
         public void OnSpatialTarget(Vector3 point, Vector3 normal)
         {
             if (ghost == null) return;

@@ -12,6 +12,7 @@
 | **Spatial Pinch** (Zeigefinger zielt auf reale Oberfläche, Pinch-Tap) | Waypoint / Go-To-Target an Welt-Punkt wo Hand-Ray reale Oberfläche trifft (Tisch, Werkstück, Boden). Mit Voice-Query („was ist das?") → VLM-Beschreibung statt Waypoint (Step 13c4). | Waypoint- / Query-Modus |
 | **Pinch lang + Drag** (≥ 200 ms) | Endeffektor ziehen (Position) | Live-EGM-Teleop |
 | **Daumen-Point** (Hitchhiker) | Jog TCP in Daumen-Richtung, solange Geste aktiv | Jog-Modus |
+| **Zeigefinger-Point** (Index gestreckt, Mittel/Ring/Klein eingerollt) | Atomar (default): ein Step in Zeigefinger-Richtung pro Strecken (vor/zurück/links/rechts/oben/unten je nach wohin der Finger zeigt). Continuous-Toggle in Config: Jog solange gehalten. | Command-Mode (Step) / Jog-Modus (Continuous) |
 | **Flat-Hand horizontal, drehen** | TCP-Orientierung A4/A5/A6 (Wrist-Achsen) | Orientation |
 | **Palm zum Roboter — still halten** (Stop-Hand) | Hold — Roboter friert ein, EGM hält Position | Soft-Stop (nur in Teleop/Jog aktiv) |
 | **Beidhändige Faust** | 🛑 E-Stop — Motors off via RWS | Hard-Stop |

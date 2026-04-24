@@ -46,6 +46,20 @@ namespace MetaMove.Settings
         [Tooltip("Required dwell time to fire soft-stop (s).")]
         public float holdStopDwellSeconds = 0.30f;
 
+        [Header("Index-Point Jog")]
+        [Tooltip("Index curl below this counts as 'extended'.")]
+        public float indexExtendedCurlMax = 0.25f;
+        [Tooltip("Average curl of middle/ring/little above this is required (others are curled).")]
+        public float indexOthersCurlMin = 0.55f;
+        [Tooltip("Step distance per detected point gesture in step-mode (m).")]
+        public float indexPointStepDistance = 0.10f;
+        [Tooltip("Continuous-mode jog speed when the gesture is held (m/s).")]
+        public float indexPointJogSpeed = 0.15f;
+        [Tooltip("If true, the jog runs continuously while the gesture is held; if false, one atomic step fires per rising edge.")]
+        public bool indexPointContinuous = false;
+        [Tooltip("Debounce between consecutive atomic point-steps from the same hand (s).")]
+        public float indexPointCooldownSeconds = 0.45f;
+
         [Header("Spatial Pinch (MRUK surface pick)")]
         [Tooltip("Normal offset applied above the hit surface when placing a waypoint (m).")]
         public float spatialPinchSurfaceOffset = 0.05f;
