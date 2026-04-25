@@ -40,9 +40,40 @@ namespace MetaMove.Robot
         [Tooltip("Also try to match target rotation (useful for tool orientation).")]
         public bool solveRotation = false;
 
+        // Cached rest local rotations — joint angles are tracked as a delta from
+        // the rest pose. This preserves the FBX hierarchy's non-identity rest
+        // rotations (typical for ABB / rparak imports) instead of overwriting
+        // them every frame.
+        Quaternion[] _restLocalRot;
+        float[] _angleDeg;
+
+        void Awake()
+        {
+            CacheRestPose();
+        }
+
+        void OnValidate()
+        {
+            // Re-cache when the joints array is edited in the inspector.
+            CacheRestPose();
+        }
+
+        void CacheRestPose()
+        {
+            if (joints == null) return;
+            _restLocalRot = new Quaternion[joints.Length];
+            _angleDeg = new float[joints.Length];
+            for (int i = 0; i < joints.Length; i++)
+            {
+                _restLocalRot[i] = joints[i].joint != null ? joints[i].joint.localRotation : Quaternion.identity;
+                _angleDeg[i] = 0f;
+            }
+        }
+
         void LateUpdate()
         {
             if (target == null || endEffector == null || joints == null || joints.Length == 0) return;
+            if (_restLocalRot == null || _restLocalRot.Length != joints.Length) CacheRestPose();
 
             for (int iter = 0; iter < iterations; iter++)
             {
@@ -61,27 +92,36 @@ namespace MetaMove.Robot
                     if (toEE.sqrMagnitude < 1e-8f || toTarget.sqrMagnitude < 1e-8f) continue;
 
                     Quaternion delta = Quaternion.FromToRotation(toEE, toTarget);
-                    Vector3 worldAxis = js.joint.TransformDirection(js.localAxis.normalized);
+                    // Rest-relative axis: rotate the joint's REST orientation, not its
+                    // current one. Otherwise drift accumulates as the joint's local axis
+                    // wanders from its rest direction.
+                    Quaternion parentRot = js.joint.parent != null ? js.joint.parent.rotation : Quaternion.identity;
+                    Vector3 worldAxis = parentRot * (_restLocalRot[i] * js.localAxis.normalized);
                     delta = ConstrainToAxis(delta, worldAxis);
-                    delta = Quaternion.Slerp(Quaternion.identity, delta, damping);
+                    delta.ToAngleAxis(out float deltaAngle, out Vector3 deltaRotAxis);
+                    if (deltaAngle > 180f) deltaAngle -= 360f;
+                    float deltaSigned = deltaAngle * Mathf.Sign(Vector3.Dot(deltaRotAxis, worldAxis)) * damping;
 
-                    js.joint.rotation = delta * js.joint.rotation;
-
-                    ClampJointToLimits(js);
+                    _angleDeg[i] = Mathf.Clamp(_angleDeg[i] + deltaSigned, js.minDeg, js.maxDeg);
+                    js.joint.localRotation = _restLocalRot[i] * Quaternion.AngleAxis(_angleDeg[i], js.localAxis.normalized);
                 }
             }
 
             if (solveRotation && joints.Length > 0)
             {
-                var last = joints[joints.Length - 1];
+                int li = joints.Length - 1;
+                var last = joints[li];
                 if (last.joint != null)
                 {
                     Quaternion rotDelta = target.rotation * Quaternion.Inverse(endEffector.rotation);
-                    Vector3 worldAxis = last.joint.TransformDirection(last.localAxis.normalized);
+                    Quaternion parentRot = last.joint.parent != null ? last.joint.parent.rotation : Quaternion.identity;
+                    Vector3 worldAxis = parentRot * (_restLocalRot[li] * last.localAxis.normalized);
                     rotDelta = ConstrainToAxis(rotDelta, worldAxis);
-                    rotDelta = Quaternion.Slerp(Quaternion.identity, rotDelta, damping * 0.5f);
-                    last.joint.rotation = rotDelta * last.joint.rotation;
-                    ClampJointToLimits(last);
+                    rotDelta.ToAngleAxis(out float a, out Vector3 ax);
+                    if (a > 180f) a -= 360f;
+                    float aSigned = a * Mathf.Sign(Vector3.Dot(ax, worldAxis)) * damping * 0.5f;
+                    _angleDeg[li] = Mathf.Clamp(_angleDeg[li] + aSigned, last.minDeg, last.maxDeg);
+                    last.joint.localRotation = _restLocalRot[li] * Quaternion.AngleAxis(_angleDeg[li], last.localAxis.normalized);
                 }
             }
         }
