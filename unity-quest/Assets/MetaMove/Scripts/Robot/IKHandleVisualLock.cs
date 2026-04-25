@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 using Oculus.Interaction;
 using Oculus.Interaction.HandGrab;
@@ -36,8 +37,8 @@ namespace MetaMove.Robot
         public DistanceHandGrabInteractable distanceGrab;
 
         bool IsGrabbed =>
-            (handGrab != null && handGrab.SelectingInteractorViews != null && handGrab.SelectingInteractorViews.Count > 0)
-         || (distanceGrab != null && distanceGrab.SelectingInteractorViews != null && distanceGrab.SelectingInteractorViews.Count > 0);
+            (handGrab != null && handGrab.SelectingInteractorViews != null && handGrab.SelectingInteractorViews.Any())
+         || (distanceGrab != null && distanceGrab.SelectingInteractorViews != null && distanceGrab.SelectingInteractorViews.Any());
 
         void Reset()
         {
