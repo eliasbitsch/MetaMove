@@ -91,16 +91,19 @@ namespace MetaMove.Robot
 
                     if (toEE.sqrMagnitude < 1e-8f || toTarget.sqrMagnitude < 1e-8f) continue;
 
-                    Quaternion delta = Quaternion.FromToRotation(toEE, toTarget);
                     // Rest-relative axis: rotate the joint's REST orientation, not its
                     // current one. Otherwise drift accumulates as the joint's local axis
                     // wanders from its rest direction.
                     Quaternion parentRot = js.joint.parent != null ? js.joint.parent.rotation : Quaternion.identity;
                     Vector3 worldAxis = parentRot * (_restLocalRot[i] * js.localAxis.normalized);
-                    delta = ConstrainToAxis(delta, worldAxis);
-                    delta.ToAngleAxis(out float deltaAngle, out Vector3 deltaRotAxis);
-                    if (deltaAngle > 180f) deltaAngle -= 360f;
-                    float deltaSigned = deltaAngle * Mathf.Sign(Vector3.Dot(deltaRotAxis, worldAxis)) * damping;
+
+                    // Project both vectors onto the rotation plane and take the signed
+                    // angle around worldAxis. This avoids ToAngleAxis's always-positive
+                    // angle convention which loses direction information.
+                    Vector3 eOnPlane = Vector3.ProjectOnPlane(toEE, worldAxis);
+                    Vector3 tOnPlane = Vector3.ProjectOnPlane(toTarget, worldAxis);
+                    if (eOnPlane.sqrMagnitude < 1e-8f || tOnPlane.sqrMagnitude < 1e-8f) continue;
+                    float deltaSigned = Vector3.SignedAngle(eOnPlane, tOnPlane, worldAxis) * damping;
 
                     _angleDeg[i] = Mathf.Clamp(_angleDeg[i] + deltaSigned, js.minDeg, js.maxDeg);
                     js.joint.localRotation = _restLocalRot[i] * Quaternion.AngleAxis(_angleDeg[i], js.localAxis.normalized);
