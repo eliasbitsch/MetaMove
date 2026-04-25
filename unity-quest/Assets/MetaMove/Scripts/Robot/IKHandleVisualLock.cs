@@ -29,6 +29,7 @@ namespace MetaMove.Robot
     ///       - handGrab + distanceGrab auto-fill via Reset()
     /// </summary>
     [DefaultExecutionOrder(1100)]   // after GoFaDLSIK so we override the visual after IK runs
+    [ExecuteAlways]                  // also keep IKTarget aligned to TCP in edit mode
     public class IKHandleVisualLock : MonoBehaviour
     {
         public Transform tcp;
