@@ -22,10 +22,12 @@ MODULE MetaMoveCore (SYSMODULE)
     PERS string metaMsg        := "";
 
     !=== EGM session state =========================================
-    VAR egmident   egmId;
+    VAR egmident   egmId;            ! Pose-mode session
+    VAR egmident   egmIdJoint;       ! Joint-mode session (separate)
     VAR egmstate   egmSt;
     CONST egm_minmax egmLin := [-0.1, 0.1];
     CONST egm_minmax egmRot := [-0.1, 0.1];
+    CONST egm_minmax egmJointMM := [-1, 1];     ! deg convergence for joint mode
     CONST pose       poseId := [[0,0,0],[1,0,0,0]];
     PERS wobjdata    egmWobj := [FALSE, TRUE, "", [[0,0,0],[1,0,0,0]], [[0,0,0],[1,0,0,0]]];
 
@@ -49,10 +51,18 @@ MODULE MetaMoveCore (SYSMODULE)
             started := TRUE;
         ENDIF
 
-        ! leave teleop → release EGM session
+        ! leave teleop → release the right EGM session, longer wait for clean release
         IF metaCmd <> 9 AND cmdPrev = 9 THEN
             EGMReset egmId;
-            metaMsg := "egm released";
+            WaitTime 0.5;
+            metaMsg := "egm pose released";
+            metaState := 0;
+            cmdPrev := metaCmd;
+        ENDIF
+        IF metaCmd <> 10 AND cmdPrev = 10 THEN
+            EGMReset egmIdJoint;
+            WaitTime 0.5;
+            metaMsg := "egm joint released";
             metaState := 0;
             cmdPrev := metaCmd;
         ENDIF
@@ -92,15 +102,21 @@ MODULE MetaMoveCore (SYSMODULE)
                 cmdPrev := 3;
 
             CASE 9:
+                ! Stay at current pose on mode entry; EGM starts from wherever robot is.
                 IF cmdPrev <> 9 THEN
-                    MoveAbsJ jtEgmStart, v20, fine, tool0;
-                    MetaEgmInit;            ! force-reset + SetupUC, ONCE per entry
                     metaState := 1;
                     cmdPrev := 9;
                 ENDIF
                 metaMsg := "EGM pose";
-                MetaEgmActPose;             ! re-arm every iteration
-                MetaEgmRun;                  ! RunPose with CondTime
+                MetaEgmCyclePose;
+
+            CASE 10:
+                IF cmdPrev <> 10 THEN
+                    metaState := 1;
+                    cmdPrev := 10;
+                ENDIF
+                metaMsg := "EGM joint";
+                MetaEgmCycleJoint;
 
         DEFAULT:
                 metaMsg := "unknown cmd " + NumToStr(metaCmd, 0);
@@ -118,46 +134,53 @@ MODULE MetaMoveCore (SYSMODULE)
 
     ! MetaEgmInit — called ONCE on CASE 9 entry. Force-reset any stale binding,
     ! grab fresh egmId, set up UC. EGMActPose moved to its own PROC for re-arm.
-    PROC MetaEgmInit()
+    !=== One iteration of EGM Pose mode (lsurobotics pattern) ============
+    PROC MetaEgmCyclePose()
         EGMGetId egmId;
-        EGMReset egmId;
-        WaitTime 0.3;
-        EGMGetId egmId;
-        EGMSetupUC ROB_1, egmId, "default", "MetaMoveUC" \Pose;
-    ENDPROC
-
-    PROC MetaEgmActPose()
+        egmSt := EGMGetState(egmId);
+        IF egmSt <= EGM_STATE_CONNECTED THEN
+            EGMSetupUC ROB_1, egmId, "default", "MetaMoveUC" \Pose;
+        ENDIF
         EGMActPose egmId,
-            \Tool:=tool0,
-            \WObj:=egmWobj,
+            \Tool:=tool0, \WObj:=egmWobj,
             poseId, EGM_FRAME_BASE,
             poseId, EGM_FRAME_BASE
             \X:=egmLin \Y:=egmLin \Z:=egmLin
             \Rx:=egmRot \Ry:=egmRot \Rz:=egmRot
-            \LpFilter:=100
-            \SampleRate:=8
-            \MaxPosDeviation:=1000
-            \MaxSpeedDeviation:=1000;
-    ENDPROC
-
-    PROC MetaEgmRun()
+            \LpFilter:=100 \SampleRate:=8
+            \MaxPosDeviation:=1000 \MaxSpeedDeviation:=1000;
         EGMRunPose egmId, EGM_STOP_HOLD
             \X \Y \Z \Rx \Ry \Rz
-            \CondTime:=1.0
-            \RampInTime:=0.1
-            \RampOutTime:=0.1
-            \PosCorrGain:=1.0;
+            \CondTime:=1.0 \RampInTime:=0.5
+            \RampOutTime:=0.1 \PosCorrGain:=1.0;
         ERROR
-            IF ERRNO = ERR_UDPUC_COMM THEN
-                metaMsg := "EGM UDP timeout";
-                RETURN;
-            ELSEIF ERRNO = ERR_ROBLIMIT THEN
-                metaMsg := "EGM joint limit";
-                TRYNEXT;
-            ELSE
-                metaMsg := "EGM err=" + NumToStr(ERRNO, 0);
-                STOP;
-            ENDIF
+            metaMsg := "EGM pose retry errno=" + NumToStr(ERRNO, 0);
+            EGMReset egmId;
+            WaitTime 0.3;
+            RETURN;
+    ENDPROC
+
+    !=== One iteration of EGM Joint mode (uses separate UDPUC: MetaMoveJoint) ===
+    PROC MetaEgmCycleJoint()
+        EGMGetId egmIdJoint;
+        egmSt := EGMGetState(egmIdJoint);
+        IF egmSt <= EGM_STATE_CONNECTED THEN
+            EGMSetupUC ROB_1, egmIdJoint, "default", "MetaMoveJoint" \Joint;
+        ENDIF
+        EGMActJoint egmIdJoint
+            \Tool:=tool0
+            \J1:=egmJointMM \J2:=egmJointMM \J3:=egmJointMM
+            \J4:=egmJointMM \J5:=egmJointMM \J6:=egmJointMM
+            \LpFilter:=100 \SampleRate:=8
+            \MaxSpeedDeviation:=1000;
+        EGMRunJoint egmIdJoint, EGM_STOP_HOLD
+            \J1 \J2 \J3 \J4 \J5 \J6
+            \CondTime:=1.0 \RampInTime:=0.1;
+        ERROR
+            metaMsg := "EGM joint retry errno=" + NumToStr(ERRNO, 0);
+            EGMReset egmIdJoint;
+            WaitTime 0.3;
+            RETURN;
     ENDPROC
 
 ENDMODULE
