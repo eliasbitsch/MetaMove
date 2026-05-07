@@ -78,7 +78,8 @@ namespace MetaMove.Robot.EGM
                     case 1: { var sub = r.ReadMessage(); ParseJoints(ref sub, msg.joints); break; }
                     case 2: { var sub = r.ReadMessage(); ParsePose(ref sub, ref msg.cartesian); break; }
                     case 3: { var sub = r.ReadMessage(); ParseJoints(ref sub, msg.externalJoints); break; }
-                    case 4: msg.measuredTimeStampUs = (uint)r.ReadVarint(); break;
+                    // field 4 (time) is a Timestamp sub-message in newer egm.proto, not a uint.
+                    // skip it generically — we don't currently consume the timestamp anyway.
                     default: r.SkipField(wt); break;
                 }
             }
@@ -167,7 +168,7 @@ namespace MetaMove.Robot.EGM
             var header = new ProtoWriter(16);
             header.WriteUInt32(1, seqno);
             header.WriteUInt32(2, tmMs);
-            header.WriteInt32(3, 1);
+            header.WriteInt32(3, 3); // mtype=MSGTYPE_CORRECTION (ABB sensor→controller)
 
             var jointsInner = new ProtoWriter(64);
             for (int i = 0; i < jointDeg.Count; i++) jointsInner.WriteDouble(1, jointDeg[i]);
@@ -181,22 +182,25 @@ namespace MetaMove.Robot.EGM
             return outer.ToArray();
         }
 
-        public static byte[] BuildPoseCommand(uint seqno, uint tmMs, double x, double y, double z, double qW, double qX, double qY, double qZ)
+        public static byte[] BuildPoseCommand(uint seqno, uint tmMs, double x, double y, double z, double eulerXdeg, double eulerYdeg, double eulerZdeg)
         {
+            // rparak/Unity3D_ABB_CRB_15000_GoFa_EGM proven pattern:
+            // EgmPose.position (field 1) + EgmPose.euler (field 3 — NOT orient/quat field 2).
+            // Controller in pose-mode reads euler when present.
             var header = new ProtoWriter(16);
             header.WriteUInt32(1, seqno);
             header.WriteUInt32(2, tmMs);
-            header.WriteInt32(3, 1);
+            header.WriteInt32(3, 3); // mtype=MSGTYPE_CORRECTION
 
             var cart = new ProtoWriter(32);
             cart.WriteDouble(1, x); cart.WriteDouble(2, y); cart.WriteDouble(3, z);
 
-            var quat = new ProtoWriter(40);
-            quat.WriteDouble(1, qW); quat.WriteDouble(2, qX); quat.WriteDouble(3, qY); quat.WriteDouble(4, qZ);
+            var euler = new ProtoWriter(32);
+            euler.WriteDouble(1, eulerXdeg); euler.WriteDouble(2, eulerYdeg); euler.WriteDouble(3, eulerZdeg);
 
             var pose = new ProtoWriter(80);
             pose.WriteMessage(1, cart.ToArray());
-            pose.WriteMessage(2, quat.ToArray());
+            pose.WriteMessage(3, euler.ToArray());
 
             var planned = new ProtoWriter(96);
             planned.WriteMessage(2, pose.ToArray());
