@@ -118,10 +118,12 @@ namespace MetaMove.Robot.EGM
         {
             if (_sock == null || _remote == null) return false;
             uint tm = (uint)(Time.realtimeSinceStartup * 1000.0);
-            // ABB uses mm + quaternion wxyz
+            // rparak proven pattern: ABB EGM Pose mode reads EgmPose.euler (XYZ degrees),
+            // not the quaternion field. Convert Unity quat → Euler ZYX-deg.
+            Vector3 eul = rot.eulerAngles;
             byte[] pkt = EgmSensorBuilder.BuildPoseCommand(++_txSeqno, tm,
                 posMeters.x * 1000.0, posMeters.y * 1000.0, posMeters.z * 1000.0,
-                rot.w, rot.x, rot.y, rot.z);
+                eul.x, eul.y, eul.z);
             try { _sock.Send(pkt, pkt.Length, _remote); _packetsSent++; return true; }
             catch (Exception e) { Debug.LogWarning($"[EGM] TX error: {e.Message}"); return false; }
         }

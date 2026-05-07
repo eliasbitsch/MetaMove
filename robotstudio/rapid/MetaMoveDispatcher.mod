@@ -28,8 +28,9 @@ MODULE MetaMoveDispatcher (SYSMODULE)
     !     metaStep    — sub-step within current demo
     !     metaMsg     — last status message for HUD
     !
-    !   Uses UDPUC host "MetaMoveUC" for EGM (independent of GoHolo's UCdevice
-    !   and the backup ROB_Michi entries — keep those for fallback).
+    !   Uses UDPUC host "MetaMoveUC" (RemoteAddress=192.168.125.99:6511) for
+    !   EGM. ROB_Michi exists in parallel (same endpoint) and is left untouched.
+    !   Unity listens on the Windows alias-IP 192.168.125.99 on port 6511.
     !
 
     !=== External control (write via RWS) ===================================
@@ -42,6 +43,15 @@ MODULE MetaMoveDispatcher (SYSMODULE)
     PERS num    metaState      := 0;         ! 0=idle 1=running 2=done 3=error
     PERS num    metaStep       := 0;
     PERS string metaMsg        := "";
+
+    !=== LED control (Asi1Led RGB + Period). When metaLedOverride=TRUE the
+    !    dispatcher writes RGB to the Asi GO signals each loop tick. Set FALSE
+    !    to release control back to T_GOFA_LED (system-state colouring).
+    PERS bool   metaLedOverride := FALSE;
+    PERS num    metaLedR        := 0;        ! 0..255
+    PERS num    metaLedG        := 0;        ! 0..255
+    PERS num    metaLedB        := 0;        ! 0..255
+    PERS num    metaLedPeriod   := 0;        ! 0=solid, >0=blink period
 
     !=== Unity-supplied targets (set via RWS before metaStart) ==============
     PERS robtarget metaPickTarget  := [[400,0,500],[0,1,0,0],[0,0,0,0],[9E9,9E9,9E9,9E9,9E9,9E9]];
@@ -56,7 +66,7 @@ MODULE MetaMoveDispatcher (SYSMODULE)
     CONST egm_minmax egmLim := [-5, 5];
 
     !=== Mode-change TRAP (from GoHolo pattern) =============================
-    VAR num    modePrev;
+    VAR intnum modePrev;
     VAR num    modePrevTerminate := -1;
     VAR bool   bStartup := TRUE;
 
@@ -67,7 +77,7 @@ MODULE MetaMoveDispatcher (SYSMODULE)
     !=========================================================================
     ! MAIN — the dispatcher loop
     !=========================================================================
-    PROC metaMain()
+    PROC main()
 
         ! First-run init
         IF bStartup THEN
@@ -127,10 +137,14 @@ MODULE MetaMoveDispatcher (SYSMODULE)
                 ENDIF
 
             CASE 9:
-                ! teleop entry — init EGM, then move to sub-state 90
+                ! teleop entry — init EGM, then move to sub-state 90.
+                ! Pre-set modePrevTerminate to 90 so the next main() iteration
+                ! does NOT call Modehandler (which would EGMStop the session
+                ! we just set up).
                 MoveAbsJ pInitEGM, v100, fine, tool0;
                 MetaEGM_Init;
                 DeleteTrap;
+                modePrevTerminate := 90;
                 metaMode := 90;
 
             CASE 90:
@@ -141,11 +155,24 @@ MODULE MetaMoveDispatcher (SYSMODULE)
                 metaState := 3;
         ENDTEST
 
+        UpdateLED;
         WaitTime 0.05;
 
         ERROR
             metaState := 3;
             metaMsg := "main trap errno=" + NumToStr(ERRNO, 0);
+            TRYNEXT;
+    ENDPROC
+
+    PROC UpdateLED()
+        IF metaLedOverride THEN
+            SetGO Asi1LedRed,    metaLedR;
+            SetGO Asi1LedGreen,  metaLedG;
+            SetGO Asi1LedBlue,   metaLedB;
+            SetGO Asi1LedPeriod, metaLedPeriod;
+        ENDIF
+        ERROR
+            ! ignore IO write conflicts — T_GOFA_LED may temporarily own
             TRYNEXT;
     ENDPROC
 
@@ -200,8 +227,7 @@ MODULE MetaMoveDispatcher (SYSMODULE)
         MoveJ Offs(metaPickTarget, 0, 0, 100), v200, z20, tool0;
         metaStep := 2; ! descend
         MoveL metaPickTarget, v100, fine, tool0;
-        metaStep := 3; ! grip
-        SetDO mm_gripper_close, 1;
+        metaStep := 3; ! grip — TODO: SetDO ox_multi_vac_greifer_schliessen when IO restored
         WaitTime 0.3;
         metaStep := 4; ! retract
         MoveL Offs(metaPickTarget, 0, 0, 100), v100, z20, tool0;
@@ -209,7 +235,7 @@ MODULE MetaMoveDispatcher (SYSMODULE)
         MoveJ Offs(metaPlaceTarget, 0, 0, 100), v200, z20, tool0;
         metaStep := 6; ! place
         MoveL metaPlaceTarget, v100, fine, tool0;
-        SetDO mm_gripper_close, 0;
+        ! TODO: SetDO ox_multi_vac_greifer_oeffnen when IO restored
         WaitTime 0.3;
         metaStep := 7; ! retract
         MoveL Offs(metaPlaceTarget, 0, 0, 100), v100, z20, tool0;
@@ -273,17 +299,20 @@ MODULE MetaMoveDispatcher (SYSMODULE)
         EGMGetId egmMetaId;
         egmMetaSt := EGMGetState(egmMetaId);
         IF egmMetaSt <= EGM_STATE_CONNECTED THEN
+            ! Use MetaMoveUC on port 6512 (avoids stale-socket conflicts on
+            ! Windows port 6511 where ROB_Michi was historically directed).
             EGMSetupUC ROB_1, egmMetaId, "default", "MetaMoveUC" \Pose;
         ENDIF
 
         EGMActPose egmMetaId
+            \StreamStart
             \Tool:=tool0 \WObj:=wobj0,
             poseZero, EGM_FRAME_WOBJ,
             poseZero, EGM_FRAME_WOBJ
             \x:=egmLim \y:=egmLim \z:=egmLim
             \rx:=egmLim \ry:=egmLim \rz:=egmLim
             \MaxPosDeviation:=1000
-            \MaxSpeedDeviation:=200;
+            \MaxSpeedDeviation:=50;
 
         metaState := 1;
         metaMsg := "EGM active";
