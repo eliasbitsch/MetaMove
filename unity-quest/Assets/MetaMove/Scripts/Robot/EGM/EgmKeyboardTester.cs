@@ -49,6 +49,8 @@ namespace MetaMove.Robot.EGM
                 case KeyCode.X:            return UnityEngine.InputSystem.Key.X;
                 case KeyCode.C:            return UnityEngine.InputSystem.Key.C;
                 case KeyCode.V:            return UnityEngine.InputSystem.Key.V;
+                case KeyCode.R:            return UnityEngine.InputSystem.Key.R;
+                case KeyCode.F:            return UnityEngine.InputSystem.Key.F;
                 default:                 return UnityEngine.InputSystem.Key.None;
             }
         }
@@ -147,13 +149,13 @@ namespace MetaMove.Robot.EGM
 
         EgmClient _egm;
         float _lastSend;
+        float _modeSwitchSettleUntil;
 
         void Awake() { _egm = GetComponent<EgmClient>(); if (homeOverride) _haveHome = true; }
 
         void Start()
         {
-            // Pose-only build: always set RAPID to mode 9 on Play start.
-            if (autoSwitchRapidMode) StartCoroutine(SetRapidMetaCmd(9));
+            if (autoSwitchRapidMode) StartCoroutine(SetRapidMetaCmd(mode == Mode.Pose ? 9 : 10));
         }
 
         void Update()
@@ -188,8 +190,15 @@ namespace MetaMove.Robot.EGM
                 }
             }
 
-            // Mode toggle disabled in pose-only build (joint mode comes back later)
-            // if (Kbd.GetKeyDown(KeyCode.M)) ...
+            // M = toggle Pose↔Joint with settle pause to avoid drive-trip on axis 6
+            if (Kbd.GetKeyDown(KeyCode.M))
+            {
+                mode = (mode == Mode.Pose) ? Mode.Joint : Mode.Pose;
+                _havePose = false;
+                _haveJoints = false;
+                _modeSwitchSettleUntil = Time.unscaledTime + 0.8f; // pause 800ms for full RAPID-side reset+rearm
+                if (autoSwitchRapidMode) StartCoroutine(SetRapidMetaCmd(mode == Mode.Pose ? 9 : 10));
+            }
 
             // Speed adjustment hotkeys
             float dt = Time.unscaledDeltaTime;
@@ -203,7 +212,8 @@ namespace MetaMove.Robot.EGM
             if (mode == Mode.Pose) UpdatePose(dt, fastMul);
             else                   UpdateJoint(dt, fastMul);
 
-            // Stream
+            // Stream — pause briefly after mode-switch so robot can settle
+            if (Time.unscaledTime < _modeSwitchSettleUntil) return;
             float minInterval = 1f / Mathf.Max(50f, streamRateHz);
             if (Time.unscaledTime - _lastSend < minInterval) return;
             _lastSend = Time.unscaledTime;
@@ -288,8 +298,8 @@ namespace MetaMove.Robot.EGM
 
             float jStep = jointSpeed * fastMul * dt;
             float jdelta = 0f;
-            if (Kbd.GetKey(KeyCode.KeypadPlus)  || Kbd.GetKey(KeyCode.Plus))  jdelta += jStep;
-            if (Kbd.GetKey(KeyCode.KeypadMinus) || Kbd.GetKey(KeyCode.Minus)) jdelta -= jStep;
+            if (Kbd.GetKey(KeyCode.R)) jdelta += jStep;
+            if (Kbd.GetKey(KeyCode.F)) jdelta -= jStep;
             if (jdelta != 0f)
             {
                 int idx = _activeJoint - 1;
@@ -409,7 +419,7 @@ namespace MetaMove.Robot.EGM
             }
             else
             {
-                GUI.Label(new Rect(20, y, w - 20, 20), "1..6 select joint   +/- jog"); y += 18;
+                GUI.Label(new Rect(20, y, w - 20, 20), "1..6 select joint   R/F jog ±"); y += 18;
             }
             GUI.Label(new Rect(20, y, w - 20, 20), "Shift=fast  H hold=HOME  F1=set HOME  M=mode"); y += 18;
             GUI.Label(new Rect(20, y, w - 20, 20), $"Z/X=lin±  C/V=rot±   RWS auto: {autoSwitchRapidMode}"); y += 18;
