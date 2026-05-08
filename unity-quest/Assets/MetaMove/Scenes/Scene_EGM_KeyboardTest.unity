@@ -506,6 +506,7 @@ GameObject:
   - component: {fileID: 2079611693}
   - component: {fileID: 2079611692}
   - component: {fileID: 2079611691}
+  - component: {fileID: 2079611694}
   m_Layer: 0
   m_Name: EGM_Tester
   m_TagString: Untagged
@@ -525,23 +526,51 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b3f4590555548e42949ea4beba78e1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MetaMove.Robot.EGM.EgmKeyboardTester
-  keyHome: 104
-  keyCaptureHome: 282
-  keyZUp: 101
-  keyZDown: 113
-  keyHold: 304
+  mode: 0
+  egmPose: {fileID: 0}
+  egmJoint: {fileID: 2079611694}
+  autoSwitchRapidMode: 1
+  rwsHost: 192.168.125.1
+  rwsUser: Default User
+  rwsPassword: robotics
   linearSpeed: 0.05
+  angularSpeed: 30
+  jointSpeed: 20
   fastMultiplier: 5
+  homeSpeedFactor: 1
   streamRateHz: 250
   homeOverride: 0
   homePosMm: {x: 400, y: 0, z: 600}
   homeRotWxyz: {x: 0, y: 0, z: 1, w: 0}
   minPosMm: {x: 150, y: -500, z: 100}
   maxPosMm: {x: 800, y: 500, z: 900}
+  j1Limits: {x: -180, y: 180}
+  j2Limits: {x: -90, y: 90}
+  j3Limits: {x: -180, y: 50}
+  j4Limits: {x: -180, y: 180}
+  j5Limits: {x: -225, y: 225}
+  j6Limits: {x: -360, y: 360}
   _targetPosMm: {x: 0, y: 0, z: 0}
   _targetRotWxyz: {x: 0, y: 0, z: 0, w: 0}
-  _haveTarget: 0
+  _jointTargetDeg:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  _jointHomeDeg:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  _activeJoint: 6
+  _havePose: 0
+  _haveJoints: 0
   _haveHome: 0
+  _haveJointHome: 0
   _connected: 0
   _hz: 0
 --- !u!114 &2079611692
@@ -578,6 +607,25 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2079611694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2079611690}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f47281aa9b3a5f4c96f24dbb81f893d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MetaMove.Robot.EGM.EgmClient
+  listenPort: 6513
+  autoDetectRemote: 1
+  remoteHost: 192.168.125.1
+  remotePort: 6513
+  _packetsReceived: 0
+  _packetsSent: 0
+  _hz: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

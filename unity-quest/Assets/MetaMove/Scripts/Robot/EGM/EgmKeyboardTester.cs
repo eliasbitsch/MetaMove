@@ -86,13 +86,18 @@ namespace MetaMove.Robot.EGM
     //   M = toggle Pose ↔ Joint mode (Unity-side; remember to set RAPID metaCmd)
     //   PageUp/Down = adjust linear speed
     //   Home/End = adjust angular speed
-    [RequireComponent(typeof(EgmClient))]
     public class EgmKeyboardTester : MonoBehaviour
     {
         public enum Mode { Pose, Joint }
 
         [Header("Mode")]
         public Mode mode = Mode.Pose;
+
+        [Header("EGM clients (separate UDP ports — Pose on 6512, Joint on 6513)")]
+        [Tooltip("EgmClient for Pose mode (typically port 6512). Required.")]
+        public EgmClient egmPose;
+        [Tooltip("EgmClient for Joint mode (typically port 6513). Required if Joint mode used.")]
+        public EgmClient egmJoint;
         [Tooltip("Beim M-Toggle automatisch RAPID metaCmd via RWS setzen (9=Pose, 10=Joint).")]
         public bool autoSwitchRapidMode = true;
 
@@ -147,11 +152,16 @@ namespace MetaMove.Robot.EGM
         [SerializeField] bool _connected;
         [SerializeField] float _hz;
 
-        EgmClient _egm;
         float _lastSend;
         float _modeSwitchSettleUntil;
+        EgmClient ActiveClient => mode == Mode.Pose ? egmPose : egmJoint;
 
-        void Awake() { _egm = GetComponent<EgmClient>(); if (homeOverride) _haveHome = true; }
+        void Awake()
+        {
+            // Backward-compat: if no explicit pose client wired, use this GameObject's first EgmClient
+            if (egmPose == null) egmPose = GetComponent<EgmClient>();
+            if (homeOverride) _haveHome = true;
+        }
 
         void Start()
         {
@@ -160,11 +170,12 @@ namespace MetaMove.Robot.EGM
 
         void Update()
         {
-            _connected = _egm != null && _egm.Connected;
-            _hz = _egm != null ? _egm.MeasuredHz : 0f;
+            var c = ActiveClient;
+            _connected = c != null && c.Connected;
+            _hz = c != null ? c.MeasuredHz : 0f;
 
-            // Capture initial pose + joints from feedback
-            if (_egm != null && _egm.TryGetLatest(out var fb))
+            // Capture initial pose + joints from feedback (active client)
+            if (c != null && c.TryGetLatest(out var fb))
             {
                 if (!_havePose)
                 {
@@ -190,14 +201,15 @@ namespace MetaMove.Robot.EGM
                 }
             }
 
-            // M = toggle Pose↔Joint with settle pause to avoid drive-trip on axis 6
+            // M = mode toggle is INTENTIONALLY DISABLED. ABB EGM does not support
+            // reliable live mode switching — we tried separate UDPUC devices, separate
+            // ports, EGMStop+long waits, settle pauses, cold restarts, and even with
+            // all that the robot either errors with "could not open device" or jumps
+            // at max speed between modes. Architecture is now: pick mode at Play start
+            // (Inspector), restart program to switch.
             if (Kbd.GetKeyDown(KeyCode.M))
             {
-                mode = (mode == Mode.Pose) ? Mode.Joint : Mode.Pose;
-                _havePose = false;
-                _haveJoints = false;
-                _modeSwitchSettleUntil = Time.unscaledTime + 0.8f; // pause 800ms for full RAPID-side reset+rearm
-                if (autoSwitchRapidMode) StartCoroutine(SetRapidMetaCmd(mode == Mode.Pose ? 9 : 10));
+                Debug.Log("[EGM] Mode toggle disabled — Stop Play, change Inspector 'mode' field, Play again.");
             }
 
             // Speed adjustment hotkeys
@@ -218,15 +230,15 @@ namespace MetaMove.Robot.EGM
             if (Time.unscaledTime - _lastSend < minInterval) return;
             _lastSend = Time.unscaledTime;
 
-            if (mode == Mode.Pose && _havePose)
+            if (mode == Mode.Pose && _havePose && egmPose != null)
             {
                 Vector3 posM = _targetPosMm * 0.001f;
                 Quaternion rot = new Quaternion(_targetRotWxyz.y, _targetRotWxyz.z, _targetRotWxyz.w, _targetRotWxyz.x);
-                _egm.SendPose(posM, rot);
+                egmPose.SendPose(posM, rot);
             }
-            else if (mode == Mode.Joint && _haveJoints)
+            else if (mode == Mode.Joint && _haveJoints && egmJoint != null)
             {
-                _egm.SendJoints(_jointTargetDeg);
+                egmJoint.SendJoints(_jointTargetDeg);
             }
         }
 
