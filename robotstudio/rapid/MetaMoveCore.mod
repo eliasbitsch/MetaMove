@@ -37,6 +37,11 @@ MODULE MetaMoveCore (SYSMODULE)
     VAR num  cmdPrev := -1;
     VAR bool started := FALSE;
 
+    ! Captured robtarget with current robot config — used to lock IK on
+    ! Pose-mode entry so toggling Joint↔Pose doesn't snap to a different
+    ! IK solution that satisfies the same TCP. Discovered/iterated 2026-05-08.
+    PERS robtarget egmEntryPose;
+
     !=== MAIN ======================================================
     PROC main()
 
@@ -44,15 +49,19 @@ MODULE MetaMoveCore (SYSMODULE)
             VelSet metaSpeed, 1000;
             ConfJ \Off;
             ConfL \Off;
-            SingArea \Wrist;
+            ! LockAxis4 statt Wrist — friert J4, vermeidet Wrist-Flip beim Toggle.
+            SingArea \LockAxis4;
             metaState := 0;
             metaMsg := "MetaMoveCore ready";
-            MoveAbsJ jtHome, v50, fine, tool0;
+            ! Startup geht zu non-singular Pose (J5=90°), nicht zu jtHome (J5=0=singularity)
+            MoveAbsJ jtEgmStart, v50, fine, tool0;
             started := TRUE;
         ENDIF
 
-        ! leave teleop → release the right EGM session, longer wait for clean release
+        ! leave teleop: graceful Stop, Reset, then wait for socket to fully unbind
         IF metaCmd <> 9 AND cmdPrev = 9 THEN
+            EGMStop egmId, EGM_STOP_HOLD;
+            WaitTime 0.2;
             EGMReset egmId;
             WaitTime 0.5;
             metaMsg := "egm pose released";
@@ -60,6 +69,8 @@ MODULE MetaMoveCore (SYSMODULE)
             cmdPrev := metaCmd;
         ENDIF
         IF metaCmd <> 10 AND cmdPrev = 10 THEN
+            EGMStop egmIdJoint, EGM_STOP_HOLD;
+            WaitTime 0.2;
             EGMReset egmIdJoint;
             WaitTime 0.5;
             metaMsg := "egm joint released";
@@ -102,8 +113,17 @@ MODULE MetaMoveCore (SYSMODULE)
                 cmdPrev := 3;
 
             CASE 9:
-                ! Stay at current pose on mode entry; EGM starts from wherever robot is.
+                ! On Pose-mode entry: capture current robtarget INCLUDING its config,
+                ! and do a tiny MoveJ to it with ConfJ/L \On to lock RAPID's planning
+                ! state to that exact joint config. Then EGMActPose sees a planned
+                ! position with locked config and IK can't snap to a different solution.
                 IF cmdPrev <> 9 THEN
+                    egmEntryPose := CRobT(\Tool:=tool0, \WObj:=egmWobj);
+                    ConfJ \On;
+                    ConfL \On;
+                    MoveJ egmEntryPose, v10, fine, tool0 \WObj:=egmWobj;
+                    ConfJ \Off;
+                    ConfL \Off;
                     metaState := 1;
                     cmdPrev := 9;
                 ENDIF
