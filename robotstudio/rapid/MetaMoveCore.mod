@@ -61,9 +61,9 @@ MODULE MetaMoveCore (SYSMODULE)
         ! leave teleop: graceful Stop, Reset, then wait for socket to fully unbind
         IF metaCmd <> 9 AND cmdPrev = 9 THEN
             EGMStop egmId, EGM_STOP_HOLD;
-            WaitTime 0.2;
+            WaitTime 0.3;
             EGMReset egmId;
-            WaitTime 0.5;
+            WaitTime 1.5;
             metaMsg := "egm pose released";
             metaState := 0;
             cmdPrev := metaCmd;
@@ -113,17 +113,10 @@ MODULE MetaMoveCore (SYSMODULE)
                 cmdPrev := 3;
 
             CASE 9:
-                ! On Pose-mode entry: capture current robtarget INCLUDING its config,
-                ! and do a tiny MoveJ to it with ConfJ/L \On to lock RAPID's planning
-                ! state to that exact joint config. Then EGMActPose sees a planned
-                ! position with locked config and IK can't snap to a different solution.
+                ! Stay at current pose. SingArea \LockAxis4 (set in startup) prevents
+                ! wrist-flips. Note: IK ambiguity on toggle Joint→Pose still possible
+                ! but LockAxis4 covers the common case.
                 IF cmdPrev <> 9 THEN
-                    egmEntryPose := CRobT(\Tool:=tool0, \WObj:=egmWobj);
-                    ConfJ \On;
-                    ConfL \On;
-                    MoveJ egmEntryPose, v10, fine, tool0 \WObj:=egmWobj;
-                    ConfJ \Off;
-                    ConfL \Off;
                     metaState := 1;
                     cmdPrev := 9;
                 ENDIF
