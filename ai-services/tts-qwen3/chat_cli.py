@@ -361,8 +361,8 @@ def main():
         "--voice-mode", choices=["xvec", "full"], default="full",
         help="xvec=stable+flat (cached embedding), full=expressive (re-encoded ref each call)",
     )
-    ap.add_argument("--temperature", type=float, default=0.7,
-                    help="Lower=more stable speaker, less drift (lib default 0.9 driftet)")
+    ap.add_argument("--temperature", type=float, default=0.85,
+                    help="0.85 = lebendig + stabil. <0.7 wirkt hoelzern, >0.9 driftet.")
     ap.add_argument("--top-p", type=float, default=0.9)
     ap.add_argument("--seed", type=int, default=42)
     ap.add_argument("--speed", type=float, default=1.0,
