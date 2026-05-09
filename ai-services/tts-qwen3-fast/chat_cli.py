@@ -32,8 +32,8 @@ import torch
 
 from faster_qwen3_tts import FasterQwen3TTS
 
-REPO_ROOT = Path(__file__).resolve().parents[2]
-SAMPLES = REPO_ROOT / "ai-services" / "tts-qwen3" / "samples"
+HERE = Path(__file__).resolve().parent
+SAMPLES = HERE / "samples"
 
 LANG_MAP = {
     "en": ("English", SAMPLES / "jarvis_ref.wav",     SAMPLES / "jarvis_ref.txt"),
@@ -373,8 +373,7 @@ def main():
 
     fx_board = None
     if args.fx != "none":
-        sys.path.insert(0, str(REPO_ROOT / "ai-services" / "tts-qwen3"))
-        from apply_jarvis_fx import CHAINS  # type: ignore
+        from jarvis_fx import CHAINS  # type: ignore
         fx_board = CHAINS[args.fx]
         print(f"[fx] Pedalboard chain = {args.fx}")
     print(f"[load] {args.model} ...", flush=True)
