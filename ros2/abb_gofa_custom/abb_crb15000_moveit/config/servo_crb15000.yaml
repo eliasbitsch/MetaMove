@@ -1,0 +1,57 @@
+###############################################################################
+# moveit_servo config for ABB CRB 15000 5kg/0.95m, MetaMove EGM-bridge teleop.
+#
+# We do NOT use a real ros2_control hardware interface — joint commands flow:
+#   servo -> /servo_node/commands (Float64MultiArray) -> rosbridge -> Windows
+#   EGM bridge -> EgmSensor -> Controller.
+###############################################################################
+use_gazebo: false
+move_group_name: manipulator
+planning_frame: base_link
+ee_frame_name: tool0
+robot_link_command_frame: base_link
+
+# Input topics (TwistStamped from RViz interactive marker / mouse / joystick)
+cartesian_command_in_topic: /servo_node/delta_twist_cmds
+joint_command_in_topic:     /servo_node/delta_joint_cmds
+command_in_type: speed_units      # interpret twist linear as m/s, angular as rad/s
+linear_scale: 1.0
+rotational_scale: 1.0
+joint_scale: 1.0
+
+# Output: published joint commands. Float64MultiArray is what we forward via rosbridge.
+command_out_type: std_msgs/Float64MultiArray
+command_out_topic: /servo_node/commands
+publish_period: 0.020             # 50 Hz on the ROS side; bridge upsamples to EGM 250 Hz
+publish_joint_positions: true
+publish_joint_velocities: false
+publish_joint_accelerations: false
+low_latency_mode: false
+
+# Joint state input (we publish this from the bridge based on EGM feedback)
+joint_topic: /joint_states
+status_topic: /servo_node/status
+
+# Smoothing / kinematics
+use_smoothing: true
+smoothing_filter_plugin_name: online_signal_smoothing::ButterworthFilterPlugin
+override_velocity_scaling_factor: 0.0
+incoming_command_timeout: 0.5
+
+# Singularity / collision
+lower_singularity_threshold: 17.0
+hard_stop_singularity_threshold: 30.0
+leaving_singularity_threshold_multiplier: 2.0
+collision_check_type: threshold_distance
+self_collision_proximity_threshold: 0.005
+scene_collision_proximity_threshold: 0.02
+collision_check_rate: 10.0
+
+# Joint limits margin (rad and rad/s)
+joint_limit_margins: [0.1, 0.1, 0.1, 0.1, 0.1, 0.1]
+
+# Servo computes inverse kinematics for cartesian twist via this plugin
+ik_solver:
+  plugin: kdl_kinematics_plugin/KDLKinematicsPlugin
+  search_resolution: 0.005
+  timeout: 0.05
