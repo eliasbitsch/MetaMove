@@ -29,7 +29,6 @@
 - **ROS2 Jazzy Docker** (`ros2/docker/`) — 17 ABB-Pakete clean, metamove_bridge + rosbridge_websocket
 - **`metamove_tools`** (`ai-services/metamove_tools/`) — Python-API für Jarvis über rosbridge → ROS services → metamove_bridge
 - **EGM-Mock** (`ai-services/egm-mock/`) — Python UDP, 100% Proto-Roundtrip
-- **RWS-Mock** (`ai-services/rws-mock/`) — FastAPI, 10 Endpoints (ctrl-state, rapid/execution, iosystem/signals, elog)
 - **Jarvis-TTS-Prompt** auf 6-Wörter-Sätze getrimmt (Streaming-Latenz)
 
 **RAPID-Seite finalisiert** (noch nicht deployed):
@@ -67,7 +66,7 @@
 4. **I/O-Signale definieren:** `mm_gripper_close`, `mm_gripper_open` als virtuelle DOs mit `RemoteAuto` in write-access
 5. **Simulation starten** → via MCP `metaMode:=1`, `metaStart:=TRUE` setzen, beobachten dass Chess-Demo durchläuft (PP + metaState/metaStep pollen)
 6. **Unity EGM-Client** bauen — Sender 250 Hz + Receiver + URDF-Twin (gegen VC auf localhost:6511)
-7. **Unity RWS-Client** für Demo-Trigger + State-HUD (gegen `ai-services/rws-mock/` daheim)
+7. **Unity RWS-Client** für Demo-Trigger + State-HUD (gegen RobotStudio VC im Lab oder daheim)
 8. Demos 2-6 ausbauen sobald Pipeline läuft
 
 ### Umgebungs-Status am Session-Ende
