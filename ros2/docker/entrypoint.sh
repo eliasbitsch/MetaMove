@@ -8,6 +8,11 @@ set -e
 
 source /opt/ros/jazzy/setup.bash
 
+# Unity ↔ ROS2 TCP bridge (built into image extras prefix during docker build)
+if [ -f /opt/ros2_extras/install/setup.bash ]; then
+    source /opt/ros2_extras/install/setup.bash
+fi
+
 cd "${WS:-/opt/metamove_ws}"
 
 if [ ! -d install ] && [ -d src ] && [ "${METAMOVE_AUTOBUILD:-1}" = "1" ]; then

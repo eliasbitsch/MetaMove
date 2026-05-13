@@ -21,6 +21,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         libpoco-dev libprotobuf-dev protobuf-compiler \
         libcurl4-openssl-dev libssl-dev \
         ros-jazzy-moveit \
+        ros-jazzy-moveit-servo ros-jazzy-moveit-ros-control-interface \
         ros-jazzy-rviz2 \
         ros-jazzy-ros2-control ros-jazzy-ros2-controllers \
         ros-jazzy-joint-state-publisher ros-jazzy-joint-state-publisher-gui \
@@ -34,6 +35,15 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 RUN pip3 install --no-cache-dir --break-system-packages requests websockets
+
+# Unity ↔ ROS2 bridge for Quest3 hand-pose teleop. Built into a separate
+# install prefix so it's sourced alongside the workspace.
+RUN mkdir -p /opt/ros2_extras/src && cd /opt/ros2_extras/src \
+    && git clone --depth 1 https://github.com/Unity-Technologies/ROS-TCP-Endpoint.git -b main-ros2 \
+    && cd /opt/ros2_extras \
+    && . /opt/ros/jazzy/setup.sh \
+    && colcon build --merge-install --cmake-args -DCMAKE_BUILD_TYPE=Release \
+    && rm -rf build log src/ROS-TCP-Endpoint/.git
 
 # rosdep init already done in the base image; just refresh the cache
 RUN . /opt/ros/jazzy/setup.sh && rosdep update --rosdistro=jazzy || true

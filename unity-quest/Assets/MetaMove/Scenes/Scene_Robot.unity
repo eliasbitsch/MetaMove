@@ -2128,6 +2128,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: WorldPanelBase
       objectReference: {fileID: 0}
+    - target: {fileID: 3563149335964526229, guid: 6b196de96e7d16b4297c1980179ae439, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3563149335964526229, guid: 6b196de96e7d16b4297c1980179ae439, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3563149335964526229, guid: 6b196de96e7d16b4297c1980179ae439, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3563149335964526229, guid: 6b196de96e7d16b4297c1980179ae439, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -12407,6 +12423,111 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 887497680}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &914875355
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 914875360}
+  - component: {fileID: 914875359}
+  - component: {fileID: 914875358}
+  - component: {fileID: 914875357}
+  - component: {fileID: 914875356}
+  m_Layer: 0
+  m_Name: MetaMoveRosBridge
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &914875356
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 914875355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8b7f3aa440506e48821ac0f4be833ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MetaMove.Robot.Ros.ServoCommandSubscriber
+  topic: /servo_node/commands
+  resendHz: 250
+  commandTimeoutSec: 0.5
+--- !u!114 &914875357
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 914875355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db66a82b1fbda8746ad01442a1d51aa7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MetaMove.Robot.Ros.JointStatePublisher
+  topic: /joint_states
+  jointNames:
+  - joint_1
+  - joint_2
+  - joint_3
+  - joint_4
+  - joint_5
+  - joint_6
+  publishHz: 50
+--- !u!114 &914875358
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 914875355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5506c445067e8fe4f956d7f7dcc36d54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MetaMove.Robot.Ros.RosBridgeBootstrap
+  rosIPAddress: 192.168.125.99
+  rosPort: 10000
+  verbose: 1
+--- !u!114 &914875359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 914875355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f47281aa9b3a5f4c96f24dbb81f893d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MetaMove.Robot.EGM.EgmClient
+  listenPort: 6511
+  autoDetectRemote: 1
+  remoteHost: 192.168.125.1
+  remotePort: 6511
+  _packetsReceived: 0
+  _packetsSent: 0
+  _hz: 0
+--- !u!4 &914875360
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 914875355}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &944138352
 GameObject:
@@ -29425,3 +29546,4 @@ SceneRoots:
   - {fileID: 1534725394}
   - {fileID: 654740136}
   - {fileID: 169939789}
+  - {fileID: 914875360}

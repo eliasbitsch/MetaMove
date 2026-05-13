@@ -1,0 +1,38 @@
+# MetaMove EGM bridge - run in WSL Docker (not Docker Desktop) with macvlan
+# so the container appears as its own LAN device, bypassing WSL2's mirrored-
+# networking UDP-receive bug.
+#
+# Usage (from inside WSL, on lab network):
+#   docker compose up --build bridge
+#
+# Switch to servo-mode (rosbridge integration) via:
+#   docker compose run --rm bridge python -u egm_bridge_servo.py
+#
+# macvlan parent must be the WSL eth0 that's bridged to your physical LAN
+# (mirrored networkingMode in .wslconfig). Subnet/gateway must match the
+# real LAB network (e.g. 192.168.125.0/24 with .1 as the GoFa controller).
+
+services:
+  bridge:
+    build:
+      context: ..
+      dockerfile: egm-bridge/Dockerfile
+    image: metamove/egm-bridge:latest
+    container_name: metamove-egm-bridge
+    restart: unless-stopped
+    networks:
+      lab_lan:
+        ipv4_address: 192.168.125.150
+    # Keep stdout/err flushed so `docker logs -f` shows live stats
+    tty: true
+    stdin_open: true
+
+networks:
+  lab_lan:
+    driver: macvlan
+    driver_opts:
+      parent: eth0
+    ipam:
+      config:
+        - subnet: 192.168.125.0/24
+          gateway: 192.168.125.1

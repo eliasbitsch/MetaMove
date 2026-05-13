@@ -1,5 +1,15 @@
 {
   "dependencies": {
+    "com.coplaydev.unity-mcp": {
+      "version": "https://github.com/CoplayDev/unity-mcp.git?path=/MCPForUnity#main",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.nuget.newtonsoft-json": "3.0.2",
+        "com.unity.test-framework": "1.1.31"
+      },
+      "hash": "73eb27aeccfa8e0676eaf3304136e9b85953d913"
+    },
     "com.meta.xr.mrutilitykit": {
       "version": "85.0.0",
       "depth": 1,
@@ -254,6 +264,13 @@
       "dependencies": {
         "com.unity.render-pipelines.core": "17.4.0"
       }
+    },
+    "com.unity.robotics.ros-tcp-connector": {
+      "version": "https://github.com/Unity-Technologies/ROS-TCP-Connector.git?path=/com.unity.robotics.ros-tcp-connector",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "c27f00c6cf750d2d0564349b3039d19aa3925e7c"
     },
     "com.unity.robotics.urdf-importer": {
       "version": "https://github.com/Unity-Technologies/URDF-Importer.git?path=/com.unity.robotics.urdf-importer",
