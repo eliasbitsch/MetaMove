@@ -1,0 +1,3 @@
+[submodule "MRE2-GOFA_Dashboard"]
+	path = MRE2-GOFA_Dashboard
+	url = https://github.com/philip-stack/MRE2-GOFA_Dashboard.git
