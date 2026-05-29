@@ -1,0 +1,51 @@
+# Slim dashboard — a separate service that joins the running metamove ROS2 graph.
+#
+# The dashboard app source lives in the MRE2-GOFA_Dashboard submodule; this
+# compose file + its Dockerfile live in MetaMove (deploy/dashboard/) because
+# they are MetaMove integration glue (shared volumes, ROS domain), not part of
+# Philip's dashboard app.
+#
+# Prereq: the metamove-ros2 stack has been built at least once so the shared
+# build/install volumes exist:
+#   docker compose -f ros2/docker/docker-compose.yml run --rm ros2   # triggers colcon build
+#
+# Run the dashboard (from the MetaMove repo root):
+#   docker compose -f deploy/dashboard/docker-compose.slim.yml up -d --build
+#   open http://localhost:8080        (HMI: http://localhost:8080/hmi)
+name: metamove-dashboard
+
+services:
+  dashboard:
+    build:
+      # Context = the dashboard submodule checkout (provides backend/ frontend/).
+      # Paths are relative to this compose file's directory (deploy/dashboard/).
+      context: ../../MRE2-GOFA_Dashboard
+      # Dockerfile lives in MetaMove, outside the build context (relative to context).
+      dockerfile: ../deploy/dashboard/dashboard.Dockerfile
+    image: metamove/gofa-dashboard:slim
+    container_name: metamove-gofa-dashboard
+    network_mode: host          # share DDS discovery with the bringup (native WSL2 docker)
+    ipc: host
+    environment:
+      - ROS_DOMAIN_ID=42
+      - RMW_IMPLEMENTATION=rmw_fastrtps_cpp
+      - SMAN_HTTP_HOST=0.0.0.0
+      - SMAN_HTTP_PORT=8080
+      - SMAN_HMI_REQUIRE_HTTPS=0  # allow http://.../hmi for local testing
+      # SMAN_DATABASE_URL unset -> backend falls back to SQLite under /app/data
+    volumes:
+      - ./data:/app/data
+      # Shared with the metamove-ros2 stack: gives the dashboard the ABB custom
+      # msgs (abb_egm_msgs, abb_robot_msgs). build/ is required too because the
+      # bringup uses `colcon build --symlink-install` (install/ symlinks into build/).
+      - metamove_build:/opt/metamove_ws/build:ro
+      - metamove_install:/opt/metamove_ws/install:ro
+    restart: unless-stopped
+
+volumes:
+  metamove_build:
+    external: true
+    name: metamove-ros2_metamove_build
+  metamove_install:
+    external: true
+    name: metamove-ros2_metamove_install
