@@ -83,6 +83,7 @@ namespace MetaMove.UI.Fixtures
             }
             if (capRenderer != null)
             {
+                if (_mpb == null) _mpb = new MaterialPropertyBlock();
                 float t = (Mathf.Sin(Time.time * Mathf.PI * 2f * pulseHz) + 1f) * 0.5f;
                 Color glow = _latched ? Color.white : Color.Lerp(idleBaseColor, idleGlowColor, t);
                 capRenderer.GetPropertyBlock(_mpb);

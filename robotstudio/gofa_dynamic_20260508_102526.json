@@ -1,0 +1,2280 @@
+{
+  "_meta": {
+    "target": "https://192.168.125.1:443",
+    "started_utc": "2026-05-08T08:25:26.488261Z",
+    "tool": "gofa_dynamic.py",
+    "schema_version": 1,
+    "purpose": "operational/historical data for DPP submodels",
+    "finished_utc": "2026-05-08T08:25:28.577376Z",
+    "duration_s": 2.09
+  },
+  "energy": {
+    "raw": {
+      "_links": {
+        "base": {
+          "href": "https://192.168.125.1:443/rw/system/energy/"
+        },
+        "self": {
+          "href": ""
+        }
+      },
+      "state": [
+        {
+          "_type": "sys-energy-state",
+          "_title": "energy-state",
+          "state": "0",
+          "energy-state": "blocked",
+          "change-count": "63",
+          "time-stamp": "2026-05-08 T 09:00:59",
+          "reset-time": "2026-02-05 T 11:00:48",
+          "interval-length": "3600",
+          "interval-energy": "4.201447e-06",
+          "accumulated-energy": "4111.557015592161"
+        },
+        {
+          "_type": "sys-energy-mec",
+          "_title": "ROB_1",
+          "axes": [
+            {
+              "_type": "sys-energy-axis",
+              "_title": "1",
+              "interval-energy": "-7.763103e-10"
+            },
+            {
+              "_type": "sys-energy-axis",
+              "_title": "2",
+              "interval-energy": "-6.950079e-21"
+            },
+            {
+              "_type": "sys-energy-axis",
+              "_title": "3",
+              "interval-energy": "4.654437e-20"
+            },
+            {
+              "_type": "sys-energy-axis",
+              "_title": "4",
+              "interval-energy": "3.835004e-06"
+            },
+            {
+              "_type": "sys-energy-axis",
+              "_title": "5",
+              "interval-energy": "9.487954e-08"
+            },
+            {
+              "_type": "sys-energy-axis",
+              "_title": "6",
+              "interval-energy": "-1.538452e-11"
+            }
+          ]
+        }
+      ]
+    },
+    "accumulated_kwh": 4111.557015592161,
+    "interval_kwh": 4.201447e-06,
+    "interval_seconds": 3600,
+    "energy_state": "blocked",
+    "reset_time": "2026-02-05 T 11:00:48",
+    "sample_time": "2026-05-08 T 09:00:59",
+    "change_count": "63",
+    "per_mechunit": {
+      "ROB_1": [
+        {
+          "axis": "1",
+          "interval_kwh": -7.763103e-10
+        },
+        {
+          "axis": "2",
+          "interval_kwh": -6.950079e-21
+        },
+        {
+          "axis": "3",
+          "interval_kwh": 4.654437e-20
+        },
+        {
+          "axis": "4",
+          "interval_kwh": 3.835004e-06
+        },
+        {
+          "axis": "5",
+          "interval_kwh": 9.487954e-08
+        },
+        {
+          "axis": "6",
+          "interval_kwh": -1.538452e-11
+        }
+      ]
+    }
+  },
+  "live": {
+    "sample_time_utc": "2026-05-08T08:25:26.616110+00:00",
+    "ctrl_state": {
+      "_links": {
+        "base": {
+          "href": "https://192.168.125.1:443/rw/panel/ctrl-state/"
+        },
+        "self": {
+          "href": ""
+        }
+      },
+      "status": {
+        "code": 294912
+      },
+      "state": [
+        {
+          "_type": "pnl-ctrlstate",
+          "_title": "ctrl-state",
+          "ctrlstate": "motoron"
+        }
+      ]
+    },
+    "opmode": {
+      "_links": {
+        "base": {
+          "href": "https://192.168.125.1:443/rw/panel/opmode/"
+        },
+        "self": {
+          "href": ""
+        }
+      },
+      "status": {
+        "code": 294912
+      },
+      "state": [
+        {
+          "_type": "pnl-opmode",
+          "_title": "opmode",
+          "opmode": "AUTO"
+        }
+      ],
+      "_embedded": {
+        "resources": [
+          {
+            "_links": {
+              "self": {
+                "href": "lock-state"
+              }
+            },
+            "_type": "pnl-lockstate-li",
+            "_title": "lock-sate"
+          }
+        ]
+      }
+    },
+    "speed_override": {
+      "_links": {
+        "base": {
+          "href": "https://192.168.125.1:443/rw/panel/speedratio/"
+        },
+        "self": {
+          "href": ""
+        }
+      },
+      "status": {
+        "code": 294912
+      },
+      "state": [
+        {
+          "_type": "pnl-speedratio",
+          "_title": "speed-ratio",
+          "speedratio": "100"
+        }
+      ]
+    },
+    "rapid_exec": {
+      "_links": {
+        "base": {
+          "href": "https://192.168.125.1:443/rw/rapid/"
+        },
+        "self": {
+          "href": "execution"
+        }
+      },
+      "status": {
+        "code": 294912
+      },
+      "state": [
+        {
+          "_type": "rap-execution",
+          "_title": "execution",
+          "ctrlexecstate": "stopped",
+          "cycle": "forever"
+        }
+      ]
+    },
+    "rapid_pcp": {
+      "_links": {
+        "base": {
+          "href": "https://192.168.125.1:443/rw/rapid/"
+        },
+        "self": {
+          "href": "tasks/T_ROB1/pcp"
+        }
+      },
+      "status": {
+        "code": 294912
+      },
+      "state": [
+        {
+          "_type": "pcp-info",
+          "_title": "progpointer",
+          "beginposition": "177,9",
+          "endposition": "179,44",
+          "modulemame": "MetaMoveCore",
+          "routinename": "MetaEgmCycleJoint",
+          "changecount": "4294967295",
+          "executiontype": "normal"
+        },
+        {
+          "_type": "pcp-info",
+          "_title": "motionpointer",
+          "motionpointer": {
+            "_links": {
+              "error": {
+                "href": "https://192.168.125.1:443/rw/retcode?code=-1073414145"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "rapid_motion": {
+      "_links": {
+        "base": {
+          "href": "https://192.168.125.1:443/rw/rapid/"
+        },
+        "self": {
+          "href": "tasks/T_ROB1/motion"
+        }
+      },
+      "_embedded": {
+        "resources": [
+          {
+            "_links": {
+              "self": {
+                "href": "tasks/T_ROB1/motion/robtarget"
+              }
+            },
+            "_type": "rapid-robtarget-li",
+            "_title": "robtarget"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "tasks/T_ROB1/motion/jointtarget"
+              }
+            },
+            "_type": "rapid-jointtarget-li",
+            "_title": "jointtarget"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "tasks/T_ROB1/motion/extjointstate"
+              }
+            },
+            "_type": "rapid-extjointstate-li",
+            "_title": "extjointstate"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "tasks/T_ROB1/motion/mechunits"
+              }
+            },
+            "_type": "rapid-mechunit-li",
+            "_title": "mechunit"
+          }
+        ]
+      }
+    },
+    "cartesian": {
+      "_links": {
+        "base": {
+          "href": "https://192.168.125.1:443/rw/motionsystem/mechunits/ROB_1/"
+        },
+        "self": {
+          "href": "cartesian"
+        }
+      },
+      "state": [
+        {
+          "_type": "ms-mechunit-cartesian",
+          "_title": "cartesian",
+          "x": "597.472608089447",
+          "y": "0.0145568319567246",
+          "z": "837.75919675827",
+          "q1": "0.499982893466949",
+          "q2": "4.11917517340044e-06",
+          "q3": "0.866035282611847",
+          "q4": "1.07294199551689e-05",
+          "cf1": "0",
+          "cf4": "-1",
+          "cf6": "0",
+          "cfx": "0"
+        }
+      ]
+    },
+    "robtarget": {
+      "_links": {
+        "base": {
+          "href": "https://192.168.125.1:443/rw/motionsystem/mechunits/ROB_1/robtarget/"
+        },
+        "self": {
+          "href": ""
+        }
+      },
+      "state": [
+        {
+          "_type": "ms-robtargets",
+          "_title": "ROB_1",
+          "x": "597.472608089447",
+          "y": "0.0145568319567246",
+          "z": "837.75919675827",
+          "q1": "0.499982893466949",
+          "q2": "3.85970633942634e-06",
+          "q3": "0.866035282611847",
+          "q4": "1.0579622539808e-05",
+          "cf1": "0",
+          "cf4": "-1",
+          "cf6": "0",
+          "cfx": "0",
+          "eax_a": "9000000000",
+          "eax_b": "9000000000",
+          "eax_c": "9000000000",
+          "eax_d": "9000000000",
+          "eax_e": "9000000000",
+          "eax_f": "9000000000"
+        }
+      ]
+    },
+    "jointtarget": {
+      "_links": {
+        "base": {
+          "href": "https://192.168.125.1:443/rw/motionsystem/mechunits/ROB_1/jointtarget/"
+        },
+        "self": {
+          "href": ""
+        }
+      },
+      "status": {
+        "code": 294912
+      },
+      "state": [
+        {
+          "_type": "ms-jointtarget",
+          "_title": "ROB_1",
+          "rax_1": "0.00135040294844657",
+          "rax_2": "-0.000114440925244708",
+          "rax_3": "0.00228536827489734",
+          "rax_4": "-0.000720977841410786",
+          "rax_5": "30.000093460083",
+          "rax_6": "0.00230026268400252",
+          "eax_a": "0",
+          "eax_b": "0",
+          "eax_c": "0",
+          "eax_d": "0",
+          "eax_e": "0",
+          "eax_f": "0"
+        }
+      ]
+    },
+    "motion_err": {
+      "_links": {
+        "base": {
+          "href": "https://192.168.125.1:443/rw/motionsystem/"
+        },
+        "self": {
+          "href": "errorstate"
+        }
+      },
+      "state": [
+        {
+          "_type": "ms-errorstate",
+          "_title": "errorstate",
+          "err-state": "HPJ_OK",
+          "err-count": "0"
+        }
+      ]
+    },
+    "iosignals": {
+      "_links": {
+        "base": {
+          "href": "https://192.168.125.1:443/rw/iosystem/"
+        },
+        "self": {
+          "href": "signals"
+        }
+      },
+      "_embedded": {
+        "resources": [
+          {
+            "_links": {
+              "self": {
+                "href": "signals/SC_Feedback_Net/SC_Feedback_Dev/SafetyEnable"
+              }
+            },
+            "_type": "ios-signal-li",
+            "_title": "SC_Feedback_Net/SC_Feedback_Dev/SafetyEnable",
+            "name": "SafetyEnable",
+            "type": "DI",
+            "category": "internal",
+            "lvalue": "1",
+            "lstate": "not simulated"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "signals/SC_Feedback_Net/SC_Feedback_Dev/ProtectiveStop"
+              }
+            },
+            "_type": "ios-signal-li",
+            "_title": "SC_Feedback_Net/SC_Feedback_Dev/ProtectiveStop",
+            "name": "ProtectiveStop",
+            "type": "DI",
+            "category": "internal",
+            "lvalue": "1",
+            "lstate": "not simulated"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "signals/SC_Feedback_Net/SC_Feedback_Dev/ManualMode"
+              }
+            },
+            "_type": "ios-signal-li",
+            "_title": "SC_Feedback_Net/SC_Feedback_Dev/ManualMode",
+            "name": "ManualMode",
+            "type": "DI",
+            "category": "internal",
+            "lvalue": "0",
+            "lstate": "not simulated"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "signals/SC_Feedback_Net/SC_Feedback_Dev/ManualFullSpeedMode"
+              }
+            },
+            "_type": "ios-signal-li",
+            "_title": "SC_Feedback_Net/SC_Feedback_Dev/ManualFullSpeedMode",
+            "name": "ManualFullSpeedMode",
+            "type": "DI",
+            "category": "internal",
+            "lvalue": "0",
+            "lstate": "not simulated"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "signals/SC_Feedback_Net/SC_Feedback_Dev/LocalEmergencyStopStatus"
+              }
+            },
+            "_type": "ios-signal-li",
+            "_title": "SC_Feedback_Net/SC_Feedback_Dev/LocalEmergencyStopStatus",
+            "name": "LocalEmergencyStopStatus",
+            "type": "DI",
+            "category": "internal",
+            "lvalue": "1",
+            "lstate": "not simulated"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "signals/SC_Feedback_Net/SC_Feedback_Dev/ExternalEmergencyStopStatus"
+              }
+            },
+            "_type": "ios-signal-li",
+            "_title": "SC_Feedback_Net/SC_Feedback_Dev/ExternalEmergencyStopStatus",
+            "name": "ExternalEmergencyStopStatus",
+            "type": "DI",
+            "category": "internal",
+            "lvalue": "1",
+            "lstate": "not simulated"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "signals/SC_Feedback_Net/SC_Feedback_Dev/EnableSwitch"
+              }
+            },
+            "_type": "ios-signal-li",
+            "_title": "SC_Feedback_Net/SC_Feedback_Dev/EnableSwitch",
+            "name": "EnableSwitch",
+            "type": "DI",
+            "category": "internal",
+            "lvalue": "0",
+            "lstate": "not simulated"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "signals/SC_Feedback_Net/SC_Feedback_Dev/EmergencyStopActivated"
+              }
+            },
+            "_type": "ios-signal-li",
+            "_title": "SC_Feedback_Net/SC_Feedback_Dev/EmergencyStopActivated",
+            "name": "EmergencyStopActivated",
+            "type": "DI",
+            "category": "internal",
+            "lvalue": "1",
+            "lstate": "not simulated"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "signals/SC_Feedback_Net/SC_Feedback_Dev/DriveEnableFeedback"
+              }
+            },
+            "_type": "ios-signal-li",
+            "_title": "SC_Feedback_Net/SC_Feedback_Dev/DriveEnableFeedback",
+            "name": "DriveEnableFeedback",
+            "type": "DI",
+            "category": "internal",
+            "lvalue": "1",
+            "lstate": "not simulated"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "signals/SC_Feedback_Net/SC_Feedback_Dev/DriveEnable"
+              }
+            },
+            "_type": "ios-signal-li",
+            "_title": "SC_Feedback_Net/SC_Feedback_Dev/DriveEnable",
+            "name": "DriveEnable",
+            "type": "DI",
+            "category": "internal",
+            "lvalue": "1",
+            "lstate": "not simulated"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "signals/SC_Feedback_Net/SC_Feedback_Dev/bAlex"
+              }
+            },
+            "_type": "ios-signal-li",
+            "_title": "SC_Feedback_Net/SC_Feedback_Dev/bAlex",
+            "name": "bAlex",
+            "type": "DI",
+            "category": "internal",
+            "lvalue": "1",
+            "lstate": "not simulated"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "signals/SC_Feedback_Net/SC_Feedback_Dev/AutomaticMode"
+              }
+            },
+            "_type": "ios-signal-li",
+            "_title": "SC_Feedback_Net/SC_Feedback_Dev/AutomaticMode",
+            "name": "AutomaticMode",
+            "type": "DI",
+            "category": "internal",
+            "lvalue": "1",
+            "lstate": "not simulated"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "signals/IntBus/IoPanel/Auto"
+              }
+            },
+            "_type": "ios-signal-li",
+            "_title": "IntBus/IoPanel/Auto",
+            "name": "Auto",
+            "type": "DO",
+            "category": "internal",
+            "lvalue": "1",
+            "lstate": "not simulated"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "signals/IntBus/IoPanel/ManFS"
+              }
+            },
+            "_type": "ios-signal-li",
+            "_title": "IntBus/IoPanel/ManFS",
+            "name": "ManFS",
+            "type": "DO",
+            "category": "internal",
+            "lvalue": "0",
+            "lstate": "not simulated"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "signals/IntBus/IoPanel/ManRS"
+              }
+            },
+            "_type": "ios-signal-li",
+            "_title": "IntBus/IoPanel/ManRS",
+            "name": "ManRS",
+            "type": "DO",
+            "category": "internal",
+            "lvalue": "0",
+            "lstate": "not simulated"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "signals/IntBus/IoPanel/MotLmpPB"
+              }
+            },
+            "_type": "ios-signal-li",
+            "_title": "IntBus/IoPanel/MotLmpPB",
+            "name": "MotLmpPB",
+            "type": "DO",
+            "category": "internal",
+            "lvalue": "1",
+            "lstate": "not simulated"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "signals/IntBus/IoPanel/AutoReqTPU"
+              }
+            },
+            "_type": "ios-signal-li",
+            "_title": "IntBus/IoPanel/AutoReqTPU",
+            "name": "AutoReqTPU",
+            "type": "DI",
+            "category": "internal",
+            "lvalue": "0",
+            "lstate": "not simulated"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "signals/IntBus/IoPanel/ManFSReqTPU"
+              }
+            },
+            "_type": "ios-signal-li",
+            "_title": "IntBus/IoPanel/ManFSReqTPU",
+            "name": "ManFSReqTPU",
+            "type": "DI",
+            "category": "internal",
+            "lvalue": "0",
+            "lstate": "not simulated"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "signals/IntBus/IoPanel/ManRSReqTPU"
+              }
+            },
+            "_type": "ios-signal-li",
+            "_title": "IntBus/IoPanel/ManRSReqTPU",
+            "name": "ManRSReqTPU",
+            "type": "DI",
+            "category": "internal",
+            "lvalue": "0",
+            "lstate": "not simulated"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "signals/IntBus/IoPanel/AutoReqExt"
+              }
+            },
+            "_type": "ios-signal-li",
+            "_title": "IntBus/IoPanel/AutoReqExt",
+            "name": "AutoReqExt",
+            "type": "DI",
+            "category": "internal",
+            "lvalue": "0",
+            "lstate": "not simulated"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "signals/IntBus/IoPanel/ManRSReqExt"
+              }
+            },
+            "_type": "ios-signal-li",
+            "_title": "IntBus/IoPanel/ManRSReqExt",
+            "name": "ManRSReqExt",
+            "type": "DI",
+            "category": "internal",
+            "lvalue": "0",
+            "lstate": "not simulated"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "signals/IntBus/IoPanel/MotOnPB"
+              }
+            },
+            "_type": "ios-signal-li",
+            "_title": "IntBus/IoPanel/MotOnPB",
+            "name": "MotOnPB",
+            "type": "DI",
+            "category": "internal",
+            "lvalue": "0",
+            "lstate": "not simulated"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "signals/IntBus/ScLocIO/scEmergencyStop"
+              }
+            },
+            "_type": "ios-signal-li",
+            "_title": "IntBus/ScLocIO/scEmergencyStop",
+            "name": "scEmergencyStop",
+            "type": "DI",
+            "category": "internal",
+            "lvalue": "1",
+            "lstate": "not simulated"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "signals/IntBus/ScLocIO/scDriveEnable"
+              }
+            },
+            "_type": "ios-signal-li",
+            "_title": "IntBus/ScLocIO/scDriveEnable",
+            "name": "scDriveEnable",
+            "type": "DI",
+            "category": "internal",
+            "lvalue": "1",
+            "lstate": "not simulated"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "signals/IntBus/ScLocIO/scDriveEnableFeedback"
+              }
+            },
+            "_type": "ios-signal-li",
+            "_title": "IntBus/ScLocIO/scDriveEnableFeedback",
+            "name": "scDriveEnableFeedback",
+            "type": "DI",
+            "category": "internal",
+            "lvalue": "1",
+            "lstate": "not simulated"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "signals/IntBus/ScLocIO/scLocalEmergencyStop"
+              }
+            },
+            "_type": "ios-signal-li",
+            "_title": "IntBus/ScLocIO/scLocalEmergencyStop",
+            "name": "scLocalEmergencyStop",
+            "type": "DI",
+            "category": "internal",
+            "lvalue": "1",
+            "lstate": "not simulated"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "signals/IntBus/ScLocIO/scDriveEnableAllowed"
+              }
+            },
+            "_type": "ios-signal-li",
+            "_title": "IntBus/ScLocIO/scDriveEnableAllowed",
+            "name": "scDriveEnableAllowed",
+            "type": "DI",
+            "category": "internal",
+            "lvalue": "1",
+            "lstate": "not simulated"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "signals/IntBus/ScLocIO/scDeviceEnable1"
+              }
+            },
+            "_type": "ios-signal-li",
+            "_title": "IntBus/ScLocIO/scDeviceEnable1",
+            "name": "scDeviceEnable1",
+            "type": "DI",
+            "category": "internal",
+            "lvalue": "1",
+            "lstate": "not simulated"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "signals/IntBus/ScLocIO/scEnableSwitch"
+              }
+            },
+            "_type": "ios-signal-li",
+            "_title": "IntBus/ScLocIO/scEnableSwitch",
+            "name": "scEnableSwitch",
+            "type": "DI",
+            "category": "internal",
+            "lvalue": "0",
+            "lstate": "not simulated"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "signals/IntBus/ScLocIO/scAutoStop"
+              }
+            },
+            "_type": "ios-signal-li",
+            "_title": "IntBus/ScLocIO/scAutoStop",
+            "name": "scAutoStop",
+            "type": "DI",
+            "category": "internal",
+            "lvalue": "1",
+            "lstate": "not simulated"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "signals/IntBus/ScLocIO/scExternalEmergencyStop"
+              }
+            },
+            "_type": "ios-signal-li",
+            "_title": "IntBus/ScLocIO/scExternalEmergencyStop",
+            "name": "scExternalEmergencyStop",
+            "type": "DI",
+            "category": "internal",
+            "lvalue": "1",
+            "lstate": "not simulated"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "signals/IntBus/DrvSys/BrakeEn"
+              }
+            },
+            "_type": "ios-signal-li",
+            "_title": "IntBus/DrvSys/BrakeEn",
+            "name": "BrakeEn",
+            "type": "DO",
+            "category": "internal",
+            "lvalue": "0",
+            "lstate": "not simulated"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "signals/IntBus/DrvSys/AXCDCOK"
+              }
+            },
+            "_type": "ios-signal-li",
+            "_title": "IntBus/DrvSys/AXCDCOK",
+            "name": "AXCDCOK",
+            "type": "DI",
+            "category": "internal",
+            "lvalue": "0",
+            "lstate": "not simulated"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "signals/IntBus/DrvSys/BrakeSupply"
+              }
+            },
+            "_type": "ios-signal-li",
+            "_title": "IntBus/DrvSys/BrakeSupply",
+            "name": "BrakeSupply",
+            "type": "DI",
+            "category": "internal",
+            "lvalue": "0",
+            "lstate": "not simulated"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "signals/IntBus/DrvSys/ACOK"
+              }
+            },
+            "_type": "ios-signal-li",
+            "_title": "IntBus/DrvSys/ACOK",
+            "name": "ACOK",
+            "type": "DI",
+            "category": "internal",
+            "lvalue": "0",
+            "lstate": "not simulated"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "signals/IntBus/DrvSys/TempOk"
+              }
+            },
+            "_type": "ios-signal-li",
+            "_title": "IntBus/DrvSys/TempOk",
+            "name": "TempOk",
+            "type": "DI",
+            "category": "internal",
+            "lvalue": "0",
+            "lstate": "not simulated"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "signals/IntBus/DrvSys/BrakeOk"
+              }
+            },
+            "_type": "ios-signal-li",
+            "_title": "IntBus/DrvSys/BrakeOk",
+            "name": "BrakeOk",
+            "type": "DI",
+            "category": "internal",
+            "lvalue": "0",
+            "lstate": "not simulated"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "signals/IntBus/DrvSys/BrakeFb"
+              }
+            },
+            "_type": "ios-signal-li",
+            "_title": "IntBus/DrvSys/BrakeFb",
+            "name": "BrakeFb",
+            "type": "DI",
+            "category": "internal",
+            "lvalue": "0",
+            "lstate": "not simulated"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "signals/IntBus/EPanel/SysFailStatus"
+              }
+            },
+            "_type": "ios-signal-li",
+            "_title": "IntBus/EPanel/SysFailStatus",
+            "name": "SysFailStatus",
+            "type": "DO",
+            "category": "internal",
+            "lvalue": "0",
+            "lstate": "not simulated"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "signals/IntBus/EPanel/EStopStatus"
+              }
+            },
+            "_type": "ios-signal-li",
+            "_title": "IntBus/EPanel/EStopStatus",
+            "name": "EStopStatus",
+            "type": "DO",
+            "category": "internal",
+            "lvalue": "0",
+            "lstate": "not simulated"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "signals/IntBus/EPanel/AutoModeStatus"
+              }
+            },
+            "_type": "ios-signal-li",
+            "_title": "IntBus/EPanel/AutoModeStatus",
+            "name": "AutoModeStatus",
+            "type": "DO",
+            "category": "internal",
+            "lvalue": "1",
+            "lstate": "not simulated"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "signals/IntBus/Asi/Asi1LedPeriod"
+              }
+            },
+            "_type": "ios-signal-li",
+            "_title": "IntBus/Asi/Asi1LedPeriod",
+            "name": "Asi1LedPeriod",
+            "type": "GO",
+            "category": "",
+            "lvalue": "0",
+            "lstate": "not simulated"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "signals/IntBus/Asi/Asi1LedBlue"
+              }
+            },
+            "_type": "ios-signal-li",
+            "_title": "IntBus/Asi/Asi1LedBlue",
+            "name": "Asi1LedBlue",
+            "type": "GO",
+            "category": "",
+            "lvalue": "0",
+            "lstate": "not simulated"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "signals/IntBus/Asi/Asi1LedGreen"
+              }
+            },
+            "_type": "ios-signal-li",
+            "_title": "IntBus/Asi/Asi1LedGreen",
+            "name": "Asi1LedGreen",
+            "type": "GO",
+            "category": "",
+            "lvalue": "0",
+            "lstate": "not simulated"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "signals/IntBus/Asi/Asi1LedRed"
+              }
+            },
+            "_type": "ios-signal-li",
+            "_title": "IntBus/Asi/Asi1LedRed",
+            "name": "Asi1LedRed",
+            "type": "GO",
+            "category": "",
+            "lvalue": "255",
+            "lstate": "not simulated"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "signals/IntBus/Asi/Asi1Button2"
+              }
+            },
+            "_type": "ios-signal-li",
+            "_title": "IntBus/Asi/Asi1Button2",
+            "name": "Asi1Button2",
+            "type": "DI",
+            "category": "",
+            "lvalue": "0",
+            "lstate": "not simulated"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "signals/IntBus/Asi/Asi1Button1"
+              }
+            },
+            "_type": "ios-signal-li",
+            "_title": "IntBus/Asi/Asi1Button1",
+            "name": "Asi1Button1",
+            "type": "DI",
+            "category": "",
+            "lvalue": "0",
+            "lstate": "not simulated"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "signals/BrakeReleaseActive"
+              }
+            },
+            "_type": "ios-signal-li",
+            "_title": "BrakeReleaseActive",
+            "name": "BrakeReleaseActive",
+            "type": "DO",
+            "category": "",
+            "lvalue": "0",
+            "lstate": "not simulated"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "signals/BrakeReleasePending"
+              }
+            },
+            "_type": "ios-signal-li",
+            "_title": "BrakeReleasePending",
+            "name": "BrakeReleasePending",
+            "type": "DO",
+            "category": "",
+            "lvalue": "0",
+            "lstate": "not simulated"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "signals/GOFA_SysOut_SetMotorsOn"
+              }
+            },
+            "_type": "ios-signal-li",
+            "_title": "GOFA_SysOut_SetMotorsOn",
+            "name": "GOFA_SysOut_SetMotorsOn",
+            "type": "DO",
+            "category": "",
+            "lvalue": "0",
+            "lstate": "not simulated"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "signals/GOFA_SysIn_SetMotorsOn"
+              }
+            },
+            "_type": "ios-signal-li",
+            "_title": "GOFA_SysIn_SetMotorsOn",
+            "name": "GOFA_SysIn_SetMotorsOn",
+            "type": "DI",
+            "category": "",
+            "lvalue": "0",
+            "lstate": "not simulated"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "signals/GOFA1_LeadThroughActivated"
+              }
+            },
+            "_type": "ios-signal-li",
+            "_title": "GOFA1_LeadThroughActivated",
+            "name": "GOFA1_LeadThroughActivated",
+            "type": "DO",
+            "category": "",
+            "lvalue": "0",
+            "lstate": "not simulated"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "signals/GOFA1_MovingState"
+              }
+            },
+            "_type": "ios-signal-li",
+            "_title": "GOFA1_MovingState",
+            "name": "GOFA1_MovingState",
+            "type": "DO",
+            "category": "",
+            "lvalue": "1",
+            "lstate": "not simulated"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "signals/GOFA_EStop"
+              }
+            },
+            "_type": "ios-signal-li",
+            "_title": "GOFA_EStop",
+            "name": "GOFA_EStop",
+            "type": "DO",
+            "category": "",
+            "lvalue": "0",
+            "lstate": "not simulated"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "signals/GOFA_ProgramState"
+              }
+            },
+            "_type": "ios-signal-li",
+            "_title": "GOFA_ProgramState",
+            "name": "GOFA_ProgramState",
+            "type": "DO",
+            "category": "",
+            "lvalue": "0",
+            "lstate": "not simulated"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "signals/GOFA_MotorsOff"
+              }
+            },
+            "_type": "ios-signal-li",
+            "_title": "GOFA_MotorsOff",
+            "name": "GOFA_MotorsOff",
+            "type": "DO",
+            "category": "",
+            "lvalue": "0",
+            "lstate": "not simulated"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "signals/GOFA_MotorsOn"
+              }
+            },
+            "_type": "ios-signal-li",
+            "_title": "GOFA_MotorsOn",
+            "name": "GOFA_MotorsOn",
+            "type": "DO",
+            "category": "",
+            "lvalue": "1",
+            "lstate": "not simulated"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "signals/SC4CBCPREWARN"
+              }
+            },
+            "_type": "ios-signal-li",
+            "_title": "SC4CBCPREWARN",
+            "name": "SC4CBCPREWARN",
+            "type": "DO",
+            "category": "internal",
+            "lvalue": "0",
+            "lstate": "not simulated"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "signals/SC4CBCREQ"
+              }
+            },
+            "_type": "ios-signal-li",
+            "_title": "SC4CBCREQ",
+            "name": "SC4CBCREQ",
+            "type": "DO",
+            "category": "internal",
+            "lvalue": "0",
+            "lstate": "not simulated"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "signals/SC4CBCOK"
+              }
+            },
+            "_type": "ios-signal-li",
+            "_title": "SC4CBCOK",
+            "name": "SC4CBCOK",
+            "type": "DO",
+            "category": "internal",
+            "lvalue": "0",
+            "lstate": "not simulated"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "signals/SC4CBCERR"
+              }
+            },
+            "_type": "ios-signal-li",
+            "_title": "SC4CBCERR",
+            "name": "SC4CBCERR",
+            "type": "DO",
+            "category": "internal",
+            "lvalue": "0",
+            "lstate": "not simulated"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "signals/SC4CBCWAR"
+              }
+            },
+            "_type": "ios-signal-li",
+            "_title": "SC4CBCWAR",
+            "name": "SC4CBCWAR",
+            "type": "DO",
+            "category": "internal",
+            "lvalue": "0",
+            "lstate": "not simulated"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "signals/SC4CBCACT"
+              }
+            },
+            "_type": "ios-signal-li",
+            "_title": "SC4CBCACT",
+            "name": "SC4CBCACT",
+            "type": "DO",
+            "category": "internal",
+            "lvalue": "0",
+            "lstate": "not simulated"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "signals/SC3CBCPREWARN"
+              }
+            },
+            "_type": "ios-signal-li",
+            "_title": "SC3CBCPREWARN",
+            "name": "SC3CBCPREWARN",
+            "type": "DO",
+            "category": "internal",
+            "lvalue": "0",
+            "lstate": "not simulated"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "signals/SC3CBCREQ"
+              }
+            },
+            "_type": "ios-signal-li",
+            "_title": "SC3CBCREQ",
+            "name": "SC3CBCREQ",
+            "type": "DO",
+            "category": "internal",
+            "lvalue": "0",
+            "lstate": "not simulated"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "signals/SC3CBCOK"
+              }
+            },
+            "_type": "ios-signal-li",
+            "_title": "SC3CBCOK",
+            "name": "SC3CBCOK",
+            "type": "DO",
+            "category": "internal",
+            "lvalue": "0",
+            "lstate": "not simulated"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "signals/SC3CBCERR"
+              }
+            },
+            "_type": "ios-signal-li",
+            "_title": "SC3CBCERR",
+            "name": "SC3CBCERR",
+            "type": "DO",
+            "category": "internal",
+            "lvalue": "0",
+            "lstate": "not simulated"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "signals/SC3CBCWAR"
+              }
+            },
+            "_type": "ios-signal-li",
+            "_title": "SC3CBCWAR",
+            "name": "SC3CBCWAR",
+            "type": "DO",
+            "category": "internal",
+            "lvalue": "0",
+            "lstate": "not simulated"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "signals/SC3CBCACT"
+              }
+            },
+            "_type": "ios-signal-li",
+            "_title": "SC3CBCACT",
+            "name": "SC3CBCACT",
+            "type": "DO",
+            "category": "internal",
+            "lvalue": "0",
+            "lstate": "not simulated"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "signals/SC2CBCPREWARN"
+              }
+            },
+            "_type": "ios-signal-li",
+            "_title": "SC2CBCPREWARN",
+            "name": "SC2CBCPREWARN",
+            "type": "DO",
+            "category": "internal",
+            "lvalue": "0",
+            "lstate": "not simulated"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "signals/SC2CBCREQ"
+              }
+            },
+            "_type": "ios-signal-li",
+            "_title": "SC2CBCREQ",
+            "name": "SC2CBCREQ",
+            "type": "DO",
+            "category": "internal",
+            "lvalue": "0",
+            "lstate": "not simulated"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "signals/SC2CBCOK"
+              }
+            },
+            "_type": "ios-signal-li",
+            "_title": "SC2CBCOK",
+            "name": "SC2CBCOK",
+            "type": "DO",
+            "category": "internal",
+            "lvalue": "0",
+            "lstate": "not simulated"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "signals/SC2CBCERR"
+              }
+            },
+            "_type": "ios-signal-li",
+            "_title": "SC2CBCERR",
+            "name": "SC2CBCERR",
+            "type": "DO",
+            "category": "internal",
+            "lvalue": "0",
+            "lstate": "not simulated"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "signals/SC2CBCWAR"
+              }
+            },
+            "_type": "ios-signal-li",
+            "_title": "SC2CBCWAR",
+            "name": "SC2CBCWAR",
+            "type": "DO",
+            "category": "internal",
+            "lvalue": "0",
+            "lstate": "not simulated"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "signals/SC2CBCACT"
+              }
+            },
+            "_type": "ios-signal-li",
+            "_title": "SC2CBCACT",
+            "name": "SC2CBCACT",
+            "type": "DO",
+            "category": "internal",
+            "lvalue": "0",
+            "lstate": "not simulated"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "signals/SC1CBCPREWARN"
+              }
+            },
+            "_type": "ios-signal-li",
+            "_title": "SC1CBCPREWARN",
+            "name": "SC1CBCPREWARN",
+            "type": "DO",
+            "category": "internal",
+            "lvalue": "0",
+            "lstate": "not simulated"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "signals/SC1CBCREQ"
+              }
+            },
+            "_type": "ios-signal-li",
+            "_title": "SC1CBCREQ",
+            "name": "SC1CBCREQ",
+            "type": "DO",
+            "category": "internal",
+            "lvalue": "1",
+            "lstate": "not simulated"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "signals/SC1CBCOK"
+              }
+            },
+            "_type": "ios-signal-li",
+            "_title": "SC1CBCOK",
+            "name": "SC1CBCOK",
+            "type": "DO",
+            "category": "internal",
+            "lvalue": "0",
+            "lstate": "not simulated"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "signals/SC1CBCERR"
+              }
+            },
+            "_type": "ios-signal-li",
+            "_title": "SC1CBCERR",
+            "name": "SC1CBCERR",
+            "type": "DO",
+            "category": "internal",
+            "lvalue": "0",
+            "lstate": "not simulated"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "signals/SC1CBCWAR"
+              }
+            },
+            "_type": "ios-signal-li",
+            "_title": "SC1CBCWAR",
+            "name": "SC1CBCWAR",
+            "type": "DO",
+            "category": "internal",
+            "lvalue": "0",
+            "lstate": "not simulated"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "signals/SC1CBCACT"
+              }
+            },
+            "_type": "ios-signal-li",
+            "_title": "SC1CBCACT",
+            "name": "SC1CBCACT",
+            "type": "DO",
+            "category": "internal",
+            "lvalue": "0",
+            "lstate": "not simulated"
+          }
+        ]
+      }
+    }
+  },
+  "services": {
+    "connected_services_gw": {
+      "_links": {
+        "base": {
+          "href": "https://192.168.125.1:443/rw/devices/HW_DEVICES/CONNECTED_SERVICES_GW/"
+        },
+        "self": {
+          "href": ""
+        }
+      },
+      "state": [],
+      "_embedded": {
+        "resources": [
+          {
+            "_links": {
+              "self": {
+                "href": "CSGW_MODULE_INFO"
+              }
+            },
+            "_type": "dev-id-li",
+            "_title": "CSGW_MODULE_INFO",
+            "name": "Module Information"
+          }
+        ]
+      }
+    },
+    "service_emb": {
+      "_links": {
+        "base": {
+          "href": "https://192.168.125.1:443/rw/devices/SW_RESOURCES/SERVICE_EMB/"
+        },
+        "self": {
+          "href": ""
+        }
+      },
+      "state": [],
+      "_embedded": {
+        "resources": [
+          {
+            "_links": {
+              "self": {
+                "href": "SERVICE_EMB_OVERVIEW"
+              }
+            },
+            "_type": "dev-id-li",
+            "_title": "SERVICE_EMB_OVERVIEW",
+            "name": "Overview"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "SERVICE_EMB_CON"
+              }
+            },
+            "_type": "dev-id-li",
+            "_title": "SERVICE_EMB_CON",
+            "name": "Connectivity"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "SERVICE_EMB_REG"
+              }
+            },
+            "_type": "dev-id-li",
+            "_title": "SERVICE_EMB_REG",
+            "name": "Registration"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "SERVICE_EMB_DEBUG"
+              }
+            },
+            "_type": "dev-id-li",
+            "_title": "SERVICE_EMB_DEBUG",
+            "name": "Advanced"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "SERVICE_EMB_DC"
+              }
+            },
+            "_type": "dev-id-li",
+            "_title": "SERVICE_EMB_DC",
+            "name": "Data Collectors"
+          }
+        ]
+      }
+    },
+    "services_index": {
+      "_links": {
+        "base": {
+          "href": "https://192.168.125.1:443/rw/devices/SW_RESOURCES/SERVICES/"
+        },
+        "self": {
+          "href": ""
+        }
+      },
+      "state": [],
+      "_embedded": {
+        "resources": [
+          {
+            "_links": {
+              "self": {
+                "href": "SERVICES_CBC"
+              }
+            },
+            "_type": "dev-id-li",
+            "_title": "SERVICES_CBC",
+            "name": "Cyclic Brake Check"
+          }
+        ]
+      }
+    },
+    "hw_devices": {
+      "_links": {
+        "base": {
+          "href": "https://192.168.125.1:443/rw/devices/HW_DEVICES/"
+        },
+        "self": {
+          "href": ""
+        }
+      },
+      "state": [],
+      "_embedded": {
+        "resources": [
+          {
+            "_links": {
+              "self": {
+                "href": "CONNECTED_SERVICES_GW"
+              }
+            },
+            "_type": "dev-id-li",
+            "_title": "CONNECTED_SERVICES_GW",
+            "name": "Connected Services Gateway"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "MAIN_COMPUTER"
+              }
+            },
+            "_type": "dev-id-li",
+            "_title": "MAIN_COMPUTER",
+            "name": "Main Computer"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "SAFETY_CONTROLLER"
+              }
+            },
+            "_type": "dev-id-li",
+            "_title": "SAFETY_CONTROLLER",
+            "name": "Safety Controller"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "DRIVE_LINK1"
+              }
+            },
+            "_type": "dev-id-li",
+            "_title": "DRIVE_LINK1",
+            "name": "Drive Link 1"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "DRIVE_LINK2"
+              }
+            },
+            "_type": "dev-id-li",
+            "_title": "DRIVE_LINK2",
+            "name": "Drive Link 2"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "DRIVE_LINK3"
+              }
+            },
+            "_type": "dev-id-li",
+            "_title": "DRIVE_LINK3",
+            "name": "Drive Link 3"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "DRIVE_LINK4"
+              }
+            },
+            "_type": "dev-id-li",
+            "_title": "DRIVE_LINK4",
+            "name": "Drive Link 4"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "DRIVE_LINK5"
+              }
+            },
+            "_type": "dev-id-li",
+            "_title": "DRIVE_LINK5",
+            "name": "Drive Link 5"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "DRIVE_LINK6"
+              }
+            },
+            "_type": "dev-id-li",
+            "_title": "DRIVE_LINK6",
+            "name": "Drive Link 6"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "DRIVE_LINK7"
+              }
+            },
+            "_type": "dev-id-li",
+            "_title": "DRIVE_LINK7",
+            "name": "Drive Link 7"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "ROBOT_SIGNAL_EXCHANGE_PROXY"
+              }
+            },
+            "_type": "dev-id-li",
+            "_title": "ROBOT_SIGNAL_EXCHANGE_PROXY",
+            "name": "Robot Signal Exchange Proxy 1"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "ROB1"
+              }
+            },
+            "_type": "dev-id-li",
+            "_title": "ROB1",
+            "name": "Mechanical Unit 1"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "FLEXPENDANT"
+              }
+            },
+            "_type": "dev-id-li",
+            "_title": "FLEXPENDANT",
+            "name": "FlexPendant"
+          }
+        ]
+      }
+    },
+    "sw_resources": {
+      "_links": {
+        "base": {
+          "href": "https://192.168.125.1:443/rw/devices/SW_RESOURCES/"
+        },
+        "self": {
+          "href": ""
+        }
+      },
+      "state": [],
+      "_embedded": {
+        "resources": [
+          {
+            "_links": {
+              "self": {
+                "href": "SERVICE_EMB"
+              }
+            },
+            "_type": "dev-id-li",
+            "_title": "SERVICE_EMB",
+            "name": "Connected Services"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "ROBAPI"
+              }
+            },
+            "_type": "dev-id-li",
+            "_title": "ROBAPI",
+            "name": "RobAPI"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "SYSTEM"
+              }
+            },
+            "_type": "dev-id-li",
+            "_title": "SYSTEM",
+            "name": "System"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "RAPID"
+              }
+            },
+            "_type": "dev-id-li",
+            "_title": "RAPID",
+            "name": "RAPID"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "SERVICES"
+              }
+            },
+            "_type": "dev-id-li",
+            "_title": "SERVICES",
+            "name": "Services"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "INDUSTRIAL_NETWORKS"
+              }
+            },
+            "_type": "dev-id-li",
+            "_title": "INDUSTRIAL_NETWORKS",
+            "name": "Industrial Networks"
+          }
+        ]
+      }
+    },
+    "ctrl_diagnostics_index": {
+      "_links": {
+        "base": {
+          "href": "https://192.168.125.1:443/ctrl/"
+        },
+        "self": {
+          "href": ""
+        }
+      },
+      "_embedded": {
+        "resources": [
+          {
+            "_links": {
+              "self": {
+                "href": "clock"
+              }
+            },
+            "_type": "ctrl-clock-info-li",
+            "_title": "clock",
+            "datetime": "2026-05-08 T 10:22:28"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "identity"
+              }
+            },
+            "_type": "ctrl-identity-info-li",
+            "_title": "identity",
+            "ctrl-name": "15000-500126",
+            "ctrl-id": "15000-500126",
+            "ctrl-type": "Real Controller",
+            "ctrl-mac": "00:30:64:69:e4:5f",
+            "ctrl-level": "System Level"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "certstore"
+              }
+            },
+            "_type": "ctrl-certstore-li",
+            "_title": "certstore"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "backup"
+              }
+            },
+            "_type": "ctrl-backup-info-li",
+            "_title": "backup"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "compress"
+              }
+            },
+            "_type": "ctrl-compress-info-li",
+            "_title": "compress"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "diagnostics"
+              }
+            },
+            "_type": "ctrl-diagnostics-info-li",
+            "_title": "diagnostics"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "system"
+              }
+            },
+            "_type": "ctrl-system-info-li",
+            "_title": "system"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "network"
+              }
+            },
+            "_type": "ctrl-network-info-li",
+            "_title": "network"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "safety"
+              }
+            },
+            "_type": "ctrl-safety-info-li",
+            "_title": "safety"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "options"
+              }
+            },
+            "_type": "ctrl-options-info-li",
+            "_title": "options"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "features"
+              }
+            },
+            "_type": "ctrl-features-info-li",
+            "_title": "features"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "virtualtime"
+              }
+            },
+            "_type": "ctrl-virtualtime-info-li",
+            "_title": "virtualtime"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "registry"
+              }
+            },
+            "_type": "cctrl-registry-info-li",
+            "_title": "registry"
+          }
+        ]
+      }
+    },
+    "ctrl_backup": {
+      "_links": {
+        "base": {
+          "href": "https://192.168.125.1:443/ctrl/backup/"
+        },
+        "self": {
+          "href": ""
+        }
+      },
+      "_embedded": {
+        "resources": [
+          {
+            "_links": {
+              "self": {
+                "href": "info?backup-path=$BACKUP"
+              }
+            },
+            "_type": "ctrl-backup-info-li",
+            "_title": "backup-info"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "state"
+              }
+            },
+            "_type": "ctrl-backup-state-li",
+            "_title": "backup-state"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "check-restore"
+              }
+            },
+            "_type": "ctrl-check-restore-li",
+            "_title": "check-restore"
+          }
+        ]
+      }
+    },
+    "ctrl_backup_state": {
+      "_links": {
+        "base": {
+          "href": "https://192.168.125.1:443/ctrl/backup/state/"
+        },
+        "self": {
+          "href": ""
+        }
+      },
+      "state": [
+        {
+          "_type": "ctrl-backup-state",
+          "_title": "backup-state",
+          "backup-state": "Backup Ready"
+        }
+      ]
+    }
+  },
+  "elog": {
+    "domains": {},
+    "categories": {
+      "_links": {
+        "base": {
+          "href": "https://192.168.125.1:443/rw/elog/"
+        },
+        "self": {
+          "href": ""
+        }
+      },
+      "status": {
+        "code": 294912
+      },
+      "_embedded": {
+        "resources": [
+          {
+            "_links": {
+              "self": {
+                "href": "0"
+              }
+            },
+            "_type": "elog-domain-li",
+            "_title": "0",
+            "numevts": "788",
+            "buffsize": "1000"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "1"
+              }
+            },
+            "_type": "elog-domain-li",
+            "_title": "1",
+            "numevts": "50",
+            "buffsize": "50"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "2"
+              }
+            },
+            "_type": "elog-domain-li",
+            "_title": "2",
+            "numevts": "19",
+            "buffsize": "50"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "3"
+              }
+            },
+            "_type": "elog-domain-li",
+            "_title": "3",
+            "numevts": "2",
+            "buffsize": "50"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "4"
+              }
+            },
+            "_type": "elog-domain-li",
+            "_title": "4",
+            "numevts": "50",
+            "buffsize": "50"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "5"
+              }
+            },
+            "_type": "elog-domain-li",
+            "_title": "5",
+            "numevts": "6",
+            "buffsize": "50"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "7"
+              }
+            },
+            "_type": "elog-domain-li",
+            "_title": "7",
+            "numevts": "6",
+            "buffsize": "50"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "8"
+              }
+            },
+            "_type": "elog-domain-li",
+            "_title": "8",
+            "numevts": "0",
+            "buffsize": "50"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "9"
+              }
+            },
+            "_type": "elog-domain-li",
+            "_title": "9",
+            "numevts": "50",
+            "buffsize": "50"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "10"
+              }
+            },
+            "_type": "elog-domain-li",
+            "_title": "10",
+            "numevts": "100",
+            "buffsize": "50"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "11"
+              }
+            },
+            "_type": "elog-domain-li",
+            "_title": "11",
+            "numevts": "0",
+            "buffsize": "50"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "12"
+              }
+            },
+            "_type": "elog-domain-li",
+            "_title": "12",
+            "numevts": "0",
+            "buffsize": "50"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "13"
+              }
+            },
+            "_type": "elog-domain-li",
+            "_title": "13",
+            "numevts": "0",
+            "buffsize": "50"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "15"
+              }
+            },
+            "_type": "elog-domain-li",
+            "_title": "15",
+            "numevts": "0",
+            "buffsize": "50"
+          },
+          {
+            "_links": {
+              "self": {
+                "href": "17"
+              }
+            },
+            "_type": "elog-domain-li",
+            "_title": "17",
+            "numevts": "6",
+            "buffsize": "50"
+          }
+        ]
+      }
+    },
+    "all_entries": []
+  },
+  "health": {
+    "total_events": 0,
+    "by_domain": {},
+    "by_severity": {},
+    "category_counts": {
+      "E-Stop": 0,
+      "Collision": 0,
+      "SafeMove": 0,
+      "MotorOff": 0,
+      "ProgramStop": 0
+    },
+    "first_event": null,
+    "last_event": null
+  }
+}

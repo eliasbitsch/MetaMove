@@ -42,6 +42,13 @@ namespace MetaMove.Safety
         [Tooltip("If true, averages pose across the stable window (median position + slerped rotation) for a cleaner lock than the last-frame-wins approach.")]
         public bool averagePoseOverStableWindow = true;
 
+        [Header("Dev Mode")]
+        [Tooltip("If true, skip QR detection entirely and spawn the prefab at devSpawnPose on Start. For Editor/dev iteration without printed marker.")]
+        public bool devAutoSpawnAtTransform = false;
+
+        [Tooltip("World pose used for the auto-spawn when devAutoSpawnAtTransform is true. If null, spawns at this GameObject's transform.")]
+        public Transform devSpawnPose;
+
         [Header("Events")]
         public UnityEvent<GameObject> onAnchorSpawned;
 
@@ -53,6 +60,8 @@ namespace MetaMove.Safety
 
         void OnEnable()
         {
+            if (devAutoSpawnAtTransform) return;
+
             if (MRUK.Instance != null)
             {
                 MRUK.Instance.SceneSettings.TrackableAdded.AddListener(OnTrackableAdded);
@@ -64,8 +73,18 @@ namespace MetaMove.Safety
             }
         }
 
+        void Start()
+        {
+            if (!devAutoSpawnAtTransform) return;
+            var src = devSpawnPose != null ? devSpawnPose : transform;
+            SpawnAt(src.position, src.rotation);
+            Debug.Log($"[QrAnchorCalibrator] DEV auto-spawn at {src.position} (QR detection skipped).");
+        }
+
         void OnDisable()
         {
+            if (devAutoSpawnAtTransform) return;
+
             if (MRUK.Instance != null)
             {
                 MRUK.Instance.SceneSettings.TrackableAdded.RemoveListener(OnTrackableAdded);
@@ -75,6 +94,7 @@ namespace MetaMove.Safety
 
         void Update()
         {
+            if (devAutoSpawnAtTransform) return;
             // Count stable detections of the target payload. A trackable can persist across frames
             // without re-firing TrackableAdded, so we poll.
             if (_spawned != null && !rePlaceOnRedetect) return;
@@ -114,17 +134,6 @@ namespace MetaMove.Safety
 
         void CommitAnchor(MRUKTrackable t)
         {
-            if (anchorPrefab == null)
-            {
-                Debug.LogError("[QrAnchorCalibrator] anchorPrefab not assigned.");
-                return;
-            }
-            if (_spawned != null)
-            {
-                if (!rePlaceOnRedetect) return;
-                Destroy(_spawned);
-            }
-
             // Compute world pose for the anchor = QR pose * local payload-to-CAD offset.
             // If averaging is enabled, smooth across the stable window to reject per-frame jitter.
             Quaternion qrRot;
@@ -139,21 +148,43 @@ namespace MetaMove.Safety
                 qrRot = t.transform.rotation;
                 qrPos = t.transform.position;
             }
+            SpawnAt(qrPos, qrRot);
+            _lockedTrackable = t;
+            _stableCount = 0;
+        }
+
+        void SpawnAt(Vector3 qrPos, Quaternion qrRot)
+        {
+            if (anchorPrefab == null)
+            {
+                Debug.LogError("[QrAnchorCalibrator] anchorPrefab not assigned.");
+                return;
+            }
+            if (_spawned != null)
+            {
+                if (!rePlaceOnRedetect) return;
+                Destroy(_spawned.transform.parent != null ? _spawned.transform.parent.gameObject : _spawned);
+            }
+
             Quaternion anchorRot = qrRot * Quaternion.Euler(payloadEulerOffset);
             Vector3 anchorPos = qrPos + qrRot * payloadPositionOffset;
 
             var anchorGo = new GameObject($"QrAnchor:{expectedPayload}");
             anchorGo.transform.SetPositionAndRotation(anchorPos, anchorRot);
-#if UNITY_ANDROID || UNITY_EDITOR
-            anchorGo.AddComponent<OVRSpatialAnchor>();
+            // OVRSpatialAnchor only works against the on-device XR runtime; adding it in the
+            // Editor (Link or no-XR) is a known crash trigger after HMDLost — skip there.
+#if UNITY_ANDROID && !UNITY_EDITOR
+            if (!devAutoSpawnAtTransform)
+            {
+                try { anchorGo.AddComponent<OVRSpatialAnchor>(); }
+                catch (System.Exception e) { Debug.LogWarning($"[QrAnchorCalibrator] OVRSpatialAnchor add failed: {e.Message}"); }
+            }
 #endif
 
             _spawned = Instantiate(anchorPrefab, anchorGo.transform);
             _spawned.transform.localPosition = Vector3.zero;
             _spawned.transform.localRotation = Quaternion.identity;
 
-            _lockedTrackable = t;
-            _stableCount = 0;
             Debug.Log($"[QrAnchorCalibrator] Anchor committed for '{expectedPayload}' at {anchorPos}");
             onAnchorSpawned?.Invoke(_spawned);
         }

@@ -44,7 +44,8 @@ def generate_launch_description():
     rsp = Node(
         package="robot_state_publisher",
         executable="robot_state_publisher",
-        parameters=[moveit_config.robot_description],
+        parameters=[moveit_config.robot_description,
+                    {"publish_frequency": 50.0}],
     )
 
     move_group = Node(

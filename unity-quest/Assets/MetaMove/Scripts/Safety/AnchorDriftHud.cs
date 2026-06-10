@@ -12,6 +12,13 @@ namespace MetaMove.Safety
     //   - Record that world position as baseline.
     //   - Over time, the delta between (anchor.TransformPoint(baselineLocal)) and the stored world
     //     baseline shows how much the anchor has drifted in headset-world coordinates.
+    // Minimal stub for the deleted SpatialAnchorMount component. Lets the HUD compile
+    // and display a generic "no mount wired" state until the real anchor pipeline is back.
+    public class SpatialAnchorMount : MonoBehaviour
+    {
+        public bool IsPlaced { get; set; }
+    }
+
     public class AnchorDriftHud : MonoBehaviour
     {
         public SpatialAnchorMount mount;

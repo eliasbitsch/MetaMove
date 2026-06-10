@@ -1,0 +1,6 @@
+# Move J6 back to 0° so MoveIt can plan (its URDF limits J6 to ±180°)
+# Aktuelle Pose (alles in rad)
+# J1=0  J2=0  J3=0  J4=0.94  J5=35  J6=215  →  J6=0
+waypoints:
+  - name: j6_zero
+    joints: [0.0, 0.0, 0.0, 0.01641, 0.61056, 0.0]

@@ -15,6 +15,8 @@ namespace MetaMove.Haptics
     // to GestureRouter / SafetyZone / WaypointManager never changes.
     public class BHapticsAdapter : MonoBehaviour
     {
+        public enum Glove { Left, Right, Both }
+
         public static BHapticsAdapter Instance { get; private set; }
 
         public HapticsConfig config;
@@ -62,6 +64,20 @@ namespace MetaMove.Haptics
             if (t01 < 0.3f) return;
             if (t01 > 0.9f) PlaySafetyViolation();
             else PlaySafetyWarning();
+        }
+
+        // Code-driven pulse used by HapticsPokeDemo. Stub until bHaptics SDK is imported —
+        // logs once, then no-op. With the real SDK, route this to BhapticsLibrary.PlayParam(...)
+        // on the appropriate hand/glove buffer.
+        public void PulseAll(Glove which, int intensity, int durationMs)
+        {
+            if (config != null && !config.gloveEnabled) return;
+            if (logOnMissingSdk && !_sdkWarned)
+            {
+                Debug.Log($"[BHapticsAdapter] PulseAll stub — glove={which} intensity={intensity} ms={durationMs}");
+                _sdkWarned = true;
+            }
+            onPatternPlayed?.Invoke($"pulse:{which}:{intensity}:{durationMs}");
         }
     }
 }

@@ -25,7 +25,7 @@ namespace MetaMove.UI.Panels
         [Header("Status")]
         public Image ledEgm, ledRws, ledRos, ledMoveIt;
         public TMP_Text latencyLabel;
-        public UiThemeConfig theme;
+        // theme inherited from WorldPanelBase (duplicate decl. broke IL2CPP serialization)
 
         [Header("Events")]
         public UnityEvent onConnectRequested;

@@ -37,9 +37,11 @@ x-ros2-common: &ros2-common
     - DISPLAY=${DISPLAY:-:0}
     - QT_X11_NO_MITSHM=1
   ports:
-    - "6511:6511/udp"            # EGM feedback/command channel
+    # 6511/udp NOT mapped — Unity Editor / native Unity Bridge binds it on Windows.
+    # Container only needs TCP back-channels for ROS↔Unity glue.
     - "8765:8765/tcp"            # foxglove-bridge (optional web viz)
     - "9090:9090/tcp"            # rosbridge_websocket (Jarvis tool-call path)
+    - "10000:10000/tcp"          # ros-tcp-endpoint (Unity ROSConnection)
   volumes:
     # ---- Source tree (host → container) ---------------------------------
     - ../abb_libegm:/opt/metamove_ws/src/abb_libegm

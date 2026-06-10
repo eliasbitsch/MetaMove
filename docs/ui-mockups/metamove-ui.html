@@ -1,0 +1,882 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>MetaMove — AR/VR UI Prototype</title>
+<style>
+  :root {
+    --accent: #1c82fe;
+    --accent-2: #6e3cff;
+    --ok: #22c55e;
+    --warn: #f59e0b;
+    --err:  #ef4444;
+    --text: #f5f7fa;
+    --text-dim: #c2c8d2;
+    --text-mute: #8a93a4;
+    --glass: rgba(18, 22, 30, 0.55);
+    --glass-strong: rgba(18, 22, 30, 0.78);
+    --stroke: rgba(255,255,255,0.16);
+    --stroke-strong: rgba(255,255,255,0.28);
+    font-family: 'Inter','SF Pro Display',-apple-system,system-ui,Segoe UI,Roboto,sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin:0; height:100%; overflow:hidden; color:var(--text); }
+
+  /* ============ Passthrough faux background ============ */
+  /* A real Quest 3 user sees the room. We fake it with a warm,
+     desaturated workshop scene + grain + slight chromatic aberration. */
+  body {
+    background:
+      radial-gradient(1200px 700px at 30% 30%, #4a3a2c 0%, #1c1a1a 55%, #0c0c10 100%),
+      #0a0a0e;
+  }
+  .passthrough {
+    position: fixed; inset: 0;
+    background:
+      /* "ceiling lights" */
+      radial-gradient(220px 80px at 25% 8%, rgba(255,230,180,0.45), transparent 70%),
+      radial-gradient(220px 80px at 70% 6%, rgba(255,230,180,0.35), transparent 70%),
+      /* warm floor */
+      linear-gradient(180deg, rgba(60,50,40,0) 55%, rgba(40,28,18,0.55) 80%, rgba(20,14,10,0.9) 100%),
+      /* desk surface hint */
+      linear-gradient(180deg, transparent 60%, rgba(120,90,60,0.18) 62%, transparent 64%);
+    filter: saturate(0.7) brightness(0.85);
+  }
+  .grain {
+    position: fixed; inset:0; pointer-events:none; opacity:.12; mix-blend-mode:overlay;
+    background-image: radial-gradient(rgba(255,255,255,.7) 1px, transparent 1.2px);
+    background-size: 3px 3px;
+  }
+  .vignette {
+    position: fixed; inset: 0; pointer-events: none;
+    background: radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.55) 100%);
+  }
+
+  /* ============ Spatial stage with perspective ============ */
+  .stage {
+    position: fixed; inset: 0;
+    perspective: 1400px;
+    perspective-origin: 50% 45%;
+    transform-style: preserve-3d;
+  }
+
+  /* A floating panel in space.
+     We use CSS 3D transforms to give each panel a real position in the room. */
+  .panel3d {
+    position: absolute;
+    transform-style: preserve-3d;
+    background: var(--glass);
+    backdrop-filter: blur(22px) saturate(140%);
+    -webkit-backdrop-filter: blur(22px) saturate(140%);
+    border: 1px solid var(--stroke-strong);
+    border-radius: 22px;
+    box-shadow:
+      0 30px 80px rgba(0,0,0,0.55),
+      0 0 0 1px rgba(255,255,255,0.04) inset,
+      0 1px 0 rgba(255,255,255,0.18) inset;
+    color: var(--text);
+    /* depth glow */
+  }
+  .panel3d::after {
+    content:""; position:absolute; inset:-1px; border-radius:inherit; pointer-events:none;
+    box-shadow: 0 0 28px rgba(28,130,254,0.10);
+  }
+  .panel-title {
+    display:flex; align-items:center; gap:8px;
+    padding: 10px 14px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    font-size: 12px; color: var(--text-dim); letter-spacing: 0.5px; text-transform: uppercase;
+  }
+  .panel-title .pin {
+    width: 6px; height: 6px; border-radius:50%; background: var(--accent);
+    box-shadow: 0 0 10px var(--accent);
+  }
+  .panel-body { padding: 14px 16px; }
+
+  /* ============ Atoms ============ */
+  .chip {
+    display:inline-flex; align-items:center; gap:6px;
+    padding: 4px 10px; border-radius:999px;
+    background: rgba(255,255,255,0.08);
+    border:1px solid var(--stroke);
+    font-size: 11px; color: var(--text-dim);
+  }
+  .dot { width:8px; height:8px; border-radius:50%; display:inline-block; }
+  .dot.ok { background:var(--ok); box-shadow:0 0 8px rgba(34,197,94,.7); }
+  .dot.warn{ background:var(--warn); box-shadow:0 0 8px rgba(245,158,11,.7); }
+  .dot.err { background:var(--err); box-shadow:0 0 8px rgba(239,68,68,.7); }
+  .btn {
+    appearance: none; border:1px solid var(--stroke-strong);
+    background: rgba(255,255,255,0.06); color: var(--text);
+    padding: 10px 14px; border-radius: 999px;
+    font-size: 13px; cursor: pointer;
+    display:inline-flex; align-items:center; gap:8px;
+    transition: transform .08s, background .15s;
+  }
+  .btn:hover { background: rgba(255,255,255,0.12); }
+  .btn:active { transform: scale(0.97); }
+  .btn.primary {
+    background: linear-gradient(180deg, var(--accent), #0064e0);
+    border-color: rgba(255,255,255,0.25);
+    box-shadow: 0 8px 26px rgba(28,130,254,0.45), inset 0 1px 0 rgba(255,255,255,0.35);
+  }
+
+  /* ============ 1. Robot in the world (SVG placed in 3D) ============ */
+  .robot-anchor {
+    position: absolute;
+    left: 50%; top: 56%;
+    transform: translate(-50%, -50%);
+    width: 360px; height: 480px;
+    pointer-events: none;
+  }
+  .robot-anchor svg { width: 100%; height: 100%; filter: drop-shadow(0 30px 30px rgba(0,0,0,0.6)); }
+
+  /* World-anchored labels (sit at fixed points in 3D, near the robot) */
+  .world-label {
+    position: absolute;
+    background: rgba(0,0,0,0.55);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--stroke);
+    color: var(--text);
+    font-size: 11px;
+    padding: 5px 9px;
+    border-radius: 8px;
+    white-space: nowrap;
+    pointer-events: auto;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.4);
+  }
+  .world-label::before {
+    content:""; position:absolute; width:8px; height:8px; border-radius:50%;
+    background: var(--accent);
+    box-shadow: 0 0 10px var(--accent);
+  }
+  .world-label.left::before  { left:-14px; top: 50%; transform: translateY(-50%); }
+  .world-label.right::before { right:-14px; top: 50%; transform: translateY(-50%); }
+  .world-label .ln {
+    /* leader line from label to anchor point */
+    position: absolute;
+    background: rgba(28,130,254,0.5);
+    height: 1px;
+  }
+  .world-label.left  .ln { right: 100%; top: 50%; width: 60px; transform-origin: right; }
+  .world-label.right .ln { left:  100%; top: 50%; width: 60px; transform-origin: left;  }
+
+  /* Trajectory ghost shown in 3D as a curve */
+  .traj { position:absolute; left:0; top:0; width:100%; height:100%; pointer-events:none; }
+
+  /* ============ 2. Wrist-attached menu (hand-anchored) ============ */
+  .wrist {
+    position: absolute;
+    left: 8%; bottom: 4%;
+    width: 360px;
+    transform: rotate(-8deg);
+    transform-origin: bottom left;
+  }
+  .wrist .arm {
+    position: absolute; left: -20px; bottom: -30px;
+    width: 360px; height: 120px;
+    background: linear-gradient(90deg, rgba(80,55,40,0.85) 20%, rgba(80,55,40,0.35) 100%);
+    border-radius: 80px 12px 12px 80px;
+    border: 1px solid rgba(255,255,255,0.08);
+    z-index: 0;
+    filter: blur(0.5px);
+  }
+  .wrist .palm {
+    position: absolute; left: -50px; bottom: -10px;
+    width: 90px; height: 90px;
+    background: radial-gradient(circle at 30% 30%, #b58a64, #6b4a32);
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  .wrist .panel3d { position: relative; z-index: 1; }
+  .wrist-menu {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    padding: 12px;
+  }
+  .wrist-menu .item {
+    aspect-ratio: 1/1;
+    border-radius: 14px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--stroke);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 4px;
+    cursor: pointer;
+    transition: background .15s, transform .15s;
+    text-align:center;
+  }
+  .wrist-menu .item:hover { background: rgba(28,130,254,0.20); transform: translateY(-2px); }
+  .wrist-menu .item .ic { font-size: 22px; }
+  .wrist-menu .item .lb { font-size: 10px; color: var(--text-dim); }
+  .wrist-menu .item.active { background: rgba(28,130,254,0.30); border-color: rgba(28,130,254,0.6); }
+
+  /* ============ 3. Near-field detail panel ============ */
+  .near {
+    position: absolute;
+    right: 6%; top: 14%;
+    width: 320px;
+    transform: rotateY(-12deg) rotateX(2deg);
+  }
+  .near .panel-body { padding: 14px 16px 16px; }
+  .pose-grid {
+    display:grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
+  }
+  .pose-grid .c {
+    background: rgba(0,0,0,0.3);
+    border: 1px solid var(--stroke);
+    border-radius: 10px; padding: 8px;
+  }
+  .pose-grid .c .l { color: var(--text-mute); font-size: 10px; text-transform: uppercase; letter-spacing: 1px;}
+  .pose-grid .c .v { font-size: 16px; font-variant-numeric: tabular-nums; margin-top: 2px;}
+  .jrow { display:flex; align-items:center; gap:8px; padding: 4px 0; }
+  .jrow .nm { width: 22px; font-size: 11px; color: var(--text-mute);}
+  .jrow .tk { flex:1; height: 4px; background: rgba(255,255,255,0.08); border-radius: 999px; position: relative; overflow:hidden;}
+  .jrow .fl { position:absolute; top:0; bottom:0; background: linear-gradient(90deg,var(--accent),var(--accent-2)); border-radius: 999px; }
+  .jrow .vl { width: 48px; text-align:right; font-size: 11px; font-variant-numeric: tabular-nums; color: var(--text-dim);}
+
+  /* ============ 4. Demo carousel (near-field, semi-transparent) ============ */
+  .demos {
+    position: absolute;
+    left: 50%; bottom: 7%;
+    transform: translateX(-50%) rotateX(8deg);
+    transform-origin: bottom center;
+    display: flex; gap: 12px;
+    padding: 10px;
+    border-radius: 22px;
+    background: rgba(10,14,20,0.45);
+    backdrop-filter: blur(16px) saturate(140%);
+    border: 1px solid var(--stroke);
+  }
+  .demo-tile {
+    width: 130px; height: 90px;
+    border-radius: 14px;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid var(--stroke);
+    cursor: pointer;
+    transition: transform .15s, border-color .15s;
+  }
+  .demo-tile:hover { transform: translateY(-4px) scale(1.04); border-color: rgba(28,130,254,0.6); }
+  .demo-tile svg { width:100%; height:100%; display:block; }
+  .demo-tile .cap {
+    position:absolute; left:0; right:0; bottom:0;
+    padding: 6px 8px;
+    background: linear-gradient(180deg, transparent, rgba(0,0,0,0.85));
+    font-size: 11px;
+  }
+  .demo-tile.active {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px rgba(28,130,254,0.4), 0 10px 30px rgba(28,130,254,0.25);
+  }
+
+  /* ============ 5. Floating E-Stop sphere ============ */
+  .estop-orb {
+    position: absolute;
+    right: 4%; bottom: 18%;
+    width: 100px; height: 100px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #ff7676 0%, #d31a1a 50%, #7a0d0d 100%);
+    box-shadow:
+      0 0 0 6px rgba(239,68,68,0.18),
+      0 20px 60px rgba(239,68,68,0.55),
+      inset 0 -10px 30px rgba(0,0,0,0.4),
+      inset 0 6px 12px rgba(255,255,255,0.25);
+    display:flex; align-items:center; justify-content:center;
+    color: white; font-weight: 700; letter-spacing: 1px;
+    font-size: 13px;
+    cursor: pointer;
+    animation: estopPulse 2s ease-in-out infinite;
+    transform: rotate(-6deg);
+  }
+  .estop-orb::after {
+    content:"NOT-HALT";
+    position: absolute; bottom: -28px; left: 50%; transform: translateX(-50%) rotate(6deg);
+    color: #ffc3c3; font-size: 10px; letter-spacing: 2px;
+    white-space: nowrap;
+  }
+  @keyframes estopPulse {
+    0%,100% { box-shadow: 0 0 0 6px rgba(239,68,68,0.18), 0 20px 60px rgba(239,68,68,0.55), inset 0 -10px 30px rgba(0,0,0,0.4), inset 0 6px 12px rgba(255,255,255,0.25);}
+    50%     { box-shadow: 0 0 0 16px rgba(239,68,68,0.08), 0 20px 60px rgba(239,68,68,0.55), inset 0 -10px 30px rgba(0,0,0,0.4), inset 0 6px 12px rgba(255,255,255,0.25);}
+  }
+
+  /* ============ 6. Status HUD (head-locked, very subtle) ============ */
+  .hud {
+    position: fixed; top: 18px; left: 50%; transform: translateX(-50%);
+    display:flex; gap: 8px;
+    background: rgba(0,0,0,0.4);
+    backdrop-filter: blur(14px);
+    border:1px solid var(--stroke);
+    padding: 6px 10px; border-radius: 999px;
+    font-size: 11px;
+    z-index: 30;
+  }
+
+  /* ============ 7. Gaze reticle ============ */
+  .reticle {
+    position: fixed; left:50%; top:50%; transform: translate(-50%,-50%);
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.85);
+    box-shadow: 0 0 0 2px rgba(0,0,0,0.4), 0 0 12px rgba(255,255,255,0.4);
+    z-index: 40; pointer-events: none;
+    transition: width .1s, height .1s;
+  }
+  .reticle::before {
+    content:""; position:absolute; inset:-12px;
+    border-radius: 50%; border: 1px solid rgba(255,255,255,0.25);
+  }
+
+  /* ============ 8. Hand cursors (pinch indicators) ============ */
+  .hand {
+    position: fixed;
+    width: 56px; height: 56px;
+    pointer-events: none; z-index: 35;
+    transform: translate(-50%, -50%);
+    transition: transform .12s ease-out;
+  }
+  .hand .ring {
+    position:absolute; inset:0; border-radius:50%;
+    border: 2px solid rgba(255,255,255,0.7);
+    box-shadow: 0 0 14px rgba(255,255,255,0.25);
+  }
+  .hand .core {
+    position: absolute; inset:18px; border-radius:50%;
+    background: radial-gradient(circle at 35% 30%, rgba(255,255,255,0.95), rgba(255,255,255,0.2));
+  }
+  .hand.left { left: 30%; top: 78%; }
+  .hand.right{ left: 68%; top: 60%; }
+  .hand .lbl {
+    position:absolute; left:50%; top: calc(100% + 6px); transform: translateX(-50%);
+    font-size: 10px; color: rgba(255,255,255,0.7);
+    white-space: nowrap; letter-spacing: 1px;
+  }
+
+  /* ============ 9. Toast / hint ============ */
+  .toast {
+    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+    background: rgba(0,0,0,0.6);
+    border: 1px solid var(--stroke);
+    backdrop-filter: blur(12px);
+    color: var(--text-dim);
+    font-size: 12px;
+    padding: 8px 14px; border-radius: 999px;
+    z-index: 30;
+  }
+
+  /* ============ Helper layout for top-left mini panel ============ */
+  .mini {
+    position: absolute;
+    left: 4%; top: 12%;
+    width: 220px;
+    transform: rotateY(10deg);
+  }
+  .mini .row {
+    display:flex; align-items:center; justify-content: space-between;
+    padding: 6px 0; font-size: 12px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .mini .row:last-child { border-bottom: none; }
+  .mini .k { color: var(--text-mute); }
+
+  /* ============ Wedge / Radial menu (Tilt-Brush style) ============ */
+  .wedge {
+    position: absolute;
+    left: 62%; top: 52%;
+    width: 320px; height: 320px;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+  .wedge svg { width:100%; height:100%; overflow: visible; }
+  .wedge .slice {
+    fill: rgba(18,22,30,0.65);
+    stroke: rgba(255,255,255,0.18);
+    stroke-width: 1;
+    transition: fill .15s;
+    cursor: pointer;
+    pointer-events: auto;
+    filter: drop-shadow(0 8px 18px rgba(0,0,0,0.5));
+  }
+  .wedge .slice:hover { fill: rgba(28,130,254,0.35); stroke: rgba(28,130,254,0.7); }
+  .wedge .slice.active { fill: rgba(28,130,254,0.55); stroke: var(--accent); }
+  .wedge .hub {
+    fill: rgba(10,14,20,0.85);
+    stroke: rgba(255,255,255,0.25);
+  }
+  .wedge text {
+    fill: var(--text);
+    font-family: inherit;
+    font-size: 11px;
+    text-anchor: middle;
+    dominant-baseline: middle;
+    pointer-events: none;
+    letter-spacing: 0.5px;
+  }
+  .wedge .ic { font-size: 18px; }
+  .wedge-tag {
+    position: absolute; left: 50%; top: -28px; transform: translateX(-50%);
+    font-size: 10px; color: var(--text-mute); letter-spacing: 2px; text-transform: uppercase;
+    background: rgba(0,0,0,0.5); border: 1px solid var(--stroke);
+    padding: 3px 8px; border-radius: 999px;
+    white-space: nowrap;
+  }
+
+  /* ============ Rotary knobs panel ============ */
+  .knobs {
+    position: absolute;
+    left: 4%; top: 44%;
+    width: 240px;
+    transform: rotateY(10deg);
+  }
+  .knob-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+  }
+  .knob {
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+    user-select: none;
+  }
+  .knob .dial {
+    position: relative;
+    width: 60px; height: 60px;
+    border-radius: 50%;
+    background:
+      radial-gradient(circle at 35% 30%, #5a626f 0%, #2a313b 60%, #14171d 100%);
+    box-shadow:
+      0 6px 16px rgba(0,0,0,0.5),
+      inset 0 -4px 8px rgba(0,0,0,0.5),
+      inset 0 2px 4px rgba(255,255,255,0.15);
+    cursor: grab;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  .knob .dial::before {
+    /* tick line */
+    content: ""; position: absolute;
+    left: 50%; top: 6px; width: 2px; height: 12px;
+    background: var(--accent);
+    box-shadow: 0 0 6px var(--accent);
+    transform-origin: 50% 24px;
+    border-radius: 2px;
+  }
+  .knob .ring-ticks {
+    position: absolute; inset: -8px;
+    border-radius: 50%;
+    background:
+      conic-gradient(from -135deg,
+        var(--accent) 0deg,
+        var(--accent) var(--arc, 90deg),
+        rgba(255,255,255,0.08) var(--arc, 90deg),
+        rgba(255,255,255,0.08) 270deg,
+        transparent 270deg);
+    -webkit-mask: radial-gradient(circle, transparent 36px, black 37px, black 40px, transparent 41px);
+            mask: radial-gradient(circle, transparent 36px, black 37px, black 40px, transparent 41px);
+    pointer-events: none;
+  }
+  .knob .lbl { font-size: 10px; color: var(--text-mute); text-transform: uppercase; letter-spacing: 1px; margin-top: 4px;}
+  .knob .val { font-size: 13px; font-variant-numeric: tabular-nums; color: var(--text); }
+
+  /* small overlay legend for the demo viewer */
+  .legend {
+    position: fixed; right: 14px; bottom: 14px;
+    background: rgba(0,0,0,0.55); backdrop-filter: blur(10px);
+    border:1px solid var(--stroke);
+    border-radius: 14px;
+    padding: 10px 12px;
+    font-size: 11px; color: var(--text-dim);
+    max-width: 240px;
+    line-height: 1.55;
+    z-index: 50;
+  }
+  .legend b { color: var(--text); }
+  .legend ul { margin: 6px 0 0; padding-left: 16px; }
+  .legend li { margin: 2px 0; }
+</style>
+</head>
+<body>
+
+<div class="passthrough"></div>
+<div class="grain"></div>
+<div class="vignette"></div>
+
+<!-- ============= HEAD-LOCKED HUD (always visible, top of view) ============= -->
+<div class="hud">
+  <span class="chip"><span class="dot ok"></span>EGM 248 Hz</span>
+  <span class="chip"><span class="dot ok"></span>RWS</span>
+  <span class="chip"><span class="dot warn"></span>ROS 6.1ms</span>
+  <span class="chip"><span class="dot ok"></span>Hands</span>
+  <span class="chip">🔋 78%</span>
+</div>
+
+<!-- ============= SPATIAL STAGE ============= -->
+<div class="stage">
+
+  <!-- ROBOT IN SPACE (faux 3D via SVG) -->
+  <div class="robot-anchor">
+    <svg viewBox="0 0 360 480">
+      <defs>
+        <linearGradient id="metal" x1="0" x2="1">
+          <stop offset="0"  stop-color="#e6e9ee"/>
+          <stop offset=".5" stop-color="#aab2bd"/>
+          <stop offset="1"  stop-color="#6e7682"/>
+        </linearGradient>
+        <linearGradient id="metalD" x1="0" x2="1">
+          <stop offset="0"  stop-color="#9aa3ae"/>
+          <stop offset="1"  stop-color="#4a525c"/>
+        </linearGradient>
+      </defs>
+      <!-- base -->
+      <ellipse cx="180" cy="455" rx="90" ry="14" fill="rgba(0,0,0,0.5)"/>
+      <rect x="120" y="400" width="120" height="50" rx="10" fill="url(#metalD)"/>
+      <!-- shoulder -->
+      <rect x="140" y="320" width="80" height="90" rx="14" fill="url(#metal)"/>
+      <circle cx="180" cy="320" r="36" fill="url(#metalD)"/>
+      <!-- upper arm -->
+      <rect x="160" y="190" width="40" height="140" rx="14" fill="url(#metal)" transform="rotate(-8 180 260)"/>
+      <circle cx="156" cy="195" r="22" fill="url(#metalD)" transform="rotate(-8 180 260)"/>
+      <!-- forearm -->
+      <rect x="170" y="120" width="34" height="100" rx="12" fill="url(#metal)" transform="rotate(18 187 170)"/>
+      <circle cx="187" cy="125" r="18" fill="url(#metalD)" transform="rotate(18 187 170)"/>
+      <!-- wrist + TCP -->
+      <g transform="translate(225,110)">
+        <rect x="-10" y="-12" width="36" height="24" rx="6" fill="url(#metalD)"/>
+        <rect x="20" y="-6" width="18" height="12" rx="3" fill="#1c82fe"/>
+        <circle cx="38" cy="0" r="6" fill="#22c55e" filter="drop-shadow(0 0 6px #22c55e)"/>
+      </g>
+      <!-- ABB-style yellow accent -->
+      <rect x="120" y="395" width="120" height="6" fill="#f7c948"/>
+    </svg>
+  </div>
+
+  <!-- Trajectory ghost in the world (SVG over the stage) -->
+  <svg class="traj">
+    <defs>
+      <linearGradient id="trajG" x1="0" x2="1">
+        <stop offset="0" stop-color="#1c82fe" stop-opacity="0"/>
+        <stop offset="0.5" stop-color="#1c82fe" stop-opacity="0.9"/>
+        <stop offset="1" stop-color="#6e3cff" stop-opacity="0.9"/>
+      </linearGradient>
+    </defs>
+    <!-- a faint arc rising up to the TCP -->
+    <path d="M 30% 80% Q 40% 50%, 58% 30%" stroke="url(#trajG)" stroke-width="2.5" fill="none" stroke-dasharray="6 6" stroke-linecap="round"/>
+    <!-- target marker -->
+    <circle cx="58%" cy="30%" r="8" fill="none" stroke="#1c82fe" stroke-width="2"/>
+    <circle cx="58%" cy="30%" r="3" fill="#1c82fe"/>
+  </svg>
+
+  <!-- WORLD-ANCHORED LABELS on the robot -->
+  <div class="world-label left"  style="left: 28%; top: 42%;">
+    <span class="ln"></span>
+    Motors <b style="color:#7ee2a8">ON</b>
+  </div>
+  <div class="world-label right" style="left: 60%; top: 30%;">
+    <span class="ln"></span>
+    TCP · 0.450 / 0.120 / 0.380
+  </div>
+  <div class="world-label left" style="left: 28%; top: 60%;">
+    <span class="ln"></span>
+    J3 · 38.2° <span style="color:var(--warn)">(nahe Limit)</span>
+  </div>
+  <div class="world-label right" style="left: 60%; top: 70%;">
+    <span class="ln"></span>
+    Workspace-Box aktiv
+  </div>
+
+  <!-- ============ NEAR-FIELD DETAIL PANEL (right) ============ -->
+  <div class="panel3d near">
+    <div class="panel-title"><span class="pin"></span>Teleop · Live</div>
+    <div class="panel-body">
+      <div class="pose-grid">
+        <div class="c"><div class="l">X (m)</div><div class="v" id="px">+0.450</div></div>
+        <div class="c"><div class="l">Y (m)</div><div class="v" id="py">+0.120</div></div>
+        <div class="c"><div class="l">Z (m)</div><div class="v" id="pz">+0.380</div></div>
+        <div class="c"><div class="l">Roll</div> <div class="v">+0.0°</div></div>
+        <div class="c"><div class="l">Pitch</div><div class="v">-90.0°</div></div>
+        <div class="c"><div class="l">Yaw</div>  <div class="v" id="ry">+45.0°</div></div>
+      </div>
+      <div style="margin-top:14px; font-size:11px; color:var(--text-mute); text-transform:uppercase; letter-spacing:1px;">Joints</div>
+      <div id="joints" style="margin-top:6px;"></div>
+      <div style="display:flex; gap:6px; margin-top:12px; flex-wrap:wrap;">
+        <span class="chip"><span class="dot ok"></span>EGM Pose</span>
+        <span class="chip">Lat 4.2ms</span>
+        <span class="chip">v=25%</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ MINI INFO (top-left, world-anchored) ============ -->
+  <div class="panel3d mini">
+    <div class="panel-title"><span class="pin"></span>Session</div>
+    <div class="panel-body">
+      <div class="row"><span class="k">Demo</span><span id="demo-name">Cube Stacking</span></div>
+      <div class="row"><span class="k">Schritt</span><span>3 / 4</span></div>
+      <div class="row"><span class="k">Zeit</span><span>00:42</span></div>
+      <div class="row"><span class="k">Modus</span><span>Pose</span></div>
+      <div class="row"><span class="k">Roboter</span><span>GoFa 500126</span></div>
+    </div>
+  </div>
+
+  <!-- ============ WEDGE / RADIAL MENU (Tilt-Brush style) ============ -->
+  <div class="wedge" id="wedge">
+    <div class="wedge-tag">Pinch + Wrist-Rotate</div>
+    <svg viewBox="-160 -160 320 320">
+      <!-- 8 slices, generated angles 0..360 -->
+      <g id="wedge-slices"></g>
+      <!-- hub -->
+      <circle class="hub" r="34"/>
+      <text y="-4" style="font-size:10px;letter-spacing:1.5px;fill:#9aa3b2;">PINCH</text>
+      <text y="10" style="font-size:9px;fill:#6b7382;">+ rotate</text>
+    </svg>
+  </div>
+
+  <!-- ============ ROTARY KNOBS PANEL ============ -->
+  <div class="panel3d knobs">
+    <div class="panel-title"><span class="pin"></span>Live-Tuning</div>
+    <div class="panel-body">
+      <div class="knob-grid">
+        <div class="knob" data-min="0" data-max="100" data-val="25" data-unit="%">
+          <div class="dial"><div class="ring-ticks"></div></div>
+          <div class="lbl">Speed</div>
+          <div class="val">25%</div>
+        </div>
+        <div class="knob" data-min="0" data-max="200" data-val="100" data-unit="">
+          <div class="dial"><div class="ring-ticks"></div></div>
+          <div class="lbl">Gain</div>
+          <div class="val">1.00</div>
+        </div>
+        <div class="knob" data-min="0" data-max="100" data-val="60" data-unit="">
+          <div class="dial"><div class="ring-ticks"></div></div>
+          <div class="lbl">Damp</div>
+          <div class="val">0.60</div>
+        </div>
+      </div>
+      <div style="margin-top:10px; font-size:10px; color:var(--text-mute); text-align:center;">
+        🤏 Pinch + Hand drehen
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ FLOATING E-STOP ORB ============ -->
+  <div class="estop-orb" onclick="estop()">STOP</div>
+
+  <!-- ============ DEMO CAROUSEL (bottom, near-field) ============ -->
+  <div class="demos" id="demos">
+    <!-- tiles inserted by JS -->
+  </div>
+
+  <!-- ============ WRIST MENU (palm-up gesture) ============ -->
+  <div class="wrist">
+    <div class="arm"></div>
+    <div class="palm"></div>
+    <div class="panel3d">
+      <div class="panel-title"><span class="pin"></span>Wrist Menu · Linke Hand ↑</div>
+      <div class="wrist-menu">
+        <div class="item active"><div class="ic">⌖</div><div class="lb">Teleop</div></div>
+        <div class="item"><div class="ic">⏺</div><div class="lb">Record</div></div>
+        <div class="item"><div class="ic">↻</div><div class="lb">Reset</div></div>
+        <div class="item"><div class="ic">⌂</div><div class="lb">Home</div></div>
+        <div class="item"><div class="ic">◎</div><div class="lb">Kalib</div></div>
+        <div class="item"><div class="ic">⇄</div><div class="lb">Verbind</div></div>
+        <div class="item"><div class="ic">📷</div><div class="lb">Snap</div></div>
+        <div class="item"><div class="ic">⚙</div><div class="lb">Settings</div></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ============ GAZE RETICLE + HAND CURSORS ============ -->
+<div class="reticle"></div>
+<div class="hand left"><div class="ring"></div><div class="core"></div><div class="lbl">L · open</div></div>
+<div class="hand right"><div class="ring"></div><div class="core"></div><div class="lbl">R · pinch</div></div>
+
+<!-- ============ LEGEND (so du beim Anschauen kapierst was was ist) ============ -->
+<div class="legend">
+  <b>So funktioniert AR-UI hier:</b>
+  <ul>
+    <li><b>Head-locked HUD oben</b> — minimal, immer da</li>
+    <li><b>Labels am Roboter</b> — kleben im Raum, nicht am Bildschirm</li>
+    <li><b>Near-Field Panel rechts</b> — Armlänge, greifbar/verschiebbar</li>
+    <li><b>Wrist-Menu unten links</b> — am Unterarm, Palm-up Geste</li>
+    <li><b>Demo-Tiles unten</b> — niedrige Frequenz, weiter weg</li>
+    <li><b>Rote Kugel</b> — Notstop, schwebt griffbereit</li>
+    <li><b>Trajektorie</b> — als 3D-Linie im Raum, nicht im Menü</li>
+    <li><b>Gaze + Pinch</b> — kein Mauszeiger</li>
+    <li><b>Wedge-Menu</b> — Pinch + Handgelenk drehen wählt Slice</li>
+    <li><b>Knobs</b> — Pinch greifen, Hand drehen (hier: drag/scroll)</li>
+  </ul>
+</div>
+
+<div class="toast">👋 Linke Handfläche nach oben → Wrist-Menu · Rechts pinch → auswählen</div>
+
+<script>
+  // Joints
+  const jointsEl = document.getElementById('joints');
+  const names = ['J1','J2','J3','J4','J5','J6'];
+  const ranges = [[-180,180],[-100,135],[-200,70],[-270,270],[-130,130],[-360,360]];
+  let vals = [12, -45, 38, -120, 60, 90];
+  jointsEl.innerHTML = names.map((n,i)=>`
+    <div class="jrow">
+      <div class="nm">${n}</div>
+      <div class="tk"><div class="fl" id="f${i}"></div></div>
+      <div class="vl" id="v${i}">${vals[i].toFixed(1)}°</div>
+    </div>`).join('');
+  function paintJoints(){
+    vals.forEach((v,i)=>{
+      const [lo,hi]=ranges[i]; const t=(v-lo)/(hi-lo);
+      const f=document.getElementById('f'+i); f.style.width=(t*100).toFixed(1)+'%';
+      document.getElementById('v'+i).textContent=v.toFixed(1)+'°';
+    });
+  }
+  paintJoints();
+
+  // Demo carousel
+  const demos = [
+    {n:'Cube Stacking', s:`<rect width="130" height="90" fill="#243042"/><rect x="50" y="55" width="20" height="20" fill="#ef4444"/><rect x="70" y="55" width="20" height="20" fill="#22c55e"/><rect x="60" y="35" width="20" height="20" fill="#f59e0b"/>`, a:true},
+    {n:'Bin Picking',   s:`<rect width="130" height="90" fill="#1b2030"/><rect x="20" y="35" width="90" height="45" fill="none" stroke="#6e3cff" stroke-width="2"/><circle cx="40" cy="60" r="6" fill="#ef4444"/><circle cx="60" cy="65" r="7" fill="#22c55e"/><circle cx="85" cy="58" r="5" fill="#f59e0b"/>`},
+    {n:'Color Sort',    s:`<rect width="130" height="90" fill="#221a30"/><rect x="15" y="55" width="25" height="20" fill="#ef4444"/><rect x="52" y="55" width="25" height="20" fill="#22c55e"/><rect x="89" y="55" width="25" height="20" fill="#1c82fe"/>`},
+    {n:'Peg in Hole',   s:`<rect width="130" height="90" fill="#101a25"/><rect x="50" y="20" width="20" height="45" fill="#1c82fe"/><rect x="35" y="65" width="55" height="10" fill="#2a3445"/>`},
+    {n:'Handover',      s:`<rect width="130" height="90" fill="#1a1525"/><circle cx="30" cy="50" r="14" fill="#6e3cff" opacity=".7"/><circle cx="100" cy="50" r="14" fill="#1c82fe" opacity=".7"/><rect x="50" y="46" width="30" height="8" fill="#f59e0b"/>`},
+    {n:'Free Teleop',   s:`<rect width="130" height="90" fill="#0e1c1c"/><path d="M 15 70 Q 65 15 115 70" stroke="#22c55e" stroke-width="2" fill="none"/><circle cx="115" cy="70" r="5" fill="#22c55e"/>`},
+  ];
+  const demosEl = document.getElementById('demos');
+  demosEl.innerHTML = demos.map((d,i)=>`
+    <div class="demo-tile ${d.a?'active':''}" data-i="${i}">
+      <svg viewBox="0 0 130 90">${d.s}</svg>
+      <div class="cap">${d.n}</div>
+    </div>`).join('');
+  demosEl.addEventListener('click', e=>{
+    const t = e.target.closest('.demo-tile'); if (!t) return;
+    demosEl.querySelectorAll('.demo-tile').forEach(x=>x.classList.remove('active'));
+    t.classList.add('active');
+    document.getElementById('demo-name').textContent = demos[+t.dataset.i].n;
+  });
+
+  // Animate pose & joints (faux live data)
+  let t=0;
+  setInterval(()=>{
+    t += 0.05;
+    vals = vals.map((v,i)=> v + Math.sin(t+i)*0.5);
+    paintJoints();
+    document.getElementById('px').textContent = '+'+(0.45 + Math.sin(t)*0.05).toFixed(3);
+    document.getElementById('py').textContent = (0.12 + Math.cos(t*0.7)*0.04 >= 0 ? '+' : '') + (0.12 + Math.cos(t*0.7)*0.04).toFixed(3);
+    document.getElementById('pz').textContent = '+'+(0.38 + Math.sin(t*1.3)*0.03).toFixed(3);
+    document.getElementById('ry').textContent = (45 + Math.sin(t*0.6)*5).toFixed(1)+'°';
+  }, 80);
+
+  // Hand cursors gently drift
+  const handL = document.querySelector('.hand.left');
+  const handR = document.querySelector('.hand.right');
+  let h=0;
+  setInterval(()=>{
+    h += 0.04;
+    handL.style.transform = `translate(-50%,-50%) translate(${Math.sin(h)*8}px,${Math.cos(h*0.8)*5}px)`;
+    handR.style.transform = `translate(-50%,-50%) translate(${Math.cos(h*0.9)*6}px,${Math.sin(h*1.1)*4}px)`;
+  }, 40);
+
+  // Reticle follows mouse (faux gaze)
+  const ret = document.querySelector('.reticle');
+  document.addEventListener('mousemove', e => {
+    ret.style.left = e.clientX + 'px';
+    ret.style.top  = e.clientY + 'px';
+  });
+
+  // ===== Wedge / radial menu =====
+  const wedgeItems = [
+    {ic:'⌖', lb:'Teleop',  active:true},
+    {ic:'⏺', lb:'Record'},
+    {ic:'↻', lb:'Reset'},
+    {ic:'📷', lb:'Snap'},
+    {ic:'⌂', lb:'Home'},
+    {ic:'◎', lb:'Kalib'},
+    {ic:'⚙', lb:'Setup'},
+    {ic:'⇄', lb:'Verbind'},
+  ];
+  const N = wedgeItems.length;
+  const slicesEl = document.getElementById('wedge-slices');
+  const R_OUT = 150, R_IN = 38;
+  function polar(r, deg){ const a=(deg-90)*Math.PI/180; return [Math.cos(a)*r, Math.sin(a)*r]; }
+  function sliceArc(i){
+    const a0 = (360/N)*i - 90 - 360/(N*2);   // center slice at top first
+    const a1 = a0 + 360/N;
+    const [x0o,y0o] = polar(R_OUT, a0+90);
+    const [x1o,y1o] = polar(R_OUT, a1+90);
+    const [x0i,y0i] = polar(R_IN,  a0+90);
+    const [x1i,y1i] = polar(R_IN,  a1+90);
+    return `M ${x0i} ${y0i} L ${x0o} ${y0o} A ${R_OUT} ${R_OUT} 0 0 1 ${x1o} ${y1o} L ${x1i} ${y1i} A ${R_IN} ${R_IN} 0 0 0 ${x0i} ${y0i} Z`;
+  }
+  slicesEl.innerHTML = wedgeItems.map((it,i)=>{
+    const angDeg = (360/N)*i;          // center angle of this slice
+    const [tx, ty] = polar((R_OUT+R_IN)/2, angDeg);
+    return `
+      <g class="slice-g">
+        <path class="slice ${it.active?'active':''}" d="${sliceArc(i)}" data-i="${i}"/>
+        <text class="ic" x="${tx}" y="${ty-8}">${it.ic}</text>
+        <text x="${tx}" y="${ty+12}">${it.lb}</text>
+      </g>`;
+  }).join('');
+  slicesEl.addEventListener('click', e=>{
+    const p = e.target.closest('.slice'); if (!p) return;
+    slicesEl.querySelectorAll('.slice').forEach(x=>x.classList.remove('active'));
+    p.classList.add('active');
+  });
+
+  // ===== Rotary knobs (click+drag, or scroll wheel) =====
+  document.querySelectorAll('.knob').forEach(k=>{
+    const dial = k.querySelector('.dial');
+    const ring = k.querySelector('.ring-ticks');
+    const valEl= k.querySelector('.val');
+    const min = +k.dataset.min, max = +k.dataset.max;
+    let val = +k.dataset.val;
+    const unit = k.dataset.unit;
+    const range = 270; // total sweep in degrees, -135..+135
+
+    function paint(){
+      const t = (val - min) / (max - min);
+      const deg = -135 + t * range;          // rotation of the dial pointer
+      dial.style.transform = `rotate(${deg}deg)`;
+      ring.style.setProperty('--arc', (t*270)+'deg');
+      const display = unit === '%'
+        ? Math.round(val) + '%'
+        : (val/100).toFixed(2);
+      valEl.textContent = display;
+    }
+    paint();
+
+    // drag to rotate
+    let dragging=false, lastY=0;
+    dial.addEventListener('pointerdown', e=>{
+      dragging=true; lastY=e.clientY;
+      dial.setPointerCapture(e.pointerId);
+      dial.style.cursor='grabbing';
+    });
+    dial.addEventListener('pointermove', e=>{
+      if (!dragging) return;
+      const dy = lastY - e.clientY;
+      lastY = e.clientY;
+      val = Math.max(min, Math.min(max, val + dy*0.5));
+      paint();
+    });
+    dial.addEventListener('pointerup', e=>{ dragging=false; dial.style.cursor='grab'; });
+    dial.addEventListener('wheel', e=>{
+      e.preventDefault();
+      val = Math.max(min, Math.min(max, val - Math.sign(e.deltaY)*2));
+      paint();
+    }, {passive:false});
+  });
+
+  function estop() {
+    document.body.style.filter = 'sepia(0.3) saturate(2) hue-rotate(-20deg)';
+    setTimeout(()=> document.body.style.filter = '', 500);
+    alert('NOT-HALT (Mockup) — Motors OFF, EGM stop.');
+  }
+
+  // Wrist menu items just toggle active state
+  document.querySelectorAll('.wrist-menu .item').forEach(it=>{
+    it.addEventListener('click', ()=>{
+      document.querySelectorAll('.wrist-menu .item').forEach(x=>x.classList.remove('active'));
+      it.classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>

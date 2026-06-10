@@ -1,0 +1,207 @@
+<?xml version="1.0"?>
+<!--
+  ABB CRB 15000 (GoFa-5/0.95) URDF for Gazebo Sim headless + ros2_control.
+
+  Inertias and link geometry sourced from:
+    https://github.com/MerlinLaboratory/ABB_omnicore_ros_driver (BSD-licensed)
+  Renamed to match the joint_1..joint_6 / base_link / link_1..link_6 conventions
+  used elsewhere in this workspace (Servo, MoveIt config, Unity rig).
+
+  Wiring contract for ros2_control:
+    - hardware: gz_ros2_control/GazeboSimSystem
+    - controllers loaded by gazebo_controllers.yaml:
+        * joint_state_broadcaster -> publishes /joint_states
+        * joint_group_position_controller -> consumes Float64MultiArray on
+          /joint_group_position_controller/commands (Servo remap target)
+-->
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="abb_crb15000_5_95">
+  <xacro:arg name="controllers_file" default="$(find abb_crb15000_gazebo)/config/gazebo_controllers.yaml"/>
+
+  <xacro:property name="joint_damping" value="0.5"/>
+  <xacro:property name="max_effort" value="300"/>
+  <xacro:property name="mesh_pkg" value="package://abb_crb15000_gazebo"/>
+
+  <material name="gofa_color">
+    <color rgba="0.792 0.819 0.933 1"/>
+  </material>
+
+  <xacro:macro name="vc" params="suffix">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="${mesh_pkg}/meshes/Gofa/${suffix}.STL"/></geometry>
+      <material name="gofa_color"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><mesh filename="${mesh_pkg}/meshes/Gofa/${suffix}.STL"/></geometry>
+    </collision>
+  </xacro:macro>
+
+  <link name="world"/>
+
+  <!-- base_link -->
+  <joint name="world_to_base" type="fixed">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <parent link="world"/>
+    <child link="base_link"/>
+  </joint>
+  <link name="base_link">
+    <inertial>
+      <origin xyz="-0.0012013793465437 -0.000175191786981708 0.0862146007385352" rpy="0 0 0"/>
+      <mass value="3.50083457958494"/>
+      <inertia ixx="0.0153015257917955" ixy="-6.40155032892694E-05" ixz="-0.000276708687772683"
+               iyy="0.0159333503953857" iyz="-3.98029144780725E-05" izz="0.0112162302268266"/>
+    </inertial>
+    <xacro:vc suffix="base"/>
+  </link>
+
+  <!-- link_1 -->
+  <link name="link_1">
+    <inertial>
+      <origin xyz="2.08682453325091E-06 0.0103608399967513 0.0705307203199506" rpy="0 0 0"/>
+      <mass value="2.76743491139404"/>
+      <inertia ixx="0.0115158625894577" ixy="6.37197693598838E-08" ixz="5.98954393680154E-09"
+               iyy="0.006494848329231" iyz="-0.000196668400316843" izz="0.0109446835358581"/>
+    </inertial>
+    <xacro:vc suffix="L1"/>
+  </link>
+  <joint name="joint_1" type="revolute">
+    <origin xyz="0 0 0.1875" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="link_1"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="${max_effort}" lower="${radians(-180)}" upper="${radians(180)}" velocity="${radians(125)}"/>
+    <dynamics damping="${joint_damping}"/>
+  </joint>
+
+  <!-- link_2 -->
+  <link name="link_2">
+    <inertial>
+      <origin xyz="1.34018352211628E-06 -0.0500118376116071 0.222001399322246" rpy="0 0 0"/>
+      <mass value="4.28904168670464"/>
+      <inertia ixx="0.130524729873898" ixy="1.31811857134115E-07" ixz="1.99022457670482E-06"
+               iyy="0.133278449324229" iyz="-4.48622200366709E-07" izz="0.00669457974697178"/>
+    </inertial>
+    <xacro:vc suffix="L2"/>
+  </link>
+  <joint name="joint_2" type="revolute">
+    <origin xyz="0 -0.085 0.0775" rpy="0 0 0"/>
+    <parent link="link_1"/>
+    <child link="link_2"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="${max_effort}" lower="${radians(-180)}" upper="${radians(180)}" velocity="${radians(125)}"/>
+    <dynamics damping="${joint_damping}"/>
+  </joint>
+
+  <!-- link_3 -->
+  <link name="link_3">
+    <inertial>
+      <origin xyz="0.0128129281453599 0.0944171780907046 0.0247427540642403" rpy="0 0 0"/>
+      <mass value="3.38333107992875"/>
+      <inertia ixx="0.0175626138728642" ixy="0.000364866179108744" ixz="-0.00318670290285352"
+               iyy="0.0140230068919562" iyz="0.000704668055158407" izz="0.013275205067567"/>
+    </inertial>
+    <xacro:vc suffix="L3"/>
+  </link>
+  <joint name="joint_3" type="revolute">
+    <origin xyz="0 -0.001 0.444" rpy="0 0 0"/>
+    <parent link="link_2"/>
+    <child link="link_3"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="${max_effort}" lower="${radians(-225)}" upper="${radians(85)}" velocity="${radians(140)}"/>
+    <dynamics damping="${joint_damping}"/>
+  </joint>
+
+  <!-- link_4 -->
+  <link name="link_4">
+    <inertial>
+      <origin xyz="0.160558561602322 0.041976811408979 -2.36623354021859E-07" rpy="0 0 0"/>
+      <mass value="2.77857535641324"/>
+      <inertia ixx="0.00881683095901354" ixy="-0.010746260580237" ixz="1.2899930119841E-07"
+               iyy="0.0340754175571832" iyz="3.96362791626429E-08" izz="0.0389358932156922"/>
+    </inertial>
+    <xacro:vc suffix="L4"/>
+  </link>
+  <joint name="joint_4" type="revolute">
+    <origin xyz="0.096 0.086 0.11" rpy="0 0 0"/>
+    <parent link="link_3"/>
+    <child link="link_4"/>
+    <axis xyz="1 0 0"/>
+    <limit effort="${max_effort}" lower="${radians(-180)}" upper="${radians(180)}" velocity="${radians(200)}"/>
+    <dynamics damping="${joint_damping}"/>
+  </joint>
+
+  <!-- link_5 -->
+  <link name="link_5">
+    <inertial>
+      <origin xyz="-0.0147152361879962 -0.0785646469392633 0.0427558021601431" rpy="0 0 0"/>
+      <mass value="3.01105814739001"/>
+      <inertia ixx="0.0114597336686444" ixy="0.000180094704361231" ixz="0.00165207280226761"
+               iyy="0.013561904467501" iyz="-0.000525272443978826" izz="0.0108480119549914"/>
+    </inertial>
+    <xacro:vc suffix="L5"/>
+  </link>
+  <joint name="joint_5" type="revolute">
+    <origin xyz="0.374 0.0745 0" rpy="0 0 0"/>
+    <parent link="link_4"/>
+    <child link="link_5"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="${max_effort}" lower="${radians(-180)}" upper="${radians(180)}" velocity="${radians(200)}"/>
+    <dynamics damping="${joint_damping}"/>
+  </joint>
+
+  <!-- link_6 -->
+  <link name="link_6">
+    <inertial>
+      <origin xyz="0.0137506852604966 0.000239804131398652 -0.000341962798940165" rpy="0 0 0"/>
+      <mass value="0.146500988015653"/>
+      <inertia ixx="0.000128977630055306" ixy="-8.7622752508613E-08" ixz="1.18851551870012E-07"
+               iyy="7.61118177829087E-05" iyz="-6.49821554399679E-07" izz="7.65022909768016E-05"/>
+    </inertial>
+    <xacro:vc suffix="L6"/>
+  </link>
+  <joint name="joint_6" type="revolute">
+    <origin xyz="0.068 -0.0745 0.08" rpy="0 0 0"/>
+    <parent link="link_5"/>
+    <child link="link_6"/>
+    <axis xyz="1 0 0"/>
+    <limit effort="${max_effort}" lower="${radians(-270)}" upper="${radians(270)}" velocity="${radians(200)}"/>
+    <dynamics damping="${joint_damping}"/>
+  </joint>
+
+  <!-- tool0 flange — fixed offset, matches abb_crb15000_support convention -->
+  <link name="tool0"/>
+  <joint name="link_6_to_tool0" type="fixed">
+    <origin xyz="0.0336 0 0" rpy="0 ${radians(90)} 0"/>
+    <parent link="link_6"/>
+    <child link="tool0"/>
+  </joint>
+
+  <!-- ros2_control + Gazebo Sim hardware interface -->
+  <ros2_control name="GazeboSimSystem" type="system">
+    <hardware>
+      <plugin>gz_ros2_control/GazeboSimSystem</plugin>
+    </hardware>
+    <xacro:macro name="jblk" params="jname init">
+      <joint name="${jname}">
+        <command_interface name="position"/>
+        <state_interface name="position">
+          <param name="initial_value">${init}</param>
+        </state_interface>
+        <state_interface name="velocity"/>
+      </joint>
+    </xacro:macro>
+    <xacro:jblk jname="joint_1" init="0"/>
+    <xacro:jblk jname="joint_2" init="0"/>
+    <xacro:jblk jname="joint_3" init="0"/>
+    <xacro:jblk jname="joint_4" init="0"/>
+    <xacro:jblk jname="joint_5" init="${radians(30)}"/>
+    <xacro:jblk jname="joint_6" init="0"/>
+  </ros2_control>
+
+  <gazebo>
+    <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
+      <parameters>$(arg controllers_file)</parameters>
+    </plugin>
+  </gazebo>
+</robot>

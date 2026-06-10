@@ -1,7 +1,9 @@
 trajectory_execution:
-  allowed_execution_duration_scaling: 1.2
-  allowed_goal_duration_margin: 0.5
-  allowed_start_tolerance: 0.01
+  # EGM-Joint cap is 10°/s in RAPID — much slower than MoveIt's plan duration.
+  # Bump scaling so MoveIt waits for slow physical execution.
+  allowed_execution_duration_scaling: 50.0
+  allowed_goal_duration_margin: 5.0
+  allowed_start_tolerance: 0.05
   trajectory_duration_monitoring: true
 
 moveit_controller_manager: moveit_simple_controller_manager/MoveItSimpleControllerManager

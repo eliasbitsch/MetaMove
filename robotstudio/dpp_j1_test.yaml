@@ -1,0 +1,7 @@
+# J1+5° micro-test. Other joints same as current pose.
+# Current was J1=-2.55, J2=-5.09, J3=12.22, J4=28.60, J5=62.63, J6=243.07 (deg)
+# Target:    J1=+2.45 (Δ=+5°), rest unchanged
+# Joints in radians.
+waypoints:
+  - name: j1_plus_5deg
+    joints: [0.04276, -0.08881, 0.21319, 0.49913, 1.09319, 4.24234]

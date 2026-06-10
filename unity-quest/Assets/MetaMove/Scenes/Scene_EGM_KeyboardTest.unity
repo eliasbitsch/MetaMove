@@ -526,9 +526,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b3f4590555548e42949ea4beba78e1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MetaMove.Robot.EGM.EgmKeyboardTester
-  mode: 0
+  mode: 1
   egmPose: {fileID: 0}
-  egmJoint: {fileID: 2079611694}
+  egmJoint: {fileID: 2079611692}
   autoSwitchRapidMode: 1
   rwsHost: 192.168.125.1
   rwsUser: Default User
@@ -585,10 +585,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f47281aa9b3a5f4c96f24dbb81f893d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MetaMove.Robot.EGM.EgmClient
-  listenPort: 6512
+  listenPort: 6511
   autoDetectRemote: 1
-  remoteHost: 192.168.125.1
-  remotePort: 6511
+  remoteHost: 10.0.0.20
+  remotePort: 6512
   _packetsReceived: 0
   _packetsSent: 0
   _hz: 0

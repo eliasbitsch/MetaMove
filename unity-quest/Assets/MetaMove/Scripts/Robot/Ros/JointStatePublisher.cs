@@ -53,7 +53,7 @@ namespace MetaMove.Robot.Ros
             for (int i = 0; i < n; i++) pos[i] = fb.joints.joints[i] * Deg2Rad;
 
             double now = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalSeconds;
-            uint sec = (uint)now;
+            int sec = (int)now;
             uint nanosec = (uint)((now - sec) * 1e9);
             var stamp = new TimeMsg();
             stamp.sec = sec;

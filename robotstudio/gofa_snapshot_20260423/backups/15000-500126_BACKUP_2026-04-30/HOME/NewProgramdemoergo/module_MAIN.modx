@@ -1,0 +1,26 @@
+MODULE module_MAIN 
+!    
+!       ---------------------------------   
+!                   GoHolo    
+!       ---------------------------------
+!
+!       Copyright (C)   2021 Jakob Hörbst
+!       author:         Jakob Hörbst
+!       email:          jakob@hoerbst.net
+!       year:           2021
+!
+!       ---------------------------------   
+!                  Extension   
+!       ---------------------------------
+!
+!       Copyright (C)   2022 Alexander Korn
+!       author:         Alexander Korn
+!       email:          alexander-korn@gmx.at
+!       year:           2022
+!
+
+PROC main()
+    !mainGoHolo;
+	Test2; ! Go GoFa
+ENDPROC
+ENDMODULE

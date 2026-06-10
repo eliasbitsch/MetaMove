@@ -1,0 +1,5 @@
+# Home pose: J5=30° non-singular, alle anderen 0
+# Joints in radians (J5 = 30° = 0.5236 rad)
+waypoints:
+  - name: home_j5_30
+    joints: [0.0, 0.0, 0.0, 0.0, 0.5236, 0.0]

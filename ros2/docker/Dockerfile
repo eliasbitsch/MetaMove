@@ -31,6 +31,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         ros-jazzy-foxglove-bridge \
         ros-jazzy-rosbridge-suite \
         ros-jazzy-ros-testing \
+        ros-jazzy-octomap ros-jazzy-octomap-msgs \
+        ros-jazzy-octomap-server ros-jazzy-octomap-rviz-plugins \
         iputils-ping iproute2 curl jq tmux nano \
     && rm -rf /var/lib/apt/lists/*
 

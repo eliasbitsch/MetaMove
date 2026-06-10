@@ -1,0 +1,7 @@
+# Safety test: one waypoint = current robot pose.
+# When dpp_egm_drive.py runs with this, robot should STAY PUT.
+# joints in radians (per dpp_teach.py format)
+# Current was: J1=-2.55, J2=-5.09, J3=12.22, J4=28.60, J5=62.63, J6=243.07 (deg)
+waypoints:
+  - name: stay_put
+    joints: [-0.04451, -0.08881, 0.21319, 0.49913, 1.09319, 4.24234]

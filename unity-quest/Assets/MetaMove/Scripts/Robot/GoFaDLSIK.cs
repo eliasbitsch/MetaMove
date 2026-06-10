@@ -5,14 +5,12 @@ namespace MetaMove.Robot
     /// <summary>
     /// Damped Least Squares IK solver for a 6-DOF serial chain.
     ///
-    /// Builds a 3x6 position Jacobian (each column = axis_i × (ee - joint_i)),
-    /// solves dθ = Jᵀ (J Jᵀ + λ²I)⁻¹ Δp per iteration. Damping (λ) prevents
-    /// the pseudo-inverse from blowing up near singularities — a stability
-    /// problem that cripples plain CCDIK on long chains.
+    /// Builds a 6x6 Jacobian (linear: axis × (ee - joint); angular: axis), solves
+    /// dθ = Jᵀ (J Jᵀ + λ²I)⁻¹ Δx per iteration. Δx is a 6D twist (3 position + 3
+    /// orientation error). When useOrientation = false the orientation rows are
+    /// zeroed and the solver degenerates to position-only.
     ///
-    /// Drop-in replacement for GoFaCCDIK: same JointSpec / endEffector / target
-    /// fields. Disable the CCDIK component on the robot root and add this one,
-    /// rewire GoFaCCDIK.target consumers to point at this script if needed.
+    /// Drop-in for GoFaCCDIK: same JointSpec / endEffector / target fields.
     /// </summary>
     [DefaultExecutionOrder(1000)]
     public class GoFaDLSIK : MonoBehaviour
@@ -38,27 +36,49 @@ namespace MetaMove.Robot
         [Tooltip("Iterations per frame. 3–6 is usually enough for DLS.")]
         [Range(1, 20)] public int iterations = 4;
 
-        [Tooltip("Damping λ (in world units, here scaled metres). Lower = more responsive but unstable near singularities. Higher = smoother but slower convergence.")]
+        [Tooltip("Damping λ. Lower = more responsive but unstable near singularities. Higher = smoother but slower convergence.")]
         [Range(0.001f, 5f)] public float damping = 0.5f;
 
-        [Tooltip("Position tolerance in world units. Solver stops when closer.")]
+        [Tooltip("Position tolerance in world units. Solver stops when position + orientation error both within tolerance.")]
         public float positionTolerance = 0.005f;
+
+        [Tooltip("Orientation tolerance in degrees. Solver stops when orientation error below this AND position within positionTolerance.")]
+        public float orientationToleranceDeg = 1f;
 
         [Tooltip("Maximum joint-angle change per iteration (degrees). Caps runaway steps when target is far away.")]
         [Range(0.5f, 30f)] public float maxStepDegPerIter = 5f;
 
-        // Cached rest local rotations + accumulated angle deltas. Same pattern
-        // as GoFaCCDIK so changing solvers doesn't change the joint book-keeping.
+        [Tooltip("If true, the solver also matches target orientation (full 6-DOF). If false, position-only.")]
+        public bool useOrientation = true;
+
+        [Tooltip("Scales the orientation rows in the error vector. 1 = position and orientation equally weighted (per-radian vs per-metre — usually rad×~0.3 ≈ a 30cm move feels like 1 rad). 0 = position-only at runtime.")]
+        [Range(0f, 5f)] public float orientationWeight = 1f;
+
+        [Tooltip("Exponential smoothing on output joint angles. 0 = no smoothing (raw DLS), 1 = frozen. 0.2–0.4 kills 180° wraparound snaps without feeling laggy.")]
+        [Range(0f, 0.95f)] public float outputSmoothing = 0.25f;
+
+        [Header("Wrist-decoupled orientation")]
+        [Tooltip("If true (and useOrientation is on), position is solved using ALL joints, " +
+                 "while orientation is solved using ONLY the spherical-wrist joints " +
+                 "(wristStartIndex..5). Far more stable for hand-tracked demos: dragging " +
+                 "the ball moves the arm, rotating the hand only twists the wrist.")]
+        public bool orientationWristOnly = false;
+
+        [Tooltip("First joint index (0-based) of the spherical wrist. GoFa: J4 = index 3.")]
+        [Range(3, 5)] public int wristStartIndex = 3;
+
         Quaternion[] _restLocalRot;
         float[] _angleDeg;
+        float[] _angleDegSmoothed;
 
-        // Per-frame scratch buffers — sized once, reused per iteration.
-        readonly float[,] _J = new float[3, 6];
-        readonly float[,] _JJt = new float[3, 3];
-        readonly float[,] _JJtInv = new float[3, 3];
-        readonly float[] _errArr = new float[3];
-        readonly float[] _tmp3 = new float[3];
-        readonly float[] _dtheta = new float[6];
+        // Per-frame scratch buffers (6x6 worst-case).
+        const int N = 6;
+        readonly float[,] _J = new float[N, N];      // rows = task-space (3 pos + 3 rot), cols = joints
+        readonly float[,] _JJt = new float[N, N];
+        readonly float[,] _JJtInv = new float[N, N];
+        readonly float[] _errArr = new float[N];
+        readonly float[] _tmpN = new float[N];
+        readonly float[] _dtheta = new float[N];
 
         void Awake() => CacheRestPose();
         void OnValidate() => CacheRestPose();
@@ -68,10 +88,12 @@ namespace MetaMove.Robot
             if (joints == null) return;
             _restLocalRot = new Quaternion[joints.Length];
             _angleDeg = new float[joints.Length];
+            _angleDegSmoothed = new float[joints.Length];
             for (int i = 0; i < joints.Length; i++)
             {
                 _restLocalRot[i] = joints[i].joint != null ? joints[i].joint.localRotation : Quaternion.identity;
                 _angleDeg[i] = 0f;
+                _angleDegSmoothed[i] = 0f;
             }
         }
 
@@ -80,67 +102,194 @@ namespace MetaMove.Robot
             if (target == null || endEffector == null || joints == null || joints.Length != 6) return;
             if (_restLocalRot == null || _restLocalRot.Length != joints.Length) CacheRestPose();
 
+            int rows = useOrientation ? 6 : 3;
             float lambda2 = damping * damping;
+
+            // Wrist-decoupled mode: position by all joints, orientation by wrist only.
+            if (useOrientation && orientationWristOnly)
+            {
+                for (int iter = 0; iter < iterations; iter++)
+                {
+                    float pErr = DlsStep3(false, 0, 5, lambda2);                 // position: all joints
+                    float rErr = DlsStep3(true, wristStartIndex, 5, lambda2);    // orientation: wrist only
+                    bool pDone = pErr < positionTolerance;
+                    bool rDone = rErr < orientationToleranceDeg;
+                    if (pDone && rDone) break;
+                }
+                return;
+            }
 
             for (int iter = 0; iter < iterations; iter++)
             {
-                Vector3 err = target.position - endEffector.position;
-                if (err.sqrMagnitude < positionTolerance * positionTolerance) break;
+                // Position error
+                Vector3 posErr = target.position - endEffector.position;
 
-                // Build position Jacobian: column i = axis_i × (ee_pos - joint_i_pos)
-                for (int i = 0; i < 6; i++)
+                // Orientation error as axis*angle (rad) in world frame
+                Vector3 rotErr = Vector3.zero;
+                float rotErrAngleDeg = 0f;
+                if (useOrientation)
                 {
-                    if (joints[i].joint == null) { _J[0, i] = _J[1, i] = _J[2, i] = 0; continue; }
-                    Vector3 axis = WorldAxis(i);
-                    Vector3 r = endEffector.position - joints[i].joint.position;
-                    Vector3 col = Vector3.Cross(axis, r);
-                    _J[0, i] = col.x;
-                    _J[1, i] = col.y;
-                    _J[2, i] = col.z;
+                    Quaternion qErr = target.rotation * Quaternion.Inverse(endEffector.rotation);
+                    qErr.ToAngleAxis(out float angDeg, out Vector3 axis);
+                    if (angDeg > 180f) angDeg -= 360f; // shortest path
+                    rotErrAngleDeg = Mathf.Abs(angDeg);
+                    rotErr = axis.normalized * (angDeg * Mathf.Deg2Rad) * orientationWeight;
                 }
 
-                // J Jᵀ (3x3) + λ²I
-                for (int r = 0; r < 3; r++)
-                    for (int c = 0; c < 3; c++)
+                bool posDone = posErr.sqrMagnitude < positionTolerance * positionTolerance;
+                bool rotDone = !useOrientation || rotErrAngleDeg < orientationToleranceDeg;
+                if (posDone && rotDone) break;
+
+                // Build Jacobian
+                for (int i = 0; i < 6; i++)
+                {
+                    if (joints[i].joint == null)
+                    {
+                        for (int r = 0; r < rows; r++) _J[r, i] = 0;
+                        continue;
+                    }
+                    Vector3 axis = WorldAxis(i);
+                    Vector3 r3 = endEffector.position - joints[i].joint.position;
+                    Vector3 lin = Vector3.Cross(axis, r3);
+                    _J[0, i] = lin.x;
+                    _J[1, i] = lin.y;
+                    _J[2, i] = lin.z;
+                    if (useOrientation)
+                    {
+                        _J[3, i] = axis.x;
+                        _J[4, i] = axis.y;
+                        _J[5, i] = axis.z;
+                    }
+                }
+
+                // J Jᵀ + λ²I
+                for (int r = 0; r < rows; r++)
+                    for (int c = 0; c < rows; c++)
                     {
                         float s = 0f;
                         for (int k = 0; k < 6; k++) s += _J[r, k] * _J[c, k];
                         _JJt[r, c] = s;
                     }
-                _JJt[0, 0] += lambda2;
-                _JJt[1, 1] += lambda2;
-                _JJt[2, 2] += lambda2;
+                for (int d = 0; d < rows; d++) _JJt[d, d] += lambda2;
 
-                if (!Invert3x3(_JJt, _JJtInv)) continue; // singular even with damping → skip iter
+                if (!InvertNxN(_JJt, _JJtInv, rows)) continue; // singular → skip iter
 
-                // tmp = (J Jᵀ + λ²I)⁻¹ * err
-                _errArr[0] = err.x; _errArr[1] = err.y; _errArr[2] = err.z;
-                for (int r = 0; r < 3; r++)
+                // err vector
+                _errArr[0] = posErr.x; _errArr[1] = posErr.y; _errArr[2] = posErr.z;
+                if (useOrientation)
                 {
-                    float s = 0f;
-                    for (int k = 0; k < 3; k++) s += _JJtInv[r, k] * _errArr[k];
-                    _tmp3[r] = s;
+                    _errArr[3] = rotErr.x; _errArr[4] = rotErr.y; _errArr[5] = rotErr.z;
                 }
 
-                // dθ = Jᵀ * tmp (radians, since axis is unit and r is in metres)
+                // tmp = (J Jᵀ + λ²I)⁻¹ * err
+                for (int r = 0; r < rows; r++)
+                {
+                    float s = 0f;
+                    for (int k = 0; k < rows; k++) s += _JJtInv[r, k] * _errArr[k];
+                    _tmpN[r] = s;
+                }
+
+                // dθ = Jᵀ * tmp
                 for (int j = 0; j < 6; j++)
                 {
                     float s = 0f;
-                    for (int k = 0; k < 3; k++) s += _J[k, j] * _tmp3[k];
+                    for (int k = 0; k < rows; k++) s += _J[k, j] * _tmpN[k];
                     _dtheta[j] = s;
                 }
 
-                // Apply: convert to degrees, clamp per-iter step, clamp to joint limits, write joint.
+                // Apply
+                float a = 1f - outputSmoothing;
                 for (int i = 0; i < 6; i++)
                 {
                     if (joints[i].joint == null) continue;
                     float dDeg = _dtheta[i] * Mathf.Rad2Deg;
                     dDeg = Mathf.Clamp(dDeg, -maxStepDegPerIter, maxStepDegPerIter);
                     _angleDeg[i] = Mathf.Clamp(_angleDeg[i] + dDeg, joints[i].minDeg, joints[i].maxDeg);
+                    _angleDegSmoothed[i] = _angleDegSmoothed[i] + (_angleDeg[i] - _angleDegSmoothed[i]) * a;
                     joints[i].joint.localRotation = _restLocalRot[i] *
-                        Quaternion.AngleAxis(_angleDeg[i], joints[i].localAxis.normalized);
+                        Quaternion.AngleAxis(_angleDegSmoothed[i], joints[i].localAxis.normalized);
                 }
             }
+        }
+
+        // One Damped-Least-Squares step for a single 3-DOF task (position when
+        // orientationTask=false, orientation when true), restricting joint motion
+        // to columns [jLo..jHi]. Returns task error magnitude (metres or degrees).
+        float DlsStep3(bool orientationTask, int jLo, int jHi, float lambda2)
+        {
+            const int rows = 3;
+            Vector3 err; float errMag;
+            if (!orientationTask)
+            {
+                Vector3 posErr = target.position - endEffector.position;
+                err = posErr; errMag = posErr.magnitude;
+            }
+            else
+            {
+                Quaternion qErr = target.rotation * Quaternion.Inverse(endEffector.rotation);
+                qErr.ToAngleAxis(out float angDeg, out Vector3 axis);
+                if (angDeg > 180f) angDeg -= 360f;
+                errMag = Mathf.Abs(angDeg);
+                err = axis.normalized * (angDeg * Mathf.Deg2Rad) * orientationWeight;
+            }
+
+            // 3x6 Jacobian — only columns [jLo..jHi] are non-zero.
+            for (int i = 0; i < 6; i++)
+            {
+                if (joints[i].joint == null || i < jLo || i > jHi)
+                {
+                    _J[0, i] = 0; _J[1, i] = 0; _J[2, i] = 0;
+                    continue;
+                }
+                Vector3 axis = WorldAxis(i);
+                if (!orientationTask)
+                {
+                    Vector3 r3 = endEffector.position - joints[i].joint.position;
+                    Vector3 lin = Vector3.Cross(axis, r3);
+                    _J[0, i] = lin.x; _J[1, i] = lin.y; _J[2, i] = lin.z;
+                }
+                else
+                {
+                    _J[0, i] = axis.x; _J[1, i] = axis.y; _J[2, i] = axis.z;
+                }
+            }
+
+            for (int r = 0; r < rows; r++)
+                for (int c = 0; c < rows; c++)
+                {
+                    float s = 0f;
+                    for (int k = 0; k < 6; k++) s += _J[r, k] * _J[c, k];
+                    _JJt[r, c] = s;
+                }
+            for (int d = 0; d < rows; d++) _JJt[d, d] += lambda2;
+            if (!InvertNxN(_JJt, _JJtInv, rows)) return errMag;
+
+            _errArr[0] = err.x; _errArr[1] = err.y; _errArr[2] = err.z;
+            for (int r = 0; r < rows; r++)
+            {
+                float s = 0f;
+                for (int k = 0; k < rows; k++) s += _JJtInv[r, k] * _errArr[k];
+                _tmpN[r] = s;
+            }
+            for (int j = 0; j < 6; j++)
+            {
+                float s = 0f;
+                for (int k = 0; k < rows; k++) s += _J[k, j] * _tmpN[k];
+                _dtheta[j] = s;
+            }
+
+            float a = 1f - outputSmoothing;
+            for (int i = jLo; i <= jHi; i++)
+            {
+                if (joints[i].joint == null) continue;
+                float dDeg = _dtheta[i] * Mathf.Rad2Deg;
+                dDeg = Mathf.Clamp(dDeg, -maxStepDegPerIter, maxStepDegPerIter);
+                _angleDeg[i] = Mathf.Clamp(_angleDeg[i] + dDeg, joints[i].minDeg, joints[i].maxDeg);
+                _angleDegSmoothed[i] = _angleDegSmoothed[i] + (_angleDeg[i] - _angleDegSmoothed[i]) * a;
+                joints[i].joint.localRotation = _restLocalRot[i] *
+                    Quaternion.AngleAxis(_angleDegSmoothed[i], joints[i].localAxis.normalized);
+            }
+            return errMag;
         }
 
         Vector3 WorldAxis(int i)
@@ -151,26 +300,55 @@ namespace MetaMove.Robot
             return parentRot * (_restLocalRot[i] * joints[i].localAxis.normalized);
         }
 
-        // 3x3 inverse via cofactor / determinant. Returns false if effectively singular.
-        static bool Invert3x3(float[,] m, float[,] inv)
+        // Generic NxN matrix inverse via Gauss-Jordan elimination with partial pivoting.
+        // m is preserved; result written into inv. Returns false if effectively singular.
+        // Sized for N=6 worst case via the scratch arrays at the top of the class.
+        static readonly float[,] _gjA = new float[N, 2 * N];
+        static bool InvertNxN(float[,] m, float[,] inv, int n)
         {
-            float a = m[0, 0], b = m[0, 1], c = m[0, 2];
-            float d = m[1, 0], e = m[1, 1], f = m[1, 2];
-            float g = m[2, 0], h = m[2, 1], i = m[2, 2];
+            // Build augmented [m | I]
+            for (int r = 0; r < n; r++)
+            {
+                for (int c = 0; c < n; c++) _gjA[r, c] = m[r, c];
+                for (int c = 0; c < n; c++) _gjA[r, n + c] = (r == c) ? 1f : 0f;
+            }
 
-            float det = a * (e * i - f * h) - b * (d * i - f * g) + c * (d * h - e * g);
-            if (Mathf.Abs(det) < 1e-9f) return false;
-            float invDet = 1f / det;
+            for (int col = 0; col < n; col++)
+            {
+                // Partial pivot
+                int piv = col;
+                float maxAbs = Mathf.Abs(_gjA[col, col]);
+                for (int r = col + 1; r < n; r++)
+                {
+                    float a = Mathf.Abs(_gjA[r, col]);
+                    if (a > maxAbs) { maxAbs = a; piv = r; }
+                }
+                if (maxAbs < 1e-9f) return false;
+                if (piv != col)
+                {
+                    for (int c = 0; c < 2 * n; c++)
+                    {
+                        float t = _gjA[col, c]; _gjA[col, c] = _gjA[piv, c]; _gjA[piv, c] = t;
+                    }
+                }
 
-            inv[0, 0] = (e * i - f * h) * invDet;
-            inv[0, 1] = (c * h - b * i) * invDet;
-            inv[0, 2] = (b * f - c * e) * invDet;
-            inv[1, 0] = (f * g - d * i) * invDet;
-            inv[1, 1] = (a * i - c * g) * invDet;
-            inv[1, 2] = (c * d - a * f) * invDet;
-            inv[2, 0] = (d * h - e * g) * invDet;
-            inv[2, 1] = (b * g - a * h) * invDet;
-            inv[2, 2] = (a * e - b * d) * invDet;
+                // Normalize pivot row
+                float pivVal = _gjA[col, col];
+                float invPiv = 1f / pivVal;
+                for (int c = 0; c < 2 * n; c++) _gjA[col, c] *= invPiv;
+
+                // Eliminate other rows
+                for (int r = 0; r < n; r++)
+                {
+                    if (r == col) continue;
+                    float factor = _gjA[r, col];
+                    if (factor == 0f) continue;
+                    for (int c = 0; c < 2 * n; c++) _gjA[r, c] -= factor * _gjA[col, c];
+                }
+            }
+
+            for (int r = 0; r < n; r++)
+                for (int c = 0; c < n; c++) inv[r, c] = _gjA[r, n + c];
             return true;
         }
 

@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="abb_crb15000_5_95">
+    <xacro:arg name="initial_positions_file" default="initial_positions.yaml" />
+    <xacro:arg name="controllers_file" default="$(find abb_crb15000_moveit)/config/gazebo_controllers.yaml" />
+
+    <!-- Robot geometry -->
+    <xacro:include filename="$(find abb_crb15000_support)/urdf/crb15000_5_95.xacro" />
+
+    <!-- ros2_control system using Gazebo Sim hardware interface -->
+    <xacro:property name="initial_positions" value="${xacro.load_yaml('$(arg initial_positions_file)')['initial_positions']}"/>
+
+    <ros2_control name="GazeboSimSystem" type="system">
+        <hardware>
+            <plugin>gz_ros2_control/GazeboSimSystem</plugin>
+        </hardware>
+        <xacro:macro name="joint_block" params="jname">
+            <joint name="${jname}">
+                <command_interface name="position"/>
+                <state_interface name="position">
+                    <param name="initial_value">${initial_positions[jname]}</param>
+                </state_interface>
+                <state_interface name="velocity"/>
+            </joint>
+        </xacro:macro>
+        <xacro:joint_block jname="joint_1"/>
+        <xacro:joint_block jname="joint_2"/>
+        <xacro:joint_block jname="joint_3"/>
+        <xacro:joint_block jname="joint_4"/>
+        <xacro:joint_block jname="joint_5"/>
+        <xacro:joint_block jname="joint_6"/>
+    </ros2_control>
+
+    <!-- Gazebo simulation plugin: hands the ros2_control system off to gz sim -->
+    <gazebo>
+        <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
+            <parameters>$(arg controllers_file)</parameters>
+        </plugin>
+    </gazebo>
+</robot>

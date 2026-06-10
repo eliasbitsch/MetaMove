@@ -1,16 +1,19 @@
 """
 MetaMove RWS bridge node.
 
-Not in the motion hot-path — Unity still talks EGM directly to the controller.
-This node gives you:
-  * CLI visibility (`ros2 topic echo /metamove/robot_state`)
-  * Services to trigger demos / grip / abort from a terminal
-  * Bag recording of the whole session
+Two roles:
+1. Telemetry + service-trigger (status polling, demos, grip, motors-on/off, event log)
+2. Sim-motion-bridge: subscribe /servo_node/commands and forward joint targets
+   via RWS REST to a PERS jointtarget in RAPID. Pair with MetaMoveCorePers.mod.
 
 Topics published:
   /metamove/robot_state   std_msgs/String   JSON blob of latest RWS snapshot (~2 Hz)
   /metamove/demo_state    std_msgs/String   {id, state, step}
   /metamove/event_log     std_msgs/String   RWS elog entries as they arrive
+  /metamove/motion_rate   std_msgs/String   {hz_in, hz_out, last_latency_ms}
+
+Topics subscribed (sim-motion path, when servo_bridge=true):
+  /servo_node/commands    std_msgs/Float64MultiArray   6 joint positions in rad
 
 Services:
   /metamove/run_demo        std_srvs/Trigger (param: scenario via ROS param)
@@ -26,6 +29,7 @@ official ABB PC SDK or abb_librws if you need push-subscriptions beyond polling.
 from __future__ import annotations
 
 import json
+import math
 import os
 import threading
 import time
@@ -35,7 +39,8 @@ import rclpy
 import requests
 import urllib3
 from rclpy.node import Node
-from std_msgs.msg import String
+from sensor_msgs.msg import JointState
+from std_msgs.msg import Float64MultiArray, String
 from std_srvs.srv import Trigger
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
@@ -50,6 +55,8 @@ DEMO_IDS = {
     'bigstone': 6,
 }
 
+RAD2DEG = 180.0 / math.pi
+
 
 class RwsClient:
     """Minimal RWS REST wrapper. Session-based digest auth."""
@@ -57,7 +64,8 @@ class RwsClient:
     def __init__(self, host: str, port: int, user: str, password: str):
         self.base = f'https://{host}:{port}'
         self.session = requests.Session()
-        self.session.auth = requests.auth.HTTPDigestAuth(user, password)
+        # OmniCore RWS 2.0 uses Basic auth, not Digest (legacy IRC5 was Digest)
+        self.session.auth = (user, password)
         self.session.verify = False
         self.session.headers.update({'Accept': 'application/hal+json;v=2.0'})
 
@@ -80,6 +88,14 @@ class RwsClient:
     def motors(self, on: bool) -> None:
         self.post('/rw/panel/ctrl-state', {'ctrl-state': 'motoron' if on else 'motoroff'})
 
+    @staticmethod
+    def format_jointtarget(joints_deg: list[float]) -> str:
+        """RAPID jointtarget literal: [[J1,J2,J3,J4,J5,J6],[E1,E2,E3,E4,E5,E6]]
+        External axes set to 9E9 (= not connected)."""
+        j = ','.join(f'{v:.4f}' for v in joints_deg)
+        ext = '9E9,9E9,9E9,9E9,9E9,9E9'
+        return f'[[{j}],[{ext}]]'
+
 
 class MetaMoveBridge(Node):
     def __init__(self) -> None:
@@ -93,6 +109,16 @@ class MetaMoveBridge(Node):
         self.declare_parameter('rapid_module', 'MetaMoveDemos')
         self.declare_parameter('poll_hz', 2.0)
 
+        # Sim-motion path config
+        self.declare_parameter('servo_bridge', False)
+        self.declare_parameter('servo_module', 'MetaMoveCorePers')
+        self.declare_parameter('servo_var', 'jTarget')
+        self.declare_parameter('servo_max_rate_hz', 30.0)  # cap outbound RWS writes
+        self.declare_parameter('joint_poll_hz', 30.0)      # cap inbound /joint_states publish rate
+        self.declare_parameter('joint_names', [
+            'joint_1','joint_2','joint_3','joint_4','joint_5','joint_6'
+        ])
+
         self.rws = RwsClient(
             self.get_parameter('rws_ip').value,
             self.get_parameter('rws_port').value,
@@ -101,11 +127,14 @@ class MetaMoveBridge(Node):
         )
         self.rapid_task = self.get_parameter('rapid_task').value
         self.rapid_module = self.get_parameter('rapid_module').value
+        self.servo_module = self.get_parameter('servo_module').value
+        self.servo_var = self.get_parameter('servo_var').value
 
         # Publishers
         self.pub_state = self.create_publisher(String, '/metamove/robot_state', 10)
         self.pub_demo = self.create_publisher(String, '/metamove/demo_state', 10)
         self.pub_log = self.create_publisher(String, '/metamove/event_log', 20)
+        self.pub_motion = self.create_publisher(String, '/metamove/motion_rate', 10)
 
         # Services
         self.create_service(Trigger, '/metamove/run_demo', self._srv_run_demo)
@@ -120,6 +149,36 @@ class MetaMoveBridge(Node):
 
         poll_hz = float(self.get_parameter('poll_hz').value)
         self.create_timer(1.0 / max(poll_hz, 0.1), self._poll)
+
+        # Sim-motion subscriber (only attached if explicitly enabled)
+        self._motion_in = 0
+        self._motion_out = 0
+        self._motion_last_latency_ms = 0.0
+        self._motion_last_send = 0.0
+        self._motion_max_period = 1.0 / max(float(self.get_parameter('servo_max_rate_hz').value), 1.0)
+        self._motion_lock = threading.Lock()
+        self._motion_pending: list[float] | None = None
+        self._motion_thread_running = False
+
+        if bool(self.get_parameter('servo_bridge').value):
+            self.create_subscription(Float64MultiArray, '/servo_node/commands', self._on_servo_cmd, 10)
+            self.create_timer(1.0, self._publish_motion_rate)
+            self.get_logger().info(
+                f'servo bridge ON, writing to RAPID/{self.rapid_task}/'
+                f'{self.servo_module}/{self.servo_var} at max '
+                f'{self.get_parameter("servo_max_rate_hz").value} Hz'
+            )
+
+            # /joint_states publisher driven by RWS poll
+            self.pub_joints = self.create_publisher(JointState, '/joint_states', 10)
+            self._joint_names = list(self.get_parameter('joint_names').value)
+            poll_hz = float(self.get_parameter('joint_poll_hz').value)
+            self.create_timer(1.0 / max(poll_hz, 1.0), self._poll_joints_async)
+            self._joint_poll_running = False
+            self.get_logger().info(
+                f'joint poll ON, GET /rw/motionsystem/mechunits/ROB_1/jointtarget '
+                f'at {poll_hz} Hz'
+            )
 
         self.get_logger().info(f'bridge up, RWS={self.rws.base}')
 
@@ -139,6 +198,112 @@ class MetaMoveBridge(Node):
                 self.get_logger().warn(f'poll failed: {e}')
 
         threading.Thread(target=work, daemon=True).start()
+
+    # ------------------------------------------------------------ sim-motion path
+    def _on_servo_cmd(self, msg: Float64MultiArray) -> None:
+        if msg.data is None or len(msg.data) < 6:
+            return
+        joints_deg = [float(msg.data[i]) * RAD2DEG for i in range(6)]
+        self._motion_in += 1
+
+        # Coalesce: store latest, fire one worker thread that drains until idle.
+        with self._motion_lock:
+            self._motion_pending = joints_deg
+            if self._motion_thread_running:
+                return
+            self._motion_thread_running = True
+
+        threading.Thread(target=self._motion_drain, daemon=True).start()
+
+    def _motion_drain(self) -> None:
+        try:
+            while True:
+                with self._motion_lock:
+                    target = self._motion_pending
+                    self._motion_pending = None
+                    if target is None:
+                        self._motion_thread_running = False
+                        return
+
+                # Rate-limit outbound writes
+                now = time.perf_counter()
+                wait = self._motion_max_period - (now - self._motion_last_send)
+                if wait > 0:
+                    time.sleep(wait)
+
+                t0 = time.perf_counter()
+                try:
+                    literal = RwsClient.format_jointtarget(target)
+                    self.rws.set_rapid_var(self.rapid_task, self.servo_module, self.servo_var, literal)
+                    self._motion_last_latency_ms = (time.perf_counter() - t0) * 1000.0
+                    self._motion_out += 1
+                    self._motion_last_send = time.perf_counter()
+                except Exception as e:
+                    self.get_logger().warn(f'servo write failed: {e}')
+                    self._motion_last_send = time.perf_counter()
+        except Exception as e:
+            self.get_logger().error(f'motion drain crashed: {e}')
+            with self._motion_lock:
+                self._motion_thread_running = False
+
+    def _poll_joints_async(self) -> None:
+        """Fire-and-forget thread that polls RWS jointtarget and publishes JointState."""
+        if self._joint_poll_running:
+            return
+        self._joint_poll_running = True
+
+        def work() -> None:
+            try:
+                data = self.rws.get('/rw/motionsystem/mechunits/ROB_1/jointtarget')
+                # OmniCore returns {"_embedded":{"resources":[{"rax_1":..,"rax_2":..,...}]}} or similar
+                joints_deg = self._extract_joints_deg(data)
+                if joints_deg is None:
+                    return
+                msg = JointState()
+                msg.header.stamp = self.get_clock().now().to_msg()
+                msg.name = self._joint_names
+                msg.position = [j * 0.017453292519943295 for j in joints_deg]  # deg → rad
+                self.pub_joints.publish(msg)
+            except Exception as e:
+                self.get_logger().debug(f'joint poll failed: {e}')
+            finally:
+                self._joint_poll_running = False
+
+        threading.Thread(target=work, daemon=True).start()
+
+    @staticmethod
+    def _extract_joints_deg(data: dict) -> list[float] | None:
+        """Walk the RWS response and pull rax_1..rax_6 as floats. RW 7.x OmniCore
+        returns under data['state'][0]; older RW under data['_embedded']['resources'][0].
+        rax_* values can be strings or numbers."""
+        candidates = []
+        try:
+            if 'state' in data and isinstance(data['state'], list):
+                candidates.extend(data['state'])
+            embedded = data.get('_embedded')
+            if embedded and isinstance(embedded.get('resources'), list):
+                candidates.extend(embedded['resources'])
+            if all(f'rax_{i}' in data for i in range(1, 7)):
+                candidates.append(data)
+        except Exception:
+            return None
+        for r in candidates:
+            try:
+                if all(f'rax_{i}' in r for i in range(1, 7)):
+                    return [float(r[f'rax_{i}']) for i in range(1, 7)]
+            except (TypeError, ValueError):
+                continue
+        return None
+
+    def _publish_motion_rate(self) -> None:
+        msg = String(data=json.dumps({
+            'hz_in': self._motion_in,
+            'hz_out': self._motion_out,
+            'last_latency_ms': round(self._motion_last_latency_ms, 2),
+        }))
+        self.pub_motion.publish(msg)
+        self._motion_in = 0
+        self._motion_out = 0
 
     # ----------------------------------------------------------------- services
     def _ok(self, resp: Trigger.Response, msg: str = 'ok') -> Trigger.Response:

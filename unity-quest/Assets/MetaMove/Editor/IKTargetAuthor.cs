@@ -6,6 +6,7 @@ using Oculus.Interaction.Grab;
 using Oculus.Interaction.HandGrab;
 using Oculus.Interaction.GrabAPI;
 using MetaMove.Robot;
+using MetaMove.Robot.Ros;
 
 namespace MetaMove.EditorTools
 {
@@ -102,6 +103,18 @@ namespace MetaMove.EditorTools
             // Wire IK target to the ball.
             ik.target = ball.transform;
             EditorUtility.SetDirty(ik);
+
+            // RViz-style "marker sticks to EE when not grabbed".
+            var sticky = ball.AddComponent<StickyIKTarget>();
+            sticky.eeTransform = ik.endEffector;
+
+            // If the scene has the ROS publisher (Servo path), point it at the ball too.
+            var rosPub = Object.FindAnyObjectByType<IKTargetPosePublisher>();
+            if (rosPub != null)
+            {
+                rosPub.target = ball.transform;
+                EditorUtility.SetDirty(rosPub);
+            }
 
             Selection.activeObject = ball;
             SceneView.lastActiveSceneView?.FrameSelected();
