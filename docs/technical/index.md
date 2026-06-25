@@ -85,3 +85,11 @@ files -> parameters -> notes**. Topic names, message types, and tunable paramete
 listed verbatim so they can be cross-referenced against the running system. The
 {doc}`installation` chapter covers hardware/software requirements and bring-up; the
 {doc}`reference` chapter consolidates all ROS topics and parameters.
+
+## Team
+
+MetaMove is developed by:
+
+- **Elias Bitsch**
+- **Philip Stix**
+- **Viktoriia Ovdiienko**

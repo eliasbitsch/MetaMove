@@ -200,6 +200,10 @@ Switch the build target to Android, build the AR scene as an APK, install on the
 - Unity bridge components committed and compiling; full end-to-end VC + ROS + Quest dry run is the next milestone
 - Six pick-and-place demo scenarios scoped (chess, stone sort, framing, mug, pins, big stone)
 
+## Team
+
+MetaMove is built by **Elias Bitsch**, **Philip Stix**, and **Viktoriia Ovdiienko**.
+
 ## Acknowledgements
 
 Architecture inspired by [rparak/Unity3D_ABB_CRB_15000_GoFa_EGM](https://github.com/rparak/Unity3D_ABB_CRB_15000_GoFa_EGM), the PickNik [abb_ros2](https://github.com/PickNikRobotics/abb_ros2) driver, and Jakob Hörbst's original GoHolo RAPID modules. EGM protobuf schema from ABB's RobotWare distribution.
