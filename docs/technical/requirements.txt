@@ -1,0 +1,8 @@
+# Documentation toolchain for MetaMove technical docs.
+# Build HTML:  sphinx-build -b html  . _build/html
+# Build PDF :  sphinx-build -b rinoh . _build/pdf   (pure-Python, no LaTeX needed)
+sphinx>=8.0
+myst-parser>=4.0
+furo>=2024.1
+rinohtype>=0.5.4
+linkify-it-py>=2.0
