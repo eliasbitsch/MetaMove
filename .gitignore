@@ -69,9 +69,7 @@ docker/volumes/
 
 # ── External references / large archives ────────────────────────────
 # Third-party sources live outside the repo — fetched / unzipped locally
-third_party/*
-# …except git submodules we explicitly track
-!third_party/bhaptics-unity
+third_party/
 
 # ── Staging area ─────────────────────────────────────────────────────
 .staging/
