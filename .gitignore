@@ -100,8 +100,8 @@ __pycache__/
 # RobotStudio local VC workspace (auto-generated, per-developer)
 robotstudio/station/
 
-# Lab measurement runs / dumps (local data, not versioned)
-lab_runs/
+# Local data dumps — GoFa controller dumps + lab measurement runs (not versioned)
+/dumps/
 
 # Old staging Unity scratch code (legacy)
 .staging/
