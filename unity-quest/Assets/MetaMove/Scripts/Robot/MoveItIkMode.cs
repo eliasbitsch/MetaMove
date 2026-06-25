@@ -49,9 +49,13 @@ namespace MetaMove.Robot
             if (!force && useMoveIt == _appliedState) return;
             _appliedState = useMoveIt;
 
-            if (localIk != null) localIk.enabled = !useMoveIt;
+            // Real-robot digital twin: the visual joints ALWAYS mirror the live robot
+            // feedback (/robot/joint_feedback via JointAnglesSubscriber), so the model is
+            // honest no matter who commands the robot. Local IK is never used here. Only
+            // the IK-target stream is mode-gated (MANUAL = grab drives the robot).
+            if (localIk != null) localIk.enabled = false;
             if (posePublisher != null) posePublisher.enabled_ = useMoveIt;
-            if (jointSubscriber != null) jointSubscriber.enabled = useMoveIt;
+            if (jointSubscriber != null) jointSubscriber.enabled = true;
         }
     }
 }

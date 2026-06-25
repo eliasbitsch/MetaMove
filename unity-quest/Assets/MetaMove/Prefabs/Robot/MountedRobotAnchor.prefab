@@ -183,7 +183,7 @@ MonoBehaviour:
   ikTarget: {fileID: 6988544309118476866}
   handAnchor: {fileID: 0}
   dragGain: 1
-  maxReachM: 0.5
+  maxReachM: 0.2
 --- !u!114 &8420355743136660758
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -441,7 +441,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c6e465d979468c4a849239ad23be8a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MetaMove.Robot.Ros.IKTargetPosePublisher
-  topic: /servo_node/pose_target_cmds
+  topic: /metamove/ik_target
   frameId: base_link
   target: {fileID: 6988544309118476866}
   robotBase: {fileID: 5287483819997504184}
@@ -459,7 +459,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 512594bd6ea7ebc4ba8fd0d9dc97ef6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MetaMove.Robot.Ros.JointAnglesSubscriber
-  topic: /servo_node/commands
+  topic: /robot/joint_feedback
   joints:
   - joint: {fileID: 3546928922932419273}
     localAxis: {x: 0, y: 0, z: 1}
@@ -490,7 +490,7 @@ MonoBehaviour:
   localIk: {fileID: 0}
   posePublisher: {fileID: 7167199114740882536}
   jointSubscriber: {fileID: 490784736811753397}
-  useMoveIt: 1
+  useMoveIt: 0
 --- !u!4 &4780911751616416123 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8308184668634051544, guid: f9b151ff8ff6d6444917b895e966b333, type: 3}

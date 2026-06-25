@@ -36,8 +36,20 @@ namespace MetaMove.Safety
         [Tooltip("If true, a detection replaces any previously spawned instance. If false, the first detection wins until ClearAnchor() is called.")]
         public bool rePlaceOnRedetect = false;
 
+        [Header("Drift correction")]
+        [Tooltip("Periodically re-align the spawned robot to the live QR pose while the marker is visible (corrects anchor/SLAM drift). Does NOT respawn — just nudges the pose.")]
+        public bool periodicReAlign = true;
+        [Tooltip("Re-align interval (s).")]
+        public float reAlignInterval = 5f;
+
         [Tooltip("Frames of stable detection required before committing the anchor. Reduces jitter in the first lock-on.")]
         public int minStableFrames = 15;
+
+        [Header("QR axis gizmo")]
+        [Tooltip("Draw an X(red)/Y(green)/Z(blue) coordinate gizmo at the detected QR anchor pose.")]
+        public bool showQrAxes = true;
+        [Tooltip("Length of the QR axis gizmo (m).")]
+        public float qrAxisLength = 0.1f;
 
         [Tooltip("If true, averages pose across the stable window (median position + slerped rotation) for a cleaner lock than the last-frame-wins approach.")]
         public bool averagePoseOverStableWindow = true;
@@ -53,6 +65,8 @@ namespace MetaMove.Safety
         public UnityEvent<GameObject> onAnchorSpawned;
 
         GameObject _spawned;
+        GameObject _anchorGo;
+        float _lastReAlign;
         MRUKTrackable _lockedTrackable;
         int _stableCount;
         readonly List<Vector3> _posBuf = new List<Vector3>();
@@ -97,7 +111,11 @@ namespace MetaMove.Safety
             if (devAutoSpawnAtTransform) return;
             // Count stable detections of the target payload. A trackable can persist across frames
             // without re-firing TrackableAdded, so we poll.
-            if (_spawned != null && !rePlaceOnRedetect) return;
+            if (_spawned != null && !rePlaceOnRedetect)
+            {
+                if (periodicReAlign) MaybeReAlign();
+                return;
+            }
             var match = FindMatchingTrackable();
             if (match == null)
             {
@@ -122,6 +140,23 @@ namespace MetaMove.Safety
                 if (t != null && t.MarkerPayloadString == expectedPayload) return t;
             }
             return null;
+        }
+
+        // Every reAlignInterval seconds, if the marker is currently visible, nudge
+        // the spawned anchor back onto the live QR pose to correct drift. If the
+        // marker isn't visible, the last pose is kept (SLAM/anchor holds it).
+        void MaybeReAlign()
+        {
+            if (_anchorGo == null) return;
+            if (Time.time - _lastReAlign < reAlignInterval) return;
+            _lastReAlign = Time.time;
+            var t = FindMatchingTrackable();
+            if (t == null) return;
+            Quaternion qrRot = t.transform.rotation;
+            Vector3 qrPos = t.transform.position;
+            _anchorGo.transform.SetPositionAndRotation(
+                qrPos + qrRot * payloadPositionOffset,
+                qrRot * Quaternion.Euler(payloadEulerOffset));
         }
 
         void OnTrackableAdded(MRUKTrackable t)
@@ -171,6 +206,13 @@ namespace MetaMove.Safety
 
             var anchorGo = new GameObject($"QrAnchor:{expectedPayload}");
             anchorGo.transform.SetPositionAndRotation(anchorPos, anchorRot);
+            _anchorGo = anchorGo;
+            _lastReAlign = Time.time;
+            if (showQrAxes)
+            {
+                var gizmo = anchorGo.AddComponent<MetaMove.UI.Visualization.AxisGizmo>();
+                gizmo.length = qrAxisLength;
+            }
             // OVRSpatialAnchor only works against the on-device XR runtime; adding it in the
             // Editor (Link or no-XR) is a known crash trigger after HMDLost — skip there.
 #if UNITY_ANDROID && !UNITY_EDITOR

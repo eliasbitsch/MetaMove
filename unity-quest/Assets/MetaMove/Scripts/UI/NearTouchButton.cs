@@ -39,6 +39,9 @@ namespace MetaMove.UI
         [Tooltip("If set, calls this RobotStationProvider's Recompute() on press. Wired here so MCP can set it without UnityEvent persistence.")]
         public MetaMove.Safety.RobotStationProvider stationToRecompute;
 
+        [Tooltip("If set, toggles speed-scaling AUTO/MANUAL on press. Wired here so MCP can set it without UnityEvent persistence.")]
+        public MetaMove.Safety.ScalingModeToggle scalingToggle;
+
         float _hoverStart = -1f;
         float _lastFire = -999f;
         MaterialPropertyBlock _mpb;
@@ -73,6 +76,7 @@ namespace MetaMove.UI
                     ApplyColor(pressColor);
                     onPress?.Invoke();
                     if (stationToRecompute != null) stationToRecompute.Recompute();
+                    if (scalingToggle != null) scalingToggle.Toggle();
                 }
             }
             else
