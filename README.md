@@ -2,7 +2,7 @@
 
 Mixed-reality teleoperation and digital twin for the **ABB GoFa CRB 15000** collaborative robot, driven from a **Meta Quest 3** through hand tracking, with **ROS 2 Jazzy + MoveIt Servo** providing inverse kinematics, collision checking, and planning.
 
-The robot listens on **EGM (Externally Guided Motion)** at 250 Hz. Quest sends pose targets over the LAN, ROS computes the joint commands, a Windows-native Unity bridge translates them to the EGM wire format, and the controller follows. RAPID stays minimal — one mode, one loop.
+The robot listens on **EGM (Externally Guided Motion)** at 250 Hz. Quest sends pose targets over the LAN, ROS computes the joint commands, a Windows-native Unity bridge translates them to the EGM wire format, and the controller follows. RAPID stays minimal - one mode, one loop.
 
 ---
 
@@ -51,11 +51,11 @@ robot and no headset):
 
 - [Overview & architecture](docs/technical/index.md)
 - [Installation & setup](docs/technical/installation.md)
-- [Reproduction guide](docs/technical/reproduce.md) — step-by-step rebuild
+- [Reproduction guide](docs/technical/reproduce.md) - step-by-step rebuild
 - [Distance-based speed scaling](docs/technical/01_distance_speed_scaling.md)
 - [Pinch-and-move end-effector control](docs/technical/02_pinch_move_teleop.md)
 - [Dashboard and HMI](docs/technical/03_dashboard_hmi.md)
-- [Reference](docs/technical/reference.md) — topics, parameters, ports, glossary
+- [Reference](docs/technical/reference.md) - topics, parameters, ports, glossary
 
 Build it as a browsable site or a single PDF (pure-Python, no LaTeX needed):
 
@@ -79,7 +79,7 @@ A pre-built PDF is checked in at
 | `ros2/` | ROS 2 Jazzy workspace, docker stack, MoveIt config, Servo launch |
 | `robotstudio/` | RAPID modules, RobotStudio station, controller backups, helper scripts |
 | `bridge/` | Python EGM/UDP bridge + operator consoles (`egm-bridge/`) and an EGM mock (`egm-mock/`) |
-| `ai-services/` | `metamove_tools` — small ROS tool-client helpers used by the bridge |
+| `ai-services/` | `metamove_tools` - small ROS tool-client helpers used by the bridge |
 | `docs/` | AR markers, documentation, drawings, technical manual |
 
 ---
@@ -91,14 +91,14 @@ A pre-built PDF is checked in at
 Unity 6 project targeting the Quest 3 with Meta XR SDK + URDF Importer + ros-tcp-connector. Hand tracking and passthrough are first-class.
 
 **EGM stack** lives in `Assets/MetaMove/Scripts/Robot/EGM/`:
-- `EgmClient.cs` — UDP socket, background RX thread, joint and pose send paths
-- `EgmMessages.cs` — minimal protobuf encoder/decoder for `egm.proto`
-- `EgmRobotSink.cs` — adapts the client to the gesture pipeline
+- `EgmClient.cs` - UDP socket, background RX thread, joint and pose send paths
+- `EgmMessages.cs` - minimal protobuf encoder/decoder for `egm.proto`
+- `EgmRobotSink.cs` - adapts the client to the gesture pipeline
 
 **ROS bridge** lives in `Assets/MetaMove/Scripts/Robot/Ros/`:
-- `RosBridgeBootstrap.cs` — configures the `ROSConnection` singleton
-- `JointStatePublisher.cs` — EGM feedback (deg) → `/joint_states` (rad, 50 Hz)
-- `ServoCommandSubscriber.cs` — `/servo_node/commands` → `EgmClient.SendJoints` (250 Hz)
+- `RosBridgeBootstrap.cs` - configures the `ROSConnection` singleton
+- `JointStatePublisher.cs` - EGM feedback (deg) → `/joint_states` (rad, 50 Hz)
+- `ServoCommandSubscriber.cs` - `/servo_node/commands` → `EgmClient.SendJoints` (250 Hz)
 
 Drop the `MetaMoveRosBridge` GameObject in your scene (already present in `Scene_Robot.unity`).
 
@@ -125,8 +125,8 @@ This starts:
 
 Two modules cover the controller side:
 
-- **`MetaMoveJointStream.mod`** — bare-minimum continuous joint EGM. `EGMSetupUC` + `EGMActJoint` + `EGMRunJoint` with `MaxSpeedDeviation:=1000` and a long `CondTime`. Drop in via RWS, point the production entry point at `main`, hit play.
-- **`MetaMoveCore.mod`** — slightly richer dispatcher with pose-mode and joint-mode case branches. Useful when developing against the StateMachine Add-In v2.0.
+- **`MetaMoveJointStream.mod`** - bare-minimum continuous joint EGM. `EGMSetupUC` + `EGMActJoint` + `EGMRunJoint` with `MaxSpeedDeviation:=1000` and a long `CondTime`. Drop in via RWS, point the production entry point at `main`, hit play.
+- **`MetaMoveCore.mod`** - slightly richer dispatcher with pose-mode and joint-mode case branches. Useful when developing against the StateMachine Add-In v2.0.
 
 `ROB_1_udpuc.cfg` is the SIO configuration that registers the UDPUC device pointing at the Unity bridge.
 
@@ -134,14 +134,14 @@ Two modules cover the controller side:
 
 Reference Python bridge used during bring-up before the Unity bridge was finished. Two flavors:
 
-- `egm_bridge_identity.py` — receives `EgmRobot`, echoes the current joints back so the EGM session stays alive without moving the robot.
-- `egm_bridge_servo.py` — same plus `rosbridge_websocket` client that publishes `/joint_states` and subscribes to `/servo_node/commands`. Useful when running headless without Unity.
+- `egm_bridge_identity.py` - receives `EgmRobot`, echoes the current joints back so the EGM session stays alive without moving the robot.
+- `egm_bridge_servo.py` - same plus `rosbridge_websocket` client that publishes `/joint_states` and subscribes to `/servo_node/commands`. Useful when running headless without Unity.
 
-`Dockerfile` + `docker-compose.yml` ship a macvlan-networked container so the bridge appears as its own device on the lab LAN — sidesteps WSL2's UDP-receive bug entirely.
+`Dockerfile` + `docker-compose.yml` ship a macvlan-networked container so the bridge appears as its own device on the lab LAN - sidesteps WSL2's UDP-receive bug entirely.
 
 ### ROS tool client (`ai-services/metamove_tools/`)
 
-A thin Python client (`client.py`) and smoke test that talk to the bridge over rosbridge — used for scripted teleop and bring-up checks. (The earlier local AI/voice stack has been removed; teleop does not depend on it.)
+A thin Python client (`client.py`) and smoke test that talk to the bridge over rosbridge - used for scripted teleop and bring-up checks. (The earlier local AI/voice stack has been removed; teleop does not depend on it.)
 
 ---
 
@@ -173,7 +173,7 @@ Hit play.
 
 ### 4. Quest 3 deployment
 
-Switch the build target to Android, build the AR scene as an APK, install on the Quest. The same scripts run there — the headset publishes its hand pose into ROS and the Unity bridge on the workstation does the EGM translation. When the headset goes offline the bridge holds the last pose and the robot stops safely.
+Switch the build target to Android, build the AR scene as an APK, install on the Quest. The same scripts run there - the headset publishes its hand pose into ROS and the Unity bridge on the workstation does the EGM translation. When the headset goes offline the bridge holds the last pose and the robot stops safely.
 
 ---
 
@@ -202,7 +202,7 @@ Switch the build target to Android, build the AR scene as an APK, install on the
 
 ## Team
 
-MetaMove is built by **Elias Bitsch**, **Philip Stix**, and **Viktoriia Ovdiienko**.
+MetaMove is built by **Elias Bitsch**, **Viktoriia Ovdiienko**, and **Philip Stix**.
 
 ## Acknowledgements
 

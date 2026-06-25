@@ -15,13 +15,13 @@ of MetaMove.
 
 ### Technology stack
 
-- **Backend** — FastAPI (Python) joining the ROS 2 graph through `rclpy`. It exposes a
+- **Backend** - FastAPI (Python) joining the ROS 2 graph through `rclpy`. It exposes a
   REST API plus a WebSocket stream, drives `FollowJointTrajectory` actions and MoveIt
   Servo twist commands, and persists history to PostgreSQL (or SQLite).
-- **Frontend** — HTML/JS/CSS. `index.html` is the monitoring dashboard;
+- **Frontend** - HTML/JS/CSS. `index.html` is the monitoring dashboard;
   `hmi.html` is a tablet-oriented GoFa control surface with a tiled layout. A WebSocket
   client streams live data.
-- **Deployment** — containerised via `deploy/dashboard/dashboard.Dockerfile`; a slim image
+- **Deployment** - containerised via `deploy/dashboard/dashboard.Dockerfile`; a slim image
   that joins an existing ROS 2 graph. Served on `:8080` (HTTP) or behind Nginx on `:8443`.
 
 ### What it shows and controls
@@ -58,11 +58,11 @@ while heartbeats arrive, so a dropped connection stops the robot (dead-man behav
 The immersive HMI lives in `unity-quest/Assets/MetaMove/Scripts/UI/`, with `Hud.unity` as
 the main scene. It is organised in three layers:
 
-1. **L1 — Home**: a hand-anchored radial menu (palm-up gesture) with eight wedges for
+1. **L1 - Home**: a hand-anchored radial menu (palm-up gesture) with eight wedges for
    quick actions (Status, Paths, Position, Safety, Ghost toggle, Envelope toggle, HUD
    toggle, Robot info).
-2. **L2 — Floating panels**: world-positioned panels spawned on demand.
-3. **L3 — Physical fixtures**: permanent 3D objects (E-Stop mushroom, pedestal, floor
+2. **L2 - Floating panels**: world-positioned panels spawned on demand.
+3. **L3 - Physical fixtures**: permanent 3D objects (E-Stop mushroom, pedestal, floor
    grid).
 
 ### Core UI scripts
@@ -70,7 +70,7 @@ the main scene. It is organised in three layers:
 | Script | Purpose |
 |--------|---------|
 | `NearTouchButton.cs` | Pinch / finger-near button with dwell-based firing and visual feedback. |
-| `StatusHud.cs` | Curved status HUD (lazy-follow, yaw-only) — battery, link Hz, motors, passthrough. |
+| `StatusHud.cs` | Curved status HUD (lazy-follow, yaw-only) - battery, link Hz, motors, passthrough. |
 | `MainDashboardPanel.cs` | Hub with tabs (Status / Control / Path / Safety / Motors / Body / Voice / System) and a persistent E-Stop row. |
 | `FlexPendantPanel.cs` | ABB-style teach-pendant emulation: resizable, wrist-attachable, 12 jog buttons (6 axes × 2), E-Stop. |
 | `TelemetryPanel.cs` | Six joint gauges, TCP XYZ / RPY readouts, Hz label. |
@@ -86,9 +86,9 @@ In-world overlays (`ShowPose`, `ShowAngles`, `ShowTorque`, `PathPreviewRenderer`
 
 ### UI modes
 
-1. **Minimal (default)** — radial menu + on-demand mini-panels + in-world overlays + HUD.
-2. **3-panel control center** — three permanent panels around the user (Telemetry, Paths, Safety).
-3. **FlexPendant** — a single resizable ABB-style teach pendant (two-hand corner pinch to resize).
+1. **Minimal (default)** - radial menu + on-demand mini-panels + in-world overlays + HUD.
+2. **3-panel control center** - three permanent panels around the user (Telemetry, Paths, Safety).
+3. **FlexPendant** - a single resizable ABB-style teach pendant (two-hand corner pinch to resize).
 
 All panels use the Meta UI Set components, are grab-translatable (no rotation), and
 re-orient to the camera on spawn. The curved HUD sits at ~60 cm with status LEDs, TCP
@@ -115,7 +115,7 @@ recovery.
 
 ## Design notes
 
-- The three surfaces are **views onto one ROS graph**, not separate control stacks — the
+- The three surfaces are **views onto one ROS graph**, not separate control stacks - the
   dashboard, the headset HMI, and the consoles all read the same telemetry and write to
   the same command topics.
 - Jog/TCP control uses a **heartbeat / dead-man** pattern: motion only continues while

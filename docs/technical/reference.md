@@ -14,7 +14,7 @@ subsystem chapters.
 | `/servo_node/commands` | `std_msgs/Float64MultiArray` | ROS → bridge | Six joint positions (rad). |
 | `/servo_node/delta_twist_cmds` | `geometry_msgs/TwistStamped` | ROS → Servo | Cartesian velocity command. |
 | `/joint_states` | `sensor_msgs/JointState` | bridge → ROS | Live robot state; seed for IK and slew base. |
-| `/diagnostics`, `/tf`, `/egm/*` | — | bridge/MoveIt → dashboard | Telemetry consumed by the dashboard. |
+| `/diagnostics`, `/tf`, `/egm/*` | - | bridge/MoveIt → dashboard | Telemetry consumed by the dashboard. |
 
 ## ROS parameters
 
@@ -48,22 +48,22 @@ subsystem chapters.
 ## Glossary
 
 EGM
-: Externally Guided Motion — ABB's low-latency external motion interface over UDP.
+: Externally Guided Motion - ABB's low-latency external motion interface over UDP.
 
 RWS
-: Robot Web Services — the controller's HTTP/REST interface.
+: Robot Web Services - the controller's HTTP/REST interface.
 
 UDPUC
 : UDP Unicast Communication device on the controller used by EGM; binds to a specific
   remote address/port.
 
 TCP (robotics)
-: Tool Center Point — the controlled point at the robot's end-effector (distinct from TCP
+: Tool Center Point - the controlled point at the robot's end-effector (distinct from TCP
   the network protocol).
 
 FLU
-: Forward-Left-Up — the ROS right-handed Z-up convention; Unity is left-handed Y-up, so a
+: Forward-Left-Up - the ROS right-handed Z-up convention; Unity is left-handed Y-up, so a
   frame conversion is applied when publishing poses.
 
 Servo
-: MoveIt Servo — real-time Cartesian/joint jogging with collision and singularity handling.
+: MoveIt Servo - real-time Cartesian/joint jogging with collision and singularity handling.

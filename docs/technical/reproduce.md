@@ -1,7 +1,7 @@
-# Reproduction Guide — Build It Yourself
+# Reproduction Guide - Build It Yourself
 
 This chapter is a complete, ordered recipe for rebuilding MetaMove from scratch. It is
-written so that the **simulation path needs no robot and no headset** — you can stand up
+written so that the **simulation path needs no robot and no headset** - you can stand up
 the full ROS 2 motion stack on one Linux/WSL2 machine and exercise the IK loop, the
 playback, and the distance speed scaler against a fake joint-state publisher. The
 **real-robot path** then adds the RAPID module, the controller `UDPUC` config, the Windows
@@ -32,8 +32,8 @@ Unity (Quest) -> | ROS 2 graph: move_group + relays + fake_jsp     |
 
 Two interchangeable IK backends exist; pick one:
 
-- `moveit_ik_relay` — calls MoveIt `/compute_ik`, outputs joint positions.
-- `pose_to_twist_node` + MoveIt Servo — outputs a Cartesian twist.
+- `moveit_ik_relay` - calls MoveIt `/compute_ik`, outputs joint positions.
+- `pose_to_twist_node` + MoveIt Servo - outputs a Cartesian twist.
 
 ## 1. Prerequisites
 
@@ -43,8 +43,8 @@ Two interchangeable IK backends exist; pick one:
 | Docker | Engine with Compose v2. |
 | ROS 2 | **Jazzy** (provided by the image; you do not install it on the host). |
 | Robot description | `abb_crb15000_moveit` MoveIt config package for the GoFa CRB 15000 5/0.95. |
-| Unity | **6000.4.0f1** (Unity 6 LTS) — only for the headset client. |
-| Robot | ABB GoFa CRB 15000, RobotWare 7.x with the EGM option — only for the real path. |
+| Unity | **6000.4.0f1** (Unity 6 LTS) - only for the headset client. |
+| Robot | ABB GoFa CRB 15000, RobotWare 7.x with the EGM option - only for the real path. |
 
 ## 2. Build the ROS 2 image
 
@@ -171,19 +171,19 @@ or `localhost` when the editor runs on the same PC) and `rosPort = 10000`.
 
 ### 4c. Wire the feature scripts (Inspector)
 
-`IKTargetPosePublisher` — `topic="/metamove/ik_target"`, `frameId="base_link"`,
+`IKTargetPosePublisher` - `topic="/metamove/ik_target"`, `frameId="base_link"`,
 `publishHz=50`, `onlyWhenGrabbed=true`; assign `target` (the IK target ball) and
 `robotBase` (the QR-anchored `base_link`). Publishes `geometry_msgs/PoseStamped` after
 converting Unity left-handed Y-up to ROS FLU.
 
-`PhantomGrabRelay` (on the end-effector sphere) — assign `grabbable`, `ikTarget`, and a
+`PhantomGrabRelay` (on the end-effector sphere) - assign `grabbable`, `ikTarget`, and a
 hand `handAnchor`; `dragGain=1.0`, `maxReachM=0.5`.
 
-`SafetyHud` — assign `robotBase` and `humanPoints` (defaults to `Camera.main`); `useRos=true`,
+`SafetyHud` - assign `robotBase` and `humanPoints` (defaults to `Camera.main`); `useRos=true`,
 `distanceTopic="/quest/min_distance"`, `speedTopic="/robot/speed_factor"`, `publishHz=20`,
 thresholds `dangerDist=0.6`, `warnDist=1.2`, `speedDistNear=0.6`, `speedDistFar=2.0`.
 
-`ScalingModeToggle` — `topic="/quest/scaling_enabled"`, `scalingEnabled=true`,
+`ScalingModeToggle` - `topic="/quest/scaling_enabled"`, `scalingEnabled=true`,
 `vrButton=OVRInput.Button.Two`; publishes `std_msgs/Bool` on a 2 s heartbeat.
 
 ### 4d. Build & deploy
@@ -201,7 +201,7 @@ out / crash the laptop on the 130 W supply.
 
 ```{warning}
 Do every new RAPID/EGM step on a RobotStudio Virtual Controller first, then the real robot.
-Keep acceleration conservative during bring-up. The robot moves under external command — be
+Keep acceleration conservative during bring-up. The robot moves under external command - be
 ready on the E-Stop.
 ```
 
@@ -224,7 +224,7 @@ EGMRunJoint egmId, EGM_STOP_HOLD
 ```
 
 ```{note}
-Do **not** pass `\PosCorrGain` to `EGMActJoint` on RW 7.20 — it raises elog 40160. Joint
+Do **not** pass `\PosCorrGain` to `EGMActJoint` on RW 7.20 - it raises elog 40160. Joint
 corrections need no gain. `MaxSpeedDeviation` here is the dominant speed cap and overrides
 the ROS-side `live_speed`.
 ```
@@ -251,7 +251,7 @@ whose source IP is not the configured `RemoteAddress`.
 cd bridge\egm-bridge
 python -m venv .venv ; .\.venv\Scripts\Activate.ps1
 pip install roslibpy numpy
-# BIND to the robot-subnet IP — never 0.0.0.0 on a multi-homed host:
+# BIND to the robot-subnet IP - never 0.0.0.0 on a multi-homed host:
 python egm_bridge_servo.py --host 192.168.125.150 --port 6511 --rosbridge-host 192.168.125.99
 ```
 
@@ -288,7 +288,7 @@ Verification checklist:
 | Symptom | Cause | Fix |
 |---------|-------|-----|
 | Robot ignores EGM corrections | Bridge sends from wrong source IP | Bind the socket to the UDPUC `RemoteAddress`; never `0.0.0.0`. |
-| `elog 40160` on EGMActJoint | `\PosCorrGain` used in joint mode on RW 7.20 | Remove it — joint corrections take no gain. |
+| `elog 40160` on EGMActJoint | `\PosCorrGain` used in joint mode on RW 7.20 | Remove it - joint corrections take no gain. |
 | Container receives 0 UDP packets | WSL2 mirrored-networking bug | Use a macvlan network or run the bridge on Windows. |
 | IK relay never commands | No fresh `/joint_states` seed | Start the bridge / fake JSP first; check `joint_state_timeout`. |
 | Robot jumps at start | Singular seed | Seed near `[0, 0, -0.785, 0, -0.785, 0]` (the fake JSP default). |

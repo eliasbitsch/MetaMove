@@ -1,12 +1,12 @@
 # Configuration file for the Sphinx documentation builder.
-# MetaMove — Technical Documentation
+# MetaMove Technical Documentation
 #
 # Build HTML:  sphinx-build -b html  . _build/html
 # Build PDF :  sphinx-build -b rinoh . _build/pdf     (pure-Python, no LaTeX)
 
 project = "MetaMove"
-author = "Elias Bitsch, Philip Stix, Viktoriia Ovdiienko"
-copyright = "2026, Elias Bitsch, Philip Stix, Viktoriia Ovdiienko"
+author = "Elias Bitsch, Viktoriia Ovdiienko, Philip Stix"
+copyright = "2026, Elias Bitsch, Viktoriia Ovdiienko, Philip Stix"
 release = "1.0"
 version = "1.0"
 
@@ -38,13 +38,15 @@ html_title = "MetaMove Technical Documentation"
 html_show_sourcelink = False
 
 # --- PDF output (rinohtype, sphinx-build -b rinoh) -------------------------
+# Short title + subtitle so the running page header stays on one line.
+# The template config (metamove.rtt) pulls in metamove.rts (no hyphenation).
 rinoh_documents = [
     dict(
         doc="index",
         target="MetaMove-Technical-Documentation",
-        title="MetaMove — Technical Documentation",
-        subtitle="Distance-Based Speed Scaling · Pinch-and-Move Teleoperation · Dashboard & HMI",
-        author="Elias Bitsch · Philip Stix · Viktoriia Ovdiienko",
-        template="book",
+        title="MetaMove",
+        subtitle="Technical Documentation",
+        author="Elias Bitsch · Viktoriia Ovdiienko · Philip Stix",
+        template="metamove.rtt",
     )
 ]

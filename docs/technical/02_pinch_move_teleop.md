@@ -10,12 +10,12 @@ grabs "the robot" rather than a free-floating widget.
 
 Two interaction methods exist, both feeding the same world-space IK target:
 
-- **Direct hand-delta grab** (`PhantomGrabRelay`) — the IK target moves by the hand's
+- **Direct hand-delta grab** (`PhantomGrabRelay`) - the IK target moves by the hand's
   displacement since the moment of grab.
-- **Visual-lock grab** (`IKHandleVisualLock`) — Meta's grab interactable moves a handle,
+- **Visual-lock grab** (`IKHandleVisualLock`) - Meta's grab interactable moves a handle,
   the script copies its pose to the IK target and snaps the visible mesh back to the TCP.
 
-A third, discrete gesture — **spatial pinch tap** — places a target on a real-world
+A third, discrete gesture - **spatial pinch tap** - places a target on a real-world
 surface by raycasting from the palm.
 
 ## Data flow
@@ -40,7 +40,7 @@ Quest hand  --(Meta SDK pinch/grab recogniser)-->  GestureRouter
                                    |
                                    v ROS-TCP-Connector
    +--------------------------------------------------------------+
-   | ROS 2 — one of two relays:                                    |
+   | ROS 2 - one of two relays:                                    |
    |  moveit_ik_relay.py  (position IK):                           |
    |    gate: target fresh? joint_state fresh?                     |
    |    /compute_ik(pose, seed=joint_states)                       |
@@ -61,8 +61,8 @@ Quest hand  --(Meta SDK pinch/grab recogniser)-->  GestureRouter
 
 `GestureRouter.cs`
 : Central gesture dispatcher. Meta's shape recognisers raise pinch/point begin/end events
-  here; `UpdateModeFromGesture()` selects the active mode — **pinch -> Teleop**,
-  **point/thumb -> Jog**, **hand free -> Command** — and forwards `OnBegin`/`OnEnd` to the
+  here; `UpdateModeFromGesture()` selects the active mode - **pinch -> Teleop**,
+  **point/thumb -> Jog**, **hand free -> Command** - and forwards `OnBegin`/`OnEnd` to the
   grab relays and the spatial-pinch controller.
 
 Pinch detection itself is provided by the Meta SDK shape recognition and wired into the
@@ -70,7 +70,7 @@ router via UnityEvent adapters.
 
 ## Continuous teleoperation
 
-### Method A — `PhantomGrabRelay.cs` (direct hand-delta)
+### Method A - `PhantomGrabRelay.cs` (direct hand-delta)
 
 The visible sphere is a child of `Joint_6` and never moves visually. A separate
 world-space `ikTarget` transform is driven by the hand:
@@ -94,7 +94,7 @@ inspector override, or the camera as a last resort.
 | `dragGain` | 1.0 | Multiplier on hand displacement (1.0 = 1:1 motion). |
 | `maxReachM` | 0.5 m | Clamp on IK-target distance from the current EE. |
 
-### Method B — `IKHandleVisualLock.cs` (visual lock)
+### Method B - `IKHandleVisualLock.cs` (visual lock)
 
 Meta's `HandGrabInteractable` (or `DistanceHandGrabInteractable`) moves a handle while
 grabbed. Each `LateUpdate` the script copies that pose to the IK target and then snaps the
@@ -106,7 +106,7 @@ else           ikTarget.position = tcp.position;        // idle: target at EE
 transform.position = tcp.position;                       // visible lock to flange
 ```
 
-### Discrete — `SpatialPinchController.cs` (tap-to-place)
+### Discrete - `SpatialPinchController.cs` (tap-to-place)
 
 A quick pinch-tap (<= `tapMaxDurationSeconds`, default 0.2 s) raycasts from the palm along
 the palm normal up to a configured length and places a waypoint / IK target at the hit
@@ -132,13 +132,13 @@ Publishing is **gated**: it streams only while the handle is actually grabbed
 
 ## ROS-side relays
 
-### `moveit_ik_relay.py` — position IK
+### `moveit_ik_relay.py` - position IK
 
 Subscribes `/metamove/ik_target` and `/joint_states`, and calls MoveIt's `/compute_ik`
 service. The loop runs at 50 Hz with two **fail-safe gates**:
 
-- **Target freshness** — if the last target is older than `target_timeout`, do nothing.
-- **Seed freshness** — if `/joint_states` is older than `joint_state_timeout`, refuse to
+- **Target freshness** - if the last target is older than `target_timeout`, do nothing.
+- **Seed freshness** - if `/joint_states` is older than `joint_state_timeout`, refuse to
   command (no live robot pose -> no motion).
 
 The IK request seeds from the current joint state. The solution is **slew-limited
@@ -150,7 +150,7 @@ per joint** (`max_joint_speed * dt`) before publishing to `/servo_node/commands`
 | `joint_state_timeout` | 0.5 s | Refuse to command without a fresh seed. |
 | `max_joint_speed` | 0.3 rad/s | Per-joint slew clamp (~0.006 rad/tick @ 50 Hz). |
 
-### `pose_to_twist_node.py` — servo twist (alternative)
+### `pose_to_twist_node.py` - servo twist (alternative)
 
 Converts an absolute pose target into a Cartesian velocity twist for MoveIt Servo. It
 reads the current EE pose from TF, applies P-control on the position error and a
@@ -179,7 +179,7 @@ angular speed, and publishes `geometry_msgs/TwistStamped` on
 
 - The visible handle is always locked to the **real** flange; the operator manipulates a
   separate invisible IK target. This avoids visual drift between command and reality.
-- Both relays enforce **seed freshness** — without a live `/joint_states` they will not
+- Both relays enforce **seed freshness** - without a live `/joint_states` they will not
   command motion, which prevents commanding into an unknown robot state.
 - The position-IK relay and the servo-twist node are interchangeable backends; IK gives
   absolute pose tracking, twist gives smooth velocity control through MoveIt Servo's

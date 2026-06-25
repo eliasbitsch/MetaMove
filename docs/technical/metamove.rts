@@ -1,0 +1,51 @@
+[STYLESHEET]
+name = MetaMove
+description = Sphinx base with hyphenation disabled and ragged-right body text
+base = sphinx
+
+# No hyphenation anywhere, and left-align (ragged right) body text so there are
+# no mid-word breaks and no gappy justification.
+
+[default:Paragraph]
+hyphenate = False
+text_align = LEFT
+
+[body]
+hyphenate = False
+text_align = LEFT
+
+[title]
+hyphenate = False
+
+[heading level 1]
+hyphenate = False
+
+[heading level 2]
+hyphenate = False
+
+[heading level 3]
+hyphenate = False
+
+[heading level 4]
+hyphenate = False
+
+[title page title]
+hyphenate = False
+
+[title page subtitle]
+hyphenate = False
+
+[title page author]
+hyphenate = False
+
+[header]
+hyphenate = False
+
+[footer]
+hyphenate = False
+
+[body matter chapter title]
+hyphenate = False
+
+[front matter section title]
+hyphenate = False

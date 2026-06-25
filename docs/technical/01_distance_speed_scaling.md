@@ -5,14 +5,14 @@
 The robot's motion speed is continuously scaled by the distance between the nearest
 human and the robot. As the operator approaches, the robot slows down; below a near
 threshold it freezes entirely. As they retreat, speed ramps back up smoothly. This is
-a collaborative-safety layer that runs **on top of** any commanded motion — teach
+a collaborative-safety layer that runs **on top of** any commanded motion - teach
 playback, pinch teleoperation, or autonomous pick-and-place.
 
 The design has two defining properties:
 
-- **Asymmetric response** — speed ramps **up slowly** (smooth acceleration) but drops
+- **Asymmetric response** - speed ramps **up slowly** (smooth acceleration) but drops
   to a stop **instantly** (reactive safety).
-- **Stale-safe** — if the distance signal goes stale (e.g. the headset is removed),
+- **Stale-safe** - if the distance signal goes stale (e.g. the headset is removed),
   the system freezes / pauses cleanly rather than coasting.
 
 There are two implementations sharing the same formula: a **local** Unity-only path for
@@ -89,7 +89,7 @@ on the ROS path, the playback node is paused for a clean stop instead of a hard 
 | relay tick | 50 Hz | `jtc_servo_relay` interpolation (`rate_hz`). |
 
 ```{note}
-The scaler does not own a topic to the relay — it writes the relay's `live_speed`
+The scaler does not own a topic to the relay - it writes the relay's `live_speed`
 **parameter** over the `/<relay_node>/set_parameters` service (`relay_node` defaults to
 `joint_trajectory_controller`, which is the rclpy node name of `jtc_servo_relay`). On
 stale distance or MANUAL mode it also calls `/<playback_node>/pause` and `/resume`
@@ -120,7 +120,7 @@ applied on the next tick.
   disabled, the manual console owns `live_speed`.
 
 `PickPlaceLoop.cs`
-: Local demo consumer — multiplies position and rotation motion by `Factor` each frame.
+: Local demo consumer - multiplies position and rotation motion by `Factor` each frame.
 
 ### ROS 2 (Python)
 
@@ -138,15 +138,15 @@ applied on the next tick.
 
 `dpp_orchestrate.py`
 : Lab orchestrator that sets MoveIt-level `velocity_scaling` per phase
-  (e.g. normal 0.15, fast 0.50) for dynamic measurement runs — a coarser, waypoint-level
+  (e.g. normal 0.15, fast 0.50) for dynamic measurement runs - a coarser, waypoint-level
   scaling distinct from the continuous `live_speed`.
 
 ## Where speed is applied
 
-1. **Unity IK-target motion** — `PickPlaceLoop` scales per-frame position/rotation by `Factor`.
-2. **Trajectory playback cursor** — `jtc_servo_relay` advances time by `period * live_speed` each tick (continuous, mid-motion).
-3. **MoveIt waypoint scaling** — `dpp_playback` `max_velocity_scaling_factor` per waypoint (coarser).
-4. **EGM servo loop** — interpolated joint positions are streamed over UDP to the controller.
+1. **Unity IK-target motion** - `PickPlaceLoop` scales per-frame position/rotation by `Factor`.
+2. **Trajectory playback cursor** - `jtc_servo_relay` advances time by `period * live_speed` each tick (continuous, mid-motion).
+3. **MoveIt waypoint scaling** - `dpp_playback` `max_velocity_scaling_factor` per waypoint (coarser).
+4. **EGM servo loop** - interpolated joint positions are streamed over UDP to the controller.
 
 ## Design notes
 
@@ -155,5 +155,5 @@ applied on the next tick.
 - `/robot/speed_factor` is fed back to the headset HUD so the operator always sees the
   speed the robot is actually executing, not just the commanded value.
 - The MoveSpeed/MaxSpeedDeviation caps in the RAPID source are a **separate, dominant**
-  governance layer — the EGM correction can never exceed the controller-side limits
+  governance layer - the EGM correction can never exceed the controller-side limits
   regardless of `live_speed`.

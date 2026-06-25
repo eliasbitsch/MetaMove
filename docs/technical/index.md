@@ -1,4 +1,4 @@
-# MetaMove — Technical Documentation
+# MetaMove - Technical Documentation
 
 MetaMove is a mixed-reality teleoperation system for an **ABB GoFa CRB 15000**
 collaborative robot. An operator wearing a **Meta Quest 3** headset sees the real
@@ -8,12 +8,12 @@ in-headset HMI provide monitoring and supervisory control.
 
 This document describes the three core subsystems:
 
-1. **Distance-Based Speed Scaling** — the robot slows down and freezes as a human
+1. **Distance-Based Speed Scaling** - the robot slows down and freezes as a human
    approaches, and ramps back up smoothly when they retreat.
-2. **Pinch-and-Move End-Effector Control** — the operator pinches a virtual handle
+2. **Pinch-and-Move End-Effector Control** - the operator pinches a virtual handle
    on the robot flange and drags it through space; the motion is solved to joint
    commands and streamed to the controller.
-3. **Dashboard and HMI** — a FastAPI/WebSocket web dashboard plus a layered Unity
+3. **Dashboard and HMI** - a FastAPI/WebSocket web dashboard plus a layered Unity
    in-headset interface, and a set of operator console tools.
 
 ```{toctree}
@@ -62,8 +62,8 @@ reference
 
 The architecture is intentionally **dual-path**:
 
-- **Real robot** — Quest -> ROS 2 -> EGM bridge (Windows) -> GoFa controller over EGM/UDP.
-- **Virtual controller / simulation** — the same ROS 2 graph drives a RobotStudio
+- **Real robot** - Quest -> ROS 2 -> EGM bridge (Windows) -> GoFa controller over EGM/UDP.
+- **Virtual controller / simulation** - the same ROS 2 graph drives a RobotStudio
   Virtual Controller via RWS where EGM/UDP is not available on the same host.
 
 ## Repository layout
@@ -91,5 +91,5 @@ listed verbatim so they can be cross-referenced against the running system. The
 MetaMove is developed by:
 
 - **Elias Bitsch**
-- **Philip Stix**
 - **Viktoriia Ovdiienko**
+- **Philip Stix**

@@ -2,7 +2,7 @@
 
 This chapter covers hardware and software requirements, dependencies, and the
 bring-up sequence for the full Quest → ROS 2 → GoFa pipeline. You can run individual
-subsystems standalone (e.g. the dashboard against a simulated robot) — each section
+subsystems standalone (e.g. the dashboard against a simulated robot) - each section
 notes its own prerequisites.
 
 ## Hardware requirements
@@ -13,7 +13,7 @@ notes its own prerequisites.
 | Robot controller | OmniCore, reachable over Ethernet; RWS (HTTPS) enabled. |
 | Headset | Meta Quest 3 (passthrough + hand tracking), developer mode enabled. |
 | Workstation | Windows 11 PC on the robot LAN; dedicated wired NIC for the robot subnet. |
-| Power | Use a sufficiently rated PSU for the workstation. A 130 W supply browns out under combined load — prefer a USB-A→USB-C cable for `adb` to avoid USB-PD draw on the laptop. |
+| Power | Use a sufficiently rated PSU for the workstation. A 130 W supply browns out under combined load - prefer a USB-A→USB-C cable for `adb` to avoid USB-PD draw on the laptop. |
 | Network | Isolated robot LAN (e.g. `10.x` / a dedicated `/24`). The controller, the Windows EGM bridge, and the workstation must share that subnet. |
 
 ## Software requirements
@@ -33,7 +33,7 @@ notes its own prerequisites.
 The pipeline depends on a correctly configured robot subnet. Key points:
 
 - Give the Windows EGM bridge a **fixed IP on the robot subnet** and bind the bridge
-  socket to that address — **never bind to `0.0.0.0`** on a multi-homed host. The
+  socket to that address - **never bind to `0.0.0.0`** on a multi-homed host. The
   controller's UDP unicast device (`UDPUC`) silently discards correction packets that
   arrive from an unexpected source IP.
 - Configure the controller `UDPUC` device `RemoteAddress` to the bridge IP and the
@@ -52,19 +52,19 @@ recipe.
 
 ## Bring-up sequence (real robot)
 
-1. **Network** — power the controller, verify the workstation can ping it and the
+1. **Network** - power the controller, verify the workstation can ping it and the
    assigned bridge IP exists on the robot NIC.
-2. **RAPID** — ensure the EGM RAPID module (`MetaJointMain` / equivalent) is the active
+2. **RAPID** - ensure the EGM RAPID module (`MetaJointMain` / equivalent) is the active
    task and the program pointer is set to its main routine. Motors on.
-3. **ROS 2** — start the Docker stack in WSL2 (MoveIt, controllers, `rosbridge`,
+3. **ROS 2** - start the Docker stack in WSL2 (MoveIt, controllers, `rosbridge`,
    ROS-TCP-Endpoint, and the `metamove_bridge` nodes).
-4. **EGM bridge (Windows)** — start `egm_bridge_servo.py`, bound to the bridge IP,
+4. **EGM bridge (Windows)** - start `egm_bridge_servo.py`, bound to the bridge IP,
    pointing at the controller `UDPUC` port. Confirm `/joint_states` goes live.
-5. **MoveIt Servo** — activate servo (`activate_servo.py`) and confirm
+5. **MoveIt Servo** - activate servo (`activate_servo.py`) and confirm
    `/servo_node/status` is nominal.
-6. **Quest app** — launch the MetaMove app; it connects via ROS-TCP-Connector. Calibrate
+6. **Quest app** - launch the MetaMove app; it connects via ROS-TCP-Connector. Calibrate
    the QR/world anchor so the virtual robot overlays the real one.
-7. **Safety check** — verify distance scaling: walking toward the robot must reduce speed
+7. **Safety check** - verify distance scaling: walking toward the robot must reduce speed
    and freeze it; retreating must ramp it back up.
 
 ```{warning}
@@ -129,7 +129,7 @@ pip install -r requirements.txt
 # HTML (browsable)
 sphinx-build -b html . _build/html
 
-# PDF (pure-Python via rinohtype — no LaTeX toolchain required)
+# PDF (pure-Python via rinohtype - no LaTeX toolchain required)
 sphinx-build -b rinoh . _build/pdf
 # -> _build/pdf/MetaMove-Technical-Documentation.pdf
 ```
