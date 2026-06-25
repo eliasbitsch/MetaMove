@@ -43,6 +43,34 @@ Design choices, with rationale:
 
 ---
 
+## Documentation
+
+A full technical manual lives in [`docs/technical/`](docs/technical/) and covers the three
+core subsystems plus a complete **build-it-yourself** guide (the simulation path needs no
+robot and no headset):
+
+- [Overview & architecture](docs/technical/index.md)
+- [Installation & setup](docs/technical/installation.md)
+- [Reproduction guide](docs/technical/reproduce.md) — step-by-step rebuild
+- [Distance-based speed scaling](docs/technical/01_distance_speed_scaling.md)
+- [Pinch-and-move end-effector control](docs/technical/02_pinch_move_teleop.md)
+- [Dashboard and HMI](docs/technical/03_dashboard_hmi.md)
+- [Reference](docs/technical/reference.md) — topics, parameters, ports, glossary
+
+Build it as a browsable site or a single PDF (pure-Python, no LaTeX needed):
+
+```bash
+cd docs/technical
+pip install -r requirements.txt
+sphinx-build -b html  . _build/html     # HTML
+sphinx-build -b rinoh . _build/pdf      # -> MetaMove-Technical-Documentation.pdf
+```
+
+A pre-built PDF is checked in at
+[`docs/technical/MetaMove-Technical-Documentation.pdf`](docs/technical/MetaMove-Technical-Documentation.pdf).
+
+---
+
 ## Repository layout
 
 | Path | What lives here |
@@ -101,7 +129,7 @@ Two modules cover the controller side:
 
 `ROB_1_udpuc.cfg` is the SIO configuration that registers the UDPUC device pointing at the Unity bridge.
 
-### EGM bridge (`ai-services/egm-bridge/`)
+### EGM bridge (`bridge/egm-bridge/`)
 
 Reference Python bridge used during bring-up before the Unity bridge was finished. Two flavors:
 
