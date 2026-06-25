@@ -9,6 +9,7 @@
 [Uu]ser[Ss]ettings/
 [Mm]emoryCaptures/
 [Rr]ecordings/
+.utmp/
 [Aa]ssets/AssetStoreTools*
 [Aa]ssets/Plugins/Editor/JetBrains*
 Assets/**/*_BackUpThisFolder_ButDontShipItWithYourGame/
@@ -100,6 +101,8 @@ robotstudio/station/
 
 # Local data dumps — GoFa controller dumps + lab measurement runs (not versioned)
 /dumps/
+# Lab measurement runs anywhere in the tree
+lab_runs/
 
 # Old staging Unity scratch code (legacy)
 .staging/
