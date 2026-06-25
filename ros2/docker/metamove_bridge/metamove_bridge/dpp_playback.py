@@ -1,8 +1,8 @@
 """
 DPP waypoint playback — loops through teach'd waypoints via MoveIt MoveGroup.
 
-Sends MotionPlanRequest goals to /move_action one waypoint at a time, in a
-shuffled-but-non-repeating sequence. Speed is set per-plan via
+Sends MotionPlanRequest goals to /move_action one waypoint at a time, in
+teach order (sequential, non-shuffled by default). Speed is set per-plan via
 `max_velocity_scaling_factor` so changing the ROS param mid-run takes effect
 on the next waypoint (typical lag: 1–3 seconds at v_scale=0.5).
 
@@ -13,7 +13,13 @@ Params:
   planning_group       MoveIt planning group name (default: "manipulator")
   planner_id           OMPL planner (default: "RRTConnectkConfigDefault")
   dwell_seconds        sleep between waypoints (default 0.5)
-  reshuffle_each_pass  if true, reshuffle order every full pass (default true)
+  reshuffle_each_pass  if true, reshuffle order every full pass (default false)
+
+Publishes the current waypoint index (Int32 on /dpp/wp_index) right after the
+robot reaches each waypoint, so a visualiser (e.g. Unity PlannedPathFade) can
+record the TCP world position per waypoint and fade traversed segments. The
+index is the waypoint's identity (its position in dpp_waypoints.yaml), stable
+across passes — in sequential mode it simply cycles 0,1,…,N-1,0,1,….
 
 Live speed change for the 4 phases:
   ros2 param set /dpp_playback velocity_scaling 0.25   # normal
@@ -33,6 +39,7 @@ from pathlib import Path
 import rclpy
 from rclpy.action import ActionClient
 from rclpy.node import Node
+from std_msgs.msg import Int32
 from std_srvs.srv import Trigger
 
 from moveit_msgs.action import MoveGroup
@@ -56,13 +63,14 @@ class DppPlayback(Node):
         self.declare_parameter('planning_group', 'manipulator')
         self.declare_parameter('planner_id', 'RRTConnectkConfigDefault')
         self.declare_parameter('dwell_seconds', 0.5)
-        self.declare_parameter('reshuffle_each_pass', True)
+        self.declare_parameter('reshuffle_each_pass', False)
         self.declare_parameter('joint_tolerance_rad', 0.005)
 
         self._paused = False
         self._goal_handle = None
         self._goal_lock = threading.Lock()
         self._stop = False
+        self._go_home = False
 
         self._waypoints = self._load_waypoints()
         if not self._waypoints:
@@ -70,9 +78,11 @@ class DppPlayback(Node):
         self.get_logger().info(f'loaded {len(self._waypoints)} waypoints')
 
         self._mg_client = ActionClient(self, MoveGroup, '/move_action')
+        self._wp_pub = self.create_publisher(Int32, '/dpp/wp_index', 10)
         self.create_service(Trigger, '~/pause', self._svc_pause)
         self.create_service(Trigger, '~/resume', self._svc_resume)
         self.create_service(Trigger, '~/stop', self._svc_stop)
+        self.create_service(Trigger, '~/home', self._svc_home)
 
         # Worker thread runs the playback loop; main thread spins ROS.
         self._worker = threading.Thread(target=self._run, daemon=True)
@@ -122,6 +132,17 @@ class DppPlayback(Node):
                 self._goal_handle.cancel_goal_async()
         resp.success = True
         resp.message = 'stopping after current cancel'
+        return resp
+
+    def _svc_home(self, _req, resp):
+        # Stop looping, plan a smooth move to the home pose, then stay there.
+        self._paused = True
+        self._go_home = True
+        with self._goal_lock:
+            if self._goal_handle is not None:
+                self._goal_handle.cancel_goal_async()
+        resp.success = True
+        resp.message = 'homing — fahre zu [0,0,0,0,90,0] und bleibe stehen'
         return resp
 
     def _build_goal(self, wp: dict) -> MoveGroup.Goal:
@@ -191,12 +212,20 @@ class DppPlayback(Node):
     def _run(self) -> None:
         time.sleep(2.0)  # let MoveIt come up
         order = list(range(len(self._waypoints)))
-        random.shuffle(order)
+        if bool(self.get_parameter('reshuffle_each_pass').value):
+            random.shuffle(order)
         i = 0
         pass_count = 0
         ok_count = 0
         fail_count = 0
         while rclpy.ok() and not self._stop:
+            if self._go_home:
+                self._go_home = False
+                self._paused = True
+                self.get_logger().info('HOME — fahre zu [0,0,0,0,90,0] und bleibe stehen')
+                self._execute_one({'name': 'HOME',
+                                   'joints': [0.0, 0.0, 0.0, 0.0, 1.5707963, 0.0]})
+                continue
             if self._paused:
                 time.sleep(0.2)
                 continue
@@ -208,6 +237,9 @@ class DppPlayback(Node):
             success = self._execute_one(wp)
             if success:
                 ok_count += 1
+                # Announce the reached waypoint's identity (stable index into the
+                # yaml) so visualisers can record TCP pose + fade traversed segments.
+                self._wp_pub.publish(Int32(data=int(order[i])))
             else:
                 fail_count += 1
             dwell = float(self.get_parameter('dwell_seconds').value)

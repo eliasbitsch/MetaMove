@@ -28,6 +28,8 @@ setup(
             'pose_to_twist_node = metamove_bridge.pose_to_twist_node:main',
             'fake_joint_state_publisher = metamove_bridge.fake_joint_state_publisher:main',
             'moveit_ik_relay = metamove_bridge.moveit_ik_relay:main',
+            'jtc_servo_relay = metamove_bridge.jtc_servo_relay:main',
+            'distance_speed_scaler = metamove_bridge.distance_speed_scaler:main',
             'dpp_teach = metamove_bridge.dpp_teach:main',
             'dpp_playback = metamove_bridge.dpp_playback:main',
             'dpp_orchestrate = metamove_bridge.dpp_orchestrate:main',

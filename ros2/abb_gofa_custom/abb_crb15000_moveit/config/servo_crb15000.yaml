@@ -40,8 +40,12 @@ override_velocity_scaling_factor: 0.0
 incoming_command_timeout: 0.5
 
 # Singularity / collision
-lower_singularity_threshold: 17.0
-hard_stop_singularity_threshold: 30.0
+# Raised from 17/30: the default damping throttled all rotational twists to
+# a crawl regardless of commanded speed (condition number passes 17 quickly
+# on the GoFa when rotating about base_link). Trade-off: less margin before
+# real singularities — rescue_jog.py frees the arm if it gets stuck.
+lower_singularity_threshold: 30.0
+hard_stop_singularity_threshold: 60.0
 leaving_singularity_threshold_multiplier: 2.0
 collision_check_type: threshold_distance
 self_collision_proximity_threshold: 0.005

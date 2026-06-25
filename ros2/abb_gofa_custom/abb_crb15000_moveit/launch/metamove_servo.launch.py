@@ -13,7 +13,8 @@ from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
 from launch.actions import IncludeLaunchDescription
 from launch.launch_description_sources import PythonLaunchDescriptionSource
-from launch_ros.actions import Node
+from launch_ros.actions import Node, ComposableNodeContainer
+from launch_ros.descriptions import ComposableNode
 from moveit_configs_utils import MoveItConfigsBuilder
 
 
@@ -72,15 +73,30 @@ def generate_launch_description():
         "override_velocity_scaling_factor": 1.0,
     })
     servo_params = {"moveit_servo": _yml}
-    servo_node = Node(
-        package="moveit_servo",
-        executable="servo_node",
-        name="servo_node",
-        parameters=[
-            servo_params,
-            moveit_config.robot_description,
-            moveit_config.robot_description_semantic,
-            moveit_config.robot_description_kinematics,
+    # Servo MUST run as a composable node inside a component container.
+    # The standalone `servo_node` executable spawns two nodes both named
+    # "servo_node"; the duplicate fully-qualified name breaks DDS request/
+    # response matching, so /servo_node/start_servo is advertised but no
+    # server ever answers (wait_for_service times out). Loading ServoNode as
+    # a single component is the documented MoveIt2 pattern and makes the
+    # start_servo / switch_command_type services reliably reachable.
+    servo_container = ComposableNodeContainer(
+        name="servo_container",
+        namespace="",
+        package="rclcpp_components",
+        executable="component_container_mt",
+        composable_node_descriptions=[
+            ComposableNode(
+                package="moveit_servo",
+                plugin="moveit_servo::ServoNode",
+                name="servo_node",
+                parameters=[
+                    servo_params,
+                    moveit_config.robot_description,
+                    moveit_config.robot_description_semantic,
+                    moveit_config.robot_description_kinematics,
+                ],
+            ),
         ],
         output="screen",
     )
@@ -109,4 +125,4 @@ def generate_launch_description():
         output="screen",
     )
 
-    return LaunchDescription([rsp, move_group, rviz, servo_node, rosbridge, rosapi, ros_tcp])
+    return LaunchDescription([rsp, move_group, rviz, servo_container, rosbridge, rosapi, ros_tcp])

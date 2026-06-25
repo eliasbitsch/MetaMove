@@ -52,11 +52,16 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 PHASES_DEFAULT = 'normal:300,move:300,fast:120,stop:60'
 
 # Per-phase velocity_scaling + whether playback should be running.
+# fast capped at 0.50 (user decision 2026-06-11: "nicht übertreiben").
+# Empirisch: ruckige Trajektorien-Starts triggern die kollaborative
+# Überwachung des GoFa (RAPID-Fehler stoppt das Programm mitten in der
+# Messung) — deshalb move konservativ und fast nur mit niedriger
+# acceleration_scaling im Playback fahren.
 PHASE_PLAN = {
-    'normal': {'v': 0.25, 'play': False},
-    'move':   {'v': 0.25, 'play': True},
-    'fast':   {'v': 1.00, 'play': True},
-    'stop':   {'v': 1.00, 'play': False},
+    'normal': {'v': 0.15, 'play': False},
+    'move':   {'v': 0.15, 'play': True},
+    'fast':   {'v': 0.50, 'play': True},
+    'stop':   {'v': 0.50, 'play': False},
 }
 
 RWS_TARGETS = {
@@ -165,10 +170,19 @@ class DppOrchestrate(Node):
         p.value = ParameterValue(type=ParameterType.PARAMETER_DOUBLE, double_value=float(v))
         req.parameters.append(p)
         fut = self.param_cli.call_async(req)
-        rclpy.spin_until_future_complete(self, fut, timeout_sec=3.0)
+        self._await_future(fut, 3.0)
         res = fut.result()
         ok = bool(res and res.results and res.results[0].successful)
         self._log(f'velocity_scaling={v}  ok={ok}')
+
+    @staticmethod
+    def _await_future(fut, timeout_s: float) -> None:
+        # The phase loop runs in a worker thread while the MAIN thread spins
+        # the executor. spin_until_future_complete here raises "Executor is
+        # already spinning" — just poll; the main spin completes the future.
+        t0 = time.monotonic()
+        while not fut.done() and time.monotonic() - t0 < timeout_s:
+            time.sleep(0.05)
 
     def _call_trigger(self, cli, label: str) -> None:
         if self.dry_run:
@@ -178,7 +192,7 @@ class DppOrchestrate(Node):
             self._log(f'! {label} service not available')
             return
         fut = cli.call_async(Trigger.Request())
-        rclpy.spin_until_future_complete(self, fut, timeout_sec=3.0)
+        self._await_future(fut, 3.0)
         res = fut.result()
         self._log(f'{label}: ' + (res.message if res else 'no response'))
 
