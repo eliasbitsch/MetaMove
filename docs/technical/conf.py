@@ -5,8 +5,8 @@
 # Build PDF :  sphinx-build -b rinoh . _build/pdf     (pure-Python, no LaTeX)
 
 project = "MetaMove"
-author = "Elias Bitsch"
-copyright = "2026, Elias Bitsch"
+author = "Elias Bitsch, Philip Stix, Viktoriia Ovdiienko"
+copyright = "2026, Elias Bitsch, Philip Stix, Viktoriia Ovdiienko"
 release = "1.0"
 version = "1.0"
 
@@ -44,7 +44,7 @@ rinoh_documents = [
         target="MetaMove-Technical-Documentation",
         title="MetaMove — Technical Documentation",
         subtitle="Distance-Based Speed Scaling · Pinch-and-Move Teleoperation · Dashboard & HMI",
-        author="Elias Bitsch",
+        author="Elias Bitsch · Philip Stix · Viktoriia Ovdiienko",
         template="book",
     )
 ]
