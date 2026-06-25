@@ -22,30 +22,31 @@ offline demos, and the **ROS** path used with the real robot.
 
 ```text
 Quest human pose (head + optional hands)
-        |
-        +-- LOCAL DEMO ----------------------------------------------+
-        |   ProximitySpeedController.cs                               |
-        |     min_distance(human -> robotBase) -> EMA filter -> slew     |
-        |     -> Factor (0..1) -> PickPlaceLoop motion gain             |
-        |                                                             |
-        +-- ROS PATH ---------------------------------------------+  |
-            SafetyHud.cs                                           |  |
-              publishes /quest/min_distance  (Float32, ~20 Hz)     |  |
-                        |                                          |  |
-                        v                                          |  |
-            distance_speed_scaler.py  (ROS 2, 50 Hz)               |  |
-              subscribe /quest/min_distance                        |  |
-              EMA filter + asymmetric slew + stale timeout         |  |
-              +- publish /robot/speed_factor   (heartbeat -> HUD)   |  |
-              +- set param jtc_servo_relay.live_speed  (0..1)       |  |
-                        |                                          |  |
-                        v                                          |  |
-            jtc_servo_relay.py  (50 Hz)                            |  |
-              tc += period * live_speed   (advance time cursor)    |  |
-              interpolate keyframes -> /servo_node/commands         |  |
-                        |                                          |  |
-                        v                                          v  v
-            EGM bridge (Windows) -> UDP -> GoFa controller
+  |
+  |  Two implementations share the same formula:
+  |
+  +- LOCAL DEMO (Unity only)
+  |    ProximitySpeedController.cs
+  |    min_distance -> EMA filter -> slew -> Factor (0..1)
+  |    Factor -> PickPlaceLoop motion gain
+  |
+  +- ROS PATH (real robot)
+       SafetyHud.cs
+         -> /quest/min_distance   (Float32, ~20 Hz)
+              |
+              v
+       distance_speed_scaler.py   (20 Hz)
+         EMA filter + asymmetric slew + stale timeout
+         -> /robot/speed_factor   (heartbeat to HUD)
+         -> set live_speed on jtc_servo_relay  (0..1)
+              |
+              v
+       jtc_servo_relay.py   (50 Hz)
+         tc += period * live_speed   (advance cursor)
+         interpolate keyframes -> /servo_node/commands
+              |
+              v
+       EGM bridge (Windows) -> UDP -> GoFa controller
 ```
 
 ## The scaling law
@@ -54,21 +55,24 @@ The distance `d` (metres) is mapped to a raw factor with a linear band between a
 and far threshold:
 
 ```text
- band(d) = 0.0                          if d <= d_near       (freeze)
- band(d) = (d - d_near)/(d_far - d_near) if d_near < d < d_far
- band(d) = 1.0                          if d >= d_far        (full speed)
+ d <= d_near         ->  band = 0.0   (freeze)
+ d_near < d < d_far  ->  band = (d - d_near)/(d_far - d_near)
+ d >= d_far          ->  band = 1.0   (full speed)
 ```
 
 The raw factor is then **low-pass filtered** (exponential moving average) and passed
 through an **asymmetric slew limiter**:
 
 ```text
- filtered = alpha * raw + (1 - alpha) * filtered          # EMA smoothing
- if raw_distance <= d_near: target = 0             # hard safety overrides filter
+ # EMA smoothing
+ filtered = alpha * raw + (1 - alpha) * filtered
+ if raw_distance <= d_near: target = 0    # hard safety
 
  # asymmetric slew
- if target > v_out:  v_out = min(target, v_out + up_rate * dt)   # ramp up slowly
- else:               v_out = target                              # drop instantly
+ if target > v_out:
+     v_out = min(target, v_out + up_rate * dt)   # ramp up
+ else:
+     v_out = target   # drop instantly
 ```
 
 If no fresh distance arrives within the stale timeout, the output collapses to `0` and,

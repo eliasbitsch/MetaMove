@@ -45,8 +45,11 @@ GET  /api/history/summary?window=1h|24h|7d|30d|90d
 GET  /api/history/series
 POST /api/ingest
 GET  /api/hmi/state
-POST /api/hmi/jog/start    * /api/hmi/jog/heartbeat    * /api/hmi/jog/stop
-POST /api/hmi/tcp/start    * /api/hmi/tcp/heartbeat
+POST /api/hmi/jog/start
+POST /api/hmi/jog/heartbeat
+POST /api/hmi/jog/stop
+POST /api/hmi/tcp/start
+POST /api/hmi/tcp/heartbeat
 POST /api/hmi/home
 ```
 

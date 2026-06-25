@@ -13,7 +13,6 @@ notes its own prerequisites.
 | Robot controller | OmniCore, reachable over Ethernet; RWS (HTTPS) enabled. |
 | Headset | Meta Quest 3 (passthrough + hand tracking), developer mode enabled. |
 | Workstation | Windows 11 PC on the robot LAN; dedicated wired NIC for the robot subnet. |
-| Power | Use a sufficiently rated PSU for the workstation. A 130 W supply browns out under combined load - prefer a USB-A→USB-C cable for `adb` to avoid USB-PD draw on the laptop. |
 | Network | Isolated robot LAN (e.g. `10.x` / a dedicated `/24`). The controller, the Windows EGM bridge, and the workstation must share that subnet. |
 
 ## Software requirements
@@ -115,8 +114,7 @@ The dashboard auto-discovers ROS topics at runtime.
 1. Open `unity-quest/` in Unity 6 LTS with the Meta XR SDK and ROS-TCP-Connector
    installed (see `Packages/manifest.json`).
 2. Set the ROS-TCP-Connector endpoint to the Windows host IP / port `10000`.
-3. Build to Android (Quest), deploy with `adb install`. Use a USB-A→USB-C cable to
-   avoid the USB-PD brownout issue noted above.
+3. Build to Android (Quest) and deploy with `adb install`.
 
 ## Building this documentation
 

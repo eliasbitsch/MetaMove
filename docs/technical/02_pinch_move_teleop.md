@@ -21,36 +21,33 @@ surface by raycasting from the palm.
 ## Data flow
 
 ```text
-Quest hand  --(Meta SDK pinch/grab recogniser)-->  GestureRouter
-                                                      |  Pinch -> Teleop
-                                                      |  Point -> Jog
-                                                      |  Free  -> Command
-                                                      v
-   +--------------------------------------------------------------+
-   | Continuous grab (one of):                                     |
-   |   PhantomGrabRelay.LateUpdate                                 |
-   |     ikTarget.pos = ee_pos_at_grab + (hand - hand_at_grab)*gain|
-   |   IKHandleVisualLock.LateUpdate                               |
-   |     ikTarget.pos = grabbed_handle.pos ; handle.pos = tcp.pos  |
-   +-------------------------------+------------------------------+
-                                   v
-   IKTargetPosePublisher.Update  (50 Hz, only while grabbed)
-     express target in robotBase frame; convert Unity LH->ROS RH (FLU)
-     publish geometry_msgs/PoseStamped -> /metamove/ik_target
-                                   |
-                                   v ROS-TCP-Connector
-   +--------------------------------------------------------------+
-   | ROS 2 - one of two relays:                                    |
-   |  moveit_ik_relay.py  (position IK):                           |
-   |    gate: target fresh? joint_state fresh?                     |
-   |    /compute_ik(pose, seed=joint_states)                       |
-   |    per-joint slew clamp -> /servo_node/commands (Float64MArray)|
-   |  pose_to_twist_node.py  (servo twist):                        |
-   |    P-control pos error + quaternion-log rot error             |
-   |    -> /servo_node/delta_twist_cmds (TwistStamped)              |
-   +-------------------------------+------------------------------+
-                                   v
-        EGM bridge (Windows) -> UDP -> GoFa controller
+Quest hand
+  |  Meta SDK pinch/grab recogniser -> GestureRouter
+  |    Pinch -> Teleop,  Point -> Jog,  Free -> Command
+  v
+Continuous grab (one of):
+  PhantomGrabRelay.LateUpdate
+    ikTarget.pos = ee_at_grab + (hand - hand_at_grab) * gain
+  IKHandleVisualLock.LateUpdate
+    ikTarget.pos = grabbed_handle.pos ; handle = tcp.pos
+  |
+  v
+IKTargetPosePublisher   (50 Hz, only while grabbed)
+  express target in base frame; Unity LH -> ROS RH (FLU)
+  publish geometry_msgs/PoseStamped -> /metamove/ik_target
+  |
+  v   ROS-TCP-Connector
+ROS 2, one of two relays:
+  moveit_ik_relay.py   (position IK)
+    gate: target fresh? joint_state fresh?
+    /compute_ik(pose, seed=joint_states)
+    per-joint slew clamp -> /servo_node/commands
+  pose_to_twist_node.py   (servo twist)
+    P-control pos error + quaternion-log rot error
+    -> /servo_node/delta_twist_cmds (TwistStamped)
+  |
+  v
+EGM bridge (Windows) -> UDP -> GoFa controller
 ```
 
 ## Hand tracking & gesture routing

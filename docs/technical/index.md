@@ -31,33 +31,28 @@ reference
 ## System overview
 
 ```text
-            +--------------------------+
-            |   Meta Quest 3 (Unity)   |
-            |  hand tracking * HMI *   |
-            |  passthrough * safety    |
-            +------------+-------------+
-                         | ROS-TCP-Connector (TCP 10000)
-                         | /metamove/ik_target  * /quest/min_distance
-                         v
-            +--------------------------+        +-----------------------+
-            |   ROS 2 (Jazzy, Docker)  |<------>|   Web Dashboard / HMI |
-            |  moveit_ik_relay         |  9090  |  FastAPI + WebSocket  |
-            |  distance_speed_scaler   | rosbri |  (MRE2-GOFA_Dashboard)|
-            |  jtc_servo_relay         |  dge   +-----------------------+
-            |  MoveIt 2 * /compute_ik  |
-            +------------+-------------+
-                         | /servo_node/commands  (Float64MultiArray, joints rad)
-                         v
-            +--------------------------+
-            |   EGM bridge (Windows)    |
-            |  UDP :6511 / :6515        |
-            +------------+-------------+
-                         | EGM (UDP, 250 Hz)
-                         v
-            +--------------------------+
-            |   ABB GoFa CRB 15000      |
-            |  RobotWare 7.x * EGM      |
-            +--------------------------+
+  Meta Quest 3 (Unity)
+    hand tracking, HMI, passthrough, safety
+       |
+       |  ROS-TCP-Connector (TCP 10000)
+       |  /metamove/ik_target, /quest/min_distance
+       v
+  ROS 2 (Jazzy, in Docker)
+    moveit_ik_relay, distance_speed_scaler,
+    jtc_servo_relay, MoveIt 2 (/compute_ik)
+       |
+       |  also rosbridge :9090 <-> Web Dashboard / HMI
+       |  (FastAPI + WebSocket, MRE2-GOFA_Dashboard)
+       |
+       |  /servo_node/commands (Float64MultiArray, rad)
+       v
+  EGM bridge (Windows)
+    UDP :6511 / :6515
+       |
+       |  EGM (UDP, 250 Hz)
+       v
+  ABB GoFa CRB 15000
+    RobotWare 7.x, EGM
 ```
 
 The architecture is intentionally **dual-path**:

@@ -19,15 +19,17 @@ values are shown as concrete examples.
 ## 0. What you are building
 
 ```text
-                 +--------- SIMULATION PATH (no hardware) ---------+
-Unity (Quest) -> | ROS 2 graph: move_group + relays + fake_jsp     |
-   or console    | /metamove/ik_target -> IK -> /servo_node/commands|
-                 +-------------------------------------------------+
-                                     |  add hardware
-                                     v
-                 +---------- REAL-ROBOT PATH -----------+
-                 | EGM bridge (Windows) <-UDP-> GoFa    |
-                 +--------------------------------------+
+SIMULATION PATH (no hardware)
+  Unity (Quest) or a console
+     |
+     v
+  ROS 2 graph: move_group + relays + fake_jsp
+  /metamove/ik_target -> IK -> /servo_node/commands
+     |
+     |  add hardware
+     v
+REAL-ROBOT PATH
+  EGM bridge (Windows) <- UDP -> GoFa controller
 ```
 
 Two interchangeable IK backends exist; pick one:
@@ -62,17 +64,20 @@ Key environment baked into the image (override at `docker run` as needed):
 ```text
 ROS_DOMAIN_ID=42
 RMW_IMPLEMENTATION=rmw_fastrtps_cpp
-METAMOVE_RWS_IP=192.168.125.1   METAMOVE_RWS_PORT=443   METAMOVE_EGM_PORT=6511
+METAMOVE_RWS_IP=192.168.125.1
+METAMOVE_RWS_PORT=443
+METAMOVE_EGM_PORT=6511
 ```
 
 The `metamove_bridge` package (`ament_python`) exposes these console scripts
 (`ros2 run metamove_bridge <name>`):
 
 ```text
-bridge_node            moveit_ik_relay        dpp_teach
-pose_to_twist_node     jtc_servo_relay        dpp_playback
-fake_joint_state_publisher   distance_speed_scaler   dpp_orchestrate
-fake_cloud_publisher   jtc_egm_stub           dpp_gui
+bridge_node                 jtc_servo_relay
+moveit_ik_relay             distance_speed_scaler
+pose_to_twist_node          dpp_teach / dpp_playback
+fake_joint_state_publisher  dpp_orchestrate / dpp_gui
+fake_cloud_publisher        jtc_egm_stub
 ```
 
 ## 3. Simulation path (no robot, no headset)
@@ -194,9 +199,6 @@ Build to Android and install on the Quest:
 adb install -r MetaMove.apk
 ```
 
-Use a **USB-A -> USB-C** cable for `adb`, not USB-C -> USB-C: USB-PD negotiation can brown
-out / crash the laptop on the 130 W supply.
-
 ## 5. Real-robot path
 
 ```{warning}
@@ -293,5 +295,4 @@ Verification checklist:
 | IK relay never commands | No fresh `/joint_states` seed | Start the bridge / fake JSP first; check `joint_state_timeout`. |
 | Robot jumps at start | Singular seed | Seed near `[0, 0, -0.785, 0, -0.785, 0]` (the fake JSP default). |
 | Speed never reaches 100% | Distance below `d_far`, or `MaxSpeedDeviation` cap | Move past 2.0 m; raise the RAPID `MaxSpeedDeviation` cap. |
-| `adb` crashes the laptop | USB-PD draw over USB-C | Use a USB-A -> USB-C cable. |
 ```
