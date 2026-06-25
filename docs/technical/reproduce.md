@@ -248,7 +248,7 @@ whose source IP is not the configured `RemoteAddress`.
 ### 5c. Windows EGM bridge
 
 ```powershell
-cd ai-services\egm-bridge
+cd bridge\egm-bridge
 python -m venv .venv ; .\.venv\Scripts\Activate.ps1
 pip install roslibpy numpy
 # BIND to the robot-subnet IP — never 0.0.0.0 on a multi-homed host:

@@ -89,7 +89,7 @@ ros2 launch metamove_bridge bringup.launch.py   # or run individual nodes
 ### EGM bridge & operator consoles (Windows)
 
 ```powershell
-cd ai-services\egm-bridge
+cd bridge\egm-bridge
 python -m venv .venv ; .\.venv\Scripts\Activate.ps1
 pip install roslibpy numpy
 python egm_bridge_servo.py --rosbridge-host <ROBOT_LAN_IP>

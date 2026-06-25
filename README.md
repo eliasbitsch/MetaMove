@@ -78,8 +78,9 @@ A pre-built PDF is checked in at
 | `unity-quest/` | Unity 6 project: Quest3 AR app, EGM bridge components, MR scene |
 | `ros2/` | ROS 2 Jazzy workspace, docker stack, MoveIt config, Servo launch |
 | `robotstudio/` | RAPID modules, RobotStudio station, controller backups, helper scripts |
-| `ai-services/` | Standalone services — EGM bridge (Python), Gemma VLM, Qwen3 TTS, Jarvis dialog |
-| `docs/` | AR markers, documentation, drawings |
+| `bridge/` | Python EGM/UDP bridge + operator consoles (`egm-bridge/`) and an EGM mock (`egm-mock/`) |
+| `ai-services/` | `metamove_tools` — small ROS tool-client helpers used by the bridge |
+| `docs/` | AR markers, documentation, drawings, technical manual |
 
 ---
 
@@ -138,13 +139,9 @@ Reference Python bridge used during bring-up before the Unity bridge was finishe
 
 `Dockerfile` + `docker-compose.yml` ship a macvlan-networked container so the bridge appears as its own device on the lab LAN — sidesteps WSL2's UDP-receive bug entirely.
 
-### AI services (`ai-services/`)
+### ROS tool client (`ai-services/metamove_tools/`)
 
-Local-first stack used by the Quest app for voice control, scene understanding, and assistive narration. None of these are required for raw teleop but they enable the higher-level demos:
-
-- **`llm-gemma/`** — Gemma 3 VLM behind an HTTP API, fronted by a small Jarvis-style dialog manager
-- **`tts-qwen3/`** — Qwen3-TTS with FX presets (helmet, ceiling speaker, neutral) for sub-second TTFA voice output
-- **`whisper/`** — local ASR for voice control
+A thin Python client (`client.py`) and smoke test that talk to the bridge over rosbridge — used for scripted teleop and bring-up checks. (The earlier local AI/voice stack has been removed; teleop does not depend on it.)
 
 ---
 
