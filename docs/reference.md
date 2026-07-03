@@ -9,7 +9,9 @@ subsystem chapters.
 |-------|---------|-----------|-------|
 | `/quest/min_distance` | `std_msgs/Float32` | Quest → ROS | Nearest human-to-robot distance (m), ~20 Hz. |
 | `/quest/scaling_enabled` | `std_msgs/Bool` | Quest → ROS | AUTO/MANUAL toggle for the speed scaler. |
+| `/quest/go_home` | `std_msgs/Bool` | Quest → ROS | Home-button poke; triggers the playback home service (singularity rescue). |
 | `/robot/speed_factor` | `std_msgs/Float32` | ROS → Quest | Heartbeat of the applied speed factor (0..1). |
+| `/robot/joint_feedback` | `std_msgs/Float64MultiArray` | ROS → Quest | Live twin mirror of the real robot pose (six joints, rad). |
 | `/metamove/ik_target` | `geometry_msgs/PoseStamped` | Quest → ROS | IK target TCP pose in `base_link`, 50 Hz, gated by grab. |
 | `/servo_node/commands` | `std_msgs/Float64MultiArray` | ROS → bridge | Six joint positions (rad). |
 | `/servo_node/delta_twist_cmds` | `geometry_msgs/TwistStamped` | ROS → Servo | Cartesian velocity command. |
@@ -29,6 +31,7 @@ subsystem chapters.
 | `moveit_ik_relay` | `target_timeout` | 0.3 s | Drop stale grab targets. |
 | `moveit_ik_relay` | `joint_state_timeout` | 0.5 s | Refuse to command without fresh seed. |
 | `moveit_ik_relay` | `max_joint_speed` | 0.3 rad/s | Per-joint slew clamp. |
+| `joint_feedback_relay` | `signs` | `[-1,…,-1]` | Per-joint sign to align EGM feedback with the Unity rig. |
 | `pose_to_twist_node` | `linear_gain` | 1.5 /s | Position P-gain. |
 | `pose_to_twist_node` | `angular_gain` | 1.5 /s | Orientation P-gain. |
 | `pose_to_twist_node` | `max_linear` | 0.25 m/s | Linear velocity clamp. |

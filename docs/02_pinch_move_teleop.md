@@ -71,29 +71,33 @@ router via UnityEvent adapters.
 
 ## Continuous teleoperation
 
-### Method A - `PhantomGrabRelay.cs` (direct hand-delta)
+### Method A - `PhantomGrabRelay.cs` (hand-follow grab)
 
 The visible sphere is a child of `Joint_6` and never moves visually. A separate
-world-space `ikTarget` transform is driven by the hand:
+world-space `ikTarget` transform is driven by the hand. By default (`attractToHand`) the
+IK target is pulled toward the hand and tracks it, bounded by `maxReachM` from the
+grab-start EE - the robot TCP "flies" to your hand and follows it:
 
 ```csharp
 // on grab begin
-_ikStartPos  = transform.position;   // current EE position
-_handStartPos = anchorPos;           // hand grab-point at grab start
+_ikStartPos = transform.position;    // EE position at grab start
 
-// each frame while grabbed
-Vector3 posDelta  = (anchorPos - _handStartPos) * dragGain;
-Vector3 targetPos = _ikStartPos + posDelta;
-ikTarget.position = targetPos;       // clamped to maxReachM from the EE
+// each frame while grabbed (attractToHand = true, default)
+Vector3 toHand = (anchorPos - _ikStartPos) * dragGain;
+if (toHand.magnitude > maxReachM) toHand = toHand.normalized * maxReachM;
+ikTarget.position = _ikStartPos + toHand;   // TCP follows the hand, bounded
 ```
 
-The hand anchor is taken, in priority order, from the live Oculus selecting point, an
-inspector override, or the camera as a last resort.
+Setting `attractToHand = false` switches to a **relative-delta** drag, where the target
+moves by the hand's displacement since grab start (`_ikStartPos + (anchorPos -
+_handStartPos) * dragGain`). The hand anchor is taken, in priority order, from the live
+Oculus selecting point, an inspector override, or the camera.
 
 | Parameter | Default | Meaning |
 |-----------|---------|---------|
-| `dragGain` | 1.0 | Multiplier on hand displacement (1.0 = 1:1 motion). |
-| `maxReachM` | 0.5 m | Clamp on IK-target distance from the current EE. |
+| `attractToHand` | true | Target follows hand position (bounded); `false` = relative delta. |
+| `dragGain` | 1.0 | Multiplier on hand motion (1.0 = 1:1). |
+| `maxReachM` | 0.5 m | Clamp on IK-target distance from the grab-start EE. |
 
 ### Method B - `IKHandleVisualLock.cs` (visual lock)
 
@@ -175,6 +179,29 @@ angular speed, and publishes `geometry_msgs/TwistStamped` on
 | `/servo_node/commands` | `std_msgs/Float64MultiArray` | `moveit_ik_relay` -> EGM bridge (50 Hz) |
 | `/servo_node/delta_twist_cmds` | `geometry_msgs/TwistStamped` | `pose_to_twist_node` -> MoveIt Servo (100 Hz) |
 | `/joint_states` | `sensor_msgs/JointState` | EGM bridge -> relays (seed) |
+| `/robot/joint_feedback` | `std_msgs/Float64MultiArray` | `joint_feedback_relay` -> Unity twin (~50 Hz) |
+
+## Bidirectional digital twin (live mirror)
+
+The Unity robot model is not only a command source - it also mirrors the **real** robot's
+live pose, so the operator sees the actual arm state regardless of who commands it (teach
+playback, pinch teleop, or the dashboard).
+
+`joint_feedback_relay.py`
+: Subscribes the controller's `/joint_states` (published by the EGM bridge from EGM
+  feedback, ~50 Hz), picks `joint_1..joint_6` by name, applies a per-joint `signs` vector
+  to align the EGM sign convention with the Unity rig, and republishes a
+  `std_msgs/Float64MultiArray` on **`/robot/joint_feedback`**. The Unity model's
+  `JointAnglesSubscriber` consumes that topic and drives the twin.
+
+Because the mirror path is independent of the command path, the on-headset model always
+reflects reality - there is no visual drift between the digital twin and the physical robot.
+
+| Parameter | Default | Meaning |
+|-----------|---------|---------|
+| `signs` | `[-1,-1,-1,-1,-1,-1]` | Per-joint sign to match EGM feedback to the Unity rig. |
+| `in_topic` | `/joint_states` | Real-robot feedback (BEST_EFFORT QoS). |
+| `out_topic` | `/robot/joint_feedback` | Twin drive topic consumed by Unity. |
 
 ## Design notes
 

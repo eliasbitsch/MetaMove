@@ -14,6 +14,13 @@ text_align = LEFT
 hyphenate = False
 text_align = LEFT
 
+# Keep code blocks / ASCII data-flow diagrams together: if a block would be
+# split with fewer than this many lines on the current page, push the whole
+# block to the next page instead. Our longest block is 27 lines; a page holds
+# ~45+, so this never loops on an over-long block (it splits normally then).
+[code block]
+split_minimum_lines = 30
+
 [title]
 hyphenate = False
 
