@@ -32,6 +32,10 @@ class JointFeedbackRelay(Node):
         super().__init__('joint_feedback_relay')
         self.declare_parameter('in_topic', '/joint_states')
         self.declare_parameter('out_topic', '/robot/joint_feedback')
+        # Per-joint sign for the twin mirror. The real EGM /joint_states came out
+        # mirrored vs the Unity model's rendering — negate to align. Tune live:
+        #   ros2 param set /joint_feedback_relay signs "[-1.0,-1.0,-1.0,-1.0,-1.0,-1.0]"
+        self.declare_parameter('signs', [-1.0, -1.0, -1.0, -1.0, -1.0, -1.0])
 
         # /joint_states is sensor data (BEST_EFFORT). Match it so we actually
         # receive from the EGM bridge / fake_jsp.
@@ -52,13 +56,15 @@ class JointFeedbackRelay(Node):
         if not msg.name or not msg.position:
             return
         out = [0.0] * 6
+        signs = list(self.get_parameter('signs').value)
         for i, jn in enumerate(JOINT_NAMES):
             try:
                 idx = list(msg.name).index(jn)
             except ValueError:
                 continue
             if idx < len(msg.position):
-                out[i] = float(msg.position[idx])
+                s = float(signs[i]) if i < len(signs) else 1.0
+                out[i] = float(msg.position[idx]) * s
         self.pub.publish(Float64MultiArray(data=out))
         self._n += 1
         if self._n % 100 == 0:

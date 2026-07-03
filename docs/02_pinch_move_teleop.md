@@ -1,5 +1,9 @@
 # Pinch-and-Move End-Effector Control
 
+*Inverse kinematics with hand control.*
+
+**Author: Viktoriia Ovdiienko**
+
 ## Purpose
 
 The operator controls the robot's end-effector with bare hands. A virtual handle sits on

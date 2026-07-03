@@ -38,6 +38,16 @@ namespace MetaMove.Safety
         [Tooltip("Distance (m) at/above which the HUD shows 100 %.")]
         public float speedDistFar = 2.0f;
 
+        [Header("bHaptics proximity (AUTO mode)")]
+        [Tooltip("In AUTO mode, pulse ALL fingers like a parking sensor — faster the closer the human is.")]
+        public bool hapticProximity = true;
+        [Tooltip("Pulse gap (s) when the human is far — slow beeps.")]
+        public float pulseIntervalFar = 0.6f;
+        [Tooltip("Pulse gap (s) when closest — fast beeps.")]
+        public float pulseIntervalNear = 0.08f;
+        [Range(5, 200)] public int pulseMs = 50;
+        float _lastHaptic;
+
         [Header("Mode")]
         [Tooltip("On = ROS (publish distance, read speed from /robot/speed_factor). Off = local digital demo.")]
         public bool useRos = true;
@@ -184,6 +194,23 @@ namespace MetaMove.Safety
                 string pctTxt = show ? $"{pct} %" : "-- %";
                 speedText.text = mode + pctTxt;
                 speedText.color = !show ? Gray : pct <= 0 ? Red : pct < 50 ? Orange : Green;
+            }
+
+            // --- bHaptics proximity (AUTO): parking-sensor pulse on ALL fingers, faster when nearer ---
+            if (hapticProximity && scalingMode != null && scalingMode.ScalingEnabled && dist >= 0f)
+            {
+                float closeness = 1f - LocalSpeedFactor(dist);   // 0 = far, 1 = nearest
+                if (closeness > 0.05f)
+                {
+                    float interval = Mathf.Lerp(pulseIntervalFar, pulseIntervalNear, closeness);
+                    if (Time.unscaledTime - _lastHaptic >= interval)
+                    {
+                        _lastHaptic = Time.unscaledTime;
+                        int inten = Mathf.RoundToInt(Mathf.Lerp(45f, 90f, closeness));
+                        MetaMove.Haptics.BHapticsAdapter.Instance?.PulseAll(
+                            MetaMove.Haptics.BHapticsAdapter.Glove.Both, inten, pulseMs);
+                    }
+                }
             }
 
             // --- publish distance (ROS mode only) ---

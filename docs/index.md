@@ -83,8 +83,8 @@ listed verbatim so they can be cross-referenced against the running system. The
 
 ## Team
 
-MetaMove is developed by:
+MetaMove is developed by three authors, each responsible for one core subsystem:
 
-- **Elias Bitsch**
-- **Viktoriia Ovdiienko**
-- **Philip Stix**
+- **Elias Bitsch** — Distance-Based Speed Scaling ({doc}`01_distance_speed_scaling`)
+- **Viktoriia Ovdiienko** — Inverse Kinematics with Hand Control ({doc}`02_pinch_move_teleop`)
+- **Philip Stix** — Dashboard and HMI ({doc}`03_dashboard_hmi`)

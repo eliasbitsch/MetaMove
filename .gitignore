@@ -89,7 +89,7 @@ desktop.ini
 *.log
 *.bak
 
-# ── Claude Code (not published) ──────────────────────────────────────
+# ── Local editor/agent config (not published) ──────────────────────────────────────
 .claude/
 
 # Python bytecode (global)

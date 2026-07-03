@@ -112,7 +112,7 @@ def main() -> int:
             if now2 - last_stat >= 1.0:
                 if not ros.is_connected:
                     print("\n!!! ROSBRIDGE-VERBINDUNG TOT — Fenster schliessen, "
-                          "Claude um Neustart bitten !!!")
+                          "Bridge manuell neu starten !!!")
                     raise KeyboardInterrupt
                 label = (f"jog:{active_key} x{int(mult)}"
                          if active_key else "idle")

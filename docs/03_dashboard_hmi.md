@@ -1,5 +1,7 @@
 # Dashboard and HMI
 
+**Author: Philip Stix**
+
 MetaMove exposes three operator surfaces: a **web dashboard** for monitoring and
 supervisory control, an **in-headset HMI** for immersive in-world control, and a set of
 **operator console** scripts for scripted or recovery operations. All three talk to the

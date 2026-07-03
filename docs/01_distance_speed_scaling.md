@@ -1,5 +1,7 @@
 # Distance-Based Speed Scaling
 
+**Author: Elias Bitsch**
+
 ## Purpose
 
 The robot's motion speed is continuously scaled by the distance between the nearest

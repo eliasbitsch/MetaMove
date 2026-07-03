@@ -18,6 +18,12 @@ namespace MetaMove.UI
         [Tooltip("Mode to set when toggleOnPress is false. true = AUTO (scaling), false = MANUAL.")]
         public bool setScalingEnabled = true;
 
+        [Header("bHaptics")]
+        [Tooltip("Buzz the index finger on the TactGloves when this button is poked.")]
+        public bool hapticFeedback = true;
+        [Range(0, 100)] public int pokeIntensity = 80;
+        [Range(5, 300)] public int pokeDurationMs = 60;
+
         PointableUnityEventWrapper _wrapper;
 
         void OnEnable()
@@ -32,8 +38,14 @@ namespace MetaMove.UI
             if (_wrapper != null) _wrapper.WhenSelect.RemoveListener(OnSelect);
         }
 
-        void OnSelect(PointerEvent _)
+        void OnSelect(PointerEvent evt)
         {
+            if (hapticFeedback)
+            {
+                // Buzz only the hand that actually poked (nearest anchor to the poke pose).
+                var glove = MetaMove.Haptics.HandSide.Nearest(evt.Pose.position);
+                MetaMove.Haptics.BHapticsAdapter.Instance?.PulseIndex(glove, pokeIntensity, pokeDurationMs);
+            }
             if (toggle == null) return;
             if (toggleOnPress) toggle.Toggle();
             else toggle.SetEnabled(setScalingEnabled);

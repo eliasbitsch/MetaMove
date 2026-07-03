@@ -62,10 +62,12 @@ x-ros2-common: &ros2-common
   working_dir: /opt/metamove_ws
 
 services:
-  # Interactive shell — recommended default
+  # Interactive shell — recommended default.
+  # Keep-alive command so the container stays up when started detached
+  # (`up -d`); use `docker compose exec ros2 bash` for an interactive shell.
   ros2:
     <<: *ros2-common
-    command: bash
+    command: tail -f /dev/null
 
   # Bridge only (headless)
   bridge:

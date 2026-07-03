@@ -1,25 +1,33 @@
 using UnityEngine;
 using UnityEngine.Events;
 using MetaMove.Settings;
+using Bhaptics.SDK2;
 
 namespace MetaMove.Haptics
 {
-    // Step 16c — bHaptics TactGloves 2 bridge. Exposes UnityEvent-shaped entry points
-    // so Meta Interaction SDK components (Selector wrappers, Interactable events) can
-    // wire in without compile-time dependency on the bHaptics SDK.
+    // bHaptics TactGloves bridge. Wraps the bHaptics SDK2 motor API so the rest of
+    // MetaMove (poke buttons, grab, safety proximity) can fire per-finger haptics
+    // without touching the SDK directly.
     //
-    // Until bhaptics_Unity_plugin is imported, Play*() calls are no-ops and the adapter
-    // logs once. After import, replace the stub in PlayPattern() with:
-    //     Bhaptics.SDK2.BhapticsLibrary.Play(key, durationMs, intensity, ...);
-    // or subscribe via the SDK's RegisterHapticApp flow. Kept in one place so the wiring
-    // to GestureRouter / SafetyZone / WaypointManager never changes.
+    // TactGlove motor map (per glove, int[6], values 0..100):
+    //   0=Thumb  1=Index  2=Middle  3=Ring  4=Little  5=Wrist
+    // Device position ids: GloveL=8, GloveR=9 (Bhaptics.SDK2.PositionType).
+    //
+    // The [bhaptics] prefab (BhapticsSDK2) must be in the scene to init + pair the
+    // gloves; this adapter only sends motor frames. If no glove is connected the
+    // PlayMotors calls are harmless no-ops.
     public class BHapticsAdapter : MonoBehaviour
     {
         public enum Glove { Left, Right, Both }
 
+        const int THUMB = 0, INDEX = 1, MIDDLE = 2, RING = 3, LITTLE = 4, WRIST = 5;
+        const int GLOVE_L = 8, GLOVE_R = 9;   // PositionType.GloveL / GloveR
+
         public static BHapticsAdapter Instance { get; private set; }
 
         public HapticsConfig config;
+        [Tooltip("Which glove(s) finger pulses target by default.")]
+        public Glove defaultGlove = Glove.Both;
         public bool logOnMissingSdk = true;
 
         [Header("Event Hooks (wire in inspector)")]
@@ -35,49 +43,105 @@ namespace MetaMove.Haptics
 
         void OnDestroy() { if (Instance == this) Instance = null; }
 
-        public void PlayPinchTap() => PlayPattern(config != null ? config.pinchTapConfirm : "pinch_tap_confirm");
-        public void PlayGrabHold() => PlayPattern(config != null ? config.grabHold : "grab_hold");
-        public void PlaySafetyWarning() => PlayPattern(config != null ? config.safetyZoneWarning : "safety_zone_warning");
-        public void PlaySafetyViolation() => PlayPattern(config != null ? config.safetyZoneViolation : "safety_zone_violation");
-        public void PlayCommit() => PlayPattern(config != null ? config.commitOkRing : "commit_ok_ring");
-        public void PlayWaypoint() => PlayPattern(config != null ? config.waypointPlaced : "waypoint_placed");
-        public void PlayPoke() => PlayPattern(config != null ? config.pokeButton : "poke_button");
+        float Master => config != null ? Mathf.Clamp01(config.masterIntensity) : 1f;
+        bool GloveEnabled => config == null || config.gloveEnabled;
+        int Scale(int intensity0to100) =>
+            Mathf.Clamp(Mathf.RoundToInt(intensity0to100 * Master), 0, 100);
+
+        // ---- core ---------------------------------------------------------------
+
+        // Play one 6-motor frame on the chosen glove(s) for durationMs.
+        public void PlayFingers(Glove which, int[] motors6, int durationMs)
+        {
+            if (!GloveEnabled || motors6 == null || motors6.Length < 6) return;
+            try
+            {
+                if (which == Glove.Left || which == Glove.Both)
+                    BhapticsLibrary.PlayMotors(GLOVE_L, motors6, durationMs);
+                if (which == Glove.Right || which == Glove.Both)
+                    BhapticsLibrary.PlayMotors(GLOVE_R, motors6, durationMs);
+            }
+            catch (System.Exception e)
+            {
+                if (logOnMissingSdk && !_sdkWarned)
+                {
+                    Debug.LogWarning($"[BHapticsAdapter] PlayMotors failed (SDK/glove not ready?): {e.Message}");
+                    _sdkWarned = true;
+                }
+            }
+            onPatternPlayed?.Invoke($"motors:{which}:{durationMs}");
+        }
+
+        // ---- semantic pulses ----------------------------------------------------
+
+        // 1) Button poke -> short index-finger tap.
+        public void PulseIndex(int intensity = 80, int durationMs = 60) =>
+            PulseIndex(defaultGlove, intensity, durationMs);
+
+        public void PulseIndex(Glove which, int intensity, int durationMs)
+        {
+            var m = new int[6];
+            m[INDEX] = Scale(intensity);
+            PlayFingers(which, m, durationMs);
+        }
+
+        // 2) Pinch + distance-grab -> short index + thumb tap.
+        public void PulseIndexThumb(int intensity = 85, int durationMs = 90) =>
+            PulseIndexThumb(defaultGlove, intensity, durationMs);
+
+        public void PulseIndexThumb(Glove which, int intensity, int durationMs)
+        {
+            var m = new int[6];
+            m[THUMB] = Scale(intensity);
+            m[INDEX] = Scale(intensity);
+            PlayFingers(which, m, durationMs);
+        }
+
+        // 3) AUTO proximity -> continuous index buzz, proportional to closeness.
+        //    t01: 0 = far (off), 1 = closest (strongest). Call repeatedly (~10 Hz);
+        //    the 120 ms frame outlives the call period so it feels continuous.
+        public void SetProximity(float t01)
+        {
+            t01 = Mathf.Clamp01(t01);
+            var m = new int[6];
+            m[INDEX] = Scale(Mathf.RoundToInt(t01 * 100f));
+            PlayFingers(defaultGlove, m, 120);
+        }
+
+        // ---- legacy / pattern API (kept for existing wiring) --------------------
+
+        public void PulseAll(Glove which, int intensity, int durationMs)
+        {
+            var m = new int[6];
+            int v = Scale(intensity);
+            for (int i = 0; i <= LITTLE; i++) m[i] = v;
+            PlayFingers(which, m, durationMs);
+        }
 
         public void PlayPattern(string key)
         {
-            if (string.IsNullOrEmpty(key)) return;
-            if (config != null && !config.gloveEnabled) return;
-
-            // TODO: replace with bHaptics SDK call once imported.
-            // e.g. BhapticsLibrary.Play(key, intensity: config.masterIntensity);
-            if (logOnMissingSdk && !_sdkWarned)
+            if (string.IsNullOrEmpty(key) || !GloveEnabled) return;
+            try { BhapticsLibrary.Play(key, intensity: Master); }
+            catch (System.Exception e)
             {
-                Debug.Log($"[BHapticsAdapter] stub active — would play '{key}'. Import bhaptics_Unity_plugin to enable.");
-                _sdkWarned = true;
+                if (logOnMissingSdk && !_sdkWarned)
+                {
+                    Debug.LogWarning($"[BHapticsAdapter] Play('{key}') failed: {e.Message}");
+                    _sdkWarned = true;
+                }
             }
             onPatternPlayed?.Invoke(key);
         }
 
-        // Convenience: scale safety warning intensity with proximity (0 = far, 1 = breach).
-        public void PlaySafetyProximity(float t01)
-        {
-            if (t01 < 0.3f) return;
-            if (t01 > 0.9f) PlaySafetyViolation();
-            else PlaySafetyWarning();
-        }
+        public void PlayPinchTap() => PulseIndexThumb();
+        public void PlayGrabHold() => PulseIndexThumb();
+        public void PlayPoke() => PulseIndex();
+        public void PlayCommit() => PulseIndex(90, 80);
+        public void PlayWaypoint() => PulseIndex(70, 50);
+        public void PlaySafetyWarning() => SetProximity(0.6f);
+        public void PlaySafetyViolation() => PulseAll(defaultGlove, 100, 150);
 
-        // Code-driven pulse used by HapticsPokeDemo. Stub until bHaptics SDK is imported —
-        // logs once, then no-op. With the real SDK, route this to BhapticsLibrary.PlayParam(...)
-        // on the appropriate hand/glove buffer.
-        public void PulseAll(Glove which, int intensity, int durationMs)
-        {
-            if (config != null && !config.gloveEnabled) return;
-            if (logOnMissingSdk && !_sdkWarned)
-            {
-                Debug.Log($"[BHapticsAdapter] PulseAll stub — glove={which} intensity={intensity} ms={durationMs}");
-                _sdkWarned = true;
-            }
-            onPatternPlayed?.Invoke($"pulse:{which}:{intensity}:{durationMs}");
-        }
+        // Scale safety intensity with proximity (0 = far, 1 = breach).
+        public void PlaySafetyProximity(float t01) => SetProximity(t01);
     }
 }

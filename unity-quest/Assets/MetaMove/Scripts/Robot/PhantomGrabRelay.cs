@@ -53,6 +53,21 @@ namespace MetaMove.Robot
         [Tooltip("Optional clamp on how far IK target can stray from the robot EE (metres). 0 = no clamp.")]
         public float maxReachM = 0.5f;
 
+        [Tooltip("Attraction: pull the IK target straight toward the hand (bounded by maxReachM) so the robot TCP 'flies' to your hand and tracks it. Off = relative drag (delta).")]
+        public bool attractToHand = true;
+
+        [Header("Axis correction (hand -> robot)")]
+        [Tooltip("Negate the hand->robot mapping per world axis. Off by default (the world-axis flip didn't help); revisit the frame in IKTargetPosePublisher if motion is mirrored.")]
+        public bool invertX = false;
+        public bool invertY = false;
+        public bool invertZ = false;
+
+        [Header("bHaptics")]
+        [Tooltip("Buzz index + thumb on the TactGloves the moment the grab starts.")]
+        public bool hapticOnGrab = true;
+        [Range(0, 100)] public int grabIntensity = 85;
+        [Range(5, 300)] public int grabDurationMs = 90;
+
         Vector3 _ikStartPos;
         Quaternion _ikStartRot;
         Vector3 _handStartPos;
@@ -122,16 +137,37 @@ namespace MetaMove.Robot
                 _ikStartRot = transform.rotation;
                 _handStartPos = anchorPos;
                 _handStartRot = anchorRot;
+                if (hapticOnGrab)
+                {
+                    // Buzz only the grabbing hand (nearest anchor to the grab point).
+                    var glove = MetaMove.Haptics.HandSide.Nearest(anchorPos);
+                    MetaMove.Haptics.BHapticsAdapter.Instance?.PulseIndexThumb(glove, grabIntensity, grabDurationMs);
+                }
             }
 
             if (grabbed && haveAnchor)
             {
-                Vector3 posDelta = (anchorPos - _handStartPos) * dragGain;
-                Vector3 targetPos = _ikStartPos + posDelta;
-                if (maxReachM > 0f)
+                Vector3 targetPos;
+                if (attractToHand)
                 {
-                    Vector3 fromEe = targetPos - transform.position;
-                    if (fromEe.magnitude > maxReachM) targetPos = transform.position + fromEe.normalized * maxReachM;
+                    // Attraction: pull the IK target toward the hand from the grab-start
+                    // EE, bounded by maxReachM. The robot TCP flies toward your hand and
+                    // tracks it within that radius — feels like grabbing the arm itself.
+                    Vector3 toHand = ApplyInvert(anchorPos - _ikStartPos) * dragGain;
+                    if (maxReachM > 0f && toHand.magnitude > maxReachM)
+                        toHand = toHand.normalized * maxReachM;
+                    targetPos = _ikStartPos + toHand;
+                }
+                else
+                {
+                    // Relative drag: move the IK target by the hand delta since grab start.
+                    Vector3 posDelta = ApplyInvert(anchorPos - _handStartPos) * dragGain;
+                    targetPos = _ikStartPos + posDelta;
+                    if (maxReachM > 0f)
+                    {
+                        Vector3 fromEe = targetPos - transform.position;
+                        if (fromEe.magnitude > maxReachM) targetPos = transform.position + fromEe.normalized * maxReachM;
+                    }
                 }
                 ikTarget.position = targetPos;
 
@@ -146,5 +182,8 @@ namespace MetaMove.Robot
 
             _wasGrabbed = grabbed;
         }
+
+        Vector3 ApplyInvert(Vector3 v) =>
+            new Vector3(invertX ? -v.x : v.x, invertY ? -v.y : v.y, invertZ ? -v.z : v.z);
     }
 }

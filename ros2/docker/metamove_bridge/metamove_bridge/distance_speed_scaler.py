@@ -76,6 +76,9 @@ class DistanceSpeedScaler(Node):
         pb = self.get_parameter('playback_node').value
         self._pause_cli = self.create_client(Trigger, f'/{pb}/pause')
         self._resume_cli = self.create_client(Trigger, f'/{pb}/resume')
+        self._home_cli = self.create_client(Trigger, f'/{pb}/home')
+        # Quest "Home" button (singularity rescue): drive the robot to the home pose.
+        self.create_subscription(Bool, '/quest/go_home', self._on_go_home, 10)
         self._was_paused = None
         self.create_timer(self._tick_dt, self._tick)
         self.get_logger().info(
@@ -95,6 +98,15 @@ class DistanceSpeedScaler(Node):
         self.set_parameters([rclpy.Parameter('enabled', value=on)])
         self.get_logger().info(
             f"scaling_enabled <- {'AUTO' if on else 'MANUELL'} (Quest-Toggle)")
+
+    def _on_go_home(self, msg: Bool) -> None:
+        if not bool(msg.data):
+            return
+        if self._home_cli.service_is_ready():
+            self._home_cli.call_async(Trigger.Request())
+            self.get_logger().info('HOME angefordert (Quest-Button) -> /dpp_playback/home')
+        else:
+            self.get_logger().warn('HOME: /dpp_playback/home nicht bereit')
 
     def _band(self, d: float) -> float:
         dn = float(self.get_parameter('d_near').value)

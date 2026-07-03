@@ -183,7 +183,14 @@ MonoBehaviour:
   ikTarget: {fileID: 6988544309118476866}
   handAnchor: {fileID: 0}
   dragGain: 1
-  maxReachM: 0.2
+  maxReachM: 0.5
+  attractToHand: 1
+  invertX: 0
+  invertY: 0
+  invertZ: 0
+  hapticOnGrab: 1
+  grabIntensity: 85
+  grabDurationMs: 90
 --- !u!114 &8420355743136660758
 MonoBehaviour:
   m_ObjectHideFlags: 0
