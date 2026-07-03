@@ -29,7 +29,6 @@ ai-services/**/*.bin
 # Docs / planning
 docs/
 .planning/
-.claude/
 
 # ROS2 build artefacts
 ros2/**/build

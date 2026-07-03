@@ -89,9 +89,6 @@ desktop.ini
 *.log
 *.bak
 
-# ── Local editor/agent config (not published) ──────────────────────────────────────
-.claude/
-
 # Python bytecode (global)
 __pycache__/
 *.pyc
