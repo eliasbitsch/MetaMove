@@ -6,6 +6,21 @@ The robot listens on **EGM (Externally Guided Motion)** at 250 Hz. Quest sends p
 
 ---
 
+## Demo
+
+![MetaMove concept](docs/images/concept.png)
+
+| Physical setup | Safety zones |
+|---|---|
+| ![Physical setup](docs/images/setup.png) | ![Distance-based safety zones](docs/images/zones.png) |
+
+**Videos** (tracked via Git LFS):
+
+- ▶️ [Full demo — Quest 3 to real GoFa teleoperation](docs/images/MetaMove.mp4)
+- ▶️ [In-headset HUD and safety overlay](docs/images/hud.mp4)
+
+---
+
 ## Architecture
 
 ```
@@ -45,29 +60,29 @@ Design choices, with rationale:
 
 ## Documentation
 
-A full technical manual lives in [`docs/technical/`](docs/technical/) and covers the three
+A full technical manual lives in [`docs/`](docs/) and covers the three
 core subsystems plus a complete **build-it-yourself** guide (the simulation path needs no
 robot and no headset):
 
-- [Overview & architecture](docs/technical/index.md)
-- [Installation & setup](docs/technical/installation.md)
-- [Reproduction guide](docs/technical/reproduce.md) - step-by-step rebuild
-- [Distance-based speed scaling](docs/technical/01_distance_speed_scaling.md)
-- [Pinch-and-move end-effector control](docs/technical/02_pinch_move_teleop.md)
-- [Dashboard and HMI](docs/technical/03_dashboard_hmi.md)
-- [Reference](docs/technical/reference.md) - topics, parameters, ports, glossary
+- [Overview & architecture](docs/index.md)
+- [Installation & setup](docs/installation.md)
+- [Reproduction guide](docs/reproduce.md) - step-by-step rebuild
+- [Distance-based speed scaling](docs/01_distance_speed_scaling.md)
+- [Pinch-and-move end-effector control](docs/02_pinch_move_teleop.md)
+- [Dashboard and HMI](docs/03_dashboard_hmi.md)
+- [Reference](docs/reference.md) - topics, parameters, ports, glossary
 
 Build it as a browsable site or a single PDF (pure-Python, no LaTeX needed):
 
 ```bash
-cd docs/technical
+cd docs
 pip install -r requirements.txt
 sphinx-build -b html  . _build/html     # HTML
 sphinx-build -b rinoh . _build/pdf      # -> MetaMove-Technical-Documentation.pdf
 ```
 
-A pre-built PDF is checked in at
-[`docs/technical/MetaMove-Technical-Documentation.pdf`](docs/technical/MetaMove-Technical-Documentation.pdf).
+A pre-built PDF is checked in at the repository root:
+[`MetaMove-Technical-Documentation.pdf`](MetaMove-Technical-Documentation.pdf).
 
 ---
 
@@ -79,8 +94,7 @@ A pre-built PDF is checked in at
 | `ros2/` | ROS 2 Jazzy workspace, docker stack, MoveIt config, Servo launch |
 | `robotstudio/` | RAPID modules, RobotStudio station, controller backups, helper scripts |
 | `bridge/` | Python EGM/UDP bridge + operator consoles (`egm-bridge/`) and an EGM mock (`egm-mock/`) |
-| `ai-services/` | `metamove_tools` - small ROS tool-client helpers used by the bridge |
-| `docs/` | AR markers, documentation, drawings, technical manual |
+| `docs/` | AR markers, documentation, drawings, technical manual, demo media |
 
 ---
 
@@ -139,10 +153,6 @@ Reference Python bridge used during bring-up before the Unity bridge was finishe
 
 `Dockerfile` + `docker-compose.yml` ship a macvlan-networked container so the bridge appears as its own device on the lab LAN - sidesteps WSL2's UDP-receive bug entirely.
 
-### ROS tool client (`ai-services/metamove_tools/`)
-
-A thin Python client (`client.py`) and smoke test that talk to the bridge over rosbridge - used for scripted teleop and bring-up checks. (The earlier local AI/voice stack has been removed; teleop does not depend on it.)
-
 ---
 
 ## Quickstart
@@ -189,7 +199,7 @@ Switch the build target to Android, build the AR scene as an APK, install on the
 - Unity 6 with Meta XR SDK and URDF Importer
 - RobotStudio 2024 with the matching RobotWare 7.20 system image
 - Docker Desktop or native Docker in WSL2 Ubuntu for the ROS image
-- Python 3.12 for the standalone bridges and AI services
+- Python 3.12 for the standalone bridges
 
 ---
 

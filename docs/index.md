@@ -30,6 +30,10 @@ reference
 
 ## System overview
 
+![Physical setup: a Meta Quest 3 operator and the ABB GoFa CRB 15000](images/setup.png)
+
+The logical data flow from headset to controller:
+
 ```text
   Meta Quest 3 (Unity)
     hand tracking, HMI, passthrough, safety
