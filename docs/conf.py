@@ -30,7 +30,7 @@ source_suffix = {
 root_doc = "index"
 master_doc = "index"
 
-exclude_patterns = ["_build", "Thumbs.db", ".DS_Store", "README.md", "ARCHITECTURE.md", "ARCHITECTURE_AUDIT.md", "gesture-vocabulary.md", "safety-anchor-test.md", "ui-panels.md", "ui-mockups", "markers"]
+exclude_patterns = ["_build", "Thumbs.db", ".DS_Store", "README.md", "gesture-vocabulary.md", "safety-anchor-test.md", "ui-panels.md", "ui-mockups", "markers"]
 
 # --- HTML output -----------------------------------------------------------
 html_theme = "furo"
