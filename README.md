@@ -2,7 +2,7 @@
 
 Mixed-reality teleoperation and digital twin for the **ABB GoFa CRB 15000** collaborative robot, driven from a **Meta Quest 3** through hand tracking, with **ROS 2 Jazzy + MoveIt Servo** providing inverse kinematics, collision checking, and planning.
 
-The robot listens on **EGM (Externally Guided Motion)** at 250 Hz. Quest sends pose targets over the LAN, ROS computes the joint commands, a Windows-native Unity bridge translates them to the EGM wire format, and the controller follows. RAPID stays minimal - one mode, one loop.
+The robot listens on **EGM (Externally Guided Motion)** at 250 Hz. Quest sends pose targets over the LAN, ROS computes the joint commands, a standalone Python bridge translates them to the EGM wire format over UDP, and the controller follows. RAPID stays minimal - one mode, one loop.
 
 ---
 
@@ -38,8 +38,8 @@ The robot listens on **EGM (Externally Guided Motion)** at 250 Hz. Quest sends p
                │ ros-tcp-connector  (Float64MultiArray joint targets)
                ▼
   ┌───────────────────────────────────────────────────┐
-  │  Unity Bridge  (Windows native, headless build)   │
-  │    EgmClient · JointStatePublisher · ServoSub.    │
+  │  Python EGM bridge  (bridge/egm-bridge/)          │
+  │    egm_bridge_servo.py: rosbridge <-> EGM/UDP     │
   └────────────┬──────────────────────────────────────┘
                │ EGM UDP @ 250 Hz   (protobuf, EgmSensor)
                ▼
@@ -53,8 +53,8 @@ Design choices, with rationale:
 
 - **No mode switching in RAPID.** The robot stays in joint-EGM forever. All IK is solved client-side by MoveIt Servo. This avoids the EGMStop / EGMReset / EGMActX dance and the configuration-jump that plagues pose-mode teleop.
 - **Hot path stays off WSL.** WSL2 mirrored networking drops UDP from real hardware. The 250 Hz EGM loop runs as a native Windows process (or a Linux server build). Only TCP traffic crosses into WSL.
-- **ROS is the brain, Unity is the courier.** Unity owns the AR rendering, hand input, EGM wire format, and last-mile sensor stream. ROS owns planning, IK, monitoring, and rosbag logging.
-- **One Unity project, two builds.** Quest3 APK (AR client) and Windows / Linux standalone (headless bridge) share the same C# code through assembly definitions.
+- **ROS is the brain, the Python bridge is the courier.** Unity owns the AR rendering and hand input; a standalone Python bridge (`bridge/egm-bridge/`) owns the EGM wire format and the last-mile UDP to the controller. ROS owns planning, IK, monitoring, and rosbag logging.
+- **Unity for the headset, Python for the wire.** The Unity project is the Quest 3 AR client; the EGM link to the controller runs as a small standalone Python bridge, so the 250 Hz UDP loop stays off the headset and off WSL.
 
 ---
 
@@ -90,7 +90,7 @@ A pre-built PDF is checked in at the repository root:
 
 | Path | What lives here |
 |---|---|
-| `unity-quest/` | Unity 6 project: Quest3 AR app, EGM bridge components, MR scene |
+| `unity-quest/` | Unity 6 project: Quest 3 AR app (hand tracking, HMI, safety), MR scene |
 | `ros2/` | ROS 2 Jazzy workspace, docker stack, MoveIt config, Servo launch |
 | `robotstudio/` | RAPID modules, RobotStudio station, controller backups, helper scripts |
 | `bridge/` | Python EGM/UDP bridge + operator consoles (`egm-bridge/`) and an EGM mock (`egm-mock/`) |
@@ -104,7 +104,7 @@ A pre-built PDF is checked in at the repository root:
 
 Unity 6 project targeting the Quest 3 with Meta XR SDK + URDF Importer + ros-tcp-connector. Hand tracking and passthrough are first-class.
 
-**EGM stack** lives in `Assets/MetaMove/Scripts/Robot/EGM/`:
+An optional **in-Unity EGM client** lives in `Assets/MetaMove/Scripts/Robot/EGM/` (early bring-up path; the real GoFa is driven by the standalone Python bridge below):
 - `EgmClient.cs` - UDP socket, background RX thread, joint and pose send paths
 - `EgmMessages.cs` - minimal protobuf encoder/decoder for `egm.proto`
 - `EgmRobotSink.cs` - adapts the client to the gesture pipeline
@@ -142,11 +142,11 @@ Two modules cover the controller side:
 - **`MetaMoveJointStream.mod`** - bare-minimum continuous joint EGM. `EGMSetupUC` + `EGMActJoint` + `EGMRunJoint` with `MaxSpeedDeviation:=1000` and a long `CondTime`. Drop in via RWS, point the production entry point at `main`, hit play.
 - **`MetaMoveCore.mod`** - slightly richer dispatcher with pose-mode and joint-mode case branches. Useful when developing against the StateMachine Add-In v2.0.
 
-`ROB_1_udpuc.cfg` is the SIO configuration that registers the UDPUC device pointing at the Unity bridge.
+`ROB_1_udpuc.cfg` is the SIO configuration that registers the UDPUC device pointing at the Python EGM bridge.
 
 ### EGM bridge (`bridge/egm-bridge/`)
 
-Reference Python bridge used during bring-up before the Unity bridge was finished. Two flavors:
+The **Python EGM bridge** - this is what drives the real GoFa. It connects ROS to the controller's EGM over UDP and keeps the 250 Hz loop off the headset and off WSL. Two flavors:
 
 - `egm_bridge_identity.py` - receives `EgmRobot`, echoes the current joints back so the EGM session stays alive without moving the robot.
 - `egm_bridge_servo.py` - same plus `rosbridge_websocket` client that publishes `/joint_states` and subscribes to `/servo_node/commands`. Useful when running headless without Unity.
@@ -181,17 +181,20 @@ Wait for `Rosbridge WebSocket server started on port 9090` and `ROS-TCP Server` 
 
 Load `robotstudio/rapid/MetaMoveJointStream.mod` onto the controller via RWS or the FlexPendant, load `ROB_1_udpuc.cfg`, warm-restart, set program pointer to `main`, motors on, play.
 
-### 3. Unity bridge
+### 3. EGM bridge (Python)
 
-Open `unity-quest/` in Unity 6. Open `Scenes/Scene_Robot.unity`. On the `MetaMoveRosBridge` GameObject set:
-- `RosBridgeBootstrap.rosIPAddress` to your ROS host
-- `EgmClient.listenPort` to `6511`
+Run the standalone Python bridge on a machine that can reach the controller's EGM UDP (Windows or Linux):
 
-Hit play.
+```bash
+cd bridge/egm-bridge
+python egm_bridge_servo.py --rosbridge-host <ROS_HOST> --port 6511
+```
+
+It bridges ROS to the GoFa at 250 Hz: `/servo_node/commands` → EGM/UDP, and `EgmRobot` feedback → `/joint_states`.
 
 ### 4. Quest 3 deployment
 
-Switch the build target to Android, build the AR scene as an APK, install on the Quest. The same scripts run there - the headset publishes its hand pose into ROS and the Unity bridge on the workstation does the EGM translation. When the headset goes offline the bridge holds the last pose and the robot stops safely.
+Switch the build target to Android, build the AR scene as an APK, install on the Quest. The same scripts run there - the headset publishes its hand pose into ROS and the Python EGM bridge on the workstation does the EGM translation. When the headset goes offline the bridge holds the last pose and the robot stops safely.
 
 ---
 
@@ -199,8 +202,8 @@ Switch the build target to Android, build the AR scene as an APK, install on the
 
 - ABB GoFa CRB 15000-5/0.95 with OmniCore controller running RobotWare 7.20 + the EGM (3124-1) option
 - Meta Quest 3 (Quest 2 also works with reduced fidelity)
-- Windows 10/11 PC for RobotStudio + Unity bridge build
-- Optional Linux PC for hosting the headless Unity bridge and ROS in a single box
+- Windows 10/11 PC for RobotStudio and the Python EGM bridge
+- Optional Linux PC for hosting the Python EGM bridge and ROS in a single box
 
 ## Software
 
@@ -215,13 +218,9 @@ Switch the build target to Android, build the AR scene as an APK, install on the
 
 - EGM joint streaming proven on the real GoFa at 250 Hz with sub-millisecond bridge RTT
 - MoveIt Servo end-to-end on real hardware with cartesian, joint, and pose command modes
-- Unity bridge components committed and compiling; full end-to-end VC + ROS + Quest dry run is the next milestone
+- Full pipeline demonstrated end-to-end on the real GoFa: Quest 3 -> ROS 2 -> Python EGM bridge -> controller
 - Six pick-and-place demo scenarios scoped (chess, stone sort, framing, mug, pins, big stone)
 
 ## Team
 
 MetaMove is built by **Elias Bitsch**, **Viktoriia Ovdiienko**, and **Philip Stix**.
-
-## Acknowledgements
-
-Architecture inspired by [rparak/Unity3D_ABB_CRB_15000_GoFa_EGM](https://github.com/rparak/Unity3D_ABB_CRB_15000_GoFa_EGM), the PickNik [abb_ros2](https://github.com/PickNikRobotics/abb_ros2) driver, and Jakob Hörbst's original GoHolo RAPID modules. EGM protobuf schema from ABB's RobotWare distribution.
