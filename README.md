@@ -157,6 +157,14 @@ Reference Python bridge used during bring-up before the Unity bridge was finishe
 
 ## Quickstart
 
+Clone the repository (it uses **Git LFS** for the demo videos and deliverables):
+
+```bash
+git clone https://github.com/eliasbitsch/MetaMove.git
+cd MetaMove
+git lfs pull        # fetch large media if git-lfs didn't pull them on clone
+```
+
 This assumes the lab network is `192.168.125.0/24` with the GoFa controller at `192.168.125.1` and a workstation reachable on `192.168.125.99`.
 
 ### 1. ROS stack (Linux / WSL)
