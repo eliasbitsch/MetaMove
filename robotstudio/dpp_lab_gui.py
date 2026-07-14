@@ -39,7 +39,7 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 # Protobuf import — egm_pb2 lives next to egm-mock dir
 HERE = Path(__file__).resolve().parent
-sys.path.insert(0, str(HERE.parent / 'ai-services' / 'egm-mock'))
+sys.path.insert(0, str(HERE.parent / 'bridge' / 'egm-mock'))
 import egm_pb2  # type: ignore
 
 DEFAULT_YAML   = Path.home() / 'dpp_waypoints.yaml'

@@ -33,7 +33,7 @@ import time
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
-sys.path.insert(0, str(HERE.parent / 'ai-services' / 'egm-mock'))
+sys.path.insert(0, str(HERE.parent / 'bridge' / 'egm-mock'))
 import egm_pb2  # type: ignore
 
 JOINT_NAMES = ['J1', 'J2', 'J3', 'J4', 'J5', 'J6']

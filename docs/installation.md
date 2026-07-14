@@ -118,10 +118,10 @@ The dashboard auto-discovers ROS topics at runtime.
 
 ## Building this documentation
 
-The documentation source lives in `docs/technical/`. To build it yourself:
+The documentation source lives in `docs/`. To build it yourself:
 
 ```bash
-cd docs/technical
+cd docs
 pip install -r requirements.txt
 
 # HTML (browsable)

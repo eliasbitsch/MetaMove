@@ -18,14 +18,6 @@ unity-quest/Build
 unity-quest/Builds
 unity-quest/UserSettings
 
-# AI services
-ai-services/**/.venv
-ai-services/**/venv
-ai-services/**/models
-ai-services/**/*.safetensors
-ai-services/**/*.gguf
-ai-services/**/*.bin
-
 # Docs / planning
 docs/
 .planning/

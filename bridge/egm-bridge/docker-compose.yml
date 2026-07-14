@@ -26,6 +26,11 @@ services:
     # Keep stdout/err flushed so `docker logs -f` shows live stats
     tty: true
     stdin_open: true
+    working_dir: /opt/bridge
+    volumes:
+      # Sources are bind-mounted (not COPYd) so edits are live — no rebuild.
+      - ./:/opt/bridge              # egm-bridge scripts
+      - ../egm-mock:/opt/egm-mock   # egm-mock: egm.proto, egm_mock.py, generated egm_pb2.py
 
 networks:
   lab_lan:

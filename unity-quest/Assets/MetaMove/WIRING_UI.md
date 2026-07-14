@@ -2,8 +2,6 @@
 
 Scripts are in place (`Assets/MetaMove/Scripts/Settings|UI|Haptics/`). This doc is the checklist for **what YOU do in the Unity Editor** to bring the 3-Layer UI to life.
 
-See [docs/ui-panels.md](../../../docs/ui-panels.md) (repo root) for the full catalog + Meta asset inventory.
-
 ---
 
 ## 0. Prerequisites

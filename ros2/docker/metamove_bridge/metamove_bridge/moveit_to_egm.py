@@ -151,7 +151,7 @@ def egm_drive(target_rad: list[float], max_step_deg: float = 0.5,
     Sends EgmSensor 250 Hz with target = interpolated current → target,
     returns when |joint_err|_inf < tolerance_deg or robot stops responding.
     """
-    sys.path.insert(0, str(Path(__file__).resolve().parent.parent / 'ai-services' / 'egm-mock'))
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
     import egm_pb2  # type: ignore
 
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)

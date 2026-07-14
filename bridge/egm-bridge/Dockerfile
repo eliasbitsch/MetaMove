@@ -1,4 +1,5 @@
-# Build context = ai-services/ (parent dir), so we can pull egm_pb2 from egm-mock/.
+# Dependency-only image. Sources (egm-bridge scripts + egm-mock) are bind-mounted
+# via docker-compose volumes, so edits are live and no rebuild is needed.
 # docker compose up --build bridge    # from inside egm-bridge/
 FROM python:3.12-slim
 
@@ -8,17 +9,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 WORKDIR /opt/bridge
 
-# protobuf-generated egm_pb2 + the bridge scripts share a parent dir context
-COPY egm-mock/egm_pb2.py /opt/egm-mock/egm_pb2.py
-COPY egm-mock/egm.proto /opt/egm-mock/egm.proto
-COPY egm-bridge/egm_bridge_identity.py \
-     egm-bridge/egm_bridge_servo.py \
-     egm-bridge/teleop_keyboard.py \
-     egm-bridge/sm_egm_pulser.py \
-     ./
-
 RUN pip install --no-cache-dir protobuf==7.34.1 roslibpy==2.0.0 requests urllib3
 
+# egm-bridge scripts are mounted at /opt/bridge, egm-mock (with the generated
+# egm_pb2) at /opt/egm-mock — both via docker-compose `volumes:` (not COPY).
 ENV PYTHONUNBUFFERED=1 \
     PYTHONPATH=/opt/egm-mock
 

@@ -164,7 +164,7 @@ namespace MetaMove.EditorTools
                 "STILL TO DO OUTSIDE EDITOR:\n" +
                 "  3. Print docs/markers/METAMOVE_ROBOT_BASE_01_print.pdf at 100% scale\n" +
                 "  4. Attach the printed marker to your test object (flat, center = CAD origin)\n\n" +
-                "THEN: Build & Run. See docs/safety-anchor-test.md for full walkthrough.",
+                "THEN: Build & Run.",
                 "OK");
         }
 
