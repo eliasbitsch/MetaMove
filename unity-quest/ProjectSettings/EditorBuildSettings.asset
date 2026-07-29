@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/MetaMove/Scenes/PaperDemo.unity
+    guid: 20177d0eefadc9b40a782391030f6d25
+  - enabled: 0
     path: Assets/MetaMove/Scenes/Scene_Robot.unity
     guid: 5d0660a6f3ff71546a0b05b83b13bb8d
   m_configObjects:

@@ -1,4 +1,6 @@
 #if UNITY_EDITOR
+using System.IO;
+using System.Text.RegularExpressions;
 using UnityEditor;
 using UnityEngine;
 
@@ -10,13 +12,49 @@ namespace MetaMove.EditorTools
     // DLL to its matching Windows standalone arch only, and exclude from Android.
     public static class FixAssimpPluginPlatforms
     {
+        const string X86Dll = "Packages/com.unity.robotics.urdf-importer/Runtime/UnityMeshImporter/Plugins/AssimpNet/Native/win/x86/assimp.dll";
+        const string X64Dll = "Packages/com.unity.robotics.urdf-importer/Runtime/UnityMeshImporter/Plugins/AssimpNet/Native/win/x86_64/assimp.dll";
+
         [MenuItem("MetaMove/Fix URDF-Importer Assimp Plugin Platforms")]
         public static void Run()
         {
-            Apply("Packages/com.unity.robotics.urdf-importer/Runtime/UnityMeshImporter/Plugins/AssimpNet/Native/win/x86/assimp.dll", "x86");
-            Apply("Packages/com.unity.robotics.urdf-importer/Runtime/UnityMeshImporter/Plugins/AssimpNet/Native/win/x86_64/assimp.dll", "x86_64");
+            Apply(X86Dll, "x86");
+            Apply(X64Dll, "x86_64");
+            // The package comes from a git URL and is immutable: PluginImporter
+            // edits above are dropped on reimport, so the .meta in the package
+            // cache has to be patched on disk as well. Takes effect on the next
+            // editor start — which is why the build script calls this first.
+            bool patched = PatchMetaOnDisk(X86Dll) | PatchMetaOnDisk(X64Dll);
             AssetDatabase.Refresh();
-            Debug.Log("[FixAssimpPluginPlatforms] Done. Try building again.");
+            Debug.Log($"[FixAssimpPluginPlatforms] Done (meta patched: {patched}).");
+        }
+
+        /// <summary>
+        /// Clears the "Any platform" flag in the plugin's .meta. Both assimp.dll
+        /// variants ship with Any=enabled, so the Android build sees two plugins
+        /// with the same name and aborts.
+        /// </summary>
+        static bool PatchMetaOnDisk(string assetPath)
+        {
+            string metaPath = Path.GetFullPath(assetPath) + ".meta";
+            if (!File.Exists(metaPath))
+            {
+                Debug.LogWarning($"[FixAssimpPluginPlatforms] .meta not found: {metaPath}");
+                return false;
+            }
+
+            string text = File.ReadAllText(metaPath);
+            string patched = Regex.Replace(
+                text,
+                @"(- first:\r?\n      Any: *\r?\n    second:\r?\n      enabled: )1",
+                "${1}0");
+            if (patched == text) return false;
+
+            var attrs = File.GetAttributes(metaPath);
+            if ((attrs & FileAttributes.ReadOnly) != 0)
+                File.SetAttributes(metaPath, attrs & ~FileAttributes.ReadOnly);
+            File.WriteAllText(metaPath, patched);
+            return true;
         }
 
         static void Apply(string path, string arch)
