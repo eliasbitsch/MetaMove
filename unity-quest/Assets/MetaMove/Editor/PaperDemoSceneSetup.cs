@@ -10,6 +10,7 @@ using MetaMove.Robot;
 using MetaMove.UI.Hud;
 using Oculus.Interaction;
 using Oculus.Interaction.DistanceReticles;
+using UnityEngine.Rendering.Universal;
 
 namespace MetaMove.EditorTools
 {
@@ -74,12 +75,34 @@ namespace MetaMove.EditorTools
             EnsureFolder("Assets/MetaMove/Scenes");
             EnsureFolder("Assets/MetaMove/Prefabs/Materials");
 
-            var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
-            scene.name = "PaperDemo";
+            // Start from Meta's sample scene. Instantiating OVRCameraRig and
+            // OVRInteractionComprehensive into an empty scene leaves the
+            // cross-root scene references between them unset, which makes the
+            // hand data pipeline throw (ShadowHandExtensions.FromHandRoot) and
+            // kills hand tracking entirely. The sample has them wired.
+            Scene scene;
+            GameObject camRig;
+            string samplePath = PinchDragSceneSetup.FindMetaSampleScenePath();
+            if (!string.IsNullOrEmpty(samplePath))
+            {
+                scene = EditorSceneManager.OpenScene(samplePath, OpenSceneMode.Single);
+                camRig = StripSampleToRigOnly();
+                Debug.Log($"[PaperDemo] Base scene: {samplePath}");
+            }
+            else
+            {
+                Debug.LogWarning("[PaperDemo] Meta HandGrabExamples.unity not found — building the rig " +
+                                 "from prefabs. Hand tracking may need manual wiring.");
+                scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
+                scene.name = "PaperDemo";
+                camRig = CreateCameraRig();
+            }
+            // Note: a scene loaded from disk takes its name from the file — it
+            // gets renamed by SaveScene() to the PaperDemo path below.
 
             CreateLighting();
-            var camRig = CreateCameraRig();
-            var passthrough = SetupPassthrough(camRig);
+            EnableHandTracking(camRig);
+            SetupPassthrough(camRig);
             var robot = SetupRobot();
 
             EditorSceneManager.MarkSceneDirty(scene);
@@ -102,6 +125,43 @@ namespace MetaMove.EditorTools
         }
 
         // ---------- rig / passthrough ----------
+
+        /// <summary>
+        /// Deletes everything the sample scene brings along (room mesh, skydome,
+        /// sample interactables, labels, its lights) and keeps only the camera
+        /// rig and the interaction rig, whose mutual references must survive.
+        /// Returns the OVRCameraRig root.
+        /// </summary>
+        static GameObject StripSampleToRigOnly()
+        {
+            var active = EditorSceneManager.GetActiveScene();
+            GameObject camRig = null;
+            int removed = 0;
+
+            foreach (var root in active.GetRootGameObjects())
+            {
+                if (root == null) continue;
+
+                if (root.GetComponentInChildren<OVRManager>(true) != null)
+                {
+                    camRig = root;
+                    continue;
+                }
+                bool isInteractionRig =
+                    root.name.StartsWith("OVR") ||
+                    root.GetComponentInChildren<Oculus.Interaction.Input.Hand>(true) != null;
+                bool isEventSystem =
+                    root.GetComponent<UnityEngine.EventSystems.EventSystem>() != null;
+                if (isInteractionRig || isEventSystem) continue;
+
+                Object.DestroyImmediate(root);
+                removed++;
+            }
+
+            Debug.Log($"[PaperDemo] Stripped {removed} sample object(s); camera rig: " +
+                      (camRig != null ? camRig.name : "NOT FOUND"));
+            return camRig;
+        }
 
         static GameObject CreateCameraRig()
         {
@@ -138,6 +198,7 @@ namespace MetaMove.EditorTools
 
         static void EnableHandTracking(GameObject camRig)
         {
+            if (camRig == null) return;
             var manager = camRig.GetComponentInChildren<OVRManager>(true);
             if (manager == null) return;
 
@@ -163,20 +224,27 @@ namespace MetaMove.EditorTools
             if (layer == null) layer = host.AddComponent<OVRPassthroughLayer>();
             layer.overlayType = OVROverlay.OverlayType.Underlay;
 
-            // Transparent clear so the underlay shows wherever nothing is drawn.
+            // Transparent clear on every rig camera so the underlay shows
+            // wherever nothing is drawn. Post-processing off: it writes opaque
+            // alpha and tints the passthrough feed.
             Camera cam = null;
             if (camRig != null)
             {
                 foreach (var c in camRig.GetComponentsInChildren<Camera>(true))
                 {
-                    if (c.name == "CenterEyeAnchor" || c.CompareTag("MainCamera")) { cam = c; break; }
-                    cam = cam ?? c;
+                    c.clearFlags = CameraClearFlags.SolidColor;
+                    c.backgroundColor = new Color(0f, 0f, 0f, 0f);
+
+                    var urp = c.GetUniversalAdditionalCameraData();
+                    if (urp != null)
+                    {
+                        urp.renderPostProcessing = false;
+                        urp.renderShadows = true;
+                    }
+
+                    if (cam == null || c.name == "CenterEyeAnchor" || c.CompareTag("MainCamera"))
+                        cam = c;
                 }
-            }
-            if (cam != null)
-            {
-                cam.clearFlags = CameraClearFlags.SolidColor;
-                cam.backgroundColor = new Color(0f, 0f, 0f, 0f);
             }
 
             var enabler = host.GetComponent<PassthroughEnabler>();
@@ -232,6 +300,10 @@ namespace MetaMove.EditorTools
             PrefabUtility.UnpackPrefabInstance(robot, PrefabUnpackMode.Completely, InteractionMode.AutomatedAction);
             robot.transform.position = new Vector3(0f, 0f, 1.3f);
             robot.transform.rotation = Quaternion.identity;
+
+            // The prefab carries the FBX's built-in materials, which render as
+            // magenta under URP. Same conversion the pinch-drag scene uses.
+            PinchDragSceneSetup.ConvertMaterialsToURP(robot);
 
             StripJointArcHandles(robot);
             var ikTarget = StripIkBall(robot);

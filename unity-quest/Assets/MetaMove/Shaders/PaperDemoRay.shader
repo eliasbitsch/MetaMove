@@ -28,6 +28,9 @@ Shader "MetaMove/PaperDemoRay"
             HLSLPROGRAM
             #pragma vertex vert
             #pragma fragment frag
+            // Required for single-pass instanced stereo — without it the mesh
+            // renders twice, offset, instead of once per eye.
+            #pragma multi_compile_instancing
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
 
             struct Attributes

@@ -289,7 +289,7 @@ namespace MetaMove.EditorTools
             }
         }
 
-        static string FindMetaSampleScenePath()
+        public static string FindMetaSampleScenePath()
         {
             string[] guids = AssetDatabase.FindAssets("HandGrabExamples t:Scene",
                 new[] { "Assets/Samples", "Packages" });
@@ -360,7 +360,7 @@ namespace MetaMove.EditorTools
             return fallback;
         }
 
-        static void ConvertMaterialsToURP(GameObject root)
+        public static void ConvertMaterialsToURP(GameObject root)
         {
             var urpLit = Shader.Find("Universal Render Pipeline/Lit");
             if (urpLit == null) return;
@@ -435,7 +435,7 @@ namespace MetaMove.EditorTools
             }
         }
 
-        static void EnableShadowsOnAll(GameObject root)
+        public static void EnableShadowsOnAll(GameObject root)
         {
             if (root == null) return;
             foreach (var rend in root.GetComponentsInChildren<Renderer>(true))
