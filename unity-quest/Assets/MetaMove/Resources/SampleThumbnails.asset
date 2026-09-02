@@ -46,4 +46,4 @@ MonoBehaviour:
   - sceneName: BodyPoseDetectionExamples
     sprite: {fileID: 21300000, guid: cbd197b6be0d83946bcc8e32731dec13, type: 3}
   - sceneName: HandOnHandInteraction
-    sprite: {fileID: 21300000, guid: c2436e74fd58782498cd032883f28445, type: 3}
+    sprite: {fileID: 0}

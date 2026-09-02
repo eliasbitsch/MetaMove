@@ -1,7 +1,8 @@
 {
   "dependencies": {
+    "at.ac.ait.xrui": "file:../../../ait-xrui",
     "com.coplaydev.unity-mcp": "https://github.com/CoplayDev/unity-mcp.git?path=/MCPForUnity#v10.1.0",
-    "com.meta.xr.sdk.all": "85.0.0",
+    "com.meta.xr.sdk.all": "205.0.0",
     "com.meta.xr.unity-mcp.extension": "https://github.com/meta-quest/Unity-MCP-Extensions.git",
     "com.unity.ai.assistant": "2.12.0-pre.2",
     "com.unity.feature.development": "1.0.2",
