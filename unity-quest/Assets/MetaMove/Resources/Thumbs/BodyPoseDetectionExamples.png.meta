@@ -1,7 +1,10 @@
 fileFormatVersion: 2
 guid: cbd197b6be0d83946bcc8e32731dec13
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: 8790235787777870927
+    second: BodyPoseDetectionExamples_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -134,7 +137,29 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: BodyPoseDetectionExamples_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 2168
+        height: 1006
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f4c0d6650e03df970800000000000000
+      internalID: 8790235787777870927
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []

@@ -1,7 +1,10 @@
 fileFormatVersion: 2
 guid: 27587105d7f5fed4ab9f3db4fd4affb7
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: -129276602938948581
+    second: ConcurrentHandsControllersExamples_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -134,7 +137,29 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: ConcurrentHandsControllersExamples_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 2048
+        height: 1148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b140e045d97b43ef0800000000000000
+      internalID: -129276602938948581
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []

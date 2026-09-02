@@ -22,6 +22,9 @@ namespace MetaMove.Demo
         [Tooltip("Assumed eye height (m). Floor = head height minus this.")]
         public float eyeHeight = 1.35f;
 
+        [Tooltip("Lift above the floor (m). The demo robot floats so the arm is at eye level.")]
+        public float heightOffset = 1.0f;
+
         [Tooltip("Extra yaw (deg) applied on top of the user's facing direction.")]
         public float yawOffsetDeg = 0f;
 
@@ -53,7 +56,7 @@ namespace MetaMove.Demo
             forward.Normalize();
 
             Vector3 pos = h.position + forward * distance;
-            pos.y = h.position.y - eyeHeight;
+            pos.y = h.position.y - eyeHeight + heightOffset;
 
             transform.position = pos;
             transform.rotation = Quaternion.Euler(0f, Quaternion.LookRotation(forward).eulerAngles.y + yawOffsetDeg, 0f);

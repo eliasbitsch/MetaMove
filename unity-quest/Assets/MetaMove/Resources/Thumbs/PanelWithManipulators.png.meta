@@ -1,7 +1,10 @@
 fileFormatVersion: 2
 guid: 3b57400c3ff4af247a81b37b6eab8634
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: -4119906438021017846
+    second: PanelWithManipulators_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -134,7 +137,29 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: PanelWithManipulators_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 2048
+        height: 1148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a0f89ed3ce623d6c0800000000000000
+      internalID: -4119906438021017846
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []

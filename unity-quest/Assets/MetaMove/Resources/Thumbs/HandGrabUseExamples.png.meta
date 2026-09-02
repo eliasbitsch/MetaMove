@@ -1,7 +1,10 @@
 fileFormatVersion: 2
 guid: a656a7168d729cb4886523f47724198e
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: 2287538007342125700
+    second: HandGrabUseExamples_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -134,7 +137,29 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: HandGrabUseExamples_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 2048
+        height: 1148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 48215d1a2b7febf10800000000000000
+      internalID: 2287538007342125700
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []

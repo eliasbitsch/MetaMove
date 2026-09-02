@@ -1,7 +1,10 @@
 fileFormatVersion: 2
 guid: df3b17ab68da00343a77bebb0c295407
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: -7259288540532036021
+    second: Button - Rounded Radius - 4px_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -160,7 +163,29 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Button - Rounded Radius - 4px_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 192
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b4e2683a883d14b90800000000000000
+      internalID: -7259288540532036021
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []

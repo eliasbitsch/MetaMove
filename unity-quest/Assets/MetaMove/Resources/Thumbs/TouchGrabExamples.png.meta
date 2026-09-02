@@ -1,7 +1,10 @@
 fileFormatVersion: 2
 guid: be84127920f6cd34c8380cbd3de28d18
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: -776900609097849938
+    second: TouchGrabExamples_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -134,7 +137,29 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: TouchGrabExamples_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 2048
+        height: 1148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ea320f02305e735f0800000000000000
+      internalID: -776900609097849938
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []

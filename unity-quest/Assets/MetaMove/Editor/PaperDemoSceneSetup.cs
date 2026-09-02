@@ -25,7 +25,7 @@ namespace MetaMove.EditorTools
     public static class PaperDemoSceneSetup
     {
         public const string ScenePath = "Assets/MetaMove/Scenes/PaperDemo.unity";
-        const string RobotPrefabPath = "Assets/MetaMove/Prefabs/GoFa_CRB15000.prefab";
+        const string RobotFbxPath = "Assets/MetaMove/Robot/Meshes/rparak_FBX/ABB_CRB_15000.fbx";
         const string RayMaterialPath = "Assets/MetaMove/Prefabs/Materials/PaperDemoRay.mat";
         const string RayShaderPath = "Assets/MetaMove/Shaders/PaperDemoRay.shader";
 
@@ -285,44 +285,142 @@ namespace MetaMove.EditorTools
 
         // ---------- robot ----------
 
+        // ABB GoFa CRB 15000 5 kg / 950 mm joint limits (3HAC077921-001).
+        static readonly (float min, float max)[] IKJointLimits =
+        {
+            (-180f, 180f), (-90f, 150f), (-90f, 75f),
+            (-180f, 180f), (-135f, 135f), (-400f, 400f),
+        };
+
+        // rparak FBX convention: J1/J4/J6 turn around local +Y, J2/J3/J5 around local +Z.
+        static readonly Vector3[] IKJointAxes =
+        {
+            Vector3.up, Vector3.forward, Vector3.forward,
+            Vector3.up, Vector3.forward, Vector3.up,
+        };
+
+        // A plausible working pose (deg per joint) — the arm reaching out and to
+        // the side, as if carrying something across. Beats the FBX rest pose,
+        // which has the arm folded straight up and reads as "switched off".
+        // Every value is inside IKJointLimits.
+        static readonly float[] DemoPoseDeg = { 35f, -28f, 38f, 0f, 42f, 0f };
+
+        /// <summary>
+        /// J1 is the base yaw: it must turn around the robot's vertical axis.
+        /// The FBX convention table says local +Y, which does not hold here — it
+        /// tipped the whole arm over instead of swivelling it. Deriving the axis
+        /// from the robot's own up vector is convention-independent.
+        /// </summary>
+        static Vector3 BaseYawWorldAxis(Transform robotRoot) => robotRoot.up;
+
+        /// <summary>Converts a world axis into the local axis GoFaCCDIK expects.</summary>
+        static Vector3 ToSolverLocalAxis(Transform joint, Vector3 worldAxis)
+            => (Quaternion.Inverse(joint.rotation) * worldAxis).normalized;
+
+        static void ApplyDemoPose(Transform[] joints, Transform robotRoot)
+        {
+            for (int i = 0; i < joints.Length && i < DemoPoseDeg.Length; i++)
+            {
+                if (joints[i] == null) continue;
+                float clamped = Mathf.Clamp(DemoPoseDeg[i], IKJointLimits[i].min, IKJointLimits[i].max);
+                if (Mathf.Approximately(clamped, 0f)) continue;
+
+                if (i == 0) joints[i].Rotate(BaseYawWorldAxis(robotRoot), clamped, Space.World);
+                else joints[i].localRotation *= Quaternion.AngleAxis(clamped, IKJointAxes[i]);
+            }
+        }
+
+        /// <summary>
+        /// Builds the robot straight from the FBX rather than from
+        /// GoFa_CRB15000.prefab. The prefab's meshes sit on Unity's built-in
+        /// default material (magenta under URP), while the FBX has all twelve
+        /// URP/Lit materials mapped through its importer — the ABB white/red
+        /// look the other scenes show.
+        /// </summary>
         static GameObject SetupRobot()
         {
-            var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(RobotPrefabPath);
-            if (prefab == null)
+            var fbx = AssetDatabase.LoadAssetAtPath<GameObject>(RobotFbxPath);
+            if (fbx == null)
             {
-                Debug.LogError($"[PaperDemo] Robot prefab missing: {RobotPrefabPath}. " +
-                               "Run MetaMove > Rebuild Robot Prefab (safe) first.");
+                Debug.LogError($"[PaperDemo] Robot FBX missing: {RobotFbxPath}");
                 return null;
             }
 
-            var robot = (GameObject)PrefabUtility.InstantiatePrefab(prefab);
+            var robot = (GameObject)PrefabUtility.InstantiatePrefab(fbx);
             robot.name = "GoFa";
             PrefabUtility.UnpackPrefabInstance(robot, PrefabUnpackMode.Completely, InteractionMode.AutomatedAction);
             robot.transform.position = new Vector3(0f, 0f, 1.3f);
             robot.transform.rotation = Quaternion.identity;
 
-            // The prefab carries the FBX's built-in materials, which render as
-            // magenta under URP. Same conversion the pinch-drag scene uses.
-            PinchDragSceneSetup.ConvertMaterialsToURP(robot);
+            // FBX colliders would only get in the way — nothing is grabbed here.
+            foreach (var col in robot.GetComponentsInChildren<Collider>(true))
+                if (col != null) Object.DestroyImmediate(col);
 
-            StripJointArcHandles(robot);
-            var ikTarget = StripIkBall(robot);
-            RestrictBodyGrabToTwoHands(robot);
+            var joints = new Transform[6];
+            bool complete = true;
+            for (int i = 0; i < 6; i++)
+            {
+                joints[i] = FindDeepByName(robot.transform, $"Joint_{i + 1}");
+                if (joints[i] == null) { complete = false; Debug.LogError($"[PaperDemo] Joint_{i + 1} not found in FBX."); }
+            }
+            if (!complete) return robot;
 
-            var tcp = FindDeepByName(robot.transform, "TCP");
-            var baseT = FindDeepByName(robot.transform, "Base") ?? robot.transform;
+            // Pose the arm before anchoring the TCP, so handle and ray end up on
+            // the posed flange. The solver caches this as its rest pose.
+            ApplyDemoPose(joints, robot.transform);
+
+            // Place the TCP along the actual wrist direction (J5 → J6) instead of
+            // a hard-coded local axis: the FBX turns J6 around local +Y, so a
+            // (0,0,z) offset would sit beside the tool axis, not on it. Working in
+            // world space also sidesteps the FBX's 100× scale.
+            var tcp = new GameObject("TCP").transform;
+            tcp.SetParent(joints[5], false);
+            Vector3 outward = joints[5].position - joints[4].position;
+            if (outward.sqrMagnitude > 1e-8f)
+                tcp.position = joints[5].position + outward.normalized * 0.04f;
+            else
+                tcp.localPosition = Vector3.zero;
+            tcp.rotation = joints[5].rotation;
+            Debug.Log($"[PaperDemo] TCP {Vector3.Distance(tcp.position, joints[5].position):F3} m " +
+                      $"beyond the flange (Joint_6 lossyScale={joints[5].lossyScale.z:F1})");
+
+            var ikTarget = new GameObject("IKTarget").transform;
+            ikTarget.SetParent(robot.transform, false);
+            ikTarget.SetPositionAndRotation(tcp.position, tcp.rotation);
+
+            // Visible handle the ray points at. Not grabbable via Meta's
+            // interactables — the pinch controller drives it directly — but it
+            // gives the ray a target you can actually see in a photo.
+            var handle = BuildHandleBall(ikTarget);
 
             var solver = robot.GetComponent<GoFaCCDIK>();
-            if (solver != null)
+            if (solver == null) solver = robot.AddComponent<GoFaCCDIK>();
+            var specs = new GoFaCCDIK.JointSpec[6];
+            for (int i = 0; i < 6; i++)
             {
-                if (ikTarget != null) solver.target = ikTarget;
-                if (tcp != null) solver.endEffector = tcp;
-                solver.solveRotation = false;
+                // Same correction for the solver: J1 gets the derived vertical
+                // axis, otherwise dragging the handle would tip the arm too.
+                Vector3 axis = i == 0
+                    ? ToSolverLocalAxis(joints[0], BaseYawWorldAxis(robot.transform))
+                    : IKJointAxes[i];
+
+                specs[i] = new GoFaCCDIK.JointSpec
+                {
+                    joint = joints[i],
+                    localAxis = axis,
+                    minDeg = IKJointLimits[i].min,
+                    maxDeg = IKJointLimits[i].max,
+                };
             }
-            else
-            {
-                Debug.LogError("[PaperDemo] GoFaCCDIK missing on robot prefab — IK will not run.");
-            }
+            solver.joints = specs;
+            solver.endEffector = tcp;
+            solver.target = ikTarget;
+            solver.iterations = 12;
+            solver.damping = 0.6f;
+            solver.positionTolerance = 0.005f;
+            solver.solveRotation = false;
+
+            var baseT = FindDeepByName(robot.transform, "Base") ?? robot.transform;
 
             var visuals = BuildRayVisuals();
 
@@ -330,88 +428,22 @@ namespace MetaMove.EditorTools
             if (ctrl == null) ctrl = robot.AddComponent<PinchIkRayController>();
             ctrl.ikTarget = ikTarget;
             ctrl.endEffector = tcp;
+            ctrl.rayTarget = handle;
             ctrl.robotBase = baseT;
             ctrl.tube = visuals.tube;
             ctrl.line = visuals.line;
-            ctrl.tipMarker = visuals.tip;
+            ctrl.tipMarker = null; // the handle ball replaces the old TCP glow
 
             var placer = robot.GetComponent<DemoRobotPlacer>();
             if (placer == null) placer = robot.AddComponent<DemoRobotPlacer>();
             placer.distance = 1.3f;
             placer.eyeHeight = 1.35f;
+            placer.heightOffset = 1.0f;   // floats, so the arm sits near eye level
             placer.placeOnStart = true;
+            ctrl.placer = placer;
 
             EnableShadowsOnRobotMeshes(robot);
             return robot;
-        }
-
-        /// <summary>Removes the per-joint rotary arc handles — the paper demo shows IK only.</summary>
-        static void StripJointArcHandles(GameObject robot)
-        {
-            foreach (var t in robot.GetComponentsInChildren<Transform>(true).ToArray())
-            {
-                if (t == null) continue;
-                if (t.name.StartsWith("RotaryHandle_"))
-                    Object.DestroyImmediate(t.gameObject);
-            }
-        }
-
-        /// <summary>
-        /// Turns the grabbable cyan IK ball into a bare invisible transform: the
-        /// demo drives it from the pinch controller, so no renderer, no collider
-        /// and no Meta grab components (which would draw their own ray).
-        /// </summary>
-        static Transform StripIkBall(GameObject robot)
-        {
-            var handle = FindDeepByName(robot.transform, "IKHandle");
-            if (handle == null)
-            {
-                Debug.LogWarning("[PaperDemo] IKHandle not found — creating a bare IK target instead.");
-                var tcpFallback = FindDeepByName(robot.transform, "TCP");
-                var go = new GameObject("IKTarget");
-                go.transform.SetParent(robot.transform, false);
-                if (tcpFallback != null) go.transform.SetPositionAndRotation(tcpFallback.position, tcpFallback.rotation);
-                return go.transform;
-            }
-
-            // Hand grab poses hang off the ball — they go with it.
-            foreach (var t in handle.GetComponentsInChildren<Transform>(true).ToArray())
-            {
-                if (t == null || t == handle) continue;
-                if (t.name.StartsWith("HandGrabPose")) Object.DestroyImmediate(t.gameObject);
-            }
-
-            foreach (var mb in handle.GetComponents<MonoBehaviour>())
-            {
-                if (mb == null) continue;
-                Object.DestroyImmediate(mb);
-            }
-            foreach (var c in handle.GetComponents<Collider>())
-            {
-                if (c != null) Object.DestroyImmediate(c);
-            }
-            var rb = handle.GetComponent<Rigidbody>();
-            if (rb != null) Object.DestroyImmediate(rb);
-            var mr = handle.GetComponent<MeshRenderer>();
-            if (mr != null) Object.DestroyImmediate(mr);
-            var mf = handle.GetComponent<MeshFilter>();
-            if (mf != null) Object.DestroyImmediate(mf);
-
-            handle.name = "IKTarget";
-            handle.localScale = Vector3.one;
-            return handle;
-        }
-
-        /// <summary>
-        /// Keeps the two-hand move/scale gesture on the robot body but drops the
-        /// one-hand translate — a single pinch must always mean "drag the TCP".
-        /// </summary>
-        static void RestrictBodyGrabToTwoHands(GameObject robot)
-        {
-            var oneGrab = robot.GetComponent<OneGrabTranslateTransformer>();
-            var grabbable = robot.GetComponent<Grabbable>();
-            if (grabbable != null) grabbable.InjectOptionalOneGrabTransformer(null);
-            if (oneGrab != null) Object.DestroyImmediate(oneGrab);
         }
 
         static void EnableShadowsOnRobotMeshes(GameObject robot)
@@ -450,7 +482,17 @@ namespace MetaMove.EditorTools
                 tube = rayGo.GetComponent<TubeRenderer>();
                 foreach (var v in rayGo.GetComponents<DistantInteractionLineVisual>())
                     if (v != null) Object.DestroyImmediate(v);
-                if (tube != null) tube.Radius = 0.006f;
+
+                if (tube != null)
+                {
+                    tube.Radius = 0.008f;
+                    // Meta's prefab fades out the first and last 20 % of the tube.
+                    // That is meant for a ray pointing into empty space; here both
+                    // ends matter — it must visibly connect hand and handle.
+                    tube.StartFadeThresold = 0f;
+                    tube.EndFadeThresold = 0.02f;
+                    tube.Feather = 0.05f;
+                }
             }
 
             if (tube == null)
@@ -464,20 +506,64 @@ namespace MetaMove.EditorTools
             rayGo.transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
             rayGo.transform.localScale = Vector3.one;
 
-            // Small additive glow marking the TCP while dragging.
-            var tip = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-            tip.name = "TipGlow";
-            var tipCol = tip.GetComponent<Collider>();
-            if (tipCol != null) Object.DestroyImmediate(tipCol);
-            tip.transform.SetParent(rayGo.transform, false);
-            tip.transform.localScale = Vector3.one * 0.022f;
-            var tipRend = tip.GetComponent<MeshRenderer>();
-            tipRend.sharedMaterial = mat;
-            tipRend.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
-            tipRend.receiveShadows = false;
-            tip.SetActive(false);
+            // No tip glow any more — the handle ball at the IK target marks the
+            // ray's destination.
+            return (tube, line, null);
+        }
 
-            return (tube, line, tip.transform);
+        const string HandleMaterialPath = "Assets/MetaMove/Prefabs/Materials/PaperDemoHandle.mat";
+
+        /// <summary>
+        /// Translucent glowing sphere at the IK target — the "handle" the curved
+        /// ray reaches for. ~6 cm across, no collider, no shadows.
+        /// </summary>
+        static Transform BuildHandleBall(Transform ikTarget)
+        {
+            var ball = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            ball.name = "IKHandle";
+            var col = ball.GetComponent<Collider>();
+            if (col != null) Object.DestroyImmediate(col);
+
+            ball.transform.SetParent(ikTarget, false);
+            ball.transform.localPosition = Vector3.zero;
+            ball.transform.localRotation = Quaternion.identity;
+            float scale = Mathf.Max(0.0001f, Mathf.Abs(ikTarget.lossyScale.x));
+            ball.transform.localScale = Vector3.one * (0.06f / scale);
+
+            var existing = AssetDatabase.LoadAssetAtPath<Material>(HandleMaterialPath);
+            if (existing != null) AssetDatabase.DeleteAsset(HandleMaterialPath);
+
+            var lit = Shader.Find("Universal Render Pipeline/Lit");
+            var mat = new Material(lit) { name = "PaperDemoHandle" };
+            var cyan = new Color(0.15f, 0.85f, 1f, 0.72f);
+            mat.SetColor("_BaseColor", cyan);
+            mat.SetFloat("_Metallic", 0f);
+            mat.SetFloat("_Smoothness", 0.7f);
+            mat.EnableKeyword("_EMISSION");
+            mat.SetColor("_EmissionColor", new Color(0.1f, 0.65f, 0.85f) * 1.6f);
+            mat.globalIlluminationFlags = MaterialGlobalIlluminationFlags.RealtimeEmissive;
+            SetURPTransparent(mat);
+            AssetDatabase.CreateAsset(mat, HandleMaterialPath);
+
+            var rend = ball.GetComponent<MeshRenderer>();
+            rend.sharedMaterial = mat;
+            rend.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+            rend.receiveShadows = false;
+
+            return ball.transform;
+        }
+
+        static void SetURPTransparent(Material m)
+        {
+            if (!m.HasProperty("_Surface")) return;
+            m.SetFloat("_Surface", 1f);
+            m.SetFloat("_Blend", 0f);
+            m.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
+            m.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+            m.SetInt("_ZWrite", 0);
+            m.DisableKeyword("_SURFACE_TYPE_OPAQUE");
+            m.EnableKeyword("_SURFACE_TYPE_TRANSPARENT");
+            m.renderQueue = 3000;
         }
 
         static GameObject LoadMetaReticleLine()

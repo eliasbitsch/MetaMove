@@ -23,8 +23,10 @@ namespace MetaMove.Demo
         [Header("Robot")]
         [Tooltip("Transform the IK solver chases. Invisible — this is the drag handle.")]
         public Transform ikTarget;
-        [Tooltip("TCP / flange transform the ray points at.")]
+        [Tooltip("TCP / flange transform — where the IK chain ends.")]
         public Transform endEffector;
+        [Tooltip("What the ray points at. Normally the handle ball; falls back to the TCP.")]
+        public Transform rayTarget;
         [Tooltip("Robot base — reach is clamped around this point.")]
         public Transform robotBase;
 
@@ -44,8 +46,14 @@ namespace MetaMove.Demo
         public float motionScale = 1.0f;
         [Tooltip("Higher = target snaps to the hand faster.")]
         public float followSmoothing = 14f;
-        [Tooltip("Two-hand pinch is reserved for moving/scaling the robot, so IK drag pauses.")]
+        [Tooltip("Two-hand pinch never drags the TCP — it is the re-place gesture.")]
         public bool ignoreWhenBothHandsPinch = true;
+
+        [Header("Re-place gesture")]
+        [Tooltip("Pinch with both hands and hold this long to drop the robot in front of you again.")]
+        public float bothHandsHoldSeconds = 0.8f;
+        [Tooltip("Placer to trigger. Auto-found on this GameObject when left empty.")]
+        public DemoRobotPlacer placer;
 
         [Header("Curved ray")]
         [Tooltip("Meta's native curved-ray tube (from the ReticleLine prefab). Used when set.")]
@@ -55,14 +63,18 @@ namespace MetaMove.Demo
         [Tooltip("Small glow drawn at the TCP while dragging. Optional.")]
         public Transform tipMarker;
         [Range(8, 96)] public int curveSegments = 40;
-        [Tooltip("How far the ray bows upward, as a fraction of hand-to-TCP distance.")]
-        public float arcHeight = 0.22f;
+        [Tooltip("How far the ray bows upward, as a fraction of hand-to-handle distance.")]
+        public float arcHeight = 0.10f;
         [Tooltip("How far the ray leaves the hand along the pinch direction before bending.")]
-        public float handLead = 0.35f;
+        public float handLead = 0.28f;
+        [Tooltip("Show a faint ray whenever a hand is tracked, not only while pinching.")]
+        public bool showWhenIdle = true;
+        [Tooltip("Opacity of that idle ray. Full strength once you pinch.")]
+        [Range(0f, 1f)] public float idleVisibility = 0.45f;
         [Tooltip("Seconds the ray takes to fade in/out.")]
         public float fadeTime = 0.12f;
-        [Tooltip("Distance (m) the ray starts ahead of the fingers — matches Meta's 0.07 visual offset.")]
-        public float visualOffset = 0.07f;
+        [Tooltip("Distance (m) the ray starts ahead of the fingers, so it does not sprout from the palm.")]
+        public float visualOffset = 0.035f;
         [Tooltip("Tube tint while dragging. Alpha is driven by the fade.")]
         public Color tubeTint = new Color(0.6f, 0.94f, 1f, 1f);
         public float widthAtHand = 0.004f;
@@ -81,6 +93,8 @@ namespace MetaMove.Demo
         float _visibility;
         float _handScanTimer;
         bool _warnedNoHands;
+        float _bothHandsHeld;
+        bool _replacedThisGesture;
 
         void Awake()
         {
@@ -96,6 +110,14 @@ namespace MetaMove.Demo
                 line.enabled = false;
             }
             if (tipMarker != null) tipMarker.gameObject.SetActive(false);
+
+            // Snap the handle onto the flange at startup: whatever the scene was
+            // authored with, the ball must start exactly at the end effector.
+            if (ikTarget != null && endEffector != null)
+            {
+                ikTarget.position = endEffector.position;
+                _smoothedTarget = ikTarget.position;
+            }
         }
 
         void Update()
@@ -129,11 +151,28 @@ namespace MetaMove.Demo
                 if (first == null) first = h;
             }
 
-            // Two hands at once = the robot-body move/scale gesture, not IK.
-            if (ignoreWhenBothHandsPinch && pinching >= 2)
+            // Two hands at once = re-place gesture, never an IK drag.
+            if (pinching >= 2)
             {
                 _activeHand = null;
-                return;
+                _bothHandsHeld += Time.deltaTime;
+                if (!_replacedThisGesture && _bothHandsHeld >= bothHandsHoldSeconds)
+                {
+                    _replacedThisGesture = true;
+                    var p = placer != null ? placer : GetComponent<DemoRobotPlacer>();
+                    if (p != null)
+                    {
+                        p.PlaceNow();
+                        // Target follows the robot, so re-anchor it on the TCP.
+                        if (endEffector != null) ikTarget.position = endEffector.position;
+                    }
+                }
+                if (ignoreWhenBothHandsPinch) return;
+            }
+            else
+            {
+                _bothHandsHeld = 0f;
+                _replacedThisGesture = false;
             }
 
             if (_activeHand != null && !IsPinching(_activeHand, true))
@@ -185,15 +224,18 @@ namespace MetaMove.Demo
 
         bool IsPinching(Hand hand, bool alreadyActive)
         {
-            if (hand == null || !hand.IsTrackedDataValid) return false;
+            if (hand == null || !hand.IsConnected || !hand.IsTrackedDataValid) return false;
             if (hand.GetIndexFingerIsPinching()) return true;
 
-            // Fallback / hysteresis: raw fingertip distance. Keeps a drag alive
-            // through the moments the SDK classifier drops out mid-motion.
+            // Fingertip distance only *sustains* a drag, never starts one: an
+            // untracked hand can report both tips at the same place, which would
+            // read as a permanent pinch and fling the target away.
+            if (!alreadyActive) return false;
             if (!hand.GetJointPose(HandJointId.HandIndexTip, out var index)) return false;
             if (!hand.GetJointPose(HandJointId.HandThumbTip, out var thumb)) return false;
             float d = Vector3.Distance(index.position, thumb.position);
-            return d < (alreadyActive ? pinchExitDistance : pinchEnterDistance);
+            if (d < 1e-4f) return false; // degenerate pose — not a real pinch
+            return d < pinchExitDistance;
         }
 
         bool TryGetPinchPoint(Hand hand, out Vector3 point)
@@ -238,15 +280,43 @@ namespace MetaMove.Demo
             }
         }
 
+        /// <summary>
+        /// Hand the ray starts from: the pinching one, otherwise whichever
+        /// tracked hand is closest to the handle. Picking by handedness looked
+        /// wrong whenever the other hand was the one being held up.
+        /// </summary>
+        Hand RayOriginHand(Vector3 aimPoint)
+        {
+            if (_activeHand != null && _activeHand.IsTrackedDataValid) return _activeHand;
+
+            Hand best = null;
+            float bestDist = float.MaxValue;
+            for (int i = 0; i < _hands.Count; i++)
+            {
+                var h = _hands[i];
+                if (h == null || !h.IsConnected || !h.IsTrackedDataValid) continue;
+                if (!TryGetPinchPoint(h, out var p)) continue;
+                float d = Vector3.SqrMagnitude(p - aimPoint);
+                if (d < bestDist) { bestDist = d; best = h; }
+            }
+            return best;
+        }
+
         // ---------- curved ray ----------
 
         void UpdateRay()
         {
-            if (endEffector == null || (line == null && tube == null)) return;
+            Transform aimAt = rayTarget != null ? rayTarget : endEffector;
+            if (aimAt == null || (line == null && tube == null)) return;
 
-            bool show = _activeHand != null;
+            // While pinching the ray is at full strength; otherwise it stays
+            // faintly visible so the hand-to-handle link always reads.
+            Hand rayHand = RayOriginHand(aimAt.position);
+            float wanted = _activeHand != null ? 1f
+                         : (showWhenIdle && rayHand != null ? idleVisibility : 0f);
+
             float step = fadeTime > 0.001f ? Time.deltaTime / fadeTime : 1f;
-            _visibility = Mathf.MoveTowards(_visibility, show ? 1f : 0f, step);
+            _visibility = Mathf.MoveTowards(_visibility, wanted, step);
 
             if (_visibility <= 0.001f)
             {
@@ -255,13 +325,13 @@ namespace MetaMove.Demo
             }
 
             Vector3 p0;
-            if (!TryGetPinchPoint(_activeHand, out p0))
+            if (!TryGetPinchPoint(rayHand, out p0))
             {
-                // Hand vanished mid-fade — collapse the ray onto the TCP.
-                p0 = endEffector.position;
+                // Hand vanished mid-fade — collapse the ray onto the handle.
+                p0 = aimAt.position;
             }
 
-            Vector3 p3 = endEffector.position;
+            Vector3 p3 = aimAt.position;
             Vector3 toTcp = p3 - p0;
             float dist = toTcp.magnitude;
             Vector3 straight = dist > 1e-4f ? toTcp / dist : Vector3.forward;
@@ -272,8 +342,11 @@ namespace MetaMove.Demo
             p0 += handDir * Mathf.Min(visualOffset, dist * 0.4f);
             dist = Vector3.Distance(p0, p3);
 
+            // Second control point pulls toward the handle from slightly above,
+            // but stays between the two ends — lifting it by a large fraction of
+            // the distance made the curve sail past the ball.
             Vector3 p1 = p0 + handDir * (dist * handLead);
-            Vector3 p2 = p3 + Vector3.up * (dist * arcHeight);
+            Vector3 p2 = Vector3.Lerp(p3, p0, 0.25f) + Vector3.up * (dist * arcHeight);
 
             int segs = Mathf.Clamp(curveSegments, 8, _points.Length - 1);
             for (int i = 0; i <= segs; i++)

@@ -1,7 +1,10 @@
 fileFormatVersion: 2
 guid: de0113b98aad70a419960e61a7d8d6ef
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: 3717147834587435440
+    second: Round_Radius_10_Top_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -186,7 +189,29 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Round_Radius_10_Top_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 400
+        height: 400
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0b15232e246f59330800000000000000
+      internalID: 3717147834587435440
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
