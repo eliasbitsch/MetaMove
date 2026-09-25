@@ -32,10 +32,12 @@ class JointFeedbackRelay(Node):
         super().__init__('joint_feedback_relay')
         self.declare_parameter('in_topic', '/joint_states')
         self.declare_parameter('out_topic', '/robot/joint_feedback')
-        # Per-joint sign for the twin mirror. The real EGM /joint_states came out
-        # mirrored vs the Unity model's rendering — negate to align. Tune live:
-        #   ros2 param set /joint_feedback_relay signs "[-1.0,-1.0,-1.0,-1.0,-1.0,-1.0]"
-        self.declare_parameter('signs', [-1.0, -1.0, -1.0, -1.0, -1.0, -1.0])
+        # Per-joint sign for the twin mirror. Stays +1: /joint_states is in URDF
+        # convention and the Unity rig's JointAnglesSubscriber (MountedRobotAnchor
+        # prefab) applies its own signFlip. This used to be -1 to make up for the
+        # prefab lacking that flip; with both, the twin mirrors twice.
+        # Verify with tools/axis-check before touching either side.
+        self.declare_parameter('signs', [1.0, 1.0, 1.0, 1.0, 1.0, 1.0])
 
         # /joint_states is sensor data (BEST_EFFORT). Match it so we actually
         # receive from the EGM bridge / fake_jsp.

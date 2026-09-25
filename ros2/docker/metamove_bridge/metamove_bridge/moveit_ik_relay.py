@@ -13,6 +13,14 @@ plugin — so the IK solution itself is the same one Servo would compute.
 
 For real-EGM path: same node, real /joint_states comes from EGM bridge,
 solutions still go to /servo_node/commands → Unity → EGM controller.
+
+Safety box (base_link, metres, TCP = tool0): the grab target is clamped into
+[safety_box_min, safety_box_max] before IK, and every slew-limited command is
+FK-checked before it goes out. The joint-space path between two in-box poses
+can bow out of the box; such a command is dropped, the EGM bridge falls back to
+echoing the robot's own pose, and the arm holds. Enforced here, not in Unity,
+so it holds whatever frame bugs the headset side has. Live-tunable:
+  ros2 param set /moveit_ik_relay safety_box_max "[0.8, 0.3, 0.95]"
 """
 from __future__ import annotations
 
@@ -22,7 +30,7 @@ from rclpy.qos import QoSProfile, QoSReliabilityPolicy, QoSDurabilityPolicy
 from geometry_msgs.msg import PoseStamped
 from sensor_msgs.msg import JointState
 from std_msgs.msg import Float64MultiArray
-from moveit_msgs.srv import GetPositionIK
+from moveit_msgs.srv import GetPositionFK, GetPositionIK
 from moveit_msgs.msg import PositionIKRequest, RobotState
 
 
@@ -47,6 +55,14 @@ class MoveItIkRelay(Node):
         # the slew from. Without it the seed is the stale default -> the real robot
         # would jump from its true pose to the default on the first command.
         self.declare_parameter('joint_state_timeout', 0.5)
+        # Default box: in front of the robot, around what the taught waypoints
+        # (dpp_waypoints.yaml) reach - x 0.57..0.70, z 0.40..0.90 - with room to move.
+        self.declare_parameter('safety_box_enabled', True)
+        self.declare_parameter('safety_box_min', [0.35, -0.30, 0.40])
+        self.declare_parameter('safety_box_max', [0.75, 0.30, 0.95])
+        # Slack for the per-command FK check (the target itself is clamped exactly).
+        self.declare_parameter('safety_box_margin', 0.03)
+        self._clamp_warn_t = 0.0
         self._target_time = 0.0
         self._joint_state_time = 0.0
         self._last_cmd: list[float] | None = None
@@ -75,12 +91,16 @@ class MoveItIkRelay(Node):
                                               '/servo_node/commands', cmd_qos)
 
         self.ik_cli = self.create_client(GetPositionIK, '/compute_ik')
+        self.fk_cli = self.create_client(GetPositionFK, '/compute_fk')
         self.get_logger().info('Waiting for /compute_ik service...')
         while not self.ik_cli.wait_for_service(timeout_sec=2.0):
             self.get_logger().info('Still waiting for /compute_ik...')
 
         self.create_timer(self._tick_dt, self._tick)  # 50 Hz IK rate
-        self.get_logger().info('MoveIt IK relay ready (50 Hz, freshness-gated + slew-limited).')
+        box = (self.get_parameter('safety_box_min').value, self.get_parameter('safety_box_max').value)
+        self.get_logger().info(
+            'MoveIt IK relay ready (50 Hz, freshness-gated + slew-limited, safety box '
+            f"{'ON ' + str(box) if self.get_parameter('safety_box_enabled').value else 'OFF'}).")
 
     def _on_joint_state(self, msg: JointState) -> None:
         # Cache latest joint positions for IK seed + slew base.
@@ -119,7 +139,7 @@ class MoveItIkRelay(Node):
         req = GetPositionIK.Request()
         req.ik_request = PositionIKRequest()
         req.ik_request.group_name = 'manipulator'
-        req.ik_request.pose_stamped = self._latest_target
+        req.ik_request.pose_stamped = self._clamped(self._latest_target)
         req.ik_request.timeout.sec = 0
         req.ik_request.timeout.nanosec = 50_000_000  # 50 ms
         req.ik_request.avoid_collisions = True
@@ -134,14 +154,38 @@ class MoveItIkRelay(Node):
         future = self.ik_cli.call_async(req)
         future.add_done_callback(self._on_ik_response)
 
+    def _box(self):
+        return (list(self.get_parameter('safety_box_min').value),
+                list(self.get_parameter('safety_box_max').value))
+
+    def _clamped(self, target: PoseStamped) -> PoseStamped:
+        if not self.get_parameter('safety_box_enabled').value:
+            return target
+        lo, hi = self._box()
+        p = target.pose.position
+        c = [min(max(v, lo[i]), hi[i]) for i, v in enumerate((p.x, p.y, p.z))]
+        if c != [p.x, p.y, p.z]:
+            now = self.get_clock().now().nanoseconds * 1e-9
+            if now - self._clamp_warn_t > 1.0:
+                self._clamp_warn_t = now
+                self.get_logger().warn(
+                    f'target ({p.x:.2f},{p.y:.2f},{p.z:.2f}) outside safety box -> clamped to '
+                    f'({c[0]:.2f},{c[1]:.2f},{c[2]:.2f})')
+        out = PoseStamped()
+        out.header = target.header
+        out.pose.orientation = target.pose.orientation
+        out.pose.position.x, out.pose.position.y, out.pose.position.z = c
+        return out
+
     def _on_ik_response(self, future) -> None:
-        self._in_flight = False
         try:
             resp = future.result()
         except Exception as e:
             self.get_logger().warn(f'IK call failed: {e}')
+            self._in_flight = False
             return
         if resp.error_code.val != 1:  # SUCCESS
+            self._in_flight = False
             return  # silent — happens normally near singularities / out of reach
         sol = resp.solution.joint_state
         target = [0.0] * 6
@@ -154,6 +198,7 @@ class MoveItIkRelay(Node):
         # Re-check freshness: the target may have gone stale during the async IK call.
         now = self.get_clock().now().nanoseconds * 1e-9
         if (now - self._target_time) >= float(self.get_parameter('target_timeout').value):
+            self._in_flight = False
             return
 
         # Seed the slew from the ACTUAL robot pose on (re)activation, so switching
@@ -170,8 +215,42 @@ class MoveItIkRelay(Node):
         for i in range(6):
             d = max(-step, min(step, target[i] - self._last_cmd[i]))
             cmd.append(self._last_cmd[i] + d)
-        self._last_cmd = cmd
+        if not self.get_parameter('safety_box_enabled').value:
+            self._in_flight = False
+            self._last_cmd = cmd
+            self._publish(cmd)
+            return
 
+        # FK-check the actual command: the slew path is joint-space, not a straight TCP line.
+        fk = GetPositionFK.Request()
+        fk.header.frame_id = 'base_link'
+        fk.fk_link_names = ['tool0']
+        fk.robot_state.joint_state = JointState(name=list(JOINT_NAMES), position=list(cmd))
+        self.fk_cli.call_async(fk).add_done_callback(lambda f, c=cmd: self._on_fk_check(f, c))
+
+    def _on_fk_check(self, future, cmd: list[float]) -> None:
+        self._in_flight = False
+        try:
+            p = future.result().pose_stamped[0].pose.position
+        except Exception as e:  # no FK answer = no proof it is safe
+            self.get_logger().warn(f'FK check failed ({e}) - command dropped')
+            return
+        lo, hi = self._box()
+        m = float(self.get_parameter('safety_box_margin').value)
+        if any(not (lo[i] - m <= v <= hi[i] + m) for i, v in enumerate((p.x, p.y, p.z))):
+            now = self.get_clock().now().nanoseconds * 1e-9
+            if now - self._clamp_warn_t > 1.0:
+                self._clamp_warn_t = now
+                self.get_logger().warn(
+                    f'command would put TCP at ({p.x:.2f},{p.y:.2f},{p.z:.2f}) outside safety box - dropped, holding')
+            # Re-seed from the real pose next tick so the slew never builds on a dropped step.
+            self._active = False
+            self._last_cmd = None
+            return
+        self._last_cmd = cmd
+        self._publish(cmd)
+
+    def _publish(self, cmd: list[float]) -> None:
         msg = Float64MultiArray()
         msg.data = cmd
         self.cmd_pub.publish(msg)
