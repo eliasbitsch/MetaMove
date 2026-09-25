@@ -20,14 +20,16 @@ namespace MetaMove.EditorTools
         public static void Setup()
         {
             // 1. Resolve IK target + base from the active GoFa solver (CCD or DLS).
-            Transform target = null, baseT = null;
+            //    robotRoot is the transform DemoRobotPlacer moves at runtime — the waypoints
+            //    have to hang off it, see step 3.
+            Transform target = null, baseT = null, robotRoot = null;
             string solver = null;
 
             foreach (var s in Object.FindObjectsByType<GoFaCCDIK>(FindObjectsSortMode.None))
-                if (s.target != null) { target = s.target; baseT = BaseOf(s.joints, s.transform); solver = "GoFaCCDIK"; if (s.isActiveAndEnabled) break; }
+                if (s.target != null) { target = s.target; baseT = BaseOf(s.joints, s.transform); robotRoot = s.transform; solver = "GoFaCCDIK"; if (s.isActiveAndEnabled) break; }
             if (target == null)
                 foreach (var s in Object.FindObjectsByType<GoFaDLSIK>(FindObjectsSortMode.None))
-                    if (s.target != null) { target = s.target; baseT = BaseOf(s.joints, s.transform); solver = "GoFaDLSIK"; if (s.isActiveAndEnabled) break; }
+                    if (s.target != null) { target = s.target; baseT = BaseOf(s.joints, s.transform); robotRoot = s.transform; solver = "GoFaDLSIK"; if (s.isActiveAndEnabled) break; }
 
             if (target == null)
             {
@@ -75,6 +77,13 @@ namespace MetaMove.EditorTools
                 g.transform.SetPositionAndRotation(d.p, rot);
                 wps.Add(g.transform);
             }
+
+            // The waypoints must travel with the arm. DemoRobotPlacer drops the robot wherever
+            // the user is looking, 0.75 s after start; waypoints left behind in world space put
+            // the loop's goal metres outside the arm's reach, and the CCD solver answers that by
+            // driving every joint to its limit — the arm visibly tears itself apart.
+            // Parented with worldPositionStays so the authored geometry is preserved exactly.
+            if (robotRoot != null) wpRoot.SetParent(robotRoot, true);
 
             // 4. 3D path visualization through the waypoints (LineRenderer).
             var pathGo = new GameObject("WaypointPath");
@@ -127,6 +136,14 @@ namespace MetaMove.EditorTools
                     && !grabs.Contains(b))
                     grabs.Add(b);
             }
+
+            // Name matching misses the one component that matters most: PinchIkRayController
+            // contains neither "Grab" nor "Interactable", yet it writes ikTarget.position during
+            // a pinch drag — the same transform PickPlaceLoop moves every frame. Left enabled in
+            // AUTO the two fight over the target and the arm jitters between two goals.
+            // Collected explicitly so a rename cannot silently reopen the hole.
+            foreach (var p in Object.FindObjectsByType<MetaMove.Demo.PinchIkRayController>(FindObjectsSortMode.None))
+                if (!grabs.Contains(p)) grabs.Add(p);
 
             // 7. MANUAL <-> AUTO switch
             var sw = NewChild(demo, "DemoModeSwitch").AddComponent<DemoModeSwitch>();
