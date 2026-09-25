@@ -30,6 +30,7 @@ class RobotStatus(Node):
             self.create_subscription(String, topic, lambda m, k=key: self._on(k, m), 10)
         self._pub = self.create_publisher(String, "/robot/status", 10)
         self._last_reason = None
+        self._t0 = time.monotonic()
         self.create_timer(0.25, self._tick)
         self.get_logger().info("robot_status up - /robot/status")
 
@@ -50,12 +51,19 @@ class RobotStatus(Node):
         sc, sa = self._get("scaler")
         pb, pa = self._get("playback")
         r = decide(egm, ea, sc, sa, pb, pa)
+        if time.monotonic() - self._t0 < 3.0 and r["level"] == "error":
+            # Reports arrive within a second of (re)start; don't cry "not running" meanwhile.
+            r = {"moving": False, "reason": "starting up", "hint": "", "level": "info"}
         self._pub.publish(String(data=json.dumps(r)))
         if r["reason"] != self._last_reason:
             self._last_reason = r["reason"]
-            log = self.get_logger().info if r["level"] in ("ok", "info") else self.get_logger().warn
-            log(f"{'MOVING' if r['moving'] else 'STOPPED'}: {r['reason']}"
-                + (f" -> {r['hint']}" if r["hint"] else ""))
+            text = (f"{'MOVING' if r['moving'] else 'STOPPED'}: {r['reason']}"
+                    + (f" -> {r['hint']}" if r["hint"] else ""))
+            # One call site per severity: rclpy refuses a call site that switches severity.
+            if r["level"] in ("ok", "info"):
+                self.get_logger().info(text)
+            else:
+                self.get_logger().warn(text)
 
 
 def main() -> None:

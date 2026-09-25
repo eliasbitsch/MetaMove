@@ -63,7 +63,7 @@ def decide(egm: dict | None, egm_age: float | None,
             return _res(True, "ok", "driving home")
         return _res(False, "info", "homing - waiting for motion", "")
     if pb == "at_home":
-        return _res(False, "info", "at home, path paused", "press Start (console) or Automatik (headset)")
+        return _res(False, "info", "at home, path paused", "press Start in the console")
 
     override = bool(scaler.get("override"))
     if not override and scaler.get("stale"):
