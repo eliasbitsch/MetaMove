@@ -63,13 +63,13 @@ def decide(egm: dict | None, egm_age: float | None,
             return _res(True, "ok", "driving home")
         return _res(False, "info", "homing - waiting for motion", "")
     if pb == "at_home":
-        return _res(False, "info", "at home, path paused", "press Start in the console")
+        return _res(False, "info", "at home, path paused", "press Automatik (headset) or Start (console)")
 
     override = bool(scaler.get("override"))
     if not override and scaler.get("stale"):
         return _res(False, "info", "no headset distance", "put the headset on (or PC test mode in the console)")
     if pb == "paused":
-        return _res(False, "info", "path paused", "press Start (console)")
+        return _res(False, "info", "path paused", "press Automatik (headset) or Start (console)")
 
     live = float(scaler.get("live_speed") or 0.0)
     dist = scaler.get("dist")
@@ -83,4 +83,7 @@ def decide(egm: dict | None, egm_age: float | None,
         return _res(False, "info", "waiting for a fresh path", "the bridge re-arms on the next planned move")
     if not egm.get("cmd_fresh"):
         return _res(True, "ok", f"at {playback.get('wp', 'waypoint')} (dwell)")
-    return _res(True, "ok", f"moving to {playback.get('wp', '?')} at {live * 100:.0f} %")
+    # Speed is not part of the reason (it changes every tick); it is in "speed".
+    r = _res(True, "ok", f"moving to {playback.get('wp', '?')}")
+    r["speed"] = round(live, 3)
+    return r

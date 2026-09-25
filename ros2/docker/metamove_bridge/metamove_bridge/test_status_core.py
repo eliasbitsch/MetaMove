@@ -13,7 +13,7 @@ def run(egm=EGM_OK, scaler=SC_AUTO, pb=PB_RUN, ages=(0.1, 0.1, 0.1)):
 
 def test_happy_path_moves():
     r = run()
-    assert r["moving"] and "wp_03" in r["reason"] and "50 %" in r["reason"]
+    assert r["moving"] and "wp_03" in r["reason"] and r["speed"] == 0.5
 
 
 def test_bridge_missing():

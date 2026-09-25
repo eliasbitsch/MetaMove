@@ -94,6 +94,9 @@ class DistanceSpeedScaler(Node):
         # Quest "Home" button (singularity rescue): drive the robot to the home pose.
         self.create_subscription(Bool, '/quest/go_home', self._on_go_home, 10)
         self.create_subscription(Float32, '/quest/max_speed', self._on_max_speed, 10)
+        # "Automatik" pressed in the headset: start the path (after Home / a stop). The
+        # distance still governs the speed - closer than d_near it stays frozen.
+        self.create_subscription(Bool, '/quest/start_path', self._on_start_path, 10)
         self._was_paused = None
         self.create_timer(self._tick_dt, self._tick)
         self.get_logger().info(
@@ -113,6 +116,14 @@ class DistanceSpeedScaler(Node):
         self.set_parameters([rclpy.Parameter('enabled', value=on)])
         self.get_logger().info(
             f"scaling_enabled <- {'AUTO' if on else 'MANUELL'} (Quest-Toggle)")
+
+    def _on_start_path(self, msg: Bool) -> None:
+        if not bool(msg.data):
+            return
+        if self._resume_cli.service_is_ready():
+            self._resume_cli.call_async(Trigger.Request())
+            self._was_paused = False
+            self.get_logger().info('START angefordert (Quest Automatik) -> /dpp_playback/resume')
 
     def _on_max_speed(self, msg: Float32) -> None:
         v = min(1.0, max(0.1, float(msg.data)))

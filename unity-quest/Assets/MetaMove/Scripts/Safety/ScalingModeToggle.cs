@@ -18,6 +18,8 @@ namespace MetaMove.Safety
     {
         [Header("ROS")]
         public string topic = "/quest/scaling_enabled";
+        [Tooltip("Pressing AUTO also asks the path to start (after Home or a stop) - the distance scaler resumes it.")]
+        public string startTopic = "/quest/start_path";
         [Tooltip("Re-send the current mode this often (s) so a late-joining scaler syncs.")]
         public float heartbeatSeconds = 2f;
 
@@ -58,6 +60,7 @@ namespace MetaMove.Safety
         {
             _ros = ROSConnection.GetOrCreateInstance();
             _ros.RegisterPublisher<BoolMsg>(topic);
+            _ros.RegisterPublisher<BoolMsg>(startTopic);
             _registered = true;
             if (calibrator != null) calibrator.onAnchorSpawned.AddListener(OnRobotSpawned);
             Publish();
@@ -90,6 +93,8 @@ namespace MetaMove.Safety
         {
             scalingEnabled = on;
             Publish();
+            // A deliberate press on AUTO also starts the path; the heartbeat never does.
+            if (on && _registered) _ros.Publish(startTopic, new BoolMsg(true));
             UpdateLabel();
             ApplyIkMode();
         }
