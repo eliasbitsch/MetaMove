@@ -31,19 +31,15 @@ RELAY = "/joint_trajectory_controller"
 PLAYBACK = "/dpp_playback"
 STEP = 0.1
 # Motion profile ladder, slow -> fast: (relay time_scale, MoveIt velocity, acceleration).
-# Level 1 is what the June real-robot runs used. First the stretch comes off, then
-# velocity/acceleration rise. From level 6 on the GoFa tripped "TCP too high" in June
-# (acceleration >= 0.25) - a protective stop, reset at the pendant.
+# Measured on the real GoFa 2026-09-25 at max speed 100 %: level 2 runs clean (peaks
+# ~32/40/38 deg/s on J1/J3/J5), stretch x1.5 already trips the controller's
+# "TCP too fast" protective stop. So the ladder ends at level 2 - faster profiles
+# are deliberately not selectable here.
 PROFILES = [
     (3.0, 0.30, 0.10),
     (2.0, 0.30, 0.10),
-    (1.5, 0.30, 0.10),
-    (1.0, 0.30, 0.10),
-    (1.0, 0.50, 0.15),
-    (1.0, 0.70, 0.20),
-    (1.0, 1.00, 0.25),
 ]
-RISKY_FROM = 6   # 1-based level
+RISKY_FROM = 99   # no flagged levels left
 
 
 class Console:
