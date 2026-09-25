@@ -42,6 +42,8 @@ namespace MetaMove.Safety
         [Header("Speed bar")]
         [Tooltip("Draw a bar under the HUD whose fill is the current speed factor - the scaling is easier to read than the number.")]
         public bool showSpeedBar = true;
+        [Tooltip("User-set speed ceiling; the bar marks it and the local fallback scales by it.")]
+        public MaxSpeedControl maxSpeedControl;
 
         [Header("bHaptics proximity (AUTO mode)")]
         [Tooltip("In AUTO mode, pulse ALL fingers like a parking sensor — faster the closer the human is.")]
@@ -72,6 +74,7 @@ namespace MetaMove.Safety
         public float connectedTimeout = 2f;
 
         RectTransform _barFill;
+        RectTransform _barMax;
         Image _barFillImg;
         TMP_Text _barText;
 
@@ -177,7 +180,7 @@ namespace MetaMove.Safety
             else
             {
                 bool gotRecentRos = (Time.unscaledTime - _lastSpeedMsgTime) < 1f;
-                speedFactor = gotRecentRos ? _speedFactor : LocalSpeedFactor(dist);
+                speedFactor = gotRecentRos ? _speedFactor : LocalSpeedFactor(dist) * MaxSpeedValue;
             }
 
             // --- render ---
@@ -234,10 +237,12 @@ namespace MetaMove.Safety
     
         void Start()
         {
+            if (maxSpeedControl == null) maxSpeedControl = FindFirstObjectByType<MaxSpeedControl>();
             if (showSpeedBar) BuildSpeedBar();
         }
 
-        // A second world-space panel directly under the HUD canvas, so the authored
+        // A second world-space panel directly above the HUD canvas (the poke buttons float
+        // in front of its lower edge and would hide a bar there), so the authored
         // three-column layout stays untouched: track, fill (= speed factor), label.
         void BuildSpeedBar()
         {
@@ -254,7 +259,7 @@ namespace MetaMove.Safety
             rt.localRotation = hudRt.localRotation;
             float gap = 8f;
             rt.localPosition = hudRt.localPosition + hudRt.localRotation *
-                new Vector3(0f, -(hudRt.sizeDelta.y + rt.sizeDelta.y) * 0.5f - gap, 0f) * hudRt.localScale.y;
+                new Vector3(0f, (hudRt.sizeDelta.y + rt.sizeDelta.y) * 0.5f + gap, 0f) * hudRt.localScale.y;
 
             var bg = Rect(rt, "BG", Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero);
             bg.gameObject.AddComponent<Image>().color = new Color(0.04f, 0.07f, 0.12f, 0.82f);
@@ -262,6 +267,8 @@ namespace MetaMove.Safety
             track.gameObject.AddComponent<Image>().color = new Color(0.16f, 0.2f, 0.26f, 1f);
             _barFill = Rect(track, "Fill", new Vector2(0, 0), new Vector2(0, 1), Vector2.zero, Vector2.zero);
             _barFillImg = _barFill.gameObject.AddComponent<Image>();
+            _barMax = Rect(track, "MaxMarker", new Vector2(0, 0), new Vector2(0, 1), new Vector2(-2, -6), new Vector2(2, 6));
+            _barMax.gameObject.AddComponent<Image>().color = Color.white;
             var label = Rect(track, "Label", Vector2.zero, Vector2.one, new Vector2(12, 0), new Vector2(-12, 0));
             _barText = label.gameObject.AddComponent<TextMeshProUGUI>();
             _barText.fontSize = 22f;
@@ -270,6 +277,8 @@ namespace MetaMove.Safety
             _barText.color = Color.white;
         }
 
+        float MaxSpeedValue => maxSpeedControl != null ? maxSpeedControl.MaxSpeed : 1f;
+
         void UpdateSpeedBar(float factor, bool show)
         {
             if (_barFill == null) return;
@@ -277,7 +286,13 @@ namespace MetaMove.Safety
             _barFill.anchorMax = new Vector2(f, 1f);
             int pct = Mathf.RoundToInt(f * 100f);
             _barFillImg.color = !show ? Gray : pct <= 0 ? Red : pct < 50 ? Orange : Green;
-            _barText.text = show ? (pct <= 0 ? "ROBOT STOPPED" : $"ROBOT SPEED {pct} %") : "ROBOT SPEED --";
+            float m = MaxSpeedValue;
+            _barMax.anchorMin = new Vector2(m, 0f);
+            _barMax.anchorMax = new Vector2(m, 1f);
+            string maxTxt = $"MAX {Mathf.RoundToInt(m * 100f)} %";
+            _barText.text = !show ? $"ROBOT SPEED --  |  {maxTxt}"
+                          : pct <= 0 ? $"ROBOT STOPPED  |  {maxTxt}"
+                          : $"ROBOT SPEED {pct} %  |  {maxTxt}";
         }
 
         static RectTransform Rect(RectTransform parent, string name, Vector2 aMin, Vector2 aMax, Vector2 oMin, Vector2 oMax)

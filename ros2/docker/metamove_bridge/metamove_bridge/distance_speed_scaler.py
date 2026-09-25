@@ -40,7 +40,14 @@ class DistanceSpeedScaler(Node):
         # starts further out. Keep in sync with SafetyHud.speedDistNear/Far.
         self.declare_parameter('d_near', 1.1)        # m -> freeze
         self.declare_parameter('d_far', 2.5)         # m -> full speed
-        self.declare_parameter('stale_timeout', 1.5)
+        # Ceiling for live_speed: what "100 %" means. Set from the headset
+        # (+/-10 % buttons -> /quest/max_speed); starts at half for safety.
+        self.declare_parameter('max_speed', 0.5)
+        # PC test mode (robot console): ignore the headset distance and run at
+        # max_speed. Removes the proximity slow-down AND the headset-off stop - the
+        # operator at the console and the e-stop are the only safety then.
+        self.declare_parameter('distance_override', False)
+        self.declare_parameter('stale_timeout', 0.5)   # Quest sends at 20 Hz; headset off -> stop within ~1 s
         self.declare_parameter('ema_alpha', 0.3)     # distance smoothing (0..1)
         self.declare_parameter('up_rate', 0.6)       # max live_speed rise /s
         self.declare_parameter('min_delta', 0.01)
@@ -72,6 +79,8 @@ class DistanceSpeedScaler(Node):
         # "Speed %" + "Connected" (heartbeat) — the HUD reflects what the robot
         # actually does, not a local re-computation.
         self._speed_pub = self.create_publisher(Float32, '/robot/speed_factor', 10)
+        # The scaler owns max_speed; headset and console send requests and show this.
+        self._max_pub = self.create_publisher(Float32, '/robot/max_speed', 10)
         self.param_cli = self.create_client(
             SetParameters,
             f"/{self.get_parameter('relay_node').value}/set_parameters")
@@ -81,6 +90,7 @@ class DistanceSpeedScaler(Node):
         self._home_cli = self.create_client(Trigger, f'/{pb}/home')
         # Quest "Home" button (singularity rescue): drive the robot to the home pose.
         self.create_subscription(Bool, '/quest/go_home', self._on_go_home, 10)
+        self.create_subscription(Float32, '/quest/max_speed', self._on_max_speed, 10)
         self._was_paused = None
         self.create_timer(self._tick_dt, self._tick)
         self.get_logger().info(
@@ -101,10 +111,21 @@ class DistanceSpeedScaler(Node):
         self.get_logger().info(
             f"scaling_enabled <- {'AUTO' if on else 'MANUELL'} (Quest-Toggle)")
 
+    def _on_max_speed(self, msg: Float32) -> None:
+        v = min(1.0, max(0.1, float(msg.data)))
+        if abs(v - float(self.get_parameter('max_speed').value)) > 1e-3:
+            self.set_parameters([rclpy.Parameter('max_speed', value=v)])
+            self.get_logger().info(f'max_speed <- {v:.0%} (Quest)')
+
     def _on_go_home(self, msg: Bool) -> None:
         if not bool(msg.data):
             return
         if self._home_cli.service_is_ready():
+            # In MANUAL this node does not drive live_speed, so it may still sit at 0
+            # from the last stop and the homing move would never advance. Home then
+            # runs at the user's ceiling. In AUTO the distance keeps governing it.
+            if not bool(self.get_parameter('enabled').value):
+                self._set_live_speed(float(self.get_parameter('max_speed').value))
             self._home_cli.call_async(Trigger.Request())
             self.get_logger().info('HOME angefordert (Quest-Button) -> /dpp_playback/home')
         else:
@@ -126,11 +147,19 @@ class DistanceSpeedScaler(Node):
             raw = self._raw_dist
             age = time.monotonic() - self._last_t if self._last_t else 1e9
         stale = age > float(self.get_parameter('stale_timeout').value)
+        override = bool(self.get_parameter('distance_override').value)
+        if override:
+            stale = False
+        self._max_pub.publish(Float32(data=float(self.get_parameter('max_speed').value)))
 
         # Unified playback gate: pause the path if MANUAL (the IK relay owns
         # /servo_node/commands) OR the distance is stale (human absent / headset off).
         # Resume only in AUTO with a fresh human reading.
-        if bool(self.get_parameter('pause_playback_on_stale').value):
+        if override:
+            # Start/stop belong to the console in PC mode - never auto-resume. Forget
+            # the gate state so it re-syncs (e.g. pauses on stale) once override ends.
+            self._was_paused = None
+        elif bool(self.get_parameter('pause_playback_on_stale').value):
             desired_paused = (not enabled) or stale
             if desired_paused != self._was_paused:
                 self._was_paused = desired_paused
@@ -152,14 +181,16 @@ class DistanceSpeedScaler(Node):
             return
 
         dn = float(self.get_parameter('d_near').value)
-        if stale or raw is None:
+        if override:
+            v_target = float(self.get_parameter('max_speed').value)
+        elif stale or raw is None:
             v_target = 0.0
             self._dist_filt = None
         else:
             a = float(self.get_parameter('ema_alpha').value)
             self._dist_filt = raw if self._dist_filt is None \
                 else a * raw + (1 - a) * self._dist_filt
-            v_target = self._band(self._dist_filt)
+            v_target = self._band(self._dist_filt) * float(self.get_parameter('max_speed').value)
             if raw <= dn:                      # hard safety on RAW distance
                 v_target = 0.0
 
@@ -177,7 +208,7 @@ class DistanceSpeedScaler(Node):
         now = time.monotonic()
         if now - self._log_t > 1.0:
             self._log_t = now
-            dtxt = ('STALE' if stale else
+            dtxt = ('PC-OVERRIDE' if override else 'STALE' if stale else
                     (f'{self._dist_filt:.2f} m' if self._dist_filt is not None else '--'))
             self.get_logger().info(f'dist={dtxt}  -> live_speed={v:.3f}')
 
@@ -185,8 +216,13 @@ class DistanceSpeedScaler(Node):
             return
         if self._last_sent is not None and abs(v - self._last_sent) < float(self.get_parameter('min_delta').value):
             return
+        if self._set_live_speed(v):
+            self._last_sent = v
+            self._last_send_t = now
+
+    def _set_live_speed(self, v: float) -> bool:
         if not self.param_cli.service_is_ready():
-            return
+            return False
         req = SetParameters.Request()
         pr = Parameter()
         pr.name = 'live_speed'
@@ -194,8 +230,7 @@ class DistanceSpeedScaler(Node):
                                   double_value=float(v))
         req.parameters.append(pr)
         self.param_cli.call_async(req)
-        self._last_sent = v
-        self._last_send_t = now
+        return True
 
 
 def main() -> None:
