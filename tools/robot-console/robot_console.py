@@ -21,11 +21,17 @@ from __future__ import annotations
 import argparse
 import json
 import math
+import sys
 import threading
+import time
+from pathlib import Path
 import tkinter as tk
 from tkinter import ttk
 
 import roslibpy
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from rws_client import Rws  # noqa: E402  (one reused RWS session)
 
 SCALER = "/distance_speed_scaler"
 RELAY = "/joint_trajectory_controller"
@@ -42,7 +48,11 @@ BASELINE = (1.5, 0.30, 0.10)
 class Console:
     def __init__(self, root: tk.Tk, ros: roslibpy.Ros) -> None:
         self.root, self.ros = root, ros
-        self.state = {"max": None, "speed": None, "joints": None, "override": False, "status": None}
+        self.state = {"max": None, "speed": None, "joints": None, "override": False, "status": None,
+                      "ctrl": None}
+        # Controller over RWS: one session, polled every 2 s in the background.
+        self.rws = Rws()
+        threading.Thread(target=self._poll_controller, daemon=True).start()
         self.lock = threading.Lock()
 
         self.max_req = roslibpy.Topic(ros, "/quest/max_speed", "std_msgs/Float32")
@@ -104,6 +114,13 @@ class Console:
         self.warn = tk.Label(mode, text="", font=mid, fg="#c62828")
         self.warn.grid(row=2, column=0, sticky="w")
 
+        ctl = ttk.LabelFrame(root, text=" Controller ", padding=10)
+        ctl.grid(row=6, column=0, columnspan=3, sticky="ew", pady=8)
+        self.ctrl_lbl = tk.Label(ctl, text="", font=mid, anchor="w", justify="left")
+        self.ctrl_lbl.grid(row=0, column=0, sticky="w")
+        tk.Button(ctl, text="PP \u2192 MetaJointMain", font=mid,
+                  command=self._set_pp).grid(row=0, column=1, padx=(12, 0))
+
         self.joint_lbl = ttk.Label(root, text="", font=("Consolas", 10))
         self.joint_lbl.grid(row=5, column=0, columnspan=3, sticky="w")
 
@@ -150,6 +167,22 @@ class Console:
                  callback=lambda r: None,
                  errback=lambda e: self._say(f"set {node}.{name} failed: {e}"))
 
+    def _poll_controller(self) -> None:
+        while True:
+            try:
+                self._set("ctrl", self.rws.state())
+            except Exception as e:  # noqa: BLE001 - keep polling through cable pulls
+                self._set("ctrl", {"error": str(e)[:60]})
+            time.sleep(2.0)
+
+    def _set_pp(self) -> None:
+        def work():
+            try:
+                self._say(self.rws.set_pp("MetaJointMain"))
+            except Exception as e:  # noqa: BLE001
+                self._say(f"PP failed: {e}")
+        threading.Thread(target=work, daemon=True).start()
+
     def _say(self, text: str) -> None:
         self.root.after(0, lambda: self.msg.configure(text=text))
 
@@ -174,6 +207,17 @@ class Console:
             self.status_lbl.configure(text=text, fg=colors.get(st["level"], "black"))
         else:
             self.status_lbl.configure(text="no robot status (robot_status node not running?)", fg="#c62828")
+        c = s["ctrl"]
+        if c is None:
+            self.ctrl_lbl.configure(text="reading controller...", fg="black")
+        elif "error" in c:
+            self.ctrl_lbl.configure(text=f"controller not reachable ({c['error']})", fg="#c62828")
+        else:
+            pp_ok = c["routine"] == "MetaJointMain"
+            self.ctrl_lbl.configure(
+                text=f"{c['opmode']} | {c['ctrl']} | RAPID {c['exec']}\n"
+                     f"PP {c['module']}/{c['routine']}" + ("" if pp_ok else "   <- WRONG PROGRAM, press the button"),
+                fg="#2e7d32" if pp_ok else "#c62828")
         if s["joints"]:
             self.joint_lbl.configure(text="joints [deg]  " + "  ".join(
                 f"{math.degrees(v):+7.1f}" for v in s["joints"][:6]))
