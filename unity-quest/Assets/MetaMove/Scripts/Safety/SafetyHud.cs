@@ -42,6 +42,9 @@ namespace MetaMove.Safety
         [Header("Speed bar")]
         [Tooltip("Draw a bar under the HUD whose fill is the current speed factor - the scaling is easier to read than the number.")]
         public bool showSpeedBar = true;
+        [Tooltip("Bar under the readouts (true) or above them.")]
+        public bool speedBarBelow = true;
+        public float speedBarHeight = 40f;
         [Tooltip("User-set speed ceiling; the bar marks it and the local fallback scales by it.")]
         public MaxSpeedControl maxSpeedControl;
 
@@ -254,16 +257,17 @@ namespace MetaMove.Safety
             go.transform.SetParent(hudRt.parent, false);
             go.GetComponent<Canvas>().renderMode = RenderMode.WorldSpace;
             var rt = (RectTransform)go.transform;
-            rt.sizeDelta = new Vector2(hudRt.sizeDelta.x, 56f);
+            rt.sizeDelta = new Vector2(hudRt.sizeDelta.x * 0.8f, speedBarHeight);
             rt.localScale = hudRt.localScale;
             rt.localRotation = hudRt.localRotation;
             float gap = 8f;
             rt.localPosition = hudRt.localPosition + hudRt.localRotation *
-                new Vector3(0f, (hudRt.sizeDelta.y + rt.sizeDelta.y) * 0.5f + gap, 0f) * hudRt.localScale.y;
+                new Vector3(0f, (speedBarBelow ? -1f : 1f) * ((hudRt.sizeDelta.y + rt.sizeDelta.y) * 0.5f + gap), 0f)
+                * hudRt.localScale.y;
 
             var bg = Rect(rt, "BG", Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero);
             bg.gameObject.AddComponent<Image>().color = new Color(0.04f, 0.07f, 0.12f, 0.82f);
-            var track = Rect(rt, "Track", new Vector2(0, 0), new Vector2(1, 1), new Vector2(16, 12), new Vector2(-16, -12));
+            var track = Rect(rt, "Track", new Vector2(0, 0), new Vector2(1, 1), new Vector2(10, 8), new Vector2(-10, -8));
             track.gameObject.AddComponent<Image>().color = new Color(0.16f, 0.2f, 0.26f, 1f);
             _barFill = Rect(track, "Fill", new Vector2(0, 0), new Vector2(0, 1), Vector2.zero, Vector2.zero);
             _barFillImg = _barFill.gameObject.AddComponent<Image>();
@@ -271,7 +275,7 @@ namespace MetaMove.Safety
             _barMax.gameObject.AddComponent<Image>().color = Color.white;
             var label = Rect(track, "Label", Vector2.zero, Vector2.one, new Vector2(12, 0), new Vector2(-12, 0));
             _barText = label.gameObject.AddComponent<TextMeshProUGUI>();
-            _barText.fontSize = 22f;
+            _barText.fontSize = 17f;
             _barText.fontStyle = FontStyles.Bold;
             _barText.alignment = TextAlignmentOptions.MidlineLeft;
             _barText.color = Color.white;

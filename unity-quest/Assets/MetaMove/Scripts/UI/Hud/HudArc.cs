@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,6 +11,8 @@ namespace MetaMove.UI.Hud
     // stretched backplate is replaced by one backplate per column.
     //
     // Canvas convention (world-space uGUI): +Z points away from the viewer.
+    // Runs before SafetyHud.Start, which sizes its speed bar from the canvas.
+    [DefaultExecutionOrder(-10)]
     public class HudArc : MonoBehaviour
     {
         public string columnPrefix = "Col_";
@@ -19,6 +22,13 @@ namespace MetaMove.UI.Hud
         public string flatBackplate = "BG";
         public Color columnBackplate = new Color(0.04f, 0.07f, 0.12f, 0.82f);
 
+        [Header("Strip shape (canvas units, 1 = 1 mm)")]
+        [Tooltip("Reshape into a wide, flat strip with label and value side by side. Off = keep the authored layout.")]
+        public bool strip = true;
+        public float stripWidth = 720f;
+        public float stripHeight = 80f;
+        [Range(0.2f, 0.6f)] public float labelShare = 0.42f;
+
         void Start() => Apply();
 
         public void Apply()
@@ -26,6 +36,7 @@ namespace MetaMove.UI.Hud
             var canvas = GetComponentInChildren<Canvas>(true);
             if (canvas == null) return;
             var root = (RectTransform)canvas.transform;
+            if (strip) root.sizeDelta = new Vector2(stripWidth, stripHeight);
             float scale = Mathf.Max(1e-6f, root.lossyScale.x);
             float r = radiusM / scale;                          // radius in canvas units
 
@@ -42,7 +53,8 @@ namespace MetaMove.UI.Hud
                 col.anchorMin = new Vector2(0.5f, 0f);
                 col.anchorMax = new Vector2(0.5f, 1f);
                 float w = root.rect.width / 3f - 32f;
-                col.sizeDelta = new Vector2(w, -32f);
+                col.sizeDelta = new Vector2(w, strip ? -16f : -32f);
+                if (strip) SideBySide(col);
                 col.anchoredPosition3D = new Vector3(r * Mathf.Sin(theta), 0f, -r * (1f - Mathf.Cos(theta)));
                 col.localRotation = Quaternion.Euler(0f, theta * Mathf.Rad2Deg, 0f);
 
@@ -60,5 +72,29 @@ namespace MetaMove.UI.Hud
                 }
             }
         }
+    
+        // Label left, value right, one row - for the flat strip.
+        void SideBySide(RectTransform col)
+        {
+            var label = col.Find("Label") as RectTransform;
+            var value = col.Find("Value") as RectTransform;
+            if (label != null)
+            {
+                label.anchorMin = new Vector2(0f, 0f);
+                label.anchorMax = new Vector2(labelShare, 1f);
+                label.offsetMin = label.offsetMax = Vector2.zero;
+                var t = label.GetComponent<TMP_Text>();
+                if (t != null) { t.fontSize = 17f; t.alignment = TextAlignmentOptions.MidlineLeft; }
+            }
+            if (value != null)
+            {
+                value.anchorMin = new Vector2(labelShare, 0f);
+                value.anchorMax = new Vector2(1f, 1f);
+                value.offsetMin = value.offsetMax = Vector2.zero;
+                var t = value.GetComponent<TMP_Text>();
+                if (t != null) { t.fontSizeMax = 34f; t.alignment = TextAlignmentOptions.MidlineRight; }
+            }
+        }
     }
+
 }
