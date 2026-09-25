@@ -27,7 +27,7 @@ MonoBehaviour:
   - AssemblyName: Assembly-CSharp
     DebugTypes:
     - MetaMove.Safety.TwinAlignment
-  immersiveDebuggerEnabled: 1
+  immersiveDebuggerEnabled: 0
   immersiveDebuggerDisplayAtStartup: 0
   enableOnlyInDebugBuild: 0
   showInspectors: 1
