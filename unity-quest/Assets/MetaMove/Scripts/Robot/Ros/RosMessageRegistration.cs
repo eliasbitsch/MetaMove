@@ -29,6 +29,7 @@ namespace MetaMove.Robot.Ros
             JointStateMsg.Register();
             PointCloud2Msg.Register();
             PoseStampedMsg.Register();
+            StringMsg.Register();
         }
     }
 }

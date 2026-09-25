@@ -27,7 +27,8 @@ namespace MetaMove.UI.Hud
         public bool strip = true;
         public float stripWidth = 720f;
         public float stripHeight = 80f;
-        [Range(0.2f, 0.6f)] public float labelShare = 0.42f;
+        [Tooltip("Height share of the small label row on top.")]
+        [Range(0.2f, 0.6f)] public float labelShare = 0.32f;
 
         void Start() => Apply();
 
@@ -73,26 +74,33 @@ namespace MetaMove.UI.Hud
             }
         }
     
-        // Label left, value right, one row - for the flat strip.
+        // Small label on top, value below - two rows in the flat strip. Side by side did not
+        // fit long values ("CONNECTION" + "NOT CONNECTED" overlapped, seen in HudRender).
         void SideBySide(RectTransform col)
         {
             var label = col.Find("Label") as RectTransform;
             var value = col.Find("Value") as RectTransform;
             if (label != null)
             {
-                label.anchorMin = new Vector2(0f, 0f);
-                label.anchorMax = new Vector2(labelShare, 1f);
+                label.anchorMin = new Vector2(0f, 1f - labelShare);
+                label.anchorMax = new Vector2(1f, 1f);
                 label.offsetMin = label.offsetMax = Vector2.zero;
                 var t = label.GetComponent<TMP_Text>();
-                if (t != null) { t.fontSize = 17f; t.alignment = TextAlignmentOptions.MidlineLeft; }
+                if (t != null) { t.fontSize = 13f; t.alignment = TextAlignmentOptions.Center; }
             }
             if (value != null)
             {
-                value.anchorMin = new Vector2(labelShare, 0f);
-                value.anchorMax = new Vector2(1f, 1f);
+                value.anchorMin = new Vector2(0f, 0f);
+                value.anchorMax = new Vector2(1f, 1f - labelShare);
                 value.offsetMin = value.offsetMax = Vector2.zero;
                 var t = value.GetComponent<TMP_Text>();
-                if (t != null) { t.fontSizeMax = 34f; t.alignment = TextAlignmentOptions.MidlineRight; }
+                if (t != null)
+                {
+                    t.enableAutoSizing = true;
+                    t.fontSizeMin = 12f;
+                    t.fontSizeMax = 30f;
+                    t.alignment = TextAlignmentOptions.Center;
+                }
             }
         }
     }

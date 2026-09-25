@@ -37,6 +37,7 @@ setup(
             'jtc_egm_stub = metamove_bridge.jtc_egm_stub:main',
             'joint_feedback_relay = metamove_bridge.joint_feedback_relay:main',
             'robot_status = metamove_bridge.robot_status:main',
+            'preview_confirm = metamove_bridge.preview_confirm:main',
         ],
     },
 )

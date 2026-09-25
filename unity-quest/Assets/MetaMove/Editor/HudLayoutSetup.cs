@@ -14,8 +14,8 @@ namespace MetaMove.EditorTools
     public static class HudLayoutSetup
     {
         const string Scene = "Assets/MetaMove/Scenes/Scene_Robot.unity";
-        // ~21 deg above the line of sight: out of the view onto the robot, one glance up to read.
-        static readonly Vector3 HudOffset = new Vector3(0f, 0.24f, 0.62f);   // head-local
+        // ~26 deg above the line of sight: out of the view onto the robot, one glance up to read.
+        static readonly Vector3 HudOffset = new Vector3(0f, 0.30f, 0.60f);   // head-local
 
         [MenuItem("MetaMove/HUD: raise and curve the info HUD")]
         public static void Apply()

@@ -2,7 +2,7 @@
 
   Quest (ROS-TCP :10000) -> distance_speed_scaler -> jtc_servo_relay.live_speed
   dpp_playback -> MoveGroup -> jtc_servo_relay -> /servo_node/commands
-  moveit_ik_relay (MANUAL grab) ----------------------^
+  preview_confirm (MANUAL: ghost preview, OK) --------^  (moveit_ik_relay: legacy live grab, idle)
   /servo_node/commands -> rosbridge :9090 -> Windows EGM bridge -> GoFa
   GoFa -> EGM bridge -> /joint_states -> joint_feedback_relay -> Quest twin
   robot_status: why the robot is (not) moving -> console + HUD
@@ -51,4 +51,5 @@ def generate_launch_description():
         ours("moveit_ik_relay"),
         ours("joint_feedback_relay"),
         ours("robot_status"),
+        ours("preview_confirm"),
     ])
