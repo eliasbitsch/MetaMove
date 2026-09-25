@@ -55,16 +55,16 @@ def generate_launch_description():
     jtc = Node(
         package="metamove_bridge", executable="jtc_servo_relay",
         name="joint_trajectory_controller", output="screen",
-        parameters=[{"time_scale": 2.0, "rate_hz": 50.0, "live_speed": 1.0}],
+        parameters=[{"time_scale": 1.5, "rate_hz": 50.0, "live_speed": 1.0, "max_tcp_speed": 0.38}],
     )
     playback = Node(
         package="metamove_bridge", executable="dpp_playback",
         name="dpp_playback", output="screen",
         parameters=[{
             "waypoints_file": "/opt/metamove_ws/src/metamove_bridge/dpp_waypoints.yaml",
-            # Real-GoFa baseline = "100 %" (2026-09-25): with the relay's time_scale 2.0
-            # this is the fastest profile that stays inside the cell's SafeMove tool
-            # speed supervision (Gesamtzone_TSP); x1.5 trips it. Scale DOWN from here
+            # Real-GoFa baseline = "100 %" (2026-09-25): with the relay's time_scale 1.5
+            # and its TCP cap (0.38 m/s) this stays inside the cell's SafeMove tool speed
+            # supervision (Gesamtzone_TSP); x1.5 without the cap tripped it. Scale DOWN from here
             # via max_speed (headset / robot console), never up.
             "velocity_scaling": 0.3,
             "acceleration_scaling": 0.1,

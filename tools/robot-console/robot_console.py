@@ -5,7 +5,8 @@ ws://127.0.0.1:9090 the EGM bridge uses):
 
   Start / Stop / Home   -> /dpp_playback/resume | pause | home   (Trigger)
   Max speed -/+ 10 %    -> /quest/max_speed request, shown from /robot/max_speed
-  Baseline profile      -> fixed "100 %": relay time_scale 2.0, MoveIt vel 0.30 / acc 0.10
+  Baseline profile      -> fixed "100 %": relay time_scale 1.5, MoveIt vel 0.30 / acc 0.10,
+                           TCP capped at 0.38 m/s by the relay
   Mode                  -> distance_speed_scaler.distance_override
 
 Mode "Headset" (default): the headset distance scales the speed and taking the
@@ -30,10 +31,11 @@ RELAY = "/joint_trajectory_controller"
 PLAYBACK = "/dpp_playback"
 STEP = 0.1
 # The baseline motion profile that defines "100 %": (relay time_scale, MoveIt velocity,
-# acceleration). Measured on the real GoFa 2026-09-25: fastest profile that stays inside
-# the cell's SafeMove tool speed supervision (Gesamtzone_TSP); stretch x1.5 trips it.
-# Everything below 100 % is max_speed / the headset distance scaling down from here.
-BASELINE = (2.0, 0.30, 0.10)
+# acceleration). Real GoFa 2026-09-25: without a TCP cap x1.5 tripped the cell's SafeMove
+# tool speed supervision (Gesamtzone_TSP); with the relay capping tool0 at 0.38 m/s it
+# runs clean and a lap is ~20 % shorter than at x2. Below 100 % is max_speed and the
+# headset distance scaling down from here.
+BASELINE = (1.5, 0.30, 0.10)
 
 
 class Console:
@@ -83,7 +85,7 @@ class Console:
 
         ts, v, a = BASELINE
         ttk.Label(root, text=f"100 % = stretch x{ts:g} | MoveIt velocity {v:.0%} | accel {a:.0%} "
-                             f"(max safe for the cell's tool speed supervision)",
+                             f"+ TCP cap 380 mm/s (cell tool speed supervision)",
                   font=("Segoe UI", 10)).grid(row=3, column=0, columnspan=3, sticky="w")
 
         mode = ttk.LabelFrame(root, text=" Mode ", padding=10)
