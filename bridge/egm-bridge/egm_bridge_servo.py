@@ -33,6 +33,8 @@ import egm_pb2  # noqa: E402
 
 import roslibpy  # noqa: E402
 
+from command_guard import CommandGuard  # noqa: E402
+
 JOINT_NAMES = [f"joint_{i}" for i in range(1, 7)]
 DEG2RAD = math.pi / 180.0
 RAD2DEG = 180.0 / math.pi
@@ -94,6 +96,12 @@ def main() -> int:
     ap.add_argument("--rosbridge-host", default="192.168.125.99")
     ap.add_argument("--rosbridge-port", type=int, default=9090)
     ap.add_argument("--verbose", "-v", action="store_true")
+    ap.add_argument("--arm-tol-deg", type=float, default=2.0,
+                    help="re-arm only on a command this close to the measured pose")
+    ap.add_argument("--jump-tol-deg", type=float, default=15.0,
+                    help="trip when an armed command is this far from the measured pose")
+    ap.add_argument("--pause-service", default="/dpp_playback/pause",
+                    help="Trigger service called on a trip ('' = none)")
     args = ap.parse_args()
 
     # ----- ROS bridge connection ---------------------------------------------
@@ -110,6 +118,21 @@ def main() -> int:
 
     sub = roslibpy.Topic(ros, "/servo_node/commands", "std_msgs/Float64MultiArray")
     sub.subscribe(on_servo_command)
+
+    guard = CommandGuard(args.arm_tol_deg, args.jump_tol_deg)
+    pause_srv = (roslibpy.Service(ros, args.pause_service, "std_srvs/Trigger")
+                 if args.pause_service else None)
+
+    def on_trip(reason: str) -> None:
+        print(f"[bridge] GUARD TRIP: {reason} -> holding pose, disarmed until a command "
+              f"within {args.arm_tol_deg} deg of the robot", flush=True)
+        if pause_srv is not None:
+            try:
+                pause_srv.call(roslibpy.ServiceRequest(), callback=lambda r: print(
+                    f"[bridge] {args.pause_service}: {r.get('message', r)}", flush=True),
+                    errback=lambda e: print(f"[bridge] pause call failed: {e}", flush=True))
+            except Exception as e:  # noqa: BLE001
+                print(f"[bridge] pause call failed: {e}", flush=True)
 
     pub_thread = threading.Thread(target=joint_state_publisher,
                                   args=(ros,), daemon=True)
@@ -152,12 +175,19 @@ def main() -> int:
                 global last_feedback_deg
                 if joints_deg:
                     last_feedback_deg = joints_deg
-                # decide target: recent servo cmd, else echo current feedback
-                if (target_deg is not None and
-                        (time.monotonic() - last_command_t) < COMMAND_TIMEOUT_S):
-                    out_deg = list(target_deg)
-                else:
-                    out_deg = list(joints_deg) if joints_deg else []
+                # decide target: recent servo cmd, else echo current feedback -
+                # and the guard has the last word on whether the command may pass.
+                fresh = (target_deg is not None and
+                         (time.monotonic() - last_command_t) < COMMAND_TIMEOUT_S)
+                cmd = list(target_deg) if fresh else None
+            if joints_deg:
+                # Both are wrapper messages ({state: enum}); unset -> 0 = UNDEFINED = not ready.
+                out_deg, trip = guard.decide(robot.rapidExecState.state, robot.motorState.state,
+                                             list(joints_deg), cmd)
+                if trip:
+                    on_trip(trip)
+            else:
+                out_deg = []
 
             sensor = egm_pb2.EgmSensor()
             sensor.header.seqno = seq_out
@@ -182,13 +212,17 @@ def main() -> int:
                                if last_command_t else float("inf"))
                     fb = list(last_feedback_deg) if last_feedback_deg else None
                 cmd_state = (f"servo({cmd_age:.1f}s)"
-                             if cmd_age < COMMAND_TIMEOUT_S else "echo")
+                             if cmd_age < COMMAND_TIMEOUT_S and guard.armed else
+                             "echo" if guard.armed or cmd_age >= COMMAND_TIMEOUT_S else
+                             "HOLD(disarmed)")
                 fb_str = ("[" + ", ".join(f"{j:+7.2f}" for j in fb) + "]"
                           if fb else "(none)")
                 uptime = now - t0
                 print(f"[bridge] t={uptime:6.1f}s rx={hz:6.1f}Hz "
                       f"rtt_avg={rtt_avg:5.0f}us p95={rtt_p95:5.0f}us "
-                      f"mode={cmd_state} fb_deg={fb_str}")
+                      f"mode={cmd_state} armed={guard.armed} "
+                      f"rapid={robot.rapidExecState.state} motors={robot.motorState.state} "
+                      f"fb_deg={fb_str}")
                 last_summary = now
                 recv_count = 0
                 rtts_us.clear()
