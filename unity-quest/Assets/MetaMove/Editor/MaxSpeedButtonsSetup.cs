@@ -28,6 +28,21 @@ namespace MetaMove.EditorTools
             Make(panels, home, "Btn_SpeedDown", "-10 %", -1, -0.17f, control);
             Make(panels, home, "Btn_SpeedUp", "+10 %", +1, +0.17f, control);
 
+            // Third row, centred under Home: show/hide the safety box.
+            if (panels.Find("Btn_WorkArea") == null)
+            {
+                var go = Object.Instantiate(home.gameObject, panels);
+                go.name = "Btn_WorkArea";
+                var lp = home.localPosition;
+                go.transform.localPosition = new Vector3(0f, lp.y - 0.077f, lp.z + 0.023f);
+                go.transform.localRotation = home.localRotation;
+                go.transform.localScale = home.localScale;
+                Object.DestroyImmediate(go.GetComponent<MetaMove.UI.HomePokeButton>());
+                go.AddComponent<WorkAreaToggleButton>();
+                var t = go.GetComponentInChildren<TMPro.TMP_Text>(true);
+                if (t != null) t.text = "Working area: ON";
+            }
+
             var hud = panels.GetComponentInChildren<SafetyHud>(true);
             if (hud != null) hud.maxSpeedControl = control;
 

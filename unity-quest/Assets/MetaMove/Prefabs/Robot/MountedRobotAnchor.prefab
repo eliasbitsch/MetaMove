@@ -209,7 +209,6 @@ MonoBehaviour:
   _data: {fileID: 0}
   _pointableElement: {fileID: 5335952979413896350}
   _rigidbody: {fileID: 7707511849820443656}
-  _physicsGrabbable: {fileID: 0}
   _resetGrabOnGrabsUpdated: 1
   _scoringModifier:
     _positionRotationWeight: 0.8
@@ -250,7 +249,6 @@ MonoBehaviour:
   _data: {fileID: 0}
   _pointableElement: {fileID: 5335952979413896350}
   _rigidbody: {fileID: 7707511849820443656}
-  _physicsGrabbable: {fileID: 0}
   _resetGrabOnGrabsUpdated: 1
   _slippiness: 0
   _supportedGrabTypes: 3
@@ -420,6 +418,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: f9b151ff8ff6d6444917b895e966b333, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8176734308819494483}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: f9b151ff8ff6d6444917b895e966b333, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2810745266594049023}
   m_SourcePrefab: {fileID: 100100000, guid: f9b151ff8ff6d6444917b895e966b333, type: 3}
 --- !u!4 &3501166127625249903 stripped
 Transform:
@@ -452,8 +453,11 @@ MonoBehaviour:
   frameId: base_link
   target: {fileID: 6988544309118476866}
   robotBase: {fileID: 5287483819997504184}
+  baseYawDeg: 90
   publishHz: 50
-  enabled_: 1
+  enabled_: 0
+  onlyWhenGrabbed: 1
+  grabHandle: {fileID: 0}
 --- !u!114 &490784736811753397
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -494,6 +498,7 @@ MonoBehaviour:
     offsetDeg: 0
   smoothTime: 0.197
   commandTimeoutSec: 1
+  debugLogEveryN: 0
 --- !u!114 &8176734308819494483
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -510,6 +515,24 @@ MonoBehaviour:
   posePublisher: {fileID: 7167199114740882536}
   jointSubscriber: {fileID: 490784736811753397}
   useMoveIt: 0
+  toggleKey: 34
+--- !u!114 &2810745266594049023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4767968580486821890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 780d07805c565fe499231d2a86abacd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MetaMove.Safety.SafetyBoxVisual
+  topic: /robot/safety_box
+  frame: {fileID: 7167199114740882536}
+  fillMaterial: {fileID: 2100000, guid: 89a224fb5fbd3e94e92962bfa79314e6, type: 2}
+  edgeMaterial: {fileID: 2100000, guid: dc567086100192c42bffc389e562686f, type: 2}
+  edgeWidth: 0.004
 --- !u!4 &4780911751616416123 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8308184668634051544, guid: f9b151ff8ff6d6444917b895e966b333, type: 3}
