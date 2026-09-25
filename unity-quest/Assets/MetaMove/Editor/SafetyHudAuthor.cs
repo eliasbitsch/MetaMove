@@ -85,6 +85,9 @@ namespace MetaMove.EditorTools
             var distanceVal  = BuildReadout(crt, "Distance",  "DISTANCE",   1f / 3f);
             var speedVal     = BuildReadout(crt, "Speed",     "SPEED",      2f / 3f);
 
+            // Trails the view lazily instead of being glued to it (detaches from the head at Start).
+            root.AddComponent<MetaMove.UI.LazyFollow>();
+
             var hud = root.AddComponent<SafetyHud>();
             hud.connectedText = connectedVal;
             hud.distanceText = distanceVal;
