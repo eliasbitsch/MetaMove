@@ -14,10 +14,21 @@ Parameters:
   time_scale   (default 2.0)  — replay N x slower than planned (safety)
   rate_hz      (default 50.0) — interpolation/publish rate
   tolerance_deg(default 2.0)  — final convergence check via /joint_states
+  max_tcp_speed(default 0.38) — cap on the Cartesian TCP (tool0) speed [m/s]; a
+                                trajectory whose peak would exceed it is replayed
+                                slower as a whole. 0 = off.
+
+TCP cap: the cell's SafeMove tool speed supervision (Gesamtzone_TSP) stops the
+GoFa with "Tool Speed violation" (elog 90515). We plan in joint space, so the TCP
+speed of a given profile depends on the path - the taught path peaked at 406 mm/s
+at time_scale 2 (ran clean) and 541 mm/s at 1.5 (tripped), 2026-09-25. Capping
+the TCP speed itself keeps any newly taught path out of the stop.
 """
 from __future__ import annotations
 
 import math
+import os
+import sys
 import threading
 import time
 
@@ -33,6 +44,10 @@ from sensor_msgs.msg import JointState
 from std_msgs.msg import Float64MultiArray
 from std_srvs.srv import SetBool, Trigger
 
+# tcp_fk lives next to this file; realpath so it resolves from the symlinked install too.
+sys.path.insert(0, os.path.dirname(os.path.realpath(__file__)))
+from tcp_fk import peak_tcp_speed  # noqa: E402
+
 JOINT_NAMES = ['joint_1', 'joint_2', 'joint_3', 'joint_4', 'joint_5', 'joint_6']
 R2D = 180.0 / math.pi
 
@@ -43,6 +58,7 @@ class JtcServoRelay(Node):
         self.declare_parameter('time_scale', 2.0)
         self.declare_parameter('rate_hz', 50.0)
         self.declare_parameter('tolerance_deg', 2.0)
+        self.declare_parameter('max_tcp_speed', 0.38)
         # live_speed (0..1): continuous throttle read EVERY tick. The trajectory
         # is replayed via a time-cursor advanced by period*live_speed, so the
         # distance scaler can change speed mid-motion. 0 = freeze (hold pose),
@@ -150,12 +166,24 @@ class JtcServoRelay(Node):
         rate = float(self.get_parameter('rate_hz').value)
         tol = float(self.get_parameter('tolerance_deg').value)
 
-        # (time, positions[6]) keyframes, time-scaled
-        keys: list[tuple[float, list[float]]] = []
+        # (time, positions[6]) keyframes as planned
+        raw: list[tuple[float, list[float]]] = []
         for p in pts:
-            t = (p.time_from_start.sec
-                 + p.time_from_start.nanosec * 1e-9) * scale
-            keys.append((t, [p.positions[i] for i in idx]))
+            t = p.time_from_start.sec + p.time_from_start.nanosec * 1e-9
+            raw.append((t, [p.positions[i] for i in idx]))
+
+        # TCP speed cap: stretch the whole trajectory further if its peak TCP
+        # speed at the configured time_scale would exceed max_tcp_speed.
+        cap = float(self.get_parameter('max_tcp_speed').value)
+        if cap > 0:
+            v_planned = peak_tcp_speed(raw)
+            if v_planned / scale > cap:
+                self.get_logger().info(
+                    f'TCP cap: peak {v_planned / scale * 1000:.0f} mm/s at x{scale:g} > '
+                    f'{cap * 1000:.0f} mm/s -> stretch x{v_planned / cap:.2f}')
+                scale = v_planned / cap
+
+        keys = [(t * scale, q) for t, q in raw]
         total = keys[-1][0]
         self.get_logger().info(
             f'executing {len(keys)} pts over {total:.1f}s (scale x{scale})')
