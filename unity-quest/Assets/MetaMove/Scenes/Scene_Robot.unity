@@ -1521,6 +1521,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MetaMove.Safety.ScalingModeToggle
   topic: /quest/scaling_enabled
+  startTopic: /quest/start_path
   heartbeatSeconds: 2
   scalingEnabled: 1
   calibrator: {fileID: 663228033}
@@ -6687,6 +6688,58 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 463527141}
   m_CullTransparentMesh: 1
+--- !u!1 &464758800
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 464758801}
+  - component: {fileID: 464758802}
+  m_Layer: 0
+  m_Name: HudPanel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &464758801
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 464758800}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.09853762, y: 0, z: 0, w: 0.99513334}
+  m_LocalPosition: {x: 0, y: 0.13, z: 0.65}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1309345301}
+  m_Father: {fileID: 2107315466}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &464758802
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 464758800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 115b9326268142646820cfd0c3dcea4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MetaMove.UI.LazyFollow
+  head: {fileID: 0}
+  angleThreshold: 25
+  distanceThreshold: 0.35
+  smoothTime: 0.35
+  settleAngle: 2
+  settleDistance: 0.02
+  snapDistance: 2
 --- !u!1 &466507682
 GameObject:
   m_ObjectHideFlags: 0
@@ -23466,6 +23519,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1309345301}
   - component: {fileID: 1309345302}
+  - component: {fileID: 1309345303}
   m_Layer: 0
   m_Name: SafetyHUD
   m_TagString: Untagged
@@ -23481,13 +23535,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1309345300}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.14521316, y: -0, z: -0, w: 0.98940045}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 115345755}
-  m_Father: {fileID: 2134148951}
+  m_Father: {fileID: 464758801}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1309345302
 MonoBehaviour:
@@ -23527,6 +23581,22 @@ MonoBehaviour:
   speedTopic: /robot/speed_factor
   publishHz: 20
   connectedTimeout: 2
+--- !u!114 &1309345303
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1309345300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a8f284f9e3420d48bb05ef6c313670e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MetaMove.UI.Hud.HudArc
+  columnPrefix: Col_
+  radiusM: 0.6628725
+  flatBackplate: BG
+  columnBackplate: {r: 0.04, g: 0.07, b: 0.12, a: 0.82}
 --- !u!1 &1316877371
 GameObject:
   m_ObjectHideFlags: 0
@@ -37437,6 +37507,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2134148951}
+  - {fileID: 464758801}
   m_Father: {fileID: 1647917901}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2114137265
@@ -37851,7 +37922,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1309345301}
   - {fileID: 72567983}
   - {fileID: 888268180}
   - {fileID: 1548052873}
