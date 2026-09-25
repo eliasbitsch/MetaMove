@@ -36,8 +36,10 @@ class DistanceSpeedScaler(Node):
         self.declare_parameter('enabled', True)
         self.declare_parameter('dist_topic', '/quest/min_distance')
         self.declare_parameter('relay_node', 'joint_trajectory_controller')
-        self.declare_parameter('d_near', 0.6)        # m -> freeze
-        self.declare_parameter('d_far', 2.0)         # m -> full speed
+        # Lab setup: a workbench keeps people >= ~1 m from the GoFa, so the ramp
+        # starts further out. Keep in sync with SafetyHud.speedDistNear/Far.
+        self.declare_parameter('d_near', 1.1)        # m -> freeze
+        self.declare_parameter('d_far', 2.5)         # m -> full speed
         self.declare_parameter('stale_timeout', 1.5)
         self.declare_parameter('ema_alpha', 0.3)     # distance smoothing (0..1)
         self.declare_parameter('up_rate', 0.6)       # max live_speed rise /s

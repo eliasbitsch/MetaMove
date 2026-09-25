@@ -21279,10 +21279,10 @@ MonoBehaviour:
   connectedText: {fileID: 1500357981}
   distanceText: {fileID: 1281227444}
   speedText: {fileID: 990614636}
-  warnDist: 1.2
-  dangerDist: 0.6
-  speedDistNear: 0.6
-  speedDistFar: 2
+  warnDist: 1.6
+  dangerDist: 1.1
+  speedDistNear: 1.1
+  speedDistFar: 2.5
   hapticProximity: 1
   pulseIntervalFar: 0.6
   pulseIntervalNear: 0.08
