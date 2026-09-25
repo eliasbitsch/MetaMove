@@ -5,7 +5,8 @@ ws://127.0.0.1:9090 the EGM bridge uses):
 
   Start / Stop / Home   -> /dpp_playback/resume | pause | home   (Trigger)
   Max speed -/+ 10 %    -> /quest/max_speed request, shown from /robot/max_speed
-  Path tempo -/+        -> jtc_servo_relay time_scale (trajectory stretch, 3 = slow)
+  Motion profile -/+    -> stretch (relay time_scale) + MoveIt velocity/acceleration
+                           scaling, as one ladder of levels (1 = June real-robot tuning)
   Mode                  -> distance_speed_scaler.distance_override
 
 Mode "Headset" (default): the headset distance scales the speed and taking the
@@ -29,13 +30,26 @@ SCALER = "/distance_speed_scaler"
 RELAY = "/joint_trajectory_controller"
 PLAYBACK = "/dpp_playback"
 STEP = 0.1
-TIME_SCALES = [4.0, 3.0, 2.5, 2.0, 1.5, 1.0]   # slow -> fast; accel limit (0.10) stays
+# Motion profile ladder, slow -> fast: (relay time_scale, MoveIt velocity, acceleration).
+# Level 1 is what the June real-robot runs used. First the stretch comes off, then
+# velocity/acceleration rise. From level 6 on the GoFa tripped "TCP too high" in June
+# (acceleration >= 0.25) - a protective stop, reset at the pendant.
+PROFILES = [
+    (3.0, 0.30, 0.10),
+    (2.0, 0.30, 0.10),
+    (1.5, 0.30, 0.10),
+    (1.0, 0.30, 0.10),
+    (1.0, 0.50, 0.15),
+    (1.0, 0.70, 0.20),
+    (1.0, 1.00, 0.25),
+]
+RISKY_FROM = 6   # 1-based level
 
 
 class Console:
     def __init__(self, root: tk.Tk, ros: roslibpy.Ros) -> None:
         self.root, self.ros = root, ros
-        self.state = {"max": None, "speed": None, "joints": None, "override": False, "ts": 3.0}
+        self.state = {"max": None, "speed": None, "joints": None, "override": False, "level": 0}
         self.lock = threading.Lock()
 
         self.max_req = roslibpy.Topic(ros, "/quest/max_speed", "std_msgs/Float32")
@@ -77,12 +91,14 @@ class Console:
         self.speed_lbl = ttk.Label(spd, text="", font=mid)
         self.speed_lbl.grid(row=2, column=0, columnspan=3)
 
-        tmp = ttk.LabelFrame(root, text=" Path tempo (trajectory stretch, next move) ", padding=10)
+        tmp = ttk.LabelFrame(root, text=" Motion profile - beyond 100 % (applies from the next move) ", padding=10)
         tmp.grid(row=3, column=0, columnspan=3, sticky="ew", pady=8)
-        tk.Button(tmp, text="slower", font=mid, width=8, command=lambda: self._tempo(-1)).grid(row=0, column=0)
-        self.ts_lbl = ttk.Label(tmp, text="", font=big, width=10, anchor="center")
+        tk.Button(tmp, text="\u2212 slower", font=big, width=9, command=lambda: self._tempo(-1)).grid(row=0, column=0)
+        self.ts_lbl = ttk.Label(tmp, text="", font=big, width=11, anchor="center")
         self.ts_lbl.grid(row=0, column=1, padx=12)
-        tk.Button(tmp, text="faster", font=mid, width=8, command=lambda: self._tempo(+1)).grid(row=0, column=2)
+        tk.Button(tmp, text="+ faster", font=big, width=9, command=lambda: self._tempo(+1)).grid(row=0, column=2)
+        self.ts_detail = tk.Label(tmp, text="", font=mid)
+        self.ts_detail.grid(row=1, column=0, columnspan=3, pady=(6, 0))
 
         mode = ttk.LabelFrame(root, text=" Mode ", padding=10)
         mode.grid(row=4, column=0, columnspan=3, sticky="ew", pady=8)
@@ -98,7 +114,7 @@ class Console:
         self.joint_lbl.grid(row=5, column=0, columnspan=3, sticky="w")
 
         self._set_param(SCALER, "distance_override", False)
-        self._get_time_scale()
+        self._apply_level(0)   # start from the known-good June profile
         root.protocol("WM_DELETE_WINDOW", self._close)
         self._refresh()
 
@@ -121,11 +137,15 @@ class Console:
 
     def _tempo(self, direction: int) -> None:
         with self.lock:
-            cur = self.state["ts"]
-        i = min(range(len(TIME_SCALES)), key=lambda k: abs(TIME_SCALES[k] - cur))
-        i = min(len(TIME_SCALES) - 1, max(0, i + direction))
-        self._set_param(RELAY, "time_scale", TIME_SCALES[i])
-        self._set("ts", TIME_SCALES[i])
+            cur = self.state["level"]
+        self._apply_level(min(len(PROFILES) - 1, max(0, cur + direction)))
+
+    def _apply_level(self, i: int) -> None:
+        ts, v, a = PROFILES[i]
+        self._set_param(RELAY, "time_scale", ts)
+        self._set_param(PLAYBACK, "velocity_scaling", v)
+        self._set_param(PLAYBACK, "acceleration_scaling", a)
+        self._set("level", i)
 
     def _mode(self) -> None:
         on = self.mode_var.get() == "pc"
@@ -142,12 +162,6 @@ class Console:
                  callback=lambda r: None,
                  errback=lambda e: self._say(f"set {node}.{name} failed: {e}"))
 
-    def _get_time_scale(self) -> None:
-        srv = roslibpy.Service(self.ros, f"{RELAY}/get_parameters", "rcl_interfaces/srv/GetParameters")
-        srv.call(roslibpy.ServiceRequest({"names": ["time_scale"]}),
-                 callback=lambda r: self._set("ts", r["values"][0].get("double_value", 3.0)),
-                 errback=lambda e: None)
-
     def _say(self, text: str) -> None:
         self.root.after(0, lambda: self.msg.configure(text=text))
 
@@ -161,7 +175,13 @@ class Console:
         self.bar["value"] = (sp or 0.0) * 100
         self.speed_lbl.configure(text=f"robot now at {sp * 100:.0f} % of full speed" if sp is not None
                                  else "no speed from the scaler")
-        self.ts_lbl.configure(text=f"x{s['ts']:.1f}")
+        lvl = s["level"]
+        ts, v, a = PROFILES[lvl]
+        self.ts_lbl.configure(text=f"Level {lvl + 1}/{len(PROFILES)}")
+        self.ts_detail.configure(
+            text=f"stretch x{ts:g} | velocity {v:.0%} | accel {a:.0%}"
+                 + ("   - may trip 'TCP too high'" if lvl + 1 >= RISKY_FROM else ""),
+            fg="#c62828" if lvl + 1 >= RISKY_FROM else "black")
         self.warn.configure(text="PC test active: no proximity slow-down, no headset-off stop. "
                                  "Hand on the e-stop." if s["override"] else "")
         if s["joints"]:
@@ -171,6 +191,7 @@ class Console:
 
     def _close(self) -> None:
         self._trigger("pause")
+        self._apply_level(0)
         self._set_param(SCALER, "distance_override", False)
         self.root.after(400, self.root.destroy)
 
