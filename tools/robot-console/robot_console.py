@@ -5,8 +5,7 @@ ws://127.0.0.1:9090 the EGM bridge uses):
 
   Start / Stop / Home   -> /dpp_playback/resume | pause | home   (Trigger)
   Max speed -/+ 10 %    -> /quest/max_speed request, shown from /robot/max_speed
-  Motion profile -/+    -> stretch (relay time_scale) + MoveIt velocity/acceleration
-                           scaling, as one ladder of levels (1 = June real-robot tuning)
+  Baseline profile      -> fixed "100 %": relay time_scale 2.0, MoveIt vel 0.30 / acc 0.10
   Mode                  -> distance_speed_scaler.distance_override
 
 Mode "Headset" (default): the headset distance scales the speed and taking the
@@ -30,22 +29,17 @@ SCALER = "/distance_speed_scaler"
 RELAY = "/joint_trajectory_controller"
 PLAYBACK = "/dpp_playback"
 STEP = 0.1
-# Motion profile ladder, slow -> fast: (relay time_scale, MoveIt velocity, acceleration).
-# Measured on the real GoFa 2026-09-25 at max speed 100 %: level 2 runs clean (peaks
-# ~32/40/38 deg/s on J1/J3/J5), stretch x1.5 already trips the controller's
-# "TCP too fast" protective stop. So the ladder ends at level 2 - faster profiles
-# are deliberately not selectable here.
-PROFILES = [
-    (3.0, 0.30, 0.10),
-    (2.0, 0.30, 0.10),
-]
-RISKY_FROM = 99   # no flagged levels left
+# The baseline motion profile that defines "100 %": (relay time_scale, MoveIt velocity,
+# acceleration). Measured on the real GoFa 2026-09-25: fastest profile that stays inside
+# the cell's SafeMove tool speed supervision (Gesamtzone_TSP); stretch x1.5 trips it.
+# Everything below 100 % is max_speed / the headset distance scaling down from here.
+BASELINE = (2.0, 0.30, 0.10)
 
 
 class Console:
     def __init__(self, root: tk.Tk, ros: roslibpy.Ros) -> None:
         self.root, self.ros = root, ros
-        self.state = {"max": None, "speed": None, "joints": None, "override": False, "level": 0}
+        self.state = {"max": None, "speed": None, "joints": None, "override": False}
         self.lock = threading.Lock()
 
         self.max_req = roslibpy.Topic(ros, "/quest/max_speed", "std_msgs/Float32")
@@ -87,14 +81,10 @@ class Console:
         self.speed_lbl = ttk.Label(spd, text="", font=mid)
         self.speed_lbl.grid(row=2, column=0, columnspan=3)
 
-        tmp = ttk.LabelFrame(root, text=" Motion profile - beyond 100 % (applies from the next move) ", padding=10)
-        tmp.grid(row=3, column=0, columnspan=3, sticky="ew", pady=8)
-        tk.Button(tmp, text="\u2212 slower", font=big, width=9, command=lambda: self._tempo(-1)).grid(row=0, column=0)
-        self.ts_lbl = ttk.Label(tmp, text="", font=big, width=11, anchor="center")
-        self.ts_lbl.grid(row=0, column=1, padx=12)
-        tk.Button(tmp, text="+ faster", font=big, width=9, command=lambda: self._tempo(+1)).grid(row=0, column=2)
-        self.ts_detail = tk.Label(tmp, text="", font=mid)
-        self.ts_detail.grid(row=1, column=0, columnspan=3, pady=(6, 0))
+        ts, v, a = BASELINE
+        ttk.Label(root, text=f"100 % = stretch x{ts:g} | MoveIt velocity {v:.0%} | accel {a:.0%} "
+                             f"(max safe for the cell's tool speed supervision)",
+                  font=("Segoe UI", 10)).grid(row=3, column=0, columnspan=3, sticky="w")
 
         mode = ttk.LabelFrame(root, text=" Mode ", padding=10)
         mode.grid(row=4, column=0, columnspan=3, sticky="ew", pady=8)
@@ -110,7 +100,7 @@ class Console:
         self.joint_lbl.grid(row=5, column=0, columnspan=3, sticky="w")
 
         self._set_param(SCALER, "distance_override", False)
-        self._apply_level(0)   # start from the known-good June profile
+        self._apply_baseline()
         root.protocol("WM_DELETE_WINDOW", self._close)
         self._refresh()
 
@@ -131,17 +121,11 @@ class Console:
         v = min(1.0, max(0.1, round((cur + direction * STEP) / STEP) * STEP))
         self.max_req.publish(roslibpy.Message({"data": v}))
 
-    def _tempo(self, direction: int) -> None:
-        with self.lock:
-            cur = self.state["level"]
-        self._apply_level(min(len(PROFILES) - 1, max(0, cur + direction)))
-
-    def _apply_level(self, i: int) -> None:
-        ts, v, a = PROFILES[i]
+    def _apply_baseline(self) -> None:
+        ts, v, a = BASELINE
         self._set_param(RELAY, "time_scale", ts)
         self._set_param(PLAYBACK, "velocity_scaling", v)
         self._set_param(PLAYBACK, "acceleration_scaling", a)
-        self._set("level", i)
 
     def _mode(self) -> None:
         on = self.mode_var.get() == "pc"
@@ -171,13 +155,6 @@ class Console:
         self.bar["value"] = (sp or 0.0) * 100
         self.speed_lbl.configure(text=f"robot now at {sp * 100:.0f} % of full speed" if sp is not None
                                  else "no speed from the scaler")
-        lvl = s["level"]
-        ts, v, a = PROFILES[lvl]
-        self.ts_lbl.configure(text=f"Level {lvl + 1}/{len(PROFILES)}")
-        self.ts_detail.configure(
-            text=f"stretch x{ts:g} | velocity {v:.0%} | accel {a:.0%}"
-                 + ("   - may trip 'TCP too high'" if lvl + 1 >= RISKY_FROM else ""),
-            fg="#c62828" if lvl + 1 >= RISKY_FROM else "black")
         self.warn.configure(text="PC test active: no proximity slow-down, no headset-off stop. "
                                  "Hand on the e-stop." if s["override"] else "")
         if s["joints"]:
@@ -187,7 +164,6 @@ class Console:
 
     def _close(self) -> None:
         self._trigger("pause")
-        self._apply_level(0)
         self._set_param(SCALER, "distance_override", False)
         self.root.after(400, self.root.destroy)
 

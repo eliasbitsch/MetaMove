@@ -62,8 +62,12 @@ def generate_launch_description():
         name="dpp_playback", output="screen",
         parameters=[{
             "waypoints_file": "/opt/metamove_ws/src/metamove_bridge/dpp_waypoints.yaml",
-            "velocity_scaling": 0.5,
-            "acceleration_scaling": 0.5,
+            # Real-GoFa baseline = "100 %" (2026-09-25): with the relay's time_scale 2.0
+            # this is the fastest profile that stays inside the cell's SafeMove tool
+            # speed supervision (Gesamtzone_TSP); x1.5 trips it. Scale DOWN from here
+            # via max_speed (headset / robot console), never up.
+            "velocity_scaling": 0.3,
+            "acceleration_scaling": 0.1,
             "dwell_seconds": 0.5,
         }],
     )
