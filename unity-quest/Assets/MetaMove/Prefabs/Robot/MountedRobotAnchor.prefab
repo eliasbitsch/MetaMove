@@ -343,9 +343,9 @@ MonoBehaviour:
   grabbable: {fileID: 5335952979413896350}
   ikTarget: {fileID: 6988544309118476866}
   handAnchor: {fileID: 0}
-  dragGain: 1
+  dragGain: 0.5
   maxReachM: 0.5
-  attractToHand: 1
+  attractToHand: 0
   invertX: 0
   invertY: 0
   invertZ: 0

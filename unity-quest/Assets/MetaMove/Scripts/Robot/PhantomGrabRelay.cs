@@ -173,6 +173,10 @@ namespace MetaMove.Robot
 
                 Quaternion rotDelta = anchorRot * Quaternion.Inverse(_handStartRot);
                 ikTarget.rotation = rotDelta * _ikStartRot;
+
+                // While held, the sphere shows where the target is (it snaps back to the
+                // flange on release, top of LateUpdate) - the ghost robot follows it.
+                transform.SetPositionAndRotation(ikTarget.position, ikTarget.rotation);
             }
             // Idle: do NOT touch ikTarget. Unity FBX-rig and Servo's URDF have
             // different kinematics, so syncing to sphere's world position would

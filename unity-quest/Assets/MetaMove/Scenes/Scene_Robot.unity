@@ -40929,10 +40929,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32024413de0512443ba377ede3b05921, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MetaMove.Safety.TwinAlignment
-  offsetX: 0
-  offsetYUp: 0
-  offsetZ: 0
-  yawDeg: 0
+  offsetX: -0.526
+  offsetYUp: -0.110
+  offsetZ: -0.401
+  yawDeg: 1.5
   calibrator: {fileID: 663228033}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

@@ -102,6 +102,8 @@ class PreviewConfirm(Node):
 
     def _on_handle(self, m: PoseStamped) -> None:
         if not self._manual or self._busy:
+            self.get_logger().info('handle pose ignored: not in MANUAL' if not self._manual else 'handle pose ignored: executing',
+                                   throttle_duration_sec=5.0)
             return
         p, o = m.pose.position, m.pose.orientation
         pose = ((p.x, p.y, p.z), (o.x, o.y, o.z, o.w))
@@ -111,8 +113,11 @@ class PreviewConfirm(Node):
                 # New grab: apply the motion to the current preview, else to the real TCP.
                 t0 = self._target or self._real_tcp_pose()
                 if t0 is None:
+                    self.get_logger().warn('grab start without a real TCP pose (no /joint_states or /compute_fk) - ignored',
+                                           throttle_duration_sec=2.0)
                     return
                 self._h0, self._t0 = pose, t0
+                self.get_logger().info(f'grab started at TCP {tuple(round(v, 3) for v in t0[0])}')
             self._last_handle_t = now
             self._handle = pose
 
@@ -125,7 +130,10 @@ class PreviewConfirm(Node):
 
     # --- preview ---------------------------------------------------------------
     def _tick(self) -> None:
-        if not self._manual or self._busy or self._ik_in_flight or self._box is None:
+        if not self._manual or self._busy or self._ik_in_flight:
+            return
+        if self._box is None:
+            self.get_logger().warn('no /robot/safety_box yet - preview waits for it', throttle_duration_sec=5.0)
             return
         with self._lock:
             if self._handle is None or self._h0 is None:
