@@ -35,6 +35,11 @@ namespace MetaMove.Robot.Ros
         [Tooltip("Robot base frame in Unity. Ball pose is expressed relative to this.")]
         public Transform robotBase;
 
+        [Tooltip("Yaw (deg, about Unity up) from robotBase's axes to URDF base_link's. The ABB_CRB_15000 rig sits 90° off " +
+                 "base_link: without it every pinch target reaches MoveIt rotated a quarter turn (forward drives the arm sideways). " +
+                 "Measured with Editor/AxisConventionCheck against MoveIt /compute_fk.")]
+        public float baseYawDeg = 90f;
+
         [Header("Rate")]
         [Range(10f, 100f)] public float publishHz = 50f;
 
@@ -69,13 +74,7 @@ namespace MetaMove.Robot.Ros
             float dt = 1f / Mathf.Max(1f, publishHz);
             if (Time.unscaledTime - _lastPublish < dt) return;
 
-            // Express the ball pose in the robot base frame (Unity coordinates).
-            Vector3 localPos = robotBase.InverseTransformPoint(target.position);
-            Quaternion localRot = Quaternion.Inverse(robotBase.rotation) * target.rotation;
-
-            // Unity LH Y-up → ROS REP-103 RH Z-up X-forward via FLU.
-            var posRos = localPos.To<FLU>();
-            var quatRos = localRot.To<FLU>();
+            ToBaseLink(target.position, target.rotation, out var posRos, out var quatRos);
 
             double now = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalSeconds;
             int sec = (int)now;
@@ -92,6 +91,20 @@ namespace MetaMove.Robot.Ros
             };
             _ros.Publish(topic, msg);
             _lastPublish = Time.unscaledTime;
+        }
+
+        // Unity world pose → ROS base_link. Public so the axis check exercises this exact path.
+        public void ToBaseLink(Vector3 worldPos, Quaternion worldRot,
+                               out Vector3<FLU> posRos, out Quaternion<FLU> quatRos)
+        {
+            // Express the pose in the robot base frame (Unity coordinates), turned onto base_link's axes.
+            var yaw = Quaternion.Euler(0f, baseYawDeg, 0f);
+            Vector3 localPos = yaw * robotBase.InverseTransformPoint(worldPos);
+            Quaternion localRot = yaw * (Quaternion.Inverse(robotBase.rotation) * worldRot);
+
+            // Unity LH Y-up → ROS REP-103 RH Z-up X-forward via FLU.
+            posRos = localPos.To<FLU>();
+            quatRos = localRot.To<FLU>();
         }
     }
 }

@@ -48,11 +48,16 @@ namespace MetaMove.EditorTools
             if (Application.isBatchMode) EditorApplication.Exit(code);
         }
 
-        static int BuildApk()
+        static int BuildApk() =>
+            BuildApk(new[] { PaperDemoSceneSetup.ScenePath }, PackageId, ProductName, OutputPath);
+
+        /// <summary>Shared by LabBuild — same player settings and assimp repair, different scene/package.</summary>
+        internal static int BuildApk(string[] scenes, string packageId, string productName, string outputPath)
         {
-            if (!File.Exists(PaperDemoSceneSetup.ScenePath))
+            foreach (var scene in scenes)
             {
-                Debug.LogError($"[PaperDemo] Scene missing: {PaperDemoSceneSetup.ScenePath}");
+                if (File.Exists(scene)) continue;
+                Debug.LogError($"[PaperDemo] Scene missing: {scene}");
                 return 1;
             }
 
@@ -61,27 +66,27 @@ namespace MetaMove.EditorTools
             // Package resolves reset the importer settings, so re-apply here.
             FixAssimpPluginPlatforms.Run();
 
-            ApplyPlayerSettings();
+            ApplyPlayerSettings(packageId, productName);
 
-            var dir = Path.GetDirectoryName(OutputPath);
+            var dir = Path.GetDirectoryName(outputPath);
             if (!string.IsNullOrEmpty(dir) && !Directory.Exists(dir)) Directory.CreateDirectory(dir);
 
             var options = new BuildPlayerOptions
             {
-                scenes = new[] { PaperDemoSceneSetup.ScenePath },
-                locationPathName = OutputPath,
+                scenes = scenes,
+                locationPathName = outputPath,
                 target = BuildTarget.Android,
                 targetGroup = BuildTargetGroup.Android,
                 options = BuildOptions.None,
             };
 
-            Debug.Log($"[PaperDemo] Building {OutputPath} ({PackageId}) …");
+            Debug.Log($"[PaperDemo] Building {outputPath} ({packageId}) …");
             BuildReport report = BuildPipeline.BuildPlayer(options);
             var summary = report.summary;
 
             if (summary.result == BuildResult.Succeeded)
             {
-                Debug.Log($"[PaperDemo] Build succeeded: {OutputPath} " +
+                Debug.Log($"[PaperDemo] Build succeeded: {outputPath} " +
                           $"({summary.totalSize / (1024 * 1024)} MB, {summary.totalTime.TotalMinutes:F1} min)");
                 return 0;
             }
@@ -98,11 +103,11 @@ namespace MetaMove.EditorTools
             return 1;
         }
 
-        static void ApplyPlayerSettings()
+        static void ApplyPlayerSettings(string packageId, string productName)
         {
             var group = BuildTargetGroup.Android;
-            PlayerSettings.SetApplicationIdentifier(group, PackageId);
-            PlayerSettings.productName = ProductName;
+            PlayerSettings.SetApplicationIdentifier(group, packageId);
+            PlayerSettings.productName = productName;
 
             PlayerSettings.Android.targetArchitectures = AndroidArchitecture.ARM64;
             PlayerSettings.SetScriptingBackend(group, ScriptingImplementation.IL2CPP);

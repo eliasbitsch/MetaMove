@@ -39,7 +39,7 @@ x-ros2-common: &ros2-common
   ports:
     # 6511/udp NOT mapped — Unity Editor / native Unity Bridge binds it on Windows.
     # Container only needs TCP back-channels for ROS↔Unity glue.
-    - "8765:8765/tcp"            # foxglove-bridge (optional web viz)
+    - "${FOXGLOVE_HOST_PORT:-8765}:8765/tcp"   # foxglove-bridge (optional web viz); override if 8765 is taken
     - "9090:9090/tcp"            # rosbridge_websocket (Jarvis tool-call path)
     - "10000:10000/tcp"          # ros-tcp-endpoint (Unity ROSConnection)
   volumes:

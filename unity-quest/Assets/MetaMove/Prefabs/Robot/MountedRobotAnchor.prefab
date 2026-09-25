@@ -470,16 +470,28 @@ MonoBehaviour:
   joints:
   - joint: {fileID: 3546928922932419273}
     localAxis: {x: 0, y: 0, z: 1}
+    signFlip: 1
+    offsetDeg: 0
   - joint: {fileID: 4780911751616416123}
     localAxis: {x: 0, y: 0, z: 1}
+    signFlip: 1
+    offsetDeg: 0
   - joint: {fileID: 8632883787211722992}
     localAxis: {x: 0, y: 0, z: 1}
+    signFlip: 1
+    offsetDeg: 0
   - joint: {fileID: 5180082751007757746}
     localAxis: {x: 0, y: 0, z: 1}
+    signFlip: 1
+    offsetDeg: 0
   - joint: {fileID: 6898584104015054749}
     localAxis: {x: 0, y: 0, z: 1}
+    signFlip: 1
+    offsetDeg: 0
   - joint: {fileID: 3501166127625249903}
     localAxis: {x: 0, y: 0, z: 1}
+    signFlip: 1
+    offsetDeg: 0
   smoothTime: 0.197
   commandTimeoutSec: 1
 --- !u!114 &8176734308819494483
