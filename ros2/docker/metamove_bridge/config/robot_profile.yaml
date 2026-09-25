@@ -1,0 +1,49 @@
+# MetaMove real-robot profile - the one place for the numbers the lab runs with.
+# Loaded by launch/metamove_real.launch.py. Values verified on the real GoFa
+# CRB 15000 on 2026-09-25 (see the comments); change them here, nowhere else.
+
+joint_trajectory_controller:        # jtc_servo_relay
+  ros__parameters:
+    # "100 %" baseline: trajectories replayed 1.5x slower than MoveIt planned them,
+    # with the TCP capped so the cell's SafeMove tool speed supervision
+    # (Gesamtzone_TSP, elog 90515) never fires. Clean peak measured 406 mm/s,
+    # a trip at 541 mm/s -> cap 380 mm/s.
+    time_scale: 1.5
+    max_tcp_speed: 0.38
+    rate_hz: 50.0
+    # Starts frozen; the distance scaler drives it from the headset distance.
+    live_speed: 0.0
+
+dpp_playback:
+  ros__parameters:
+    waypoints_file: /opt/metamove_ws/src/metamove_bridge/dpp_waypoints.yaml
+    # acceleration >= 0.25 tripped the GoFa in June; 0.10 is the tested value.
+    velocity_scaling: 0.3
+    acceleration_scaling: 0.1
+    dwell_seconds: 0.5
+    # Never start moving just because ROS came up - wait for the headset/console.
+    start_paused: true
+
+distance_speed_scaler:
+  ros__parameters:
+    # A workbench keeps people >= ~1 m from the robot: freeze at 1.1 m, full at 2.5 m.
+    d_near: 1.1
+    d_far: 2.5
+    # Headset off -> no distance for 0.5 s -> path paused (stop within ~1 s).
+    stale_timeout: 0.5
+    # Ceiling set from the headset/console, starts at half.
+    max_speed: 0.5
+    distance_override: false
+
+moveit_ik_relay:
+  ros__parameters:
+    max_joint_speed: 0.15
+    # TCP (tool0) box in base_link for MANUAL grab control. Taught by jogging the floor
+    # corners + one lid height (tools/teach-box); floor = highest floor corner (a step).
+    safety_box_enabled: true
+    safety_box_min: [-0.445, -0.623, 0.381]   # taught 2026-09-25, tools/teach-box
+    safety_box_max: [0.660, 0.292, 0.869]
+    # No slack: the slew path is joint-space and bows; with a 3 cm margin it dipped
+    # 1.2 cm under the floor (a step) in the sim test. 0 = a step that would leave the
+    # box is dropped and the arm holds just inside.
+    safety_box_margin: 0.0

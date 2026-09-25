@@ -35,6 +35,8 @@ setup(
             'dpp_orchestrate = metamove_bridge.dpp_orchestrate:main',
             'dpp_gui = metamove_bridge.dpp_gui:main',
             'jtc_egm_stub = metamove_bridge.jtc_egm_stub:main',
+            'joint_feedback_relay = metamove_bridge.joint_feedback_relay:main',
+            'robot_status = metamove_bridge.robot_status:main',
         ],
     },
 )

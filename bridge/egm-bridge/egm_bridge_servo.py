@@ -18,6 +18,7 @@ directions. Joint order (per SRDF): joint_1..joint_6.
 from __future__ import annotations
 
 import argparse
+import json
 import math
 import socket
 import statistics
@@ -100,6 +101,9 @@ def main() -> int:
                     help="re-arm only on a command this close to the measured pose")
     ap.add_argument("--jump-tol-deg", type=float, default=15.0,
                     help="trip when an armed command is this far from the measured pose")
+    ap.add_argument("--ros-lost-exit-s", type=float, default=3.0,
+                    help="exit (code 3) when rosbridge has been gone this long, so the "
+                         "supervisor loop in tools/metamove_up.ps1 restarts us cleanly")
     ap.add_argument("--pause-service", default="/dpp_playback/pause",
                     help="Trigger service called on a trip ('' = none)")
     args = ap.parse_args()
@@ -120,6 +124,11 @@ def main() -> int:
     sub.subscribe(on_servo_command)
 
     guard = CommandGuard(args.arm_tol_deg, args.jump_tol_deg)
+    # Compact state for robot_status ("why is it not moving?"), 5 Hz.
+    status_pub = roslibpy.Topic(ros, "/egm/status", "std_msgs/String")
+    status_pub.advertise()
+    last_status = 0.0
+    rx_window: list[float] = []
     pause_srv = (roslibpy.Service(ros, args.pause_service, "std_srvs/Trigger")
                  if args.pause_service else None)
 
@@ -142,6 +151,10 @@ def main() -> int:
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     sock.bind((args.host, args.port))
+    # recvfrom must not block forever: with no EGM traffic we still have to notice a
+    # lost rosbridge and exit for a clean restart.
+    sock.settimeout(1.0)
+    ros_lost_since: float | None = None
     print(f"[bridge] EGM listening on {args.host}:{args.port}/udp")
 
     seq_out = 0
@@ -154,7 +167,18 @@ def main() -> int:
 
     try:
         while True:
-            data, addr = sock.recvfrom(4096)
+            if ros.is_connected:
+                ros_lost_since = None
+            else:
+                ros_lost_since = ros_lost_since or time.monotonic()
+                if time.monotonic() - ros_lost_since > args.ros_lost_exit_s:
+                    print(f"[bridge] rosbridge gone for >{args.ros_lost_exit_s:.0f} s - exiting "
+                          f"for a clean restart", flush=True)
+                    return 3
+            try:
+                data, addr = sock.recvfrom(4096)
+            except socket.timeout:
+                continue
             t_recv = time.monotonic()
             try:
                 robot = egm_pb2.EgmRobot()
@@ -166,6 +190,7 @@ def main() -> int:
                 continue
             recv_count += 1
             last_addr = addr
+            rx_window.append(t_recv)
 
             joints_deg: list[float] = []
             if robot.HasField("feedBack") and robot.feedBack.HasField("joints"):
@@ -198,6 +223,20 @@ def main() -> int:
                 sensor.planned.joints.joints.extend(out_deg)
 
             sock.sendto(sensor.SerializeToString(), addr)
+
+            if t_recv - last_status >= 0.2:
+                last_status = t_recv
+                rx_window[:] = [t for t in rx_window if t_recv - t <= 1.0]
+                with state_lock:
+                    fresh = (target_deg is not None and
+                             (time.monotonic() - last_command_t) < COMMAND_TIMEOUT_S)
+                status_pub.publish(roslibpy.Message({"data": json.dumps({
+                    "rapid": robot.rapidExecState.state,
+                    "motors": robot.motorState.state,
+                    "armed": guard.armed,
+                    "cmd_fresh": fresh,
+                    "rx_hz": float(len(rx_window)),
+                })}))
             rtts_us.append((time.monotonic() - t_recv) * 1e6)
 
             now = time.monotonic()

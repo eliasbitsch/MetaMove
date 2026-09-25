@@ -69,6 +69,14 @@ services:
     <<: *ros2-common
     command: tail -f /dev/null
 
+  # REAL GoFa: the whole ROS side (launch/metamove_real.launch.py, tunables in
+  # config/robot_profile.yaml). Restarts with Docker / WSL; every node respawns on
+  # its own. Shares ports with "ros2" - tools/metamove_up.ps1 stops that one first.
+  robot:
+    <<: *ros2-common
+    command: ros2 launch metamove_bridge metamove_real.launch.py
+    restart: unless-stopped
+
   # Bridge only (headless)
   bridge:
     <<: *ros2-common

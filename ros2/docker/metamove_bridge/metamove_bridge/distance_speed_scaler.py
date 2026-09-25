@@ -19,12 +19,13 @@ Fail-safe: no distance for stale_timeout s -> 0 (freeze).
 """
 from __future__ import annotations
 
+import json
 import threading
 import time
 
 import rclpy
 from rclpy.node import Node
-from std_msgs.msg import Bool, Float32
+from std_msgs.msg import Bool, Float32, String
 from std_srvs.srv import Trigger
 from rcl_interfaces.srv import SetParameters
 from rcl_interfaces.msg import Parameter, ParameterType, ParameterValue
@@ -81,6 +82,8 @@ class DistanceSpeedScaler(Node):
         self._speed_pub = self.create_publisher(Float32, '/robot/speed_factor', 10)
         # The scaler owns max_speed; headset and console send requests and show this.
         self._max_pub = self.create_publisher(Float32, '/robot/max_speed', 10)
+        # Compact state for robot_status ("why is it not moving?").
+        self._state_pub = self.create_publisher(String, '/robot/scaler_state', 10)
         self.param_cli = self.create_client(
             SetParameters,
             f"/{self.get_parameter('relay_node').value}/set_parameters")
@@ -131,6 +134,17 @@ class DistanceSpeedScaler(Node):
         else:
             self.get_logger().warn('HOME: /dpp_playback/home nicht bereit')
 
+    def _publish_state(self, enabled: bool, override: bool, stale: bool, raw) -> None:
+        self._state_pub.publish(String(data=json.dumps({
+            'mode': 'AUTO' if enabled else 'MANUAL',
+            'override': override,
+            'dist': None if (stale or raw is None) else round(float(raw), 3),
+            'stale': bool(stale),
+            'live_speed': round(float(self._v_out), 3),
+            'max_speed': float(self.get_parameter('max_speed').value),
+            'd_near': float(self.get_parameter('d_near').value),
+        })))
+
     def _band(self, d: float) -> float:
         dn = float(self.get_parameter('d_near').value)
         df = float(self.get_parameter('d_far').value)
@@ -170,6 +184,8 @@ class DistanceSpeedScaler(Node):
                 self.get_logger().info(
                     f'STOP — {reason} → Playback pausiert' if desired_paused
                     else 'WEITER — AUTO + Mensch da → Playback resumed')
+
+        self._publish_state(enabled, override, stale, raw)
 
         if not enabled:
             now = time.monotonic()

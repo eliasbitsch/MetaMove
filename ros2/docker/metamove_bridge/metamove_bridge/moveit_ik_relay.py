@@ -92,6 +92,10 @@ class MoveItIkRelay(Node):
 
         self.ik_cli = self.create_client(GetPositionIK, '/compute_ik')
         self.fk_cli = self.create_client(GetPositionFK, '/compute_fk')
+        # The box this node enforces, for the headset visualisation (SafetyBoxVisual):
+        # [min x, y, z, max x, y, z] in base_link, 1 Hz - Unity never has its own copy.
+        self._box_pub = self.create_publisher(Float64MultiArray, '/robot/safety_box', 10)
+        self.create_timer(1.0, self._publish_box)
         self.get_logger().info('Waiting for /compute_ik service...')
         while not self.ik_cli.wait_for_service(timeout_sec=2.0):
             self.get_logger().info('Still waiting for /compute_ik...')
@@ -153,6 +157,12 @@ class MoveItIkRelay(Node):
         self._in_flight = True
         future = self.ik_cli.call_async(req)
         future.add_done_callback(self._on_ik_response)
+
+    def _publish_box(self) -> None:
+        if not self.get_parameter('safety_box_enabled').value:
+            return
+        lo, hi = self._box()
+        self._box_pub.publish(Float64MultiArray(data=[float(v) for v in lo + hi]))
 
     def _box(self):
         return (list(self.get_parameter('safety_box_min').value),

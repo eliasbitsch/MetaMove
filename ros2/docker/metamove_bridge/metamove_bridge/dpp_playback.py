@@ -31,6 +31,7 @@ Live speed change for the 4 phases:
 from __future__ import annotations
 
 import math
+import json
 import random
 import threading
 import time
@@ -39,7 +40,7 @@ from pathlib import Path
 import rclpy
 from rclpy.action import ActionClient
 from rclpy.node import Node
-from std_msgs.msg import Int32
+from std_msgs.msg import String, Int32
 from std_srvs.srv import Trigger
 
 from moveit_msgs.action import MoveGroup
@@ -65,8 +66,15 @@ class DppPlayback(Node):
         self.declare_parameter('dwell_seconds', 0.5)
         self.declare_parameter('reshuffle_each_pass', False)
         self.declare_parameter('joint_tolerance_rad', 0.005)
+        # Real robot: never start moving just because ROS came up (robot_profile.yaml).
+        self.declare_parameter('start_paused', False)
 
         self._paused = False
+        # Reported on /dpp/state for robot_status: running | paused | homing | at_home | stopped
+        self._state = 'running'
+        if bool(self.get_parameter('start_paused').value):
+            self._paused, self._state = True, 'paused'
+        self._wp_name = ''
         self._goal_handle = None
         self._goal_lock = threading.Lock()
         self._stop = False
@@ -83,6 +91,8 @@ class DppPlayback(Node):
         self.create_service(Trigger, '~/resume', self._svc_resume)
         self.create_service(Trigger, '~/stop', self._svc_stop)
         self.create_service(Trigger, '~/home', self._svc_home)
+        self._state_pub = self.create_publisher(String, '/dpp/state', 10)
+        self.create_timer(0.25, self._publish_state)
 
         # Worker thread runs the playback loop; main thread spins ROS.
         self._worker = threading.Thread(target=self._run, daemon=True)
@@ -109,8 +119,13 @@ class DppPlayback(Node):
             self.get_logger().warn(f'skipped {len(wps) - len(valid)} malformed waypoints')
         return valid
 
+    def _publish_state(self) -> None:
+        self._state_pub.publish(String(data=json.dumps({'state': self._state, 'wp': self._wp_name})))
+
     def _svc_pause(self, _req, resp):
         self._paused = True
+        if self._state != 'at_home':
+            self._state = 'paused'
         with self._goal_lock:
             if self._goal_handle is not None:
                 self._goal_handle.cancel_goal_async()
@@ -120,6 +135,7 @@ class DppPlayback(Node):
 
     def _svc_resume(self, _req, resp):
         self._paused = False
+        self._state = 'running'
         resp.success = True
         resp.message = 'resumed'
         return resp
@@ -127,6 +143,7 @@ class DppPlayback(Node):
     def _svc_stop(self, _req, resp):
         self._stop = True
         self._paused = True
+        self._state = 'stopped'
         with self._goal_lock:
             if self._goal_handle is not None:
                 self._goal_handle.cancel_goal_async()
@@ -223,13 +240,17 @@ class DppPlayback(Node):
                 self._go_home = False
                 self._paused = True
                 self.get_logger().info('HOME — fahre zu [0,0,0,0,90,0] und bleibe stehen')
+                self._state, self._wp_name = 'homing', 'HOME'
                 self._execute_one({'name': 'HOME',
                                    'joints': [0.0, 0.0, 0.0, 0.0, 1.5707963, 0.0]})
+                if self._paused and self._state == 'homing':
+                    self._state = 'at_home'
                 continue
             if self._paused:
                 time.sleep(0.2)
                 continue
             wp = self._waypoints[order[i]]
+            self._state, self._wp_name = 'running', wp['name']
             v = float(self.get_parameter('velocity_scaling').value)
             self.get_logger().info(
                 f'pass {pass_count} · {wp["name"]} · v={v:.2f} · ok={ok_count} fail={fail_count}'

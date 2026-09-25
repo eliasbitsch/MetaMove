@@ -19,6 +19,7 @@ and switches back to "Headset".
 from __future__ import annotations
 
 import argparse
+import json
 import math
 import threading
 import tkinter as tk
@@ -41,7 +42,7 @@ BASELINE = (1.5, 0.30, 0.10)
 class Console:
     def __init__(self, root: tk.Tk, ros: roslibpy.Ros) -> None:
         self.root, self.ros = root, ros
-        self.state = {"max": None, "speed": None, "joints": None, "override": False}
+        self.state = {"max": None, "speed": None, "joints": None, "override": False, "status": None}
         self.lock = threading.Lock()
 
         self.max_req = roslibpy.Topic(ros, "/quest/max_speed", "std_msgs/Float32")
@@ -50,6 +51,8 @@ class Console:
             lambda m: self._set("max", m["data"]))
         roslibpy.Topic(ros, "/robot/speed_factor", "std_msgs/Float32").subscribe(
             lambda m: self._set("speed", m["data"]))
+        roslibpy.Topic(ros, "/robot/status", "std_msgs/String").subscribe(
+            lambda m: self._set("status", json.loads(m["data"])))
         roslibpy.Topic(ros, "/joint_states", "sensor_msgs/JointState", throttle_rate=100).subscribe(
             lambda m: self._set("joints", m["position"]))
 
@@ -59,7 +62,10 @@ class Console:
         mid = ("Segoe UI", 12)
 
         self.conn = ttk.Label(root, text="", font=mid)
-        self.conn.grid(row=0, column=0, columnspan=3, sticky="w")
+        self.conn.grid(row=12, column=0, columnspan=3, sticky="w")
+        # Why the robot is (not) moving - from robot_status.
+        self.status_lbl = tk.Label(root, text="", font=("Segoe UI", 15, "bold"), anchor="w", justify="left")
+        self.status_lbl.grid(row=0, column=0, columnspan=3, sticky="ew", pady=(0, 4))
 
         path = ttk.LabelFrame(root, text=" Taught path ", padding=10)
         path.grid(row=1, column=0, columnspan=3, sticky="ew", pady=8)
@@ -159,6 +165,15 @@ class Console:
                                  else "no speed from the scaler")
         self.warn.configure(text="PC test active: no proximity slow-down, no headset-off stop. "
                                  "Hand on the e-stop." if s["override"] else "")
+        st = s["status"]
+        colors = {"ok": "#2e7d32", "info": "#1565c0", "warn": "#e65100", "error": "#c62828"}
+        if st:
+            text = ("MOVING: " if st["moving"] else "STOPPED: ") + st["reason"]
+            if st["hint"]:
+                text += "\n\u2192 " + st["hint"]
+            self.status_lbl.configure(text=text, fg=colors.get(st["level"], "black"))
+        else:
+            self.status_lbl.configure(text="no robot status (robot_status node not running?)", fg="#c62828")
         if s["joints"]:
             self.joint_lbl.configure(text="joints [deg]  " + "  ".join(
                 f"{math.degrees(v):+7.1f}" for v in s["joints"][:6]))
