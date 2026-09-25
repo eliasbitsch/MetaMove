@@ -47,6 +47,32 @@ $fw = Get-NetFirewallRule -Direction Inbound -Enabled True -Action Allow -ErrorA
 Check 'Firewall EGM UDP' ($null -ne $fw) $(if ($fw) { "$EgmPort inbound allowed" } else {
     "as admin: New-NetFirewallRule -DisplayName 'MetaMove EGM $EgmPort' -Direction Inbound -Protocol UDP -LocalPort $EgmPort -Action Allow" })
 
+# WSL without mirrored networking (Windows Server 2022, the lab PC) only exposes container
+# ports on 127.0.0.1. The Quest comes in over WLAN, so forward <WLAN IP>:10000 -> 127.0.0.1:10000,
+# re-pointed on every start because the WLAN IP comes from DHCP. Needs an admin shell.
+$wslcfg = Join-Path $env:USERPROFILE '.wslconfig'
+$mirrored = (Test-Path $wslcfg) -and ((Get-Content $wslcfg -Raw) -match 'networkingMode\s*=\s*mirrored')
+if (-not $mirrored) {
+    $wlan = Get-NetIPAddress -AddressFamily IPv4 -ErrorAction SilentlyContinue |
+            Where-Object { $_.InterfaceAlias -match 'Wi-?Fi|WLAN' -and $_.IPAddress -notlike '169.254.*' } |
+            Select-Object -First 1
+    if ($wlan) {
+        $existing = netsh interface portproxy show v4tov4 | Select-String '^\s*(\S+)\s+10000\s'
+        foreach ($e in $existing) {
+            $addr = ($e.Line -split '\s+' | Where-Object { $_ })[0]
+            if ($addr -ne $wlan.IPAddress) { netsh interface portproxy delete v4tov4 listenaddress=$addr listenport=10000 | Out-Null }
+        }
+        netsh interface portproxy add v4tov4 listenaddress=$($wlan.IPAddress) listenport=10000 connectaddress=127.0.0.1 connectport=10000 | Out-Null
+        if (-not (Get-NetFirewallRule -DisplayName 'MetaMove Quest ROS-TCP 10000' -ErrorAction SilentlyContinue)) {
+            New-NetFirewallRule -DisplayName 'MetaMove Quest ROS-TCP 10000' -Direction Inbound -Protocol TCP -LocalPort 10000 -Action Allow | Out-Null
+        }
+        $ok = (netsh interface portproxy show v4tov4 | Select-String "$($wlan.IPAddress)\s+10000").Count -gt 0
+        Check 'Quest WLAN forward' $ok "$($wlan.IPAddress):10000 -> WSL (Quest ros_ip.txt = this address)"
+    } else {
+        Check 'Quest WLAN forward' $false 'no WLAN address found'
+    }
+}
+
 # --- 2. controller over RWS (one session) --------------------------------------
 $ping = Test-Connection -ComputerName $RobotIp -Count 1 -Quiet -ErrorAction SilentlyContinue
 Check 'Controller reachable' $ping $RobotIp
