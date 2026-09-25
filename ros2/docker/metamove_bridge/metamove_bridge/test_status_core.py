@@ -22,7 +22,14 @@ def test_bridge_missing():
 
 
 def test_no_packets_from_controller():
-    assert "no EGM packets" in run(egm={**EGM_OK, "rx_hz": 0.0})["reason"]
+    r = run(egm={**EGM_OK, "rx_hz": 0.0})
+    assert "no EGM packets" in r["reason"] and "MetaJointMain" in r["hint"]
+
+
+def test_bridge_alive_but_controller_silent_is_not_bridge_down():
+    # The bridge reports rx 0 on a socket timeout; that must not read as "bridge down".
+    silent = {"rapid": 0, "motors": 0, "armed": False, "cmd_fresh": False, "rx_hz": 0.0}
+    assert run(egm=silent)["reason"] == "no EGM packets from the controller"
 
 
 def test_rapid_stopped_is_the_first_answer():

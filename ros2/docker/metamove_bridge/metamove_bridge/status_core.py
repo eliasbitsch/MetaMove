@@ -34,8 +34,9 @@ def decide(egm: dict | None, egm_age: float | None,
         return _res(False, "error", "EGM bridge not running",
                     "start bridge/egm-bridge/egm_bridge_servo.py (metamove_up.ps1 does it)")
     if egm.get("rx_hz", 0.0) < 50.0:
-        return _res(False, "error", "no EGM packets from the controller",
-                    "check the Ethernet cable / NIC 192.168.125.100 and that MetaJointMain is loaded")
+        return _res(False, "warn", "no EGM packets from the controller",
+                    "PP on MetaJointMain (console button) + Play at the pendant; "
+                    "if it runs: Ethernet cable / NIC 192.168.125.100")
     if egm.get("motors") != MOTORS_ON:
         return _res(False, "warn", "motors off", "Motors On at the pendant")
     if egm.get("rapid") != RAPID_RUNNING:

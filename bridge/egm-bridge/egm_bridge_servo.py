@@ -178,6 +178,12 @@ def main() -> int:
             try:
                 data, addr = sock.recvfrom(4096)
             except socket.timeout:
+                # No EGM traffic for 1 s (RAPID not in MetaJointMain / EGM not active):
+                # still report, so robot_status says "no EGM packets" and not "bridge down".
+                guard.armed = False
+                status_pub.publish(roslibpy.Message({"data": json.dumps({
+                    "rapid": 0, "motors": 0, "armed": False, "cmd_fresh": False, "rx_hz": 0.0,
+                })}))
                 continue
             t_recv = time.monotonic()
             try:
