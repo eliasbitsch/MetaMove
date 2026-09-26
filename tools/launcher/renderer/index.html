@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; font-src 'self'">
+  <title>MetaMove Launcher</title>
+  <link rel="stylesheet" href="../node_modules/@fontsource-variable/figtree/index.css">
+  <link rel="stylesheet" href="../node_modules/@fontsource/barlow-semi-condensed/500.css">
+  <link rel="stylesheet" href="../node_modules/@fontsource/barlow-semi-condensed/600.css">
+  <link rel="stylesheet" href="../node_modules/@fontsource-variable/jetbrains-mono/index.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-phase="down">
+  <header class="titlebar">
+    <div class="brand">
+      <svg class="mark" viewBox="0 0 32 32" aria-hidden="true">
+        <rect width="32" height="32" rx="9" class="mark-bg"/>
+        <path d="M5.5 22.5V10l5.25 7L16 10v12.5" class="mark-m"/>
+        <path d="M16 22.5V10l5.25 7L26.5 10v12.5" class="mark-m mark-m2"/>
+      </svg>
+      <span class="wordmark">MetaMove</span>
+      <span class="eyebrow">Launcher</span>
+    </div>
+    <div class="titlebar-right">
+      <span class="demo-badge" id="demoBadge" hidden>Demo · not wired</span>
+      <div class="winctl">
+        <button data-win="min" aria-label="Minimize"><svg viewBox="0 0 10 10"><path d="M1 5h8"/></svg></button>
+        <button data-win="max" aria-label="Maximize"><svg viewBox="0 0 10 10"><rect x="1.5" y="1.5" width="7" height="7" rx="1"/></svg></button>
+        <button data-win="close" aria-label="Close" class="close"><svg viewBox="0 0 10 10"><path d="M2 2l6 6M8 2l-6 6"/></svg></button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="control">
+      <h1 id="headline">Off</h1>
+
+      <div class="actions">
+        <button class="power" id="power">
+          <span class="power-glyph" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M12 3v8"/><path d="M6.3 6.8a8 8 0 1 0 11.4 0"/></svg>
+          </span>
+          <span class="power-label" id="powerLabel">Start</span>
+        </button>
+
+        <button class="pill" id="questBtn">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 9.5a3 3 0 0 1 3-3h11a3 3 0 0 1 3 3v4a3 3 0 0 1-3 3h-2.6a2 2 0 0 1-1.6-.8l-.5-.7a1 1 0 0 0-1.6 0l-.5.7a2 2 0 0 1-1.6.8H6.5a3 3 0 0 1-3-3z"/></svg>
+          <span id="questLabel">Restart app</span>
+        </button>
+
+        <button class="pill" id="streamBtn" hidden>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5.5" width="18" height="11" rx="2"/><path d="M9 20h6"/></svg>
+          Headset view
+        </button>
+      </div>
+
+      <div class="links">
+        <button class="link" data-dash="">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V5M4 19h16M8 15l4-4 3 3 5-6"/></svg>
+          <span>Dashboard</span>
+          <svg class="arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 11l6-6M6 5h5v5"/></svg>
+        </button>
+        <button class="link" data-dash="/hmi">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7h9M18 7h1M5 17h1M10 17h9M5 12h4M13 12h6"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/><circle cx="11" cy="12" r="2"/></svg>
+          <span>Control panel</span>
+          <svg class="arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 11l6-6M6 5h5v5"/></svg>
+        </button>
+      </div>
+
+      <div class="pendant" id="pendant" data-kind="play" role="status" aria-live="polite" hidden>
+        <svg class="pendant-art" viewBox="0 0 200 150" aria-hidden="true">
+          <!-- OmniCore FlexPendant, landscape: screen left, e-stop and Play right -->
+          <rect class="p-body" x="8" y="18" width="184" height="114" rx="16"/>
+          <rect class="p-screen" x="20" y="30" width="116" height="90" rx="7"/>
+          <path class="p-lines" d="M32 46h52M32 58h78M32 70h40"/>
+          <circle class="p-estop-ring" cx="165" cy="47" r="15"/>
+          <circle class="p-estop" cx="165" cy="47" r="10"/>
+          <circle class="p-ring r1" cx="165" cy="96" r="13"/>
+          <circle class="p-ring r2" cx="165" cy="96" r="13"/>
+          <g class="p-play-btn">
+            <circle class="p-play" cx="165" cy="96" r="13"/>
+            <path class="p-play-glyph" d="M161 89.5v13l10-6.5z"/>
+          </g>
+        </svg>
+        <div>
+          <h2 class="pendant-title" id="pendantTitle">Press Play on the FlexPendant</h2>
+          <p class="pendant-text" id="pendantText"></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="chain" aria-label="System status">
+      <div class="chain-head">
+        <h2>Status</h2>
+        <span class="count" id="count"></span>
+      </div>
+      <ol class="nodes" id="nodes"></ol>
+
+      <div class="observers">
+        <ol class="nodes flat" id="observers"></ol>
+      </div>
+    </section>
+  </main>
+
+  <footer class="log" id="log" aria-live="polite"></footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

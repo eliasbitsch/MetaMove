@@ -4,10 +4,13 @@
 
 .DESCRIPTION
   1. Checks the robot network (NIC 192.168.125.100, firewall for EGM UDP 6515).
-  2. Reads the controller over RWS (one session, read-only): state, mode, program pointer.
+  2. Reads the controller over RWS (one session): state, mode, program pointer. A wrong
+     pointer (e.g. after 'PP to Main' or a mode switch) is set to MetaJointMain - RWS allows
+     that only in AUTO with RAPID stopped, otherwise it says what to do on the pendant.
   3. Starts the ROS side in WSL/Docker (compose service "robot" = metamove_real.launch.py).
-  4. Starts the EGM bridge in its own window, restarted automatically if it exits.
-  5. Opens the robot console, forwards the Quest over USB when one is connected.
+  4. Starts the EGM bridge in its own window, restarted automatically if it exits
+     (-Hidden: no window, output to %TEMP%\metamove-egm-bridge.log).
+  5. Opens the robot console (not with -NoConsole), forwards the Quest over USB when one is connected.
   6. Prints a checklist and the robot's own status ("why is it not moving").
 
   Nothing here moves the robot: the path starts paused, and the bridge only passes
@@ -23,7 +26,8 @@ param(
     [int]$EgmPort = 6515,
     [string]$RosIp = '',            # IP the Quest should use; empty = USB (adb reverse)
     [switch]$NoConsole,
-    [switch]$NoBridge
+    [switch]$NoBridge,
+    [switch]$Hidden                 # launcher: bridge without a window, log file instead
 )
 $ErrorActionPreference = 'Continue'
 $repo = Split-Path $PSScriptRoot -Parent
@@ -88,9 +92,28 @@ if ($ping) {
     $op = (Rws '/rw/panel/opmode').state[0].opmode
     $pp = (Rws '/rw/rapid/tasks/T_ROB1/pcp').state[0]
     Check 'Controller state' ($st -eq 'motoron') "$st / $op"
+    function RwsPost([string]$path, [string]$body = '') {
+        & curl.exe -sk --anyauth -u 'Default User:robotics' -c $jar -b $jar --max-time 8 -o NUL -w '%{http_code}' `
+            -H 'Accept: application/hal+json;v=2.0' -H 'Content-Type: application/x-www-form-urlencoded;v=2.0' `
+            -X POST -d $body "https://$RobotIp$path"
+    }
     $ppOk = $pp.routinename -eq 'MetaJointMain'
-    Check 'Program pointer' $ppOk $(if ($ppOk) { 'MetaMoveJointStream/MetaJointMain' } else {
-        "$($pp.modulemame)/$($pp.routinename) - pendant: PP to routine MetaJointMain (not 'PP to Main')" })
+    $ppNote = ''
+    if (-not $ppOk) {
+        $exec = (Rws '/rw/rapid/execution').state[0].ctrlexecstate
+        if ($op -eq 'AUTO' -and $exec -eq 'stopped') {
+            RwsPost '/rw/mastership/edit/request' | Out-Null
+            try { RwsPost '/rw/rapid/tasks/T_ROB1/pcp/routine' 'routine=MetaJointMain&userlevel=FALSE' | Out-Null }
+            finally { RwsPost '/rw/mastership/edit/release' | Out-Null }
+            $pp = (Rws '/rw/rapid/tasks/T_ROB1/pcp').state[0]
+            $ppOk = $pp.routinename -eq 'MetaJointMain'
+            $ppNote = ' (set over RWS)'
+        } else {
+            $ppNote = " - RWS can set it only in AUTO with RAPID stopped (now $op, RAPID $exec)"
+        }
+    }
+    Check 'Program pointer' $ppOk $(if ($ppOk) { "MetaMoveJointStream/MetaJointMain$ppNote" } else {
+        "$($pp.modulemame)/$($pp.routinename)$ppNote - pendant: PP to routine MetaJointMain (not 'PP to Main')" })
 }
 
 # --- 3. ROS side in WSL/Docker --------------------------------------------------
@@ -104,30 +127,50 @@ $deadline = (Get-Date).AddSeconds(90)
 do {
     Start-Sleep 3
     $rb = (Test-NetConnection 127.0.0.1 -Port 9090 -WarningAction SilentlyContinue).TcpTestSucceeded
-    $tcp = (Test-NetConnection 127.0.0.1 -Port 10000 -WarningAction SilentlyContinue).TcpTestSucceeded
+    # Listener check, never a connect: ros_tcp_endpoint would route its output to the probe
+    # and cut off an already connected headset.
+    $tcp = [bool]([Net.NetworkInformation.IPGlobalProperties]::GetIPGlobalProperties().GetActiveTcpListeners() |
+        Where-Object { $_.Port -eq 10000 -and ([Net.IPAddress]::IsLoopback($_.Address) -or $_.Address.Equals([Net.IPAddress]::Any)) })
 } until (($rb -and $tcp) -or (Get-Date) -gt $deadline)
 Check 'ROS launch (robot)' ($rb -and $tcp) $(if ($rb -and $tcp) { 'rosbridge :9090, ROS-TCP :10000' } else {
     "not up - wsl -e docker logs metamove-ros2-robot-1" })
 
 # --- 4. EGM bridge, supervised -----------------------------------------------------
 if (-not $NoBridge) {
-    $running = Get-CimInstance Win32_Process | Where-Object { $_.CommandLine -like '*egm_bridge_servo.py*' }
+    $running = Get-CimInstance Win32_Process | Where-Object { $_.CommandLine -like '*egm_bridge_servo.py*' -or $_.CommandLine -like '*metamove-egm-bridge-loop*' }
     if ($running) {
         Check 'EGM bridge' $true "already running (pid $($running.ProcessId -join ','))"
     } else {
         $loop = @"
 `$host.UI.RawUI.WindowTitle = 'MetaMove EGM bridge'
 while (`$true) {
+  # No robot cable: $PcIp is not usable yet (adapter down, address 'Tentative') and the
+  # bridge could not bind - wait quietly instead of crash-looping.
+  `$waited = `$false
+  while ((Get-NetIPAddress -IPAddress $PcIp -ErrorAction SilentlyContinue).AddressState -ne 'Preferred') {
+    if (-not `$waited) { Write-Host "waiting for the robot cable - $PcIp is not up yet (plug the GoFa into the robot NIC)" -ForegroundColor Yellow; `$waited = `$true }
+    Start-Sleep 2
+  }
+  if (`$waited) { Write-Host 'robot network up - starting the bridge' -ForegroundColor Green }
   python -u '$repo\bridge\egm-bridge\egm_bridge_servo.py' --host $PcIp --port $EgmPort --rosbridge-host 127.0.0.1 -v
   if (`$LASTEXITCODE -eq 0) { break }
   Write-Host "bridge exited (`$LASTEXITCODE) - restarting in 2 s" -ForegroundColor Yellow
   Start-Sleep 2
 }
 "@
-        Start-Process powershell.exe -ArgumentList '-NoExit', '-NoProfile', '-Command', $loop
+        if ($Hidden) {
+            $bridgeLog = Join-Path $env:TEMP 'metamove-egm-bridge.log'
+            # As a script file: a multi-line -Command does not survive a hidden Start-Process
+            # intact (python got no arguments). The name lets the launcher's stop find it.
+            $loopFile = Join-Path $env:TEMP 'metamove-egm-bridge-loop.ps1'
+            Set-Content $loopFile "& {`n$loop`n} *>> '$bridgeLog'" -Encoding utf8
+            Start-Process powershell.exe -WindowStyle Hidden -ArgumentList '-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', "`"$loopFile`""
+        } else {
+            Start-Process powershell.exe -ArgumentList '-NoExit', '-NoProfile', '-Command', $loop
+        }
         Start-Sleep 6
         $running = Get-CimInstance Win32_Process | Where-Object { $_.CommandLine -like '*egm_bridge_servo.py*' }
-        Check 'EGM bridge' ($null -ne $running) 'own window, restarts itself'
+        Check 'EGM bridge' ($null -ne $running) $(if ($Hidden) { "no window, restarts itself, log $bridgeLog" } else { 'own window, restarts itself' })
     }
 }
 

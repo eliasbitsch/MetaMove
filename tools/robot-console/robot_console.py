@@ -3,7 +3,7 @@
 A small Tk window next to the pendant. Talks to ROS through rosbridge (the same
 ws://127.0.0.1:9090 the EGM bridge uses):
 
-  Start / Stop / Home   -> /dpp_playback/resume | pause | home   (Trigger)
+  Start / Stop / Home   -> /dpp_playback/start (via HOME) | pause | home   (Trigger)
   Max speed -/+ 10 %    -> /quest/max_speed request, shown from /robot/max_speed
   Baseline profile      -> fixed "100 %": relay time_scale 1.5, MoveIt vel 0.30 / acc 0.10,
                            TCP capped at 0.38 m/s by the relay
@@ -80,7 +80,7 @@ class Console:
         path = ttk.LabelFrame(root, text=" Taught path ", padding=10)
         path.grid(row=1, column=0, columnspan=3, sticky="ew", pady=8)
         tk.Button(path, text="▶  Start", font=big, bg="#2e7d32", fg="white", width=9,
-                  command=lambda: self._trigger("resume")).grid(row=0, column=0, padx=4)
+                  command=lambda: self._trigger("start")).grid(row=0, column=0, padx=4)
         tk.Button(path, text="■  Stop", font=big, bg="#c62828", fg="white", width=9,
                   command=lambda: self._trigger("pause")).grid(row=0, column=1, padx=4)
         tk.Button(path, text="⌂  Home", font=big, width=9,

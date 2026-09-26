@@ -1,0 +1,84 @@
+/* Headset view: the picture is the interface. Chrome only appears on hover. */
+:root {
+  --bg: oklch(19% 0.012 262);
+  --fg: oklch(95% 0.006 85);
+  --fg-2: oklch(72% 0.01 262);
+  --meta: oklch(64% 0.19 256);
+  --abb: oklch(60% 0.235 27);
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+* { box-sizing: border-box; margin: 0; }
+html, body { height: 100%; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: 'Figtree Variable', 'Segoe UI Variable Text', system-ui, sans-serif;
+  overflow: hidden;
+  user-select: none;
+  -webkit-app-region: drag;          /* drag the window by the picture */
+}
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+
+video {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;                 /* window is locked to 16:9, so nothing is cut */
+  opacity: 0; transition: opacity .6s var(--ease);
+}
+body[data-live="true"] video { opacity: 1; }
+
+.waiting {
+  position: absolute; inset: 0;
+  display: grid; place-content: center; justify-items: center; gap: 6px;
+  text-align: center;
+  transition: opacity .4s var(--ease);
+}
+body[data-live="true"] .waiting { opacity: 0; }
+.waiting svg {
+  width: 44px; height: 44px; margin-bottom: 8px;
+  fill: none; stroke: var(--fg-2); stroke-width: 1.2; stroke-linejoin: round;
+  animation: breathe 2.4s ease-in-out infinite;
+}
+.waiting p { font-weight: 600; font-size: 17px; }
+.waiting span { font-size: 13px; color: var(--fg-2); }
+
+.bar {
+  position: absolute; left: 0; right: 0; top: 0;
+  height: 48px; padding: 0 8px 0 16px;
+  display: flex; align-items: center; justify-content: space-between;
+  background: linear-gradient(oklch(19% 0.012 262 / 0.85), transparent);
+  opacity: 0; transform: translateY(-6px);
+  transition: opacity .25s var(--ease), transform .25s var(--ease);
+}
+body:hover .bar, body[data-live="false"] .bar { opacity: 1; transform: none; }
+.title { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 14px; }
+.mark { width: 20px; height: 20px; }
+.mark-bg { fill: oklch(28% 0.014 262); }
+.mark-m { fill: none; stroke: var(--fg); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.mark-m2 { stroke: var(--meta); }
+
+.live {
+  display: none; align-items: center; gap: 6px;
+  font-family: 'Barlow Semi Condensed', sans-serif; font-weight: 600;
+  font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+  padding: 2px 8px 2px 7px; border-radius: 999px;
+  background: oklch(100% 0 0 / 0.1);
+}
+.live::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--abb); }
+body[data-live="true"] .live { display: inline-flex; }
+
+.tools { display: flex; gap: 2px; -webkit-app-region: no-drag; }
+.tools button {
+  width: 34px; height: 34px; border-radius: 999px;
+  display: grid; place-items: center;
+  transition: background .15s;
+}
+.tools button:hover { background: oklch(100% 0 0 / 0.12); }
+.tools button.on { background: oklch(100% 0 0 / 0.16); }
+.tools button.on svg { stroke: var(--meta); }
+.tools .close:hover { background: var(--abb); }
+.tools svg { width: 16px; height: 16px; fill: none; stroke: var(--fg); stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
+button:focus-visible { outline: 2px solid var(--meta); outline-offset: 2px; }
+
+@keyframes breathe { 50% { opacity: .45; } }
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }

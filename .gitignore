@@ -107,3 +107,6 @@ lab_runs/
 # Internal AI working notes — kept in the private memory vault, not the repo
 _memory/
 
+
+# adb copied onto hosts without the Android SDK (lab PC) - found there by the launcher
+tools/platform-tools/
