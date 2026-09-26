@@ -50,6 +50,8 @@ class PreviewConfirm(Node):
         super().__init__('preview_confirm')
         self.declare_parameter('max_config_jump_deg', 45.0)   # preview IK may not flip the arm
         self.declare_parameter('line_max_jump_deg', 10.0)     # per 5 mm step on the executed line
+        # Apply only the hand's turn about the vertical axis (tool keeps pointing down).
+        self.declare_parameter('yaw_only', True)
         self._lock = threading.Lock()
         self._joints: list[float] | None = None
         self._box = None
@@ -138,7 +140,8 @@ class PreviewConfirm(Node):
         with self._lock:
             if self._handle is None or self._h0 is None:
                 return
-            p, q = relative_target(self._h0, self._handle, self._t0)
+            p, q = relative_target(self._h0, self._handle, self._t0,
+                                   yaw_only=bool(self.get_parameter('yaw_only').value))
         p, clamped = clamp_to_box(p, *self._box)
         seed = self._preview_q or self._joints
         if seed is None:

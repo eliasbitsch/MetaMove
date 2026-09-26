@@ -35,6 +35,14 @@ def test_rotation_is_applied_in_base_frame():
     assert p == TCP0[0]
 
 
+def test_yaw_only_ignores_tilt():
+    tilt = (math.sin(math.radians(20) / 2), 0.0, 0.0, math.cos(math.radians(20) / 2))   # 20 deg about x
+    _, q = relative_target(((0, 0, 0), I), ((0, 0, 0), tilt), TCP0)
+    assert q_angle_deg(q, TCP0[1]) < 1e-6
+    _, q = relative_target(((0, 0, 0), I), ((0, 0, 0), tilt), TCP0, yaw_only=False)
+    assert abs(q_angle_deg(q, TCP0[1]) - 20.0) < 1e-6
+
+
 def test_clamp_reports_and_limits():
     lo, hi = (-0.445, -0.623, 0.381), (0.660, 0.292, 0.869)
     c, clamped = clamp_to_box((0.5, -0.3, 0.2), lo, hi)

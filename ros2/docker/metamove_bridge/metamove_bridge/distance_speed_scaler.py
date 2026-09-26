@@ -48,6 +48,7 @@ class DistanceSpeedScaler(Node):
         # max_speed. Removes the proximity slow-down AND the headset-off stop - the
         # operator at the console and the e-stop are the only safety then.
         self.declare_parameter('distance_override', False)
+        self.declare_parameter('home_on_manual', True)   # AUTO -> MANUAL drives HOME first
         self.declare_parameter('stale_timeout', 0.5)   # Quest sends at 20 Hz; headset off -> stop within ~1 s
         self.declare_parameter('ema_alpha', 0.3)     # distance smoothing (0..1)
         self.declare_parameter('up_rate', 0.6)       # max live_speed rise /s
@@ -90,6 +91,7 @@ class DistanceSpeedScaler(Node):
         pb = self.get_parameter('playback_node').value
         self._pause_cli = self.create_client(Trigger, f'/{pb}/pause')
         self._resume_cli = self.create_client(Trigger, f'/{pb}/resume')
+        self._start_cli = self.create_client(Trigger, f'/{pb}/start')
         self._home_cli = self.create_client(Trigger, f'/{pb}/home')
         # Quest "Home" button (singularity rescue): drive the robot to the home pose.
         self.create_subscription(Bool, '/quest/go_home', self._on_go_home, 10)
@@ -111,19 +113,27 @@ class DistanceSpeedScaler(Node):
 
     def _on_enable_cmd(self, msg: Bool) -> None:
         on = bool(msg.data)
+        was_on = bool(self.get_parameter('enabled').value)
         # rclpy.Parameter (not rcl_interfaces.msg.Parameter, which is imported
         # below for the SetParameters service); value-only ctor infers BOOL.
         self.set_parameters([rclpy.Parameter('enabled', value=on)])
         self.get_logger().info(
             f"scaling_enabled <- {'AUTO' if on else 'MANUELL'} (Quest-Toggle)")
+        if was_on and not on and bool(self.get_parameter('home_on_manual').value):
+            # MANUAL always starts from HOME (J5 90 deg): a known, collision-free pose for
+            # the grab preview instead of wherever the path stopped. Only on the switch -
+            # the headset repeats its mode every few seconds.
+            self.get_logger().info('MANUELL -> HOME (Startpose fuer die Vorschau)')
+            self._on_go_home(Bool(data=True))
 
     def _on_start_path(self, msg: Bool) -> None:
         if not bool(msg.data):
             return
-        if self._resume_cli.service_is_ready():
-            self._resume_cli.call_async(Trigger.Request())
+        # A fresh start always goes HOME first, then the path from its first waypoint.
+        if self._start_cli.service_is_ready():
+            self._start_cli.call_async(Trigger.Request())
             self._was_paused = False
-            self.get_logger().info('START angefordert (Quest Automatik) -> /dpp_playback/resume')
+            self.get_logger().info('START angefordert (Quest Automatik) -> /dpp_playback/start (via HOME)')
 
     def _on_max_speed(self, msg: Float32) -> None:
         v = min(1.0, max(0.1, float(msg.data)))

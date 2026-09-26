@@ -28,23 +28,25 @@ waypoints:
   recorded_utc: '2026-09-25T11:23:36Z'
 - name: wp_04
   joints:
-  - -2.775238
-  - -0.158237
-  - 0.173543
-  - 0.006842
-  - 1.548034
-  - -1.091656
+  - -2.775121
+  - -0.176567
+  - 0.294069
+  - 0.006893
+  - 1.44584
+  - -1.092243
   recorded_utc: '2026-09-25T11:26:15Z'
-  note: x/y snapped onto wp_03, z + orientation as jogged (IK)
+  note: x/y snapped onto wp_03, z + orientation as jogged (IK) | z -5 cm (sign clearance,
+    2026-09-25)
 - name: wp_05
   joints:
-  - 0.075922
-  - 0.408756
-  - -0.464607
-  - -0.008727
-  - 1.631359
-  - 1.758943
+  - 0.075808
+  - 0.377621
+  - -0.315835
+  - -0.008726
+  - 1.513726
+  - 1.759855
   recorded_utc: '2026-09-25T11:27:25Z'
+  note: z -5 cm (sign clearance, 2026-09-25)
 - name: wp_06
   joints:
   - 0.078365

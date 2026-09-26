@@ -97,6 +97,14 @@ class DppPlayback(Node):
         self._goal_lock = threading.Lock()
         self._stop = False
         self._go_home = False
+        # Every (re)start of the path goes through HOME first: the robot may have been
+        # moved (MANUAL preview, Home, pendant jog) since the path last ran, and a direct
+        # plan from there to the next waypoint can sweep through the cell. Set on the
+        # first start, on /start, and on a resume after the arm moved while paused.
+        self._restart = True
+        self._interrupted = False     # the running goal was cancelled by pause/home/stop
+        self._pause_pose: list[float] | None = None
+        self.declare_parameter('restart_move_tol_deg', 2.0)
 
         self._waypoints = self._load_waypoints()
         if not self._waypoints:
@@ -111,6 +119,7 @@ class DppPlayback(Node):
         self._wp_pub = self.create_publisher(Int32, '/dpp/wp_index', 10)
         self.create_service(Trigger, '~/pause', self._svc_pause)
         self.create_service(Trigger, '~/resume', self._svc_resume)
+        self.create_service(Trigger, '~/start', self._svc_start)
         self.create_service(Trigger, '~/stop', self._svc_stop)
         self.create_service(Trigger, '~/home', self._svc_home)
         self._state_pub = self.create_publisher(String, '/dpp/state', 10)
@@ -145,7 +154,10 @@ class DppPlayback(Node):
         self._state_pub.publish(String(data=json.dumps({'state': self._state, 'wp': self._wp_name})))
 
     def _svc_pause(self, _req, resp):
+        if not self._paused:
+            self._pause_pose = list(self._joints_now) if self._joints_now else None
         self._paused = True
+        self._interrupted = True
         if self._state != 'at_home':
             self._state = 'paused'
         with self._goal_lock:
@@ -155,11 +167,41 @@ class DppPlayback(Node):
         resp.message = 'paused — cancelling current goal'
         return resp
 
+    def _moved_since_pause(self) -> bool:
+        if self._pause_pose is None or self._joints_now is None:
+            return True
+        dev = max(abs(a - b) for a, b in zip(self._pause_pose, self._joints_now))
+        return math.degrees(dev) > float(self.get_parameter('restart_move_tol_deg').value)
+
     def _svc_resume(self, _req, resp):
+        # Continue where the path stopped - unless the arm is no longer where it stopped.
+        if not self._paused:
+            resp.success = True
+            resp.message = 'already running'
+            return resp
+        if self._go_home or self._state in ('homing', 'at_home', 'stopped'):
+            # Home / Stop end the automatic path: only an explicit start (/start: headset
+            # "Automatik", console Start) runs it again - not a headset put back on, not a
+            # mode toggle racing the homing move.
+            resp.success = False
+            resp.message = 'path stopped (Home/Stop) - press Automatik / Start to run it again'
+            return resp
+        if self._state in ('at_home', 'stopped') or self._moved_since_pause():
+            self._restart = True
         self._paused = False
         self._state = 'running'
         resp.success = True
-        resp.message = 'resumed'
+        resp.message = 'resumed via HOME (arm moved since the pause)' if self._restart else 'resumed'
+        return resp
+
+    def _svc_start(self, _req, resp):
+        # Fresh start (headset "Automatik", console Start): HOME first, then wp 1.
+        self._restart = True
+        self._stop = False
+        self._paused = False
+        self._state = 'running'
+        resp.success = True
+        resp.message = 'starting: HOME, then the path from the first waypoint'
         return resp
 
     def _svc_stop(self, _req, resp):
@@ -177,6 +219,7 @@ class DppPlayback(Node):
         # Stop looping, plan a smooth move to the home pose, then stay there.
         self._paused = True
         self._go_home = True
+        self._interrupted = True
         with self._goal_lock:
             if self._goal_handle is not None:
                 self._goal_handle.cancel_goal_async()
@@ -360,13 +403,34 @@ class DppPlayback(Node):
             if self._paused:
                 time.sleep(0.2)
                 continue
+            if self._restart:
+                self.get_logger().info('START via HOME - fahre zu [0,0,0,0,90,0], dann ab dem ersten Wegpunkt')
+                self._state, self._wp_name = 'homing', 'HOME'
+                ok = self._execute_one({'name': 'HOME',
+                                        'joints': [0.0, 0.0, 0.0, 0.0, 1.5707963, 0.0]})
+                if ok and not self._paused:
+                    self._restart = False
+                    i = 0
+                elif not self._paused:
+                    # HOME could not be planned/executed: do not retry in a tight loop and
+                    # never skip it - hold paused, the next start tries HOME again.
+                    self.get_logger().error('START via HOME failed - path held (paused)')
+                    self._paused, self._state = True, 'paused'
+                # Paused on the way (headset off, too close): stay in restart mode,
+                # the next resume goes HOME again.
+                continue
             wp = self._waypoints[order[i]]
             self._state, self._wp_name = 'running', wp['name']
             v = float(self.get_parameter('velocity_scaling').value)
             self.get_logger().info(
                 f'pass {pass_count} · {wp["name"]} · v={v:.2f} · ok={ok_count} fail={fail_count}'
             )
+            self._interrupted = False
             success = self._execute_one(wp)
+            if not success and self._interrupted:
+                # Cancelled by a pause - same target again on resume, not the next one
+                # (even if the resume came before the cancelled goal reported back).
+                continue
             if success:
                 ok_count += 1
                 # Announce the reached waypoint's identity (stable index into the

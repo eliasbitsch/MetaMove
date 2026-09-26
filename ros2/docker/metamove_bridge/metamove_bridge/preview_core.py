@@ -37,10 +37,24 @@ def q_angle_deg(a: Quat, b: Quat) -> float:
     return math.degrees(2 * math.acos(min(1.0, d)))
 
 
-def relative_target(h0: tuple[Vec, Quat], h: tuple[Vec, Quat], t0: tuple[Vec, Quat]) -> tuple[Vec, Quat]:
+def twist_about_z(q: Quat) -> Quat:
+    """The part of rotation q that turns about the base z axis (swing-twist decomposition)."""
+    x, y, z, w = q
+    n = math.hypot(z, w)
+    return (0.0, 0.0, z / n, w / n) if n > 1e-9 else (0.0, 0.0, 0.0, 1.0)
+
+
+def relative_target(h0: tuple[Vec, Quat], h: tuple[Vec, Quat], t0: tuple[Vec, Quat],
+                    yaw_only: bool = True) -> tuple[Vec, Quat]:
+    """yaw_only: of the hand's rotation only the turn about the vertical axis is applied, so
+    the tool keeps pointing where it did (down, for pick & place). A hand never moves without
+    tilting a little; applying the full rotation sent the wrist into flips on the real path."""
     (h0p, h0q), (hp, hq), (t0p, t0q) = h0, h, t0
     p = tuple(t0p[i] + (hp[i] - h0p[i]) for i in range(3))
-    q = q_norm(q_mul(q_mul(hq, q_inv(h0q)), t0q))
+    d = q_norm(q_mul(hq, q_inv(h0q)))
+    if yaw_only:
+        d = twist_about_z(d)
+    q = q_norm(q_mul(d, t0q))
     return p, q  # type: ignore[return-value]
 
 
