@@ -8,7 +8,10 @@ namespace MetaMove.Interaction
     // Meta's DistantInteractionLineVisual hides its line on Select by design (it expects the
     // object to fly into the hand); with MoveFromTargetProvider the object stays at a distance
     // and is steered from there, so the link between hand and object should stay visible.
+    // Runs after PhantomGrabRelay (order 50): the grab transformer first moves the object 1:1
+    // with the hand, the relay then puts it where the target really is - read it only after that.
     [RequireComponent(typeof(LineRenderer))]
+    [DefaultExecutionOrder(100)]
     public class GrabRayVisual : MonoBehaviour
     {
         public DistanceHandGrabInteractable interactable;

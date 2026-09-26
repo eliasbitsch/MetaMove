@@ -61,9 +61,9 @@ namespace MetaMove.Robot.Ros
             if (json.Contains("\"executing\"")) return "Moving...";
             if (json.Contains("\"unreachable\"")) return "Unreachable";
             if (json.Contains("\"rejected\"")) return "Rejected - see console";
-            if (json.Contains("\"preview\"")) return "OK: move robot";
+            if (json.Contains("\"preview\"")) return "Move robot";
             if (json.Contains("\"done\"")) return "Done";
-            return "OK (grab first)";
+            return "Move robot";
         }
     }
 }

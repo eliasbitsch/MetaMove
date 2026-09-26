@@ -11,7 +11,7 @@ namespace MetaMove.EditorTools
     // Preview & confirm wiring (idempotent):
     //  - robot prefab: GhostPreview (translucent cyan ghost), and the grab handle's pose stream
     //    goes to preview_confirm (/metamove/preview_target) instead of the live IK relay;
-    //  - Scene_Robot: "OK" and "Reset" poke buttons in the third row, beside "Working area".
+    //  - Scene_Robot: "Move robot" and "Reset pose" poke buttons in the third row, beside "Working area".
     public static class PreviewConfirmSetup
     {
         const string Prefab = "Assets/MetaMove/Prefabs/Robot/MountedRobotAnchor.prefab";
@@ -57,8 +57,8 @@ namespace MetaMove.EditorTools
                 .First(t => t.name == "HeadPanels");
             var area = panels.Find("Btn_WorkArea");
             var home = panels.Find("Btn_Home");
-            Button(panels, home, area, "Btn_PreviewOK", "OK (grab first)", "confirm", -0.17f, true);
-            Button(panels, home, area, "Btn_PreviewReset", "Reset", "reset", +0.17f, false);
+            Button(panels, home, area, "Btn_PreviewOK", "Move robot", "confirm", -0.17f, true);
+            Button(panels, home, area, "Btn_PreviewReset", "Reset pose", "reset", +0.17f, false);
             EditorSceneManager.SaveScene(EditorSceneManager.GetActiveScene());
             Debug.Log("[PreviewConfirmSetup] PREVIEW_SETUP_DONE");
             if (Application.isBatchMode) EditorApplication.Exit(0);
