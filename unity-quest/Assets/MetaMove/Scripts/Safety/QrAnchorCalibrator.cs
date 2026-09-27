@@ -61,6 +61,14 @@ namespace MetaMove.Safety
         [Tooltip("World pose used for the auto-spawn when devAutoSpawnAtTransform is true. If null, spawns at this GameObject's transform.")]
         public Transform devSpawnPose;
 
+        [Tooltip("Unity Editor only (Play mode, e.g. Meta XR Simulator): there is no QR marker, so spawn the robot at editorSpawnPosition/Yaw instead. Never affects a device build.")]
+        public bool editorAutoSpawn = true;
+        public Vector3 editorSpawnPosition = new Vector3(-0.53f, 0.91f, 1.2f);   // robot base ~(0, 0.8, 1.6): table height, in front
+        public float editorSpawnYaw = 180f;
+
+        // QR detection skipped: explicit dev mode, or the Editor where no marker can be seen.
+        bool DevSpawn => devAutoSpawnAtTransform || (Application.isEditor && editorAutoSpawn);
+
         [Header("Events")]
         public UnityEvent<GameObject> onAnchorSpawned;
 
@@ -74,7 +82,7 @@ namespace MetaMove.Safety
 
         void OnEnable()
         {
-            if (devAutoSpawnAtTransform) return;
+            if (DevSpawn) return;
 
             if (MRUK.Instance != null)
             {
@@ -89,7 +97,13 @@ namespace MetaMove.Safety
 
         void Start()
         {
-            if (!devAutoSpawnAtTransform) return;
+            if (!DevSpawn) return;
+            if (!devAutoSpawnAtTransform)
+            {
+                SpawnAt(editorSpawnPosition, Quaternion.Euler(0f, editorSpawnYaw, 0f));
+                Debug.Log($"[QrAnchorCalibrator] EDITOR auto-spawn at {editorSpawnPosition} (no QR marker in the Editor).");
+                return;
+            }
             var src = devSpawnPose != null ? devSpawnPose : transform;
             SpawnAt(src.position, src.rotation);
             Debug.Log($"[QrAnchorCalibrator] DEV auto-spawn at {src.position} (QR detection skipped).");
@@ -97,7 +111,7 @@ namespace MetaMove.Safety
 
         void OnDisable()
         {
-            if (devAutoSpawnAtTransform) return;
+            if (DevSpawn) return;
 
             if (MRUK.Instance != null)
             {
@@ -108,7 +122,7 @@ namespace MetaMove.Safety
 
         void Update()
         {
-            if (devAutoSpawnAtTransform) return;
+            if (DevSpawn) return;
             // Count stable detections of the target payload. A trackable can persist across frames
             // without re-firing TrackableAdded, so we poll.
             if (_spawned != null && !rePlaceOnRedetect)
