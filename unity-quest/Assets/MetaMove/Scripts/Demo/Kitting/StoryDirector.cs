@@ -22,6 +22,8 @@ namespace MetaMove.Demo.Kitting
             [TextArea(2, 4)] public string caption;
             public Sprite image;
             public VideoClip clip;
+            [Tooltip("Spoken line (Qwen3-TTS, cloned voice), same text as the caption.")]
+            public AudioClip voice;
             [Tooltip("Hide after this many seconds; 0 = until the next beat.")]
             public float hold;
         }
@@ -29,6 +31,8 @@ namespace MetaMove.Demo.Kitting
         public KittingCell cell;
         public ProximitySpeedController speed;
         public StoryCard card;
+        [Tooltip("Plays the spoken lines; 2D, it is the narrator in the visitor's ear.")]
+        public AudioSource voiceSource;
         public List<Beat> beats = new List<Beat>();
 
         string _current;
@@ -61,7 +65,12 @@ namespace MetaMove.Demo.Kitting
             _beat = b; _current = key; _shownAt = Time.time;
             int idx = beats.IndexOf(b) + 1;
             card.Show(b.title, b.caption, b.image, b.clip, idx + " / " + beats.Count);
-            Debug.Log("[Story] " + key);
+            if (voiceSource != null)
+            {
+                voiceSource.Stop();
+                if (b.voice != null) { voiceSource.clip = b.voice; voiceSource.Play(); }
+            }
+            Debug.Log("[Story] " + key + (b.voice != null ? " (" + b.voice.length.ToString("F1") + " s)" : ""));
         }
 
         void OnCue(string key)
@@ -82,7 +91,8 @@ namespace MetaMove.Demo.Kitting
             if (_boundAt < 0f) _boundAt = Time.time;
 
             if (!_welcomed && Time.time - _boundAt > 1.5f) { _welcomed = true; Play("welcome"); }
-            if (_welcomed && !_storyTold && _current == "welcome" && Time.time - _shownAt > 12f) { _storyTold = true; Play("story"); }
+            float welcomeLen = Find("welcome") != null && Find("welcome").voice != null ? Find("welcome").voice.length + 2f : 12f;
+            if (_welcomed && !_storyTold && _current == "welcome" && Time.time - _shownAt > Mathf.Max(8f, welcomeLen)) { _storyTold = true; Play("story"); }
 
             float f = speed != null ? speed.Factor : 1f;
             if (!_stood && f <= 0.001f && cell.State == KittingCell.Phase.Running) { _stood = true; Play("standstill"); }
@@ -94,7 +104,12 @@ namespace MetaMove.Demo.Kitting
                 if (ca != null && ca.State == CarryableTray.Phase.Waiting) { _emptyAsked = true; Play("empty"); }
             }
 
-            if (_beat != null && _beat.hold > 0f && Time.time - _shownAt > _beat.hold) { card.Hide(); _beat = null; }
+            // A timed beat stays up at least as long as its line is being spoken.
+            if (_beat != null && _beat.hold > 0f)
+            {
+                float speaking = _beat.voice != null ? _beat.voice.length + 1.5f : 0f;
+                if (Time.time - _shownAt > Mathf.Max(_beat.hold, speaking)) { card.Hide(); _beat = null; }
+            }
         }
     }
 }

@@ -260,6 +260,19 @@ namespace MetaMove.EditorTools
             var story = root.AddComponent<StoryDirector>();
             story.cell = cell; story.speed = prox; story.card = card;
             story.beats = StoryDirector.DefaultBeats();
+            ApplyNarration(story.beats);
+            var menu = new GameObject("FingertipMenu").AddComponent<FingertipMenu>();
+            menu.transform.SetParent(root.transform, false);
+            menu.cell = cell; menu.speed = prox; menu.font = inter;
+            var lhs = FindPath("[BuildingBlock] Camera Rig/TrackingSpace/LeftHandAnchor/[BuildingBlock] Hand Tracking left");
+            var rhs = FindPath("[BuildingBlock] Camera Rig/TrackingSpace/RightHandAnchor/[BuildingBlock] Hand Tracking right");
+            menu.leftHand = lhs != null ? lhs.GetComponentInChildren<OVRSkeleton>(true) : null;
+            menu.rightHand = rhs != null ? rhs.GetComponentInChildren<OVRSkeleton>(true) : null;
+            if (menu.leftHand == null || menu.rightHand == null) Debug.LogWarning("[BariDemoAuthor] fingertip menu: hand skeletons not found");
+            story.voiceSource = root.AddComponent<AudioSource>();
+            story.voiceSource.playOnAwake = false;
+            story.voiceSource.spatialBlend = 0f;
+            story.voiceSource.volume = 1f;
 
             // Place by hand in the Simulator too: same flow as on the headset.
             placer.placeInEditor = true;
@@ -636,6 +649,39 @@ namespace MetaMove.EditorTools
             var sh = Shader.Find("MetaMove/UI Rounded Rect");
             if (sh == null) { Debug.LogError("[BariDemoAuthor] UI shader missing"); return; }
             AssetDatabase.CreateAsset(new Material(sh), path);
+        }
+
+        // docs/bari/narration.txt is the single source of truth for what is said: captions come
+        // from it, and the clips Qwen3-TTS made from it are attached by key.
+        const string NarrationFile = "../docs/bari/narration.txt";
+        const string NarrationAudio = "Assets/MetaMove/Audio/Narration/bari_nar_";
+
+        static void ApplyNarration(List<StoryDirector.Beat> beats)
+        {
+            var text = new Dictionary<string, string>();
+            if (System.IO.File.Exists(NarrationFile))
+            {
+                string key = null; var buf = new System.Text.StringBuilder();
+                foreach (var raw in System.IO.File.ReadAllLines(NarrationFile))
+                {
+                    var line = raw.Trim();
+                    if (line.StartsWith("#")) continue;
+                    if (line.StartsWith("[") && line.EndsWith("]"))
+                    {
+                        if (key != null) text[key] = buf.ToString().Trim();
+                        key = line.Substring(1, line.Length - 2); buf.Clear();
+                    }
+                    else if (line.Length > 0 && key != null) buf.Append(line).Append(' ');
+                }
+                if (key != null) text[key] = buf.ToString().Trim();
+            }
+            foreach (var b in beats)
+            {
+                if (text.TryGetValue(b.key, out var t) && t.Length > 0) b.caption = t;
+                b.voice = AssetDatabase.LoadAssetAtPath<AudioClip>(NarrationAudio + b.key + ".wav");
+            }
+            Debug.Log("[BariDemoAuthor] narration: " + text.Count + " lines, clips for "
+                      + beats.FindAll(b => b.voice != null).Count + "/" + beats.Count + " beats");
         }
 
         static List<Vector3> GridNests(int nx, int nz, float dx, float dz, float y)

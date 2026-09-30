@@ -269,6 +269,17 @@ namespace MetaMove.Demo.Kitting
             if (State == Phase.Waiting) EnterGuide();
         }
 
+        // Home from the fingertip menu: stop the line and park the arm; Restart resumes.
+        public void ParkHome()
+        {
+            if (!_bound) return;
+            if (_run != null) StopCoroutine(_run);
+            SetGuide(false);
+            State = Phase.Idle;
+            _run = StartCoroutine(MoveTo(home, Vector3.zero));
+            Emit("home", "Parked at home");
+        }
+
         // Teach: accept the tray under the TCP as the new work object.
         public void Teach()
         {

@@ -1,0 +1,32 @@
+# MetaMove Bari demo - narration, single source of truth for voice and story card.
+#
+# Each [key] matches a beat in StoryDirector. The text under it is spoken (cloned voice,
+# Qwen3-TTS) and shown on the story card. Lines starting with # are ignored.
+# Regenerate one line only:  generate_bari.py <key>
+
+[welcome]
+This arm is building kits: an ABB GoFa, life-size, picking gears at full speed. Keep an eye on the tray. It is running low.
+
+[story]
+Arms like this used to stand behind a fence. The safety standard now lets them share the floor with you, on one condition: the machine has to know where you are.
+
+[refill]
+The tray is almost empty. The next batch is waiting on the trolley behind you. Pick it up and load it into the rack, before the line stops.
+
+[standstill]
+It stopped. Not because anything broke. You are inside its reach.
+
+[recover]
+Step back. Notice that it does not pick up straight away? Slowing down is allowed to be abrupt. Speeding up is not.
+
+[empty]
+The robot has given up on the empty box. Take it out at the front and put it on the return lane below.
+
+[guide]
+The arm still believes in the old box. Pinch the glowing point on the tool and bring it over the new box, from where you stand. Roughly is enough. Then press Teach.
+
+[aligned]
+It found the box and lined itself up. You gave the intent, the machine added the precision.
+
+[release]
+Let go. The line runs again from the box you just showed it, at full speed now that the floor is clear. You never touched the arm.
