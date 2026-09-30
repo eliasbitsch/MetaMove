@@ -169,7 +169,9 @@ namespace MetaMove.Safety
             float dist = local ? localController.Distance : ComputeDistance();
 
             // --- connection: real ROS link state ---
-            if (_ros == null) _ros = ROSConnection.GetOrCreateInstance();
+            // Local mode never touches ROS: GetOrCreateInstance would spin up a connection
+            // thread that retries the endpoint forever.
+            if (_ros == null && useRos) _ros = ROSConnection.GetOrCreateInstance();
             bool connected = _ros != null && _ros.HasConnectionThread && !_ros.HasConnectionError;
             string connText = connected ? "CONNECTED" : "NOT CONNECTED";
 

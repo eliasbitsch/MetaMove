@@ -109,6 +109,31 @@ namespace MetaMove.Safety
             Debug.Log($"[QrAnchorCalibrator] DEV auto-spawn at {src.position} (QR detection skipped).");
         }
 
+        // Spawn without a QR marker (hand placement): robot base ends up at basePos. No
+        // spatial anchor is created here - the caller parents Root under its own persisted
+        // anchor once the base has been shifted into place (Placed turns true).
+        public GameObject SpawnWithBaseAt(Vector3 basePos, Quaternion rot)
+        {
+            Placed = false;
+            SpawnAt(basePos, rot, withAnchor: false);
+            StartCoroutine(PlaceBaseAt(basePos));
+            return _anchorGo;
+        }
+
+        public GameObject Root => _anchorGo;
+        public bool Placed { get; private set; }
+
+        System.Collections.IEnumerator PlaceBaseAt(Vector3 target)
+        {
+            yield return null;
+            yield return null;   // TwinAlignment applies its offset on the first frames
+            var ik = _spawned != null ? _spawned.GetComponentInChildren<MetaMove.Robot.Ros.IKTargetPosePublisher>(true) : null;
+            if (ik != null && ik.robotBase != null && _anchorGo != null)
+                _anchorGo.transform.position += target - ik.robotBase.position;
+            Placed = true;
+            Debug.Log($"[QrAnchorCalibrator] hand placement: robot base at {target}");
+        }
+
         void OnDisable()
         {
             if (DevSpawn) return;
@@ -202,7 +227,7 @@ namespace MetaMove.Safety
             _stableCount = 0;
         }
 
-        void SpawnAt(Vector3 qrPos, Quaternion qrRot)
+        void SpawnAt(Vector3 qrPos, Quaternion qrRot, bool withAnchor = true)
         {
             if (anchorPrefab == null)
             {
@@ -230,7 +255,7 @@ namespace MetaMove.Safety
             // OVRSpatialAnchor only works against the on-device XR runtime; adding it in the
             // Editor (Link or no-XR) is a known crash trigger after HMDLost — skip there.
 #if UNITY_ANDROID && !UNITY_EDITOR
-            if (!devAutoSpawnAtTransform)
+            if (!devAutoSpawnAtTransform && withAnchor)
             {
                 try { anchorGo.AddComponent<OVRSpatialAnchor>(); }
                 catch (System.Exception e) { Debug.LogWarning($"[QrAnchorCalibrator] OVRSpatialAnchor add failed: {e.Message}"); }

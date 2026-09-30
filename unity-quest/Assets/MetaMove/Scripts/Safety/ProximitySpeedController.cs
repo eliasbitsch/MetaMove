@@ -24,6 +24,8 @@ namespace MetaMove.Safety
         [Header("Smoothing")]
         [Range(0f, 1f)] public float emaAlpha = 0.3f;   // distance low-pass
         public float upRate = 0.6f;                     // max factor rise / s
+        [Tooltip("Measure on the floor plane only (ignore height). Floor rings then show exactly where the zones start.")]
+        public bool horizontalOnly = false;
 
         // Read by PickPlaceLoop and SafetyHud.
         public float Distance { get; private set; } = -1f;
@@ -47,7 +49,9 @@ namespace MetaMove.Safety
                 foreach (var p in humanPoints)
                 {
                     if (p == null) continue;
-                    float dd = Vector3.Distance(p.position, robotBase.position);
+                    Vector3 v = p.position - robotBase.position;
+                    if (horizontalOnly) v.y = 0f;
+                    float dd = v.magnitude;
                     if (dd < best) best = dd;
                 }
                 if (best < float.MaxValue) d = best;

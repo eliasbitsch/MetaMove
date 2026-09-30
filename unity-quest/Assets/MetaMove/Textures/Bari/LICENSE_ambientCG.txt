@@ -1,0 +1,2 @@
+Textures from ambientCG (https://ambientcg.com), licensed CC0 1.0 Universal.
+Metal051A, Metal009, Plastic015A, Metal027, Rubber004, Concrete034 - 1K JPG, Color + NormalGL.
