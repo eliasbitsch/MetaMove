@@ -530,7 +530,7 @@ namespace MetaMove.EditorTools
                 case "RackBlue":     return TexMat("RackBlue", "Metal027", new Color(0.12f, 0.33f, 0.78f), 0.35f, 0.45f, 3f, useAlbedo: false);   // powder coat: tint + normal map only
                 case "Roller":       return Mat("Roller", new Color(0.10f, 0.10f, 0.11f), 0.3f, 0.5f);
                 case "LabelHolder":  return Mat("LabelHolder", new Color(0.92f, 0.92f, 0.92f), 0f, 0.6f);
-                case "FacEpoxy":     return TexMat("FacEpoxy", "Concrete034", new Color(0.20f, 0.52f, 0.30f), 0f, 0.62f, 1.5f, useAlbedo: false);
+                case "FacEpoxy":     return TexMat("FacEpoxy", "Concrete034", new Color(0.74f, 0.76f, 0.78f), 0f, 0.55f, 1.5f, useAlbedo: false);   // light grey epoxy
                 case "FacConcrete":  return TexMat("FacConcrete", "Concrete034", new Color(0.85f, 0.85f, 0.82f), 0f, 0.1f, 1.5f);
                 case "FacYellow":    return Mat("FacYellow", new Color(0.98f, 0.76f, 0.05f), 0f, 0.4f);
                 case "FacHazard":    { var m = Mat("FacHazard", Color.white, 0f, 0.35f); m.SetTexture("_BaseMap", AssetDatabase.LoadAssetAtPath<Texture2D>(TexDir + "hazard_stripes.png")); return m; }

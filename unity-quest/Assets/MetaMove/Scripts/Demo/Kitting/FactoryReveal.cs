@@ -1,53 +1,55 @@
-using System.Collections;
 using UnityEngine;
 
 namespace MetaMove.Demo.Kitting
 {
     // The moment the cell is placed: the slab of factory floor spreads out from under the
     // robot, the wall rises out of the ground and the hall beam lowers in from above.
-    // Runs once each time the cell frame becomes active (it stays hidden until placement).
+    //
+    // Driven by a clock in Update rather than a coroutine, and the resting poses are taken
+    // once in Awake: whatever re-enables or re-parents the cell, every part always ends
+    // exactly where the builder put it.
     public class FactoryReveal : MonoBehaviour
     {
         public Transform floorIsland, wall, beam, portalMask;
         public float floorTime = 0.9f, wallTime = 0.8f, beamTime = 0.7f;
+        public float wallDrop = 2.9f, beamLift = 1.5f;
 
-        void OnEnable() => StartCoroutine(Reveal());
+        Vector3 _wall, _beam, _mask;
+        float _t = -1f;
+        bool _captured;
 
-        IEnumerator Reveal()
+        void Awake() => Capture();
+
+        void Capture()
         {
-            Vector3 wallPos = wall != null ? wall.localPosition : Vector3.zero;
-            Vector3 beamPos = beam != null ? beam.localPosition : Vector3.zero;
-            Vector3 maskPos = portalMask != null ? portalMask.localPosition : Vector3.zero;
-            if (floorIsland != null) floorIsland.localScale = new Vector3(0.001f, 1f, 0.001f);
-            if (wall != null) wall.localPosition = wallPos + Vector3.down * 2.9f;
-            if (portalMask != null) portalMask.localPosition = maskPos + Vector3.down * 2.9f;
-            if (beam != null) beam.localPosition = beamPos + Vector3.up * 1.5f;
+            if (_captured) return;
+            if (wall != null) _wall = wall.localPosition;
+            if (beam != null) _beam = beam.localPosition;
+            if (portalMask != null) _mask = portalMask.localPosition;
+            _captured = true;
+        }
 
-            for (float t = 0f; t < 1f; t += Time.deltaTime / floorTime)
-            {
-                float e = 1f - Mathf.Pow(1f - t, 3f);            // ease out
-                if (floorIsland != null) floorIsland.localScale = new Vector3(e, 1f, e);
-                yield return null;
-            }
-            if (floorIsland != null) floorIsland.localScale = Vector3.one;
+        void OnEnable() { Capture(); _t = 0f; Apply(0f); }
 
-            for (float t = 0f; t < 1f; t += Time.deltaTime / wallTime)
-            {
-                float e = 1f - Mathf.Pow(1f - t, 3f);
-                if (wall != null) wall.localPosition = wallPos + Vector3.down * 2.9f * (1f - e);
-                if (portalMask != null) portalMask.localPosition = maskPos + Vector3.down * 2.9f * (1f - e);
-                yield return null;
-            }
-            if (wall != null) wall.localPosition = wallPos;
-            if (portalMask != null) portalMask.localPosition = maskPos;
+        void Update()
+        {
+            if (_t < 0f) return;
+            _t += Time.deltaTime;
+            Apply(_t);
+            if (_t > floorTime + wallTime + beamTime) { Apply(1e3f); _t = -1f; }
+        }
 
-            for (float t = 0f; t < 1f; t += Time.deltaTime / beamTime)
-            {
-                float e = 1f - Mathf.Pow(1f - t, 2f);
-                if (beam != null) beam.localPosition = beamPos + Vector3.up * 1.5f * (1f - e);
-                yield return null;
-            }
-            if (beam != null) beam.localPosition = beamPos;
+        static float EaseOut(float x, float p) => 1f - Mathf.Pow(1f - Mathf.Clamp01(x), p);
+
+        void Apply(float t)
+        {
+            float f = EaseOut(t / floorTime, 3f);
+            float w = EaseOut((t - floorTime) / wallTime, 3f);
+            float b = EaseOut((t - floorTime - wallTime) / beamTime, 2f);
+            if (floorIsland != null) floorIsland.localScale = new Vector3(Mathf.Max(0.001f, f), 1f, Mathf.Max(0.001f, f));
+            if (wall != null) wall.localPosition = _wall + Vector3.down * wallDrop * (1f - w);
+            if (portalMask != null) portalMask.localPosition = _mask + Vector3.down * wallDrop * (1f - w);
+            if (beam != null) beam.localPosition = _beam + Vector3.up * beamLift * (1f - b);
         }
     }
 }
