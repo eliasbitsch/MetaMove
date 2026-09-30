@@ -399,6 +399,14 @@ namespace MetaMove.EditorTools
             var wall = Model("bari_wall", "FactoryWall", frame, floor, 0f);
             Model("bari_conveyor", "Conveyor", frame, floor, 0f);
             var beam = Model("bari_beam_lamp", "BeamLamp", frame, floor, 0f);
+            // Light from the pendant: soft additive beam down to the floor and a warm pool on it.
+            // Lamp disc sits 1.735 m above the floor (Blender factory.py), under the wall beam.
+            var coneGo = new GameObject("LightCone");
+            coneGo.transform.SetParent(beam.transform, false);
+            coneGo.transform.localPosition = new Vector3(0f, 1.725f, 0.20f);
+            var cone = coneGo.AddComponent<LightCone>();
+            cone.material = ShaderMat("LightCone", "MetaMove/LightCone");
+            cone.length = 1.725f - 0.012f;   // down to the factory floor top
 
             var mask = Model("bari_portal_mask", "PortalMask", frame, floor, 0f);
             var reveal = frame.gameObject.AddComponent<FactoryReveal>();
