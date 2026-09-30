@@ -58,7 +58,18 @@ namespace MetaMove.Demo.Kitting
 
         Beat Find(string key) { foreach (var b in beats) if (b.key == key) return b; return null; }
 
+        // Beats wait for the line being spoken to finish; only the standstill cuts in,
+        // because that one has to be heard while it is happening.
+        readonly Queue<string> _pending = new Queue<string>();
+
         void Play(string key)
+        {
+            bool urgent = key == "standstill";
+            if (!urgent && voiceSource != null && voiceSource.isPlaying) { if (!_pending.Contains(key)) _pending.Enqueue(key); return; }
+            PlayNow(key);
+        }
+
+        void PlayNow(string key)
         {
             var b = Find(key);
             if (b == null || card == null) return;
@@ -81,7 +92,7 @@ namespace MetaMove.Demo.Kitting
                 case "guide": Play("guide"); break;
                 case "aligned": Play("aligned"); break;
                 case "resume": Play("release"); break;
-                case "restart": _welcomed = _storyTold = _stood = _recovered = _emptyAsked = false; _boundAt = Time.time; break;
+                case "restart": _welcomed = _storyTold = _stood = _recovered = _emptyAsked = false; _boundAt = Time.time; _pending.Clear(); break;
             }
         }
 
@@ -90,7 +101,9 @@ namespace MetaMove.Demo.Kitting
             if (cell == null || card == null || !cell.IsBound) return;
             if (_boundAt < 0f) _boundAt = Time.time;
 
-            if (!_welcomed && Time.time - _boundAt > 1.5f) { _welcomed = true; Play("welcome"); }
+            if (_pending.Count > 0 && (voiceSource == null || !voiceSource.isPlaying)) PlayNow(_pending.Dequeue());
+            // Straight away: "...so we brought the factory to you" lands while the hall grows out of the floor.
+            if (!_welcomed && Time.time - _boundAt > 0.3f) { _welcomed = true; Play("welcome"); }
             float welcomeLen = Find("welcome") != null && Find("welcome").voice != null ? Find("welcome").voice.length + 2f : 12f;
             if (_welcomed && !_storyTold && _current == "welcome" && Time.time - _shownAt > Mathf.Max(8f, welcomeLen)) { _storyTold = true; Play("story"); }
 

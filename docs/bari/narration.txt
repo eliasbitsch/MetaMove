@@ -5,7 +5,7 @@
 # Regenerate one line only:  generate_bari.py <key>
 
 [welcome]
-This arm is building kits: an ABB GoFa, life-size, picking gears at full speed. Keep an eye on the tray. It is running low.
+We couldn't bring you to the factory, so we brought the factory to you. This arm is building kits: an ABB GoFa, life-size, picking gears at full speed. Keep an eye on the tray. It is running low.
 
 [story]
 Arms like this used to stand behind a fence. The safety standard now lets them share the floor with you, on one condition: the machine has to know where you are.
