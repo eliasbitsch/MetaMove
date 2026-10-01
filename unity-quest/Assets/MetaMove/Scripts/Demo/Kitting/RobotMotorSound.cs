@@ -3,8 +3,9 @@ using UnityEngine;
 namespace MetaMove.Demo.Kitting
 {
     // Servo sound of the arm, synthesised - no recordings, no licences. Pitch and level follow
-    // the tool speed, so the slow-down of speed scaling is heard as well as seen: a whine with
-    // a few harmonics (drives) plus band-limited noise (gearboxes), and a faint hold hum at rest.
+    // the tool speed, so the slow-down of speed scaling is heard as well as seen. A cobot hums,
+    // it does not whine: a low, almost pure tone, a trace of soft gear noise, everything through
+    // a low-pass, and a faint hold hum at rest. (Bright harmonics made it sound like a drill.)
     // The source rides on the tool and is spatial, so it comes from the arm.
     [RequireComponent(typeof(AudioSource))]
     public class RobotMotorSound : MonoBehaviour
@@ -12,9 +13,9 @@ namespace MetaMove.Demo.Kitting
         public KittingCell cell;
         [Tooltip("Tool speed (m/s) that counts as full voice.")]
         public float fullSpeed = 0.9f;
-        public float baseHz = 120f, spanHz = 260f;
-        [Range(0f, 1f)] public float volume = 0.35f;
-        [Range(0f, 0.2f)] public float idleLevel = 0.04f;
+        public float baseHz = 100f, spanHz = 90f;   // Quest speakers drop off below ~100 Hz
+        [Range(0f, 1f)] public float volume = 0.18f;
+        [Range(0f, 0.2f)] public float idleLevel = 0.06f;
 
         AudioSource _src;
         Vector3 _last;
@@ -25,7 +26,7 @@ namespace MetaMove.Demo.Kitting
         // audio thread state
         int _rate;
         double _ph1, _ph2, _ph3;
-        float _lvl, _f, _lp, _bp;
+        float _lvl, _f, _lp, _bp, _out;
         uint _rng = 22222;
 
         void Awake()
@@ -54,7 +55,7 @@ namespace MetaMove.Demo.Kitting
             _last = tcp.position;
             _speedSmooth = Mathf.Lerp(_speedSmooth, v, 1f - Mathf.Exp(-Time.deltaTime / 0.06f));
             float s = Mathf.Clamp01(_speedSmooth / fullSpeed);
-            _level = idleLevel + (1f - idleLevel) * Mathf.Sqrt(s);
+            _level = idleLevel + (1f - idleLevel) * s;
             _freq = baseHz + spanHz * s;
             _src.volume = volume;
         }
@@ -75,15 +76,17 @@ namespace MetaMove.Demo.Kitting
                 _f += (_freq - _f) * 0.002f;
                 _ph1 += _f * k; _ph2 += _f * 2.0 * k; _ph3 += _f * 3.02 * k;
                 if (_ph1 > 1.0) _ph1 -= 1.0; if (_ph2 > 1.0) _ph2 -= 1.0; if (_ph3 > 1.0) _ph3 -= 1.0;
-                float tone = 0.50f * Mathf.Sin((float)(_ph1 * 2.0 * Mathf.PI))
-                           + 0.22f * Mathf.Sin((float)(_ph2 * 2.0 * Mathf.PI))
-                           + 0.10f * Mathf.Sin((float)(_ph3 * 2.0 * Mathf.PI));
-                // gearbox: noise through a crude band-pass that rises with speed
+                float tone = 0.80f * Mathf.Sin((float)(_ph1 * 2.0 * Mathf.PI))
+                           + 0.12f * Mathf.Sin((float)(_ph2 * 2.0 * Mathf.PI))
+                           + 0.03f * Mathf.Sin((float)(_ph3 * 2.0 * Mathf.PI));
+                // gearbox: a trace of dark noise
                 float n = Noise();
-                _lp += (n - _lp) * (0.05f + 0.10f * _lvl);
-                _bp += (_lp - _bp) * 0.02f;
-                float gear = (_lp - _bp) * 0.9f;
-                data[i] = (tone * 0.6f + gear) * _lvl * 0.5f;
+                _lp += (n - _lp) * 0.01f;
+                _bp += (_lp - _bp) * 0.004f;
+                float gear = (_lp - _bp) * 0.6f;
+                // low-pass on everything (~300 Hz at 48 kHz): no edge left to sound like a tool
+                _out += (tone + gear - _out) * 0.04f;
+                data[i] = _out * _lvl * 0.9f;
             }
         }
     }
