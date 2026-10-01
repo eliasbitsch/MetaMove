@@ -140,7 +140,7 @@ namespace MetaMove.Demo.Kitting
                 case KittingCell.Phase.Running:
                     if (f <= 0.001f) { state = "Standstill"; detail = "Person in reach"; c = UIKit.Stop; }
                     else if (f < 0.99f) { state = "Running"; detail = "Slowed · " + parts; c = UIKit.Warn; }
-                    else { state = "Running"; detail = parts; c = tray != null && tray.Remaining <= 2 ? UIKit.Warn : UIKit.Ok; }
+                    else { state = "Running"; detail = parts; c = tray != null && tray == cell.trayA && tray.Remaining <= cell.lowAt ? UIKit.Warn : UIKit.Ok; }
                     break;
                 case KittingCell.Phase.Probe: state = "Checking"; detail = "Gripping " + (tray != null ? tray.label : ""); c = UIKit.Warn; break;
                 case KittingCell.Phase.Waiting: state = "No parts"; detail = "Bring the next batch"; c = UIKit.Stop; break;

@@ -1,5 +1,6 @@
 using UnityEngine;
 using MetaMove.Robot;
+using Unity.Robotics.ROSTCPConnector;
 
 namespace MetaMove.Demo
 {
@@ -43,6 +44,17 @@ namespace MetaMove.Demo
                 if (p.enabled) p.enabled = false;
             foreach (var g in FindObjectsByType<Robot.Ros.GhostPreview>(FindObjectsSortMode.None))
                 if (g.enabled) g.enabled = false;
+            // Any lab component that still calls ROSConnection.GetOrCreateInstance() spins up a
+            // connection that retries 127.0.0.1:10000 every second, forever. Nothing listens
+            // here: stop it once and keep it from reconnecting.
+            foreach (var r in FindObjectsByType<ROSConnection>(FindObjectsSortMode.None))
+                if (r.ConnectOnStart || r.enabled)
+                {
+                    r.ConnectOnStart = false;
+                    r.Disconnect();
+                    r.enabled = false;
+                    Debug.Log("[Standalone] ROS connection stopped on " + r.name);
+                }
             foreach (var ik in FindObjectsByType<GoFaDLSIK>(FindObjectsInactive.Include, FindObjectsSortMode.None))
                 if (!ik.enabled && ik.target != null) { ik.enabled = true; Debug.Log("[Standalone] GoFaDLSIK on " + ik.name); }
         }

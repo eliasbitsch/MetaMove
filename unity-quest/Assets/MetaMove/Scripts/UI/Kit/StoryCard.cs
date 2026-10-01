@@ -43,11 +43,23 @@ namespace MetaMove.UI.Kit
 
         void Awake() => Build();
 
-        public void Show(string title, string caption, Sprite image = null, VideoClip clip = null, string step = "")
+        [Header("Captions")]
+        [Tooltip("A caption is shown one or two lines at a time, in step with the voice.")]
+        public int chunkChars = 80;
+        [Tooltip("Reading pace when there is no voice clip (s per character).")]
+        public float secondsPerChar = 0.065f;
+
+        string[] _chunks;
+        float[] _chunkEnds;
+        int _chunk = -1;
+        float _captionStart;
+
+        // speakSeconds: length of the spoken line; the caption chunks are spread over it.
+        public void Show(string title, string caption, Sprite image = null, VideoClip clip = null, string step = "", float speakSeconds = 0f)
         {
             if (_canvas == null) Build();
             _title.text = title != null ? title.ToUpperInvariant() : "";
-            _caption.text = caption ?? "";
+            SetCaption(caption ?? "", speakSeconds);
             _step.text = step ?? "";
             SetMedia(image, clip);
             _placed = false;   // every new step comes to the centre of the view
@@ -85,9 +97,63 @@ namespace MetaMove.UI.Kit
             else if (_player != null) _player.Stop();
         }
 
+        void SetCaption(string text, float seconds)
+        {
+            _chunks = Chunk(text, chunkChars);
+            int total = 0;
+            foreach (var c in _chunks) total += c.Length;
+            if (seconds <= 0f) seconds = total * secondsPerChar;
+            _chunkEnds = new float[_chunks.Length];
+            float t = 0f;
+            for (int i = 0; i < _chunks.Length; i++)
+            {
+                t += seconds * _chunks[i].Length / Mathf.Max(1, total);
+                _chunkEnds[i] = t;
+            }
+            _captionStart = Time.time;
+            _chunk = -1;
+            UpdateCaption();
+        }
+
+        void UpdateCaption()
+        {
+            if (_chunks == null || _chunks.Length == 0) { _caption.text = ""; return; }
+            float e = Time.time - _captionStart;
+            int i = 0;
+            while (i < _chunks.Length - 1 && e > _chunkEnds[i]) i++;
+            if (i == _chunk) return;
+            _chunk = i;
+            _caption.text = _chunks[i];
+        }
+
+        // Sentences, and sentences longer than maxChars split at a comma or colon near the middle.
+        static string[] Chunk(string text, int maxChars)
+        {
+            var parts = new System.Collections.Generic.List<string>();
+            foreach (var raw in System.Text.RegularExpressions.Regex.Split(text.Trim(), @"(?<=[.!?])\s+"))
+            {
+                var s = raw.Trim();
+                while (s.Length > maxChars)
+                {
+                    int mid = s.Length / 2, cut = -1;
+                    for (int d = 0; d < mid && cut < 0; d++)
+                    {
+                        foreach (int k in new[] { mid + d, mid - d })
+                            if (k > 10 && k < s.Length - 10 && (s[k] == ',' || s[k] == ':' || s[k] == ';')) { cut = k + 1; break; }
+                    }
+                    if (cut < 0) break;
+                    parts.Add(s.Substring(0, cut).Trim());
+                    s = s.Substring(cut).Trim();
+                }
+                if (s.Length > 0) parts.Add(s);
+            }
+            return parts.ToArray();
+        }
+
         void LateUpdate()
         {
             if (_canvas == null || Camera.main == null) return;
+            if (_target > 0.5f) UpdateCaption();
             _shown = Mathf.MoveTowards(_shown, _target, Time.deltaTime / Mathf.Max(0.01f, fadeTime));
             _group.alpha = Mathf.SmoothStep(0f, 1f, _shown);
             _canvas.enabled = _shown > 0.001f;
@@ -146,7 +212,7 @@ namespace MetaMove.UI.Kit
             _caption = UIKit.Text("Caption", root, font, 42f, UIKit.TextHi, TextAlignmentOptions.Top);
             UIKit.Place(_caption.rectTransform, new Vector2(0.5f, 0f), new Vector2(0.5f, 0f), new Vector2(0f, Pad), new Vector2(W - 2f * Pad - 20f, TextH));
             _caption.enableWordWrapping = true;
-            _caption.enableAutoSizing = true; _caption.fontSizeMin = 28f; _caption.fontSizeMax = 42f;
+            _caption.enableAutoSizing = true; _caption.fontSizeMin = 32f; _caption.fontSizeMax = 48f;
             _caption.lineSpacing = 6f;
 
             SetMedia(null, null);

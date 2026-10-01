@@ -51,7 +51,7 @@ namespace MetaMove.Demo.Kitting
             new Beat { key = "slow", title = "It knows you are there", caption = "Notice the arm slowing down as you come closer? It measures your distance all the time. The closer you are, the slower it moves.", hold = 9f },
             new Beat { key = "standstill", title = "Standstill", caption = "It stopped. Not because anything broke. You are inside its reach.", hold = 6f },
             new Beat { key = "recover", title = "Trust comes back slowly", caption = "Step back. Notice that it does not pick up straight away? Slowing down is allowed to be abrupt. Speeding up is not.", hold = 9f },
-            new Beat { key = "empty", title = "Clear the empty box", caption = "The robot has given up on the empty box. Take it out at the front and put it on the return lane below." },
+            new Beat { key = "empty", title = "Clear the empty box", caption = "The first box is empty. The arm noticed and switched to the reserve box on the left, so the line keeps running. Take the empty box out at the front and put it on the return lane below. Watch the arm while your hands are close." },
             new Beat { key = "guide", title = "Show it the new tray", caption = "The arm still believes in the old box. Pinch the glowing point on the tool and bring it over the new box, from where you stand. Roughly is enough. Then press Teach." },
             new Beat { key = "aligned", title = "Taught", caption = "It found the box and lined itself up. You gave the intent, the machine added the precision.", hold = 6f },
             new Beat { key = "release", title = "Hand it back", caption = "Let go. The line runs again from the box you just showed it, at full speed now that the floor is clear. You never touched the arm.", hold = 12f },
@@ -76,7 +76,7 @@ namespace MetaMove.Demo.Kitting
             if (b == null || card == null) return;
             _beat = b; _current = key; _shownAt = Time.time;
             int idx = beats.IndexOf(b) + 1;
-            card.Show(b.title, b.caption, b.image, b.clip, idx + " / " + beats.Count);
+            card.Show(b.title, b.caption, b.image, b.clip, idx + " / " + beats.Count, b.voice != null ? b.voice.length : 0f);
             if (voiceSource != null)
             {
                 voiceSource.Stop();
@@ -106,11 +106,14 @@ namespace MetaMove.Demo.Kitting
             // Straight away: "...so we brought the factory to you" lands while the hall grows out of the floor.
             if (!_welcomed && Time.time - _boundAt > 0.3f) { _welcomed = true; Play("welcome"); }
             float welcomeLen = Find("welcome") != null && Find("welcome").voice != null ? Find("welcome").voice.length + 2f : 12f;
-            if (_welcomed && !_storyTold && _current == "welcome" && Time.time - _shownAt > Mathf.Max(8f, welcomeLen)) { _storyTold = true; Play("story"); }
+            // The story follows the welcome whatever else was said in between (it queues).
+            if (_welcomed && !_storyTold && Time.time - _boundAt > 0.3f + Mathf.Max(8f, welcomeLen)) { _storyTold = true; Play("story"); }
 
             float f = speed != null ? speed.Factor : 1f;
             // The slow-down is the point of the demo: name it the first time it happens.
-            if (!_slowTold && _welcomed && f < 0.85f && f > 0.001f && cell.State == KittingCell.Phase.Running && _current != "standstill")
+            // Only once the visitor has been sent towards the cell: standing within 2 m from the
+            // start is not "coming closer", and it must not push the story aside.
+            if (!_slowTold && _storyTold && cell.RefillDue && f < 0.85f && f > 0.001f && cell.State == KittingCell.Phase.Running && _current != "standstill")
             { _slowTold = true; Play("slow"); }
             if (!_stood && f <= 0.001f && cell.State == KittingCell.Phase.Running) { _stood = true; Play("standstill"); }
             if (_stood && !_recovered && _current == "standstill" && f > 0.5f) { _recovered = true; Play("recover"); }

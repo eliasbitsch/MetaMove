@@ -12,7 +12,8 @@ namespace MetaMove.Demo.Kitting
     // runs the story around it:
     //
     //   Running   pick from the taught tray, place into the kit, repeat
-    //   Probe     taught tray is empty: go there once anyway and grip air
+    //   Probe     taught tray is empty: go there once anyway and grip air,
+    //             then carry on from the reserve box (a known location) if it has parts
     //   Waiting   no tray the robot knows has parts; "starved" until tray B arrives
     //             and the empty tray A has been taken out
     //   Guide     tray B is in the rack but not taught: the visitor pinch-drags
@@ -50,6 +51,9 @@ namespace MetaMove.Demo.Kitting
         [Header("Cell")]
         public KittingTray trayA;
         public KittingTray trayB;
+        [Tooltip("Reserve box on a lane the robot already knows. Keeps the line running while the " +
+                 "visitor clears the empty tray A - the arm is moving when the hands come close.")]
+        public KittingTray reserve;
         [Tooltip("Where tray B waits before the visitor brings it (≈3 m away).")]
         public Transform trayBSpawn;
         [Tooltip("Where the editor shortcut puts tray B, standing in for the visitor.")]
@@ -128,7 +132,7 @@ namespace MetaMove.Demo.Kitting
         public bool AllowEmptyRemoval =>
             trayA != null && trayA.Remaining == 0 &&
             (State == Phase.Waiting || State == Phase.Guide || State == Phase.Align ||
-             (State == Phase.Running && Taught == trayB));
+             (State == Phase.Running && Taught != trayA));
 
         // Narration / HUD hook. Keys: low, starved, miss, guide, aligned, teach_fail, resume, restart.
         public event Action<string> Cue;
@@ -268,6 +272,7 @@ namespace MetaMove.Demo.Kitting
             if (_gripper != null) _gripper.Open();
             trayA.Refill();
             trayB.Refill();
+            if (reserve != null) { reserve.Refill(); reserve.SetRecognized(false); }
             trayA.SetRecognized(false);
             trayB.SetRecognized(false);
             if (_aHome.HasValue)
@@ -370,10 +375,28 @@ namespace MetaMove.Demo.Kitting
             State = Phase.Running;
             while (true)
             {
+                // Working from the reserve: as soon as the new batch is in the rack and the empty
+                // is out, finish here and ask to be shown the new box.
+                if (Taught == reserve && _trayBOnTable && TrayACleared)
+                {
+                    yield return MoveTo(home, Vector3.zero);
+                    State = Phase.Waiting;
+                    EnterGuide();
+                    yield break;
+                }
                 int n = Taught.NextFilled();
                 if (n < 0)
                 {
-                    yield return Probe(Taught);
+                    if (Taught != reserve) yield return Probe(Taught);
+                    if (reserve != null && Taught != reserve && reserve.NextFilled() >= 0)
+                    {
+                        // The empty box does not stop the line: the arm switches to the reserve.
+                        Taught = reserve;
+                        State = Phase.Running;
+                        Emit("reserve", "Running from the reserve box");
+                        continue;
+                    }
+                    yield return MoveTo(home, Vector3.zero);
                     yield return WaitForTray();
                     yield break;   // Guide takes over; AlignThenRun restarts the loop
                 }
@@ -441,7 +464,7 @@ namespace MetaMove.Demo.Kitting
             if (_gripper != null) _gripper.Open();
             yield return MoveAlong(n, up);
             yield return MoveOver(n);
-            yield return MoveTo(home, Vector3.zero);
+            State = Phase.Running;
         }
 
         IEnumerator WaitForTray()

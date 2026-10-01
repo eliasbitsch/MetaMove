@@ -23,7 +23,7 @@ It stopped. Not because anything broke. You are inside its reach.
 Step back. Notice that it does not pick up straight away? Slowing down is allowed to be abrupt. Speeding up is not.
 
 [empty]
-The robot has given up on the empty box. Take it out at the front and put it on the return lane below.
+The first box is empty. The arm noticed and switched to the reserve box on the left, so the line keeps running. Take the empty box out at the front and put it on the return lane below. Watch the arm while your hands are close.
 
 [guide]
 The arm still believes in the old box. Pinch the glowing point on the tool and bring it over the new box, from where you stand. Roughly is enough. Then press Teach.

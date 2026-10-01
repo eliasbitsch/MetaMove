@@ -388,7 +388,11 @@ namespace MetaMove.EditorTools
 
             // Stock: more blue boxes make it a working rack, not a prop. Lane 0 is theirs on
             // both levels, so the visitor's boxes always go to lanes 1 and 2.
-            StockBox("Stock_Lane0", frame, rack.picks[0], true);
+            // Reserve on lane 0 (the visitor's left): a box the robot knows, six gears. When
+            // tray A runs empty the arm carries on from here while the visitor clears tray A.
+            cell.reserve = Tray("TrayReserve", "Reserve", frame, "KLT_Blue", "bari_gear_a", mGlow,
+                GridNests(2, 3, 0.09f, 0.10f, 0f), -1);
+            cell.reserve.transform.SetPositionAndRotation(rack.picks[0].position, rack.picks[0].rotation);
             StockBox("Stock_Return0", frame, rack.returns[0], false);
             for (int i = 0; i < 3; i++)
             {
@@ -570,7 +574,7 @@ namespace MetaMove.EditorTools
             switch (slot)
             {
                 case "GearSteel":    return TexMat("GearSteel", "Metal051A", new Color(0.92f, 0.93f, 0.95f), 1f, 0.72f, 1f);
-                case "GearAnodized": return TexMat("GearAnodized", "Metal051A", new Color(0.18f, 0.52f, 0.85f), 0.85f, 0.62f, 1f);
+                case "GearAnodized": return TexMat("GearAnodized", "Metal051A", new Color(0.72f, 0.74f, 0.77f), 0.95f, 0.58f, 1f);   // satin silver, a shade darker than the bright steel of tray A
                 case "Profile":      return TexMat("Profile", "Metal009", new Color(0.86f, 0.88f, 0.90f), 0.9f, 0.55f, 4f);
                 case "ESDTop":       return TexMat("ESDTop", "Rubber004", new Color(0.30f, 0.42f, 0.40f), 0f, 0.15f, 3f);
                 case "Rubber":       return TexMat("Rubber", "Rubber004", new Color(0.25f, 0.25f, 0.25f), 0f, 0.1f, 2f);
