@@ -115,6 +115,12 @@ namespace MetaMove.Demo.Kitting
         public int KitsDone { get; private set; }
         public string Status { get; private set; } = "";
         public bool IsBound => _bound;
+        [Tooltip("Second run: no hints, no narration - the visitor does it from memory.")]
+        public bool Expert;
+        public int PartsPlaced { get; private set; }
+        // Horizontal distance (m) from the tool to the tray centre when Teach was pressed:
+        // how coarse the visitor's pinch was, and how far the robot corrected on its own.
+        public float TeachOffset { get; private set; } = -1f;
         // The refill has been asked for (tray A low) or the line is already starved.
         public bool RefillDue => _lowCued || State == Phase.Waiting;
         public bool TrayBInRack => _trayBOnTable;
@@ -291,6 +297,8 @@ namespace MetaMove.Demo.Kitting
             _lowCued = false;
             ClearKit();
             KitsDone = 0;
+            PartsPlaced = 0;
+            TeachOffset = -1f;
             Taught = trayA;
             SetGuide(false);
             if (ikTarget != null && home != null) ikTarget.SetPositionAndRotation(home.position, _graspRot);
@@ -335,6 +343,9 @@ namespace MetaMove.Demo.Kitting
                 Emit("teach_fail", "No tray under the gripper");
                 return;
             }
+            var d = ikTarget.position - hit.Center;
+            TeachOffset = new Vector2(d.x, d.z).magnitude;
+            Emit("teach", "Teach accepted, " + (TeachOffset * 100f).ToString("0.0") + " cm off");
             SetGuide(false);
             if (_run != null) StopCoroutine(_run);
             _run = StartCoroutine(AlignThenRun(hit));
@@ -444,6 +455,7 @@ namespace MetaMove.Demo.Kitting
             _held.transform.localPosition = Vector3.zero;
             _held.transform.localRotation = Quaternion.identity;
             _held = null;
+            PartsPlaced++;
             yield return MoveOver(slot);
 
             _slot++;

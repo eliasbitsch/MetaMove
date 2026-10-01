@@ -28,7 +28,7 @@ namespace MetaMove.Demo.Kitting
 
         void LateUpdate()
         {
-            if (_what == null || cell == null || !cell.IsBound || Camera.main == null) { Hide(); return; }
+            if (_what == null || cell == null || !cell.IsBound || cell.Expert || Camera.main == null) { Hide(); return; }
             if (_boundAt < 0f) _boundAt = Time.time;
             var head = Camera.main.transform.position;
 

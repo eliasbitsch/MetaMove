@@ -290,10 +290,11 @@ namespace MetaMove.EditorTools
             hints.rack = frame.GetComponentInChildren<FlowRack>(true);
             var guide = root.AddComponent<GuideMotionFilter>();
             guide.cell = cell;
-            // Sound, synthesised at runtime: servo whine on the arm, quiet hall behind the cut-out.
-            var motor = new GameObject("MotorSound").AddComponent<RobotMotorSound>();
-            motor.transform.SetParent(root.transform, false);
-            motor.cell = cell;
+            // Sound, synthesised at runtime: a quiet hall behind the cut-out. (A synthesised motor
+            // hum was tried and dropped - it never sounded like a drive, only like a tool.)
+            var report = new GameObject("ShiftReport").AddComponent<ShiftReport>();
+            report.transform.SetParent(root.transform, false);
+            report.cell = cell; report.speed = prox; report.font = inter;
             var amb = new GameObject("FactoryAmbience").AddComponent<FactoryAmbience>();
             amb.transform.SetParent(root.transform, false);
             amb.cell = cell;

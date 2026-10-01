@@ -7,7 +7,8 @@ using MetaMove.UI.Kit;
 namespace MetaMove.Demo.Kitting
 {
     // Palm-up menu on either hand (left- and right-handers): status line plus Teach / Home /
-    // Restart, poked with the index finger of the other hand. It is there when you look for it and gone when you work, so it
+    // Restart / Expert, poked with the index finger of the other hand. Expert restarts the
+    // run without hints or narration - the second go, from memory. It is there when you look for it and gone when you work, so it
     // never covers the cell. Teach is only live while the cell is waiting to be shown a tray.
     public class FingertipMenu : MonoBehaviour
     {
@@ -26,7 +27,7 @@ namespace MetaMove.Demo.Kitting
         Canvas _canvas;
         CanvasGroup _group;
         TextMeshProUGUI _status;
-        readonly Button[] _buttons = new Button[3];
+        readonly Button[] _buttons = new Button[4];
         float _palmUpFor, _palmDownFor, _shown, _lastPress = -9f;
         bool _visible;
         OVRSkeleton _menuHand;   // the hand that holds the menu; the other one pokes
@@ -47,15 +48,16 @@ namespace MetaMove.Demo.Kitting
             _status = UIKit.Text("Status", root, font, 30f, UIKit.TextHi, TextAlignmentOptions.Center);
             UIKit.Place(_status.rectTransform, new Vector2(0.5f, 1f), new Vector2(0.5f, 1f), new Vector2(0f, -26f), new Vector2(W - 40f, 70f));
             _status.enableWordWrapping = true;
-            string[] names = { "Teach", "Home", "Restart" };
-            System.Action[] acts = { () => cell.Teach(), () => cell.ParkHome(), () => cell.Restart() };
-            for (int i = 0; i < 3; i++)
+            string[] names = { "Teach", "Home", "Restart", "Expert" };
+            System.Action[] acts = { () => cell.Teach(), () => cell.ParkHome(), () => cell.Restart(),
+                                     () => { cell.Expert = !cell.Expert; cell.Restart(); } };
+            for (int i = 0; i < 4; i++)
             {
                 var b = new Button { act = acts[i] };
                 b.bg = UIKit.Panel("Btn_" + names[i], root, UIKit.GlassLight, 34f, 3f);
                 b.rt = b.bg.rectTransform;
-                UIKit.Place(b.rt, new Vector2(0.5f, 0f), new Vector2(0.5f, 0f), new Vector2((i - 1) * 160f, 30f), new Vector2(145f, 150f));
-                b.label = UIKit.Text("Label", b.bg.transform, font, 30f, UIKit.TextHi, TextAlignmentOptions.Center, FontStyles.Bold);
+                UIKit.Place(b.rt, new Vector2(0.5f, 0f), new Vector2(0.5f, 0f), new Vector2((i - 1.5f) * 120f, 30f), new Vector2(110f, 150f));
+                b.label = UIKit.Text("Label", b.bg.transform, font, 26f, UIKit.TextHi, TextAlignmentOptions.Center, FontStyles.Bold);
                 UIKit.Stretch(b.label.rectTransform);
                 b.label.text = names[i];
                 _buttons[i] = b;
@@ -102,17 +104,19 @@ namespace MetaMove.Demo.Kitting
             float f = speed != null ? speed.Factor : 1f;
             float d = speed != null ? speed.Distance : -1f;
             var inv = System.Globalization.CultureInfo.InvariantCulture;
-            string state = !cell.IsBound ? "Not placed" : cell.State.ToString();
+            string state = (!cell.IsBound ? "Not placed" : cell.State.ToString()) + (cell.Expert ? " · expert" : "");
             _status.text = "<b>" + state + "</b>   " + Mathf.RoundToInt(f * 100f) + "%   " + (d < 0f ? "--" : d.ToString("0.00", inv) + " m");
             _buttons[0].enabled = cell.State == KittingCell.Phase.Guide;
             // Teach lights up once the tool is over a tray it would accept.
             bool ready = _buttons[0].enabled && cell.TrayUnderTool() != null;
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 4; i++)
             {
                 var b = _buttons[i];
                 b.label.color = b.enabled ? UIKit.TextHi : UIKit.TextLo * 0.8f;
                 float pulse = ready && i == 0 ? 0.35f + 0.35f * Mathf.Sin(Time.time * 6f) : 0f;
-                b.bg.color = i == 0 && b.enabled ? new Color(UIKit.Accent.r, UIKit.Accent.g, UIKit.Accent.b, 0.55f + pulse) : UIKit.GlassLight;
+                b.bg.color = i == 0 && b.enabled ? new Color(UIKit.Accent.r, UIKit.Accent.g, UIKit.Accent.b, 0.55f + pulse)
+                           : i == 3 && cell.Expert ? new Color(UIKit.Warn.r, UIKit.Warn.g, UIKit.Warn.b, 0.6f)
+                           : UIKit.GlassLight;
             }
         }
 

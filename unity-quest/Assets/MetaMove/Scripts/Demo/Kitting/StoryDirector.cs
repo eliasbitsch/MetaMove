@@ -102,6 +102,14 @@ namespace MetaMove.Demo.Kitting
         {
             if (cell == null || card == null || !cell.IsBound) return;
             if (_boundAt < 0f) _boundAt = Time.time;
+            // Expert run: from memory - no card, no voice.
+            if (cell.Expert)
+            {
+                if (card.Visible) card.Hide();
+                if (voiceSource != null && voiceSource.isPlaying) voiceSource.Stop();
+                _pending.Clear();
+                return;
+            }
 
             if (_pending.Count > 0 && (voiceSource == null || !voiceSource.isPlaying)) PlayNow(_pending.Dequeue());
             // Straight away: "...so we brought the factory to you" lands while the hall grows out of the floor.
