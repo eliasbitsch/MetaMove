@@ -39,7 +39,7 @@ namespace MetaMove.UI.Kit
         VideoPlayer _player;
         RenderTexture _rt;
         float _shown, _target, _pop = 1f;
-        bool _placed;
+        readonly UIKit.FollowState _follow = new UIKit.FollowState();
 
         void Awake() => Build();
 
@@ -62,7 +62,9 @@ namespace MetaMove.UI.Kit
             SetCaption(caption ?? "", speakSeconds);
             _step.text = step ?? "";
             SetMedia(image, clip);
-            _placed = false;   // every new step comes to the centre of the view
+            // every new step comes to the centre of the view: appears there when hidden,
+            // glides there when already up
+            if (_target < 0.5f) _follow.placed = false; else _follow.following = true;
             _pop = 0f;
             _target = 1f;
         }
@@ -158,7 +160,7 @@ namespace MetaMove.UI.Kit
             _group.alpha = Mathf.SmoothStep(0f, 1f, _shown);
             _canvas.enabled = _shown > 0.001f;
             if (!_canvas.enabled) return;
-            UIKit.LazyFollow(_canvas.transform, Camera.main.transform, distance, elevation, deadzone, followTime, ref _placed, azimuth);
+            UIKit.LazyFollow(_canvas.transform, Camera.main.transform, distance, elevation, deadzone, followTime, _follow, azimuth);
             // scale-in while appearing, and a short pop on every new step so it is noticed
             _pop = Mathf.MoveTowards(_pop, 1f, Time.deltaTime / 0.35f);
             float pop = 1f + 0.06f * Mathf.Sin(_pop * Mathf.PI);

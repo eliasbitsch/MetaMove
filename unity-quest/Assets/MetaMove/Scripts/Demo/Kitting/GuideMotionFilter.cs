@@ -7,7 +7,8 @@ namespace MetaMove.Demo.Kitting
     // that into a target the arm can follow calmly:
     //
     //   - no jumps:     the target moves towards the hand at most maxSpeed, smoothed
-    //   - tool down:    orientation stays the grasp orientation, the wrist never flips
+    //   - rotation:     the hand's turn is passed on - free around the tool axis, tilt
+    //                   limited to maxTilt from vertical, rate-limited, so the wrist never flips
     //   - keep-out:     the tool stays above the table, the kit and the boxes on the rack,
     //                   and inside a reach band around the base (no stretched singularity,
     //                   no folding into the column)
@@ -22,6 +23,10 @@ namespace MetaMove.Demo.Kitting
         public float maxSpeed = 0.45f;
         [Tooltip("s - smoothing of hand jitter.")]
         public float smoothTime = 0.08f;
+        [Tooltip("Max tilt of the tool away from straight down (deg).")]
+        public float maxTilt = 35f;
+        [Tooltip("deg/s - how fast the tool may follow the hand's rotation.")]
+        public float maxTurnSpeed = 120f;
         [Tooltip("Horizontal reach band around the robot base (m).")]
         public float minReach = 0.28f, maxReach = 0.78f;
         [Tooltip("TCP height limits above the table top (m).")]
@@ -35,6 +40,8 @@ namespace MetaMove.Demo.Kitting
         public float towerRadius = 0.14f, towerTop = 0.62f;
 
         Vector3 _filtered, _vel;
+        Quaternion _rot, _rawStart, _toolStart;
+        bool _held;
         bool _active;
 
         void LateUpdate()
@@ -43,12 +50,31 @@ namespace MetaMove.Demo.Kitting
             if (cell.State != KittingCell.Phase.Guide) { _active = false; return; }
 
             var t = cell.ikTarget;
-            if (!_active) { _filtered = Clamp(t.position); _vel = Vector3.zero; _active = true; }
+            if (!_active) { _filtered = Clamp(t.position); _vel = Vector3.zero; _rot = cell.GraspRotation; _held = false; _active = true; }
 
             var goal = Clamp(t.position);   // raw target from the relay (or where we left it)
             var smooth = Vector3.SmoothDamp(_filtered, goal, ref _vel, smoothTime, maxSpeed);
             _filtered = Clamp(smooth);      // every step, not only the goal, respects the keep-out
-            t.SetPositionAndRotation(_filtered, cell.GraspRotation);
+            // Rotation: the hand's turn since the grab started (the relay applies it to the
+            // handle's own orientation; only the delta is used), tilt-limited.
+            bool held = cell.GuideHeld;
+            if (held && !_held) { _rawStart = t.rotation; _toolStart = _rot; }
+            _held = held;
+            var goalRot = held ? LimitTilt(t.rotation * Quaternion.Inverse(_rawStart) * _toolStart) : _rot;
+            float k = 1f - Mathf.Exp(-Time.deltaTime / Mathf.Max(0.01f, smoothTime));
+            var step = Quaternion.Slerp(_rot, goalRot, k);
+            _rot = Quaternion.RotateTowards(_rot, step, maxTurnSpeed * Time.deltaTime);
+            t.SetPositionAndRotation(_filtered, _rot);
+        }
+
+        // The tool axis is the flange forward (straight down in the grasp orientation).
+        Quaternion LimitTilt(Quaternion r)
+        {
+            var axis = r * Vector3.forward;
+            float tilt = Vector3.Angle(axis, Vector3.down);
+            if (tilt <= maxTilt) return r;
+            var limited = Vector3.Slerp(Vector3.down, axis, maxTilt / tilt);
+            return Quaternion.FromToRotation(axis, limited) * r;
         }
 
         Vector3 Clamp(Vector3 world)

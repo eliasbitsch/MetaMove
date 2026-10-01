@@ -27,7 +27,7 @@ namespace MetaMove.Demo.Kitting
         Canvas _canvas;
         Image _pill, _dot, _gaugeFill, _gaugeTrack, _zoneBar;
         TextMeshProUGUI _state, _detail, _pct, _speedLabel, _dist, _zone;
-        bool _placed;
+        readonly UIKit.FollowState _follow = new UIKit.FollowState();
         float _shownFactor, _ssmShown = 1f;
         CanvasGroup _ssmGroup;
         RectTransform _pillRt;
@@ -98,7 +98,7 @@ namespace MetaMove.Demo.Kitting
         void LateUpdate()
         {
             if (_canvas == null || Camera.main == null) return;
-            UIKit.LazyFollow(_canvas.transform, Camera.main.transform, distance, elevation, 18f, 0.25f, ref _placed);
+            UIKit.LazyFollow(_canvas.transform, Camera.main.transform, distance, elevation, 18f, 0.25f, _follow);
 
             bool ssmActive = cell == null || (cell.State != KittingCell.Phase.Guide && cell.State != KittingCell.Phase.Align);
             _ssmShown = Mathf.MoveTowards(_ssmShown, ssmActive ? 1f : 0f, Time.deltaTime / 0.25f);

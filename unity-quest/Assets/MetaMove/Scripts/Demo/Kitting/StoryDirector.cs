@@ -36,7 +36,7 @@ namespace MetaMove.Demo.Kitting
         public List<Beat> beats = new List<Beat>();
 
         string _current;
-        bool _welcomed, _storyTold, _slowTold, _stood, _recovered, _emptyAsked;
+        bool _welcomed, _storyTold, _slowTold, _stood, _recovered, _emptyAsked, _grabTold;
         float _shownAt, _boundAt = -1f;
         Beat _beat;
 
@@ -53,6 +53,7 @@ namespace MetaMove.Demo.Kitting
             new Beat { key = "recover", title = "Trust comes back slowly", caption = "Step back. Notice that it does not pick up straight away? Slowing down is allowed to be abrupt. Speeding up is not.", hold = 9f },
             new Beat { key = "empty", title = "Clear the empty box", caption = "The first box is empty. The arm noticed and switched to the reserve box on the left, so the line keeps running. Take the empty box out at the front and put it on the return lane below. Watch the arm while your hands are close." },
             new Beat { key = "guide", title = "Show it the new tray", caption = "The arm still believes in the old box. Pinch the glowing point on the tool and bring it over the new box, from where you stand. Roughly is enough. Then press Teach." },
+            new Beat { key = "grab", title = "Hand guiding", caption = "Steady. I will follow your hand anywhere, except into the rack. Someone has to be sensible here.", hold = 7f },
             new Beat { key = "aligned", title = "Taught", caption = "It found the box and lined itself up. You gave the intent, the machine added the precision.", hold = 6f },
             new Beat { key = "release", title = "Hand it back", caption = "Let go. The line runs again from the box you just showed it, at full speed now that the floor is clear. You never touched the arm.", hold = 12f },
         };
@@ -93,7 +94,7 @@ namespace MetaMove.Demo.Kitting
                 case "guide": Play("guide"); break;
                 case "aligned": Play("aligned"); break;
                 case "resume": Play("release"); break;
-                case "restart": _welcomed = _storyTold = _slowTold = _stood = _recovered = _emptyAsked = false; _boundAt = Time.time; _pending.Clear(); break;
+                case "restart": _welcomed = _storyTold = _slowTold = _stood = _recovered = _emptyAsked = _grabTold = false; _boundAt = Time.time; _pending.Clear(); break;
             }
         }
 
@@ -123,6 +124,10 @@ namespace MetaMove.Demo.Kitting
                 var ca = cell.trayA != null ? cell.trayA.GetComponent<CarryableTray>() : null;
                 if (ca != null && ca.State == CarryableTray.Phase.Waiting) { _emptyAsked = true; Play("empty"); }
             }
+
+            // First pinch on the tool: a dry remark, but never over another line.
+            if (!_grabTold && cell.State == KittingCell.Phase.Guide && cell.GuideHeld && (voiceSource == null || !voiceSource.isPlaying))
+            { _grabTold = true; PlayNow("grab"); }
 
             // A timed beat stays up at least as long as its line is being spoken.
             if (_beat != null && _beat.hold > 0f)

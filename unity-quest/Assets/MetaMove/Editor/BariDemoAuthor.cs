@@ -68,10 +68,25 @@ namespace MetaMove.EditorTools
                 dst.endEffector = Map(inst.transform, srcRoot, src.endEffector);
                 dst.target = Map(inst.transform, srcRoot, src.target);
                 dst.enabled = true;
+                // Tighter than the lab twin: the travel demo drives the target at cobot pick
+                // speed, and a lagging solver cuts corners through box walls.
+                dst.iterations = 8;
+                dst.outputSmoothing = 0.1f;
                 if (dst.target == null || dst.endEffector == null) { Debug.LogError("[BariDemoAuthor] IK remap failed"); return null; }
 
                 // Gripper on the flange, IK with orientation so the tool points down.
                 MountGripper(dst.endEffector);
+
+                // The pinch handle on the tool in the UI accent cyan: the one thing on the arm
+                // the visitor may touch.
+                var handleMat = Mat("GuideHandle", new Color(0.25f, 0.82f, 0.88f), 0f, 0.7f, true);
+                foreach (var relay in inst.GetComponentsInChildren<MetaMove.Robot.PhantomGrabRelay>(true))
+                    foreach (var r in relay.GetComponentsInChildren<Renderer>(true))
+                    {
+                        var mats = new Material[r.sharedMaterials.Length];
+                        for (int k = 0; k < mats.Length; k++) mats[k] = handleMat;
+                        r.sharedMaterials = mats;
+                    }
                 dst.useOrientation = true;
 
                 return PrefabUtility.SaveAsPrefabAsset(inst, BariRobotPrefab);
@@ -275,6 +290,13 @@ namespace MetaMove.EditorTools
             hints.rack = frame.GetComponentInChildren<FlowRack>(true);
             var guide = root.AddComponent<GuideMotionFilter>();
             guide.cell = cell;
+            // Sound, synthesised at runtime: servo whine on the arm, quiet hall behind the cut-out.
+            var motor = new GameObject("MotorSound").AddComponent<RobotMotorSound>();
+            motor.transform.SetParent(root.transform, false);
+            motor.cell = cell;
+            var amb = new GameObject("FactoryAmbience").AddComponent<FactoryAmbience>();
+            amb.transform.SetParent(root.transform, false);
+            amb.cell = cell;
             story.voiceSource = root.AddComponent<AudioSource>();
             story.voiceSource.playOnAwake = false;
             story.voiceSource.spatialBlend = 0f;
@@ -523,8 +545,9 @@ namespace MetaMove.EditorTools
         // side, facing the visitor). Logo files live in a git-excluded folder of this public repo.
         static void Logos(Transform rack)
         {
-            Sticker("Logo_FHTW", rack, "Assets/MetaMove/Private/Logos/logo_fhtw.png", new Vector3(-0.30f, 1.28f, -0.432f), 0.28f);
-            Sticker("Logo_ISMAR2026", rack, "Assets/MetaMove/Private/Logos/logo_ismar2026.png", new Vector3(0.28f, 1.28f, -0.432f), 0.50f);
+            // Board between the two levels (flowrack.py BOARD_Z = 0.72), below the line of sight to the arm.
+            Sticker("Logo_FHTW", rack, "Assets/MetaMove/Private/Logos/logo_fhtw.png", new Vector3(-0.30f, 0.72f, -0.432f), 0.24f);
+            Sticker("Logo_ISMAR2026", rack, "Assets/MetaMove/Private/Logos/logo_ismar2026.png", new Vector3(0.28f, 0.72f, -0.432f), 0.46f);
         }
 
         static void Sticker(string name, Transform parent, string texPath, Vector3 local, float width, float yaw = 0f)

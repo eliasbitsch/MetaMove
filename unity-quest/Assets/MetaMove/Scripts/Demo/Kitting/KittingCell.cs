@@ -78,6 +78,11 @@ namespace MetaMove.Demo.Kitting
         public float toolOffset = 0.07f;
         public float gripDwell = 0.25f;        // s at factor 1
         public float arriveTol = 0.004f;
+        [Tooltip("A waypoint counts as reached only when the real flange is this close to the target: " +
+                 "no cutting corners through box walls, no gripping beside the part.")]
+        public float settleTol = 0.006f;
+        [Tooltip("Give up waiting for the solver after this long at speed factor 1 (s).")]
+        public float settleTimeout = 0.6f;
 
         [Header("Teach")]
         [Tooltip("Horizontal radius around a tray centre in which Teach counts as 'over the tray'.")]
@@ -423,6 +428,10 @@ namespace MetaMove.Demo.Kitting
             yield return Dwell(gripDwell);
             _held = tray.parts[nest];
             _held.transform.SetParent(_holdAt != null ? _holdAt : ikTarget, true);
+            // centre the part between the fingers (graspHeight above its foot), so a millimetre
+            // the solver is off never shows as a grip beside the gear
+            if (_holdAt != null)
+                _held.transform.position += _holdAt.position - (_held.transform.position + _held.transform.up * tray.graspHeight);
             yield return MoveAlong(n, up);
             yield return MoveOver(n);
 
@@ -540,6 +549,7 @@ namespace MetaMove.Demo.Kitting
         }
 
         float _speedScale = 1f;
+        float _settle;
 
         // One frame of the trapezoid profile: accelerate, cruise at baseSpeed * factor, brake
         // into the goal. The SSM factor scales the cruise speed and brakes immediately.
@@ -551,7 +561,12 @@ namespace MetaMove.Demo.Kitting
             v = Mathf.Min(Mathf.Min(v + acceleration * Time.deltaTime, vMax), vBrake);
             ikTarget.position = Vector3.MoveTowards(ikTarget.position, p, v * Time.deltaTime);
             ikTarget.rotation = Quaternion.RotateTowards(ikTarget.rotation, rotGoal, 360f * F * Time.deltaTime);
-            return (ikTarget.position - p).sqrMagnitude <= arriveTol * arriveTol;
+            if ((ikTarget.position - p).sqrMagnitude > arriveTol * arriveTol) { _settle = 0f; return false; }
+            // target is there; now wait for the arm itself (time only runs while the arm may move)
+            _settle += Time.deltaTime * F;
+            bool settled = tcp == null || (tcp.position - ikTarget.position).sqrMagnitude <= settleTol * settleTol;
+            if (settled || _settle > settleTimeout) { _settle = 0f; return true; }
+            return false;
         }
 
         IEnumerator Dwell(float seconds)

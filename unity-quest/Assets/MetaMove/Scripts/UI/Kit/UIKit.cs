@@ -126,23 +126,43 @@ namespace MetaMove.UI.Kit
             return Sprite.Create(tex, new Rect(0, 0, n, n), new Vector2(0.5f, 0.5f), 100f);
         }
 
-        // Smooth head-follow with a dead zone: the panel stays put until the view has turned
-        // far enough, then eases after it. Upright (world up), never rolls with the head.
+        public class FollowState
+        {
+            public bool placed, following;
+            public Vector3 velocity;
+        }
+
+        // Smooth head-follow with a dead zone and hysteresis: the panel stays put until the view
+        // has turned (or the head walked) far enough, then glides all the way back to its spot
+        // in front and stops there - it never hovers on the edge of the dead zone, which made it
+        // twitch with every bit of head sway. Upright (world up), never rolls with the head;
+        // the turn towards the viewer is damped too.
         public static void LazyFollow(Transform panel, Transform head, float distance, float elevationDeg,
-            float deadzoneDeg, float followTime, ref bool placed, float azimuthDeg = 0f)
+            float deadzoneDeg, float followTime, FollowState st, float azimuthDeg = 0f)
         {
             var fwd = head.forward; fwd.y = 0f;
             if (fwd.sqrMagnitude < 1e-4f) fwd = Vector3.forward;
             fwd = Quaternion.AngleAxis(azimuthDeg, Vector3.up) * fwd.normalized;
             var dir = Quaternion.AngleAxis(-elevationDeg, Vector3.Cross(Vector3.up, fwd)) * fwd;
             var goal = head.position + dir * distance;
-            if (!placed) { panel.position = goal; placed = true; }
+            if (!st.placed)
+            {
+                panel.position = goal; st.placed = true; st.following = false; st.velocity = Vector3.zero;
+                var l0 = goal - head.position; l0.y = 0f;
+                if (l0.sqrMagnitude > 1e-5f) panel.rotation = Quaternion.LookRotation(l0.normalized, Vector3.up);
+                return;
+            }
             var cur = panel.position - head.position;
             float off = Vector3.Angle(new Vector3(cur.x, 0f, cur.z), fwd);
-            if (off > deadzoneDeg || Mathf.Abs(cur.magnitude - distance) > 0.15f)
-                panel.position = Vector3.Lerp(panel.position, goal, 1f - Mathf.Exp(-Time.deltaTime / Mathf.Max(0.01f, followTime)));
+            float dd = Mathf.Abs(cur.magnitude - distance);
+            if (!st.following && (off > deadzoneDeg || dd > 0.20f)) st.following = true;
+            if (st.following && off < 2f && dd < 0.03f) { st.following = false; st.velocity = Vector3.zero; }
+            if (st.following)
+                panel.position = Vector3.SmoothDamp(panel.position, goal, ref st.velocity, Mathf.Max(0.05f, followTime));
             var look = panel.position - head.position; look.y = 0f;
-            if (look.sqrMagnitude > 1e-5f) panel.rotation = Quaternion.LookRotation(look.normalized, Vector3.up);
+            if (look.sqrMagnitude > 1e-5f)
+                panel.rotation = Quaternion.Slerp(panel.rotation, Quaternion.LookRotation(look.normalized, Vector3.up),
+                                                  1f - Mathf.Exp(-Time.deltaTime / 0.2f));
         }
     }
 }

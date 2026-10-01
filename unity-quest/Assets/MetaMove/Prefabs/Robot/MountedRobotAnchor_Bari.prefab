@@ -1208,6 +1208,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 207710017302521657, guid: 4d1712aed14be1e499c325f50f358a1b, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: ca7c2d528de27a64eba6a2292426e816, type: 2}
     - target: {fileID: 1677779415546034824, guid: 4d1712aed14be1e499c325f50f358a1b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1268,6 +1272,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8337027306773829625, guid: 4d1712aed14be1e499c325f50f358a1b, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: ca7c2d528de27a64eba6a2292426e816, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -1338,14 +1346,14 @@ MonoBehaviour:
     maxDeg: 360
   endEffector: {fileID: 3601635172326508947}
   target: {fileID: 7030536926624812990}
-  iterations: 10
+  iterations: 8
   damping: 1.5
   positionTolerance: 0.005
   orientationToleranceDeg: 1
   maxStepDegPerIter: 2
   useOrientation: 1
   orientationWeight: 1
-  outputSmoothing: 0.6
+  outputSmoothing: 0.1
   orientationWristOnly: 0
   wristStartIndex: 3
 --- !u!4 &5084117308899244110 stripped
