@@ -269,6 +269,12 @@ namespace MetaMove.EditorTools
             menu.leftHand = lhs != null ? lhs.GetComponentInChildren<OVRSkeleton>(true) : null;
             menu.rightHand = rhs != null ? rhs.GetComponentInChildren<OVRSkeleton>(true) : null;
             if (menu.leftHand == null || menu.rightHand == null) Debug.LogWarning("[BariDemoAuthor] fingertip menu: hand skeletons not found");
+            var hints = new GameObject("Hints").AddComponent<KittingHints>();
+            hints.transform.SetParent(root.transform, false);
+            hints.cell = cell; hints.font = inter;
+            hints.rack = frame.GetComponentInChildren<FlowRack>(true);
+            var guide = root.AddComponent<GuideMotionFilter>();
+            guide.cell = cell;
             story.voiceSource = root.AddComponent<AudioSource>();
             story.voiceSource.playOnAwake = false;
             story.voiceSource.spatialBlend = 0f;
@@ -356,10 +362,12 @@ namespace MetaMove.EditorTools
             BuildLaneMarkers(rack);
             Logos(rackGo.transform);
 
-            // Tray A: blue VDA KLT on the middle supply lane, steel spur gears (Ø60, hub Ø30).
-            // Only 4 parts, so the line runs low within the first minute.
+            // Tray A: blue VDA KLT on the middle supply lane, 12 steel spur gears (Ø60, hub Ø30).
+            // Two full kits: the visitor watches the line run, and the refill is asked for at
+            // half (KittingCell.lowAt), while the arm is still working.
             cell.trayA = Tray("TrayA", "Tray A", frame, "KLT_Blue", "bari_gear_a", mGlow,
-                GridNests(2, 3, 0.11f, 0.11f, 0f), 4);
+                GridNests(3, 4, 0.085f, 0.09f, 0f), -1);
+            cell.lowAt = 6;
             cell.trayA.transform.SetPositionAndRotation(rack.picks[1].position, rack.picks[1].rotation);
             MakeCarryable(cell, cell.trayA, rack, CarryableTray.Kind.Empty, rack.picks[1]);
 
@@ -377,6 +385,18 @@ namespace MetaMove.EditorTools
             MakeCarryable(cell, cell.trayB, rack, CarryableTray.Kind.Supply, cell.trayBSpawn);
             Model("bari_trolley", "Trolley", frame, new Vector3(0.90f, -FloorBelowTable, 2.60f), 0f);
             cell.trayBPlaced = rack.entries[2];   // presenter fallback: rolls into a free lane
+
+            // Stock: more blue boxes make it a working rack, not a prop. Lane 0 is theirs on
+            // both levels, so the visitor's boxes always go to lanes 1 and 2.
+            StockBox("Stock_Lane0", frame, rack.picks[0], true);
+            StockBox("Stock_Return0", frame, rack.returns[0], false);
+            for (int i = 0; i < 3; i++)
+            {
+                var at = Marker("StockPile_" + i, frame, new Vector3(-1.15f, -FloorBelowTable + i * KltSize.y, 1.35f), (i - 1) * 4f);
+                StockBox("StockPile_Box" + i, frame, at, i == 2);
+            }
+            rack.blocked = new[] { true, false, false };
+            Colliders(frame);
 
             // Kit on the robot table: shell with foam insert, 6 pockets on a 75 mm grid.
             var kitModel = Model("bari_kit", "Kit", frame, new Vector3(-0.42f, 0f, 0.05f), 0f);
@@ -407,13 +427,16 @@ namespace MetaMove.EditorTools
             Model("bari_conveyor", "Conveyor", frame, floor, 0f);
             var beam = Model("bari_beam_lamp", "BeamLamp", frame, floor, 0f);
             // Light from the pendant: soft additive beam down to the floor and a warm pool on it.
-            // Lamp disc sits 1.735 m above the floor (Blender factory.py), under the wall beam.
+            // Lamp disc sits 2.435 m above the floor (Blender factory.py, beam at 3.0 m), well
+            // above anything the arm can reach.
             var coneGo = new GameObject("LightCone");
             coneGo.transform.SetParent(beam.transform, false);
-            coneGo.transform.localPosition = new Vector3(0f, 1.725f, 0.20f);
+            coneGo.transform.localPosition = new Vector3(0f, 2.425f, 0.20f);
             var cone = coneGo.AddComponent<LightCone>();
             cone.material = ShaderMat("LightCone", "MetaMove/LightCone");
-            cone.length = 1.725f - 0.012f;   // down to the factory floor top
+            cone.length = 2.425f - 0.012f;   // down to the factory floor top
+            cone.bottomRadius = 1.35f;
+            cone.poolRadius = 1.5f;
 
             var mask = Model("bari_portal_mask", "PortalMask", frame, floor, 0f);
             var reveal = frame.gameObject.AddComponent<FactoryReveal>();
@@ -500,7 +523,7 @@ namespace MetaMove.EditorTools
             Sticker("Logo_ISMAR2026", rack, "Assets/MetaMove/Private/Logos/logo_ismar2026.png", new Vector3(0.28f, 1.28f, -0.432f), 0.50f);
         }
 
-        static void Sticker(string name, Transform parent, string texPath, Vector3 local, float width)
+        static void Sticker(string name, Transform parent, string texPath, Vector3 local, float width, float yaw = 0f)
         {
             var tex = AssetDatabase.LoadAssetAtPath<Texture2D>(texPath);
             if (tex == null) { Debug.LogWarning("[BariDemoAuthor] logo missing: " + texPath); return; }
@@ -509,7 +532,7 @@ namespace MetaMove.EditorTools
             Object.DestroyImmediate(q.GetComponent<Collider>());
             q.transform.SetParent(parent, false);
             q.transform.localPosition = local;
-            q.transform.localRotation = Quaternion.identity;          // quad front faces local -Z
+            q.transform.localRotation = Quaternion.Euler(0f, yaw, 0f);   // yaw 0: quad front faces local -Z
             q.transform.localScale = new Vector3(width, width * tex.height / tex.width, 1f);
             var m = Mat(name, Color.white, 0f, 0.25f);
             m.SetTexture("_BaseMap", tex);
@@ -708,6 +731,38 @@ namespace MetaMove.EditorTools
             return l;
         }
 
+        // A blue KLT of the scenery: no KittingTray, no interaction, six gears when full.
+        static void StockBox(string name, Transform frame, Transform at, bool full)
+        {
+            var go = new GameObject(name);
+            go.transform.SetParent(frame, false);
+            go.transform.SetPositionAndRotation(at.position, at.rotation);
+            Model("bari_klt4147", "Body", go.transform, Vector3.zero, 90f);
+            if (!full) return;
+            int i = 0;
+            foreach (var p in GridNests(2, 3, 0.11f, 0.11f, 0.005f))
+                Model("bari_gear_a", "Part_" + i, go.transform, p, (i++) * 53f);
+        }
+
+        // Static colliders, only for boxes the visitor drops: factory floor, robot table,
+        // flow rack and trolley as plain boxes.
+        static void Colliders(Transform frame)
+        {
+            var root = new GameObject("PhysicsColliders").transform;
+            root.SetParent(frame, false);
+            void Add(string n, Vector3 c, Vector3 size)
+            {
+                var b = new GameObject(n).AddComponent<BoxCollider>();
+                b.transform.SetParent(root, false);
+                b.center = c; b.size = size;
+            }
+            float fy = -FloorBelowTable;
+            Add("Floor", new Vector3(0f, fy - 0.05f, 0.80f), new Vector3(3.5f, 0.1f, 4.7f));
+            Add("RobotTable", new Vector3(-0.15f, fy / 2f, 0f), new Vector3(1.0f, FloorBelowTable, 0.6f));
+            Add("FlowRack", new Vector3(0f, fy + 0.49f, RackCenterZ), new Vector3(1.2f, 0.98f, 0.8f));
+            Add("Trolley", new Vector3(0.90f, fy / 2f, 2.60f), new Vector3(0.55f, FloorBelowTable, 0.65f));
+        }
+
         static KittingTray Tray(string name, string label, Transform parent,
             string bodyMat, string partModel, Material glow, List<Vector3> nests, int fill)
         {
@@ -721,6 +776,13 @@ namespace MetaMove.EditorTools
                 // The new batch arrives in an orange box: tint only, keep the plastic normal map.
                 var orange = TexMat("KLT_Orange", "Plastic015A", new Color(0.95f, 0.45f, 0.08f), 0f, 0.35f, 2f, useAlbedo: false);
                 foreach (var r in klt.GetComponentsInChildren<Renderer>()) r.sharedMaterial = orange;
+                // FH Technikum Wien and ISMAR 2026 on both long sides of the box the visitor carries
+                foreach (var side in new[] { 1f, -1f })
+                {
+                    float x = side * (KltSize.x / 2f + 0.006f), yaw = side > 0f ? -90f : 90f;
+                    Sticker("Logo_FHTW", go.transform, "Assets/MetaMove/Private/Logos/logo_fhtw.png", new Vector3(x, 0.085f, side * 0.09f), 0.16f, yaw);
+                    Sticker("Logo_ISMAR2026", go.transform, "Assets/MetaMove/Private/Logos/logo_ismar2026.png", new Vector3(x, 0.085f, -side * 0.10f), 0.19f, yaw);
+                }
             }
 
             var hl = Box("Recognized", go.transform, new Vector3(0f, 0.001f, 0f), new Vector3(KltSize.x + 0.03f, 0.002f, KltSize.z + 0.03f), glow);

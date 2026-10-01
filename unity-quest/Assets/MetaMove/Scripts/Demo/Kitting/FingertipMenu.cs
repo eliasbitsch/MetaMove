@@ -6,8 +6,8 @@ using MetaMove.UI.Kit;
 
 namespace MetaMove.Demo.Kitting
 {
-    // Palm-up menu on the left hand: status line plus Teach / Home / Restart, poked with the
-    // right index finger. It is there when you look for it and gone when you work, so it
+    // Palm-up menu on either hand (left- and right-handers): status line plus Teach / Home /
+    // Restart, poked with the index finger of the other hand. It is there when you look for it and gone when you work, so it
     // never covers the cell. Teach is only live while the cell is waiting to be shown a tray.
     public class FingertipMenu : MonoBehaviour
     {
@@ -29,6 +29,7 @@ namespace MetaMove.Demo.Kitting
         readonly Button[] _buttons = new Button[3];
         float _palmUpFor, _palmDownFor, _shown, _lastPress = -9f;
         bool _visible;
+        OVRSkeleton _menuHand;   // the hand that holds the menu; the other one pokes
 
         class Button { public Image bg; public TextMeshProUGUI label; public RectTransform rt; public System.Action act; public bool enabled = true; }
 
@@ -68,7 +69,15 @@ namespace MetaMove.Demo.Kitting
             var head = Camera.main.transform;
 
             Vector3 palm, normal;
-            bool up = PalmUp(out palm, out normal, head);
+            // Keep the hand that already holds the menu; otherwise take whichever palm is up.
+            bool up = false;
+            if (_menuHand != null) up = PalmUp(_menuHand, out palm, out normal, head);
+            else { palm = normal = Vector3.zero; }
+            if (!up)
+            {
+                foreach (var h in new[] { leftHand, rightHand })
+                    if (h != null && h != _menuHand && PalmUp(h, out palm, out normal, head)) { up = true; _menuHand = h; break; }
+            }
             if (up) { _palmUpFor += Time.deltaTime; _palmDownFor = 0f; } else { _palmDownFor += Time.deltaTime; _palmUpFor = 0f; }
             if (!_visible && _palmUpFor > showDelay) _visible = true;
             if (_visible && _palmDownFor > hideDelay) _visible = false;
@@ -96,18 +105,22 @@ namespace MetaMove.Demo.Kitting
             string state = !cell.IsBound ? "Not placed" : cell.State.ToString();
             _status.text = "<b>" + state + "</b>   " + Mathf.RoundToInt(f * 100f) + "%   " + (d < 0f ? "--" : d.ToString("0.00", inv) + " m");
             _buttons[0].enabled = cell.State == KittingCell.Phase.Guide;
+            // Teach lights up once the tool is over a tray it would accept.
+            bool ready = _buttons[0].enabled && cell.TrayUnderTool() != null;
             for (int i = 0; i < 3; i++)
             {
                 var b = _buttons[i];
                 b.label.color = b.enabled ? UIKit.TextHi : UIKit.TextLo * 0.8f;
-                b.bg.color = i == 0 && b.enabled ? new Color(UIKit.Accent.r, UIKit.Accent.g, UIKit.Accent.b, 0.55f) : UIKit.GlassLight;
+                float pulse = ready && i == 0 ? 0.35f + 0.35f * Mathf.Sin(Time.time * 6f) : 0f;
+                b.bg.color = i == 0 && b.enabled ? new Color(UIKit.Accent.r, UIKit.Accent.g, UIKit.Accent.b, 0.55f + pulse) : UIKit.GlassLight;
             }
         }
 
         void Poke()
         {
             Vector3 tip;
-            if (!Bone(rightHand, OVRSkeleton.BoneId.XRHand_IndexTip, OVRSkeleton.BoneId.Hand_IndexTip, out tip)) return;
+            var poker = _menuHand == leftHand ? rightHand : leftHand;
+            if (!Bone(poker, OVRSkeleton.BoneId.XRHand_IndexTip, OVRSkeleton.BoneId.Hand_IndexTip, out tip)) return;
             if (Time.time - _lastPress < pressCooldown) return;
             foreach (var b in _buttons)
             {
@@ -137,15 +150,15 @@ namespace MetaMove.Demo.Kitting
             foreach (var b in _buttons) if (b.label.text == name && b.enabled) { b.act(); return; }
         }
 
-        bool PalmUp(out Vector3 palm, out Vector3 normal, Transform head)
+        bool PalmUp(OVRSkeleton hand, out Vector3 palm, out Vector3 normal, Transform head)
         {
             palm = normal = Vector3.zero;
             Vector3 wrist, index1, pinky1;
-            if (!Bone(leftHand, OVRSkeleton.BoneId.XRHand_Wrist, OVRSkeleton.BoneId.Hand_WristRoot, out wrist)) return false;
-            if (!Bone(leftHand, OVRSkeleton.BoneId.XRHand_IndexProximal, OVRSkeleton.BoneId.Hand_Index1, out index1)) return false;
-            if (!Bone(leftHand, OVRSkeleton.BoneId.XRHand_LittleProximal, OVRSkeleton.BoneId.Hand_Pinky1, out pinky1)) return false;
+            if (!Bone(hand, OVRSkeleton.BoneId.XRHand_Wrist, OVRSkeleton.BoneId.Hand_WristRoot, out wrist)) return false;
+            if (!Bone(hand, OVRSkeleton.BoneId.XRHand_IndexProximal, OVRSkeleton.BoneId.Hand_Index1, out index1)) return false;
+            if (!Bone(hand, OVRSkeleton.BoneId.XRHand_LittleProximal, OVRSkeleton.BoneId.Hand_Pinky1, out pinky1)) return false;
             palm = (wrist + index1 + pinky1) / 3f;
-            normal = Vector3.Cross(index1 - wrist, pinky1 - wrist).normalized;   // left hand: palm side
+            normal = Vector3.Cross(index1 - wrist, pinky1 - wrist).normalized;
             if (Vector3.Dot(normal, head.position - palm) < 0f) normal = -normal; // the side you can see
             return Vector3.Dot(normal, Vector3.up) > palmUpThreshold;
         }

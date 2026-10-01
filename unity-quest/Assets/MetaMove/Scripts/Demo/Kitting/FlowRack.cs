@@ -18,6 +18,8 @@ namespace MetaMove.Demo.Kitting
         public Transform[] entries;
         public Transform[] picks;
         public Transform[] returns;
+        [Tooltip("Lanes taken by stock boxes of the scenery, on both levels: never offered to the visitor.")]
+        public bool[] blocked;
 
         [Tooltip("Carried boxes released inside this box (rack local) count as 'set on a lane'.")]
         public Bounds loadZone = new Bounds(new Vector3(0f, 1.05f, -0.40f), new Vector3(1.20f, 0.40f, 0.45f));
@@ -35,7 +37,7 @@ namespace MetaMove.Demo.Kitting
             int best = -1; float bestD = float.MaxValue;
             for (int i = 0; i < LaneCount; i++)
             {
-                if (IsOccupied(i, occupants)) continue;
+                if (IsOccupied(i, occupants) || IsBlocked(i)) continue;
                 var local = transform.InverseTransformPoint(world);
                 var lane = transform.InverseTransformPoint(entries[i].position);
                 float d = Mathf.Abs(local.x - lane.x);
@@ -43,6 +45,8 @@ namespace MetaMove.Demo.Kitting
             }
             return best;
         }
+
+        public bool IsBlocked(int lane) => blocked != null && lane < blocked.Length && blocked[lane];
 
         bool IsOccupied(int lane, KittingTray[] occupants)
         {

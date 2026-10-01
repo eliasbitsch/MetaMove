@@ -93,7 +93,9 @@ wall_pts = []                          # outline in the wall's XY plane (x, y), 
 xs = [-1.7 + i * 0.12 for i in range(int(3.4 / 0.12) + 1)]
 wall_pts.append((-1.7, 0.0)); wall_pts.append((1.7, 0.0))
 for x in reversed(xs):
-    wall_pts.append((x, 2.45 + random.uniform(-0.25, 0.08) + (0.35 if abs(x - 0.9) < 0.5 else 0)))
+    # a column stub stands up where the steel beam enters, so the beam can sit high above the arm
+    col = 1.05 * max(0.0, 1.0 - (x / 0.42) ** 2)
+    wall_pts.append((x, 2.45 + random.uniform(-0.25, 0.08) + (0.35 if abs(x - 0.9) < 0.5 else 0) + col))
 bm = bmesh.new()
 front = [bm.verts.new(U(x, y, WZ + WT / 2)) for x, y in wall_pts]
 back = [bm.verts.new(U(x, y, WZ - WT / 2)) for x, y in wall_pts]
@@ -166,7 +168,7 @@ export("bari_conveyor", [conv, crol])
 
 # ---------------------------------------------------------------- steel beam out of the wall + pendant lamp
 # An HEB-style I-beam cantilevers out of the broken wall over the cell and carries the lamp.
-BY = 2.30                               # beam centre height above the floor
+BY = 3.00                               # beam centre height above the floor: well clear of the arm
 BZ0, BZ1 = WZ - 0.30, 0.42               # from inside the wall to its free end
 def ibeam_z(x, y, z0, z1, name):
     L = z1 - z0; cz = (z0 + z1) / 2

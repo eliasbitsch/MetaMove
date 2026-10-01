@@ -17,10 +17,10 @@ namespace MetaMove.UI.Kit
     {
         public TMP_FontAsset font;
         [Header("Placement")]
-        public float distance = 1.05f;
-        public float elevation = 9f;        // degrees above the horizon
-        public float azimuth = -24f;        // left of the view, keeps the robot in sight
-        public float worldWidth = 0.50f;
+        public float distance = 1.15f;
+        public float elevation = 16f;       // degrees above the horizon: centred, above the robot
+        public float azimuth = 0f;          // straight ahead, where the eye already is
+        public float worldWidth = 0.56f;
         public float deadzone = 14f;
         public float followTime = 0.35f;
         public float fadeTime = 0.2f;
@@ -28,17 +28,17 @@ namespace MetaMove.UI.Kit
         public bool showPlaceholder = true;
         public string placeholderLabel = "TUTORIAL";
 
-        const float W = 900f, MediaH = 470f, TitleH = 56f, TextH = 170f, Pad = 30f;
+        const float W = 900f, MediaH = 340f, TitleH = 64f, TextH = 190f, Pad = 30f;
         const float H = Pad + MediaH + Pad * 0.6f + TitleH + TextH + Pad;
 
         Canvas _canvas;
         CanvasGroup _group;
-        Image _mediaFrame, _mediaImage, _placeholderIcon;
+        Image _mediaFrame, _mediaImage, _placeholderIcon, _accent;
         RawImage _video;
         TextMeshProUGUI _title, _caption, _placeholderText, _step;
         VideoPlayer _player;
         RenderTexture _rt;
-        float _shown, _target;
+        float _shown, _target, _pop = 1f;
         bool _placed;
 
         void Awake() => Build();
@@ -50,7 +50,8 @@ namespace MetaMove.UI.Kit
             _caption.text = caption ?? "";
             _step.text = step ?? "";
             SetMedia(image, clip);
-            if (_target < 0.5f) _placed = false;   // re-appear in front of the viewer
+            _placed = false;   // every new step comes to the centre of the view
+            _pop = 0f;
             _target = 1f;
         }
 
@@ -92,8 +93,11 @@ namespace MetaMove.UI.Kit
             _canvas.enabled = _shown > 0.001f;
             if (!_canvas.enabled) return;
             UIKit.LazyFollow(_canvas.transform, Camera.main.transform, distance, elevation, deadzone, followTime, ref _placed, azimuth);
-            // gentle scale-in while appearing
-            _canvas.transform.localScale = Vector3.one * (worldWidth / W) * Mathf.Lerp(0.94f, 1f, _group.alpha);
+            // scale-in while appearing, and a short pop on every new step so it is noticed
+            _pop = Mathf.MoveTowards(_pop, 1f, Time.deltaTime / 0.35f);
+            float pop = 1f + 0.06f * Mathf.Sin(_pop * Mathf.PI);
+            _canvas.transform.localScale = Vector3.one * (worldWidth / W) * Mathf.Lerp(0.94f, 1f, _group.alpha) * pop;
+            _accent.color = new Color(UIKit.Accent.r, UIKit.Accent.g, UIKit.Accent.b, 0.55f + 0.45f * Mathf.Sin(_pop * Mathf.PI));
         }
 
         void Build()
@@ -104,8 +108,11 @@ namespace MetaMove.UI.Kit
             var root = (RectTransform)_canvas.transform;
             _canvas.transform.localScale = Vector3.one * (worldWidth / W);
 
-            var bg = UIKit.Panel("Glass", root, UIKit.Glass, 46f, 5f);
+            var bg = UIKit.Panel("Glass", root, new Color(UIKit.Glass.r, UIKit.Glass.g, UIKit.Glass.b, 0.95f), 46f, 5f);
             UIKit.Stretch(bg.rectTransform);
+            // accent bar along the top edge: this card is the one to read
+            _accent = UIKit.Panel("Accent", root, UIKit.Accent, 4f, 0f, false);
+            UIKit.Place(_accent.rectTransform, new Vector2(0.5f, 1f), new Vector2(0.5f, 1f), new Vector2(0f, -10f), new Vector2(W * 0.4f, 8f));
 
             // media slot
             _mediaFrame = UIKit.Panel("Media", root, UIKit.GlassLight, 28f, 0f, false);
@@ -133,13 +140,13 @@ namespace MetaMove.UI.Kit
 
             // title + caption
             float y = Pad + TextH;
-            _title = UIKit.Text("Title", root, font, 28f, UIKit.Accent, TextAlignmentOptions.BottomLeft, FontStyles.Bold);
-            UIKit.Place(_title.rectTransform, new Vector2(0f, 0f), new Vector2(0f, 0f), new Vector2(Pad + 10f, y), new Vector2(W - 2f * Pad - 20f, TitleH));
+            _title = UIKit.Text("Title", root, font, 34f, UIKit.Accent, TextAlignmentOptions.Bottom, FontStyles.Bold);
+            UIKit.Place(_title.rectTransform, new Vector2(0.5f, 0f), new Vector2(0.5f, 0f), new Vector2(0f, y), new Vector2(W - 2f * Pad - 20f, TitleH));
             _title.characterSpacing = 8f;
-            _caption = UIKit.Text("Caption", root, font, 40f, UIKit.TextHi, TextAlignmentOptions.TopLeft);
-            UIKit.Place(_caption.rectTransform, new Vector2(0f, 0f), new Vector2(0f, 0f), new Vector2(Pad + 10f, Pad), new Vector2(W - 2f * Pad - 20f, TextH));
+            _caption = UIKit.Text("Caption", root, font, 42f, UIKit.TextHi, TextAlignmentOptions.Top);
+            UIKit.Place(_caption.rectTransform, new Vector2(0.5f, 0f), new Vector2(0.5f, 0f), new Vector2(0f, Pad), new Vector2(W - 2f * Pad - 20f, TextH));
             _caption.enableWordWrapping = true;
-            _caption.enableAutoSizing = true; _caption.fontSizeMin = 26f; _caption.fontSizeMax = 40f;
+            _caption.enableAutoSizing = true; _caption.fontSizeMin = 28f; _caption.fontSizeMax = 42f;
             _caption.lineSpacing = 6f;
 
             SetMedia(null, null);

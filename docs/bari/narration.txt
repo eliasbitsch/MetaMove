@@ -5,13 +5,16 @@
 # Regenerate one line only:  generate_bari.py <key>
 
 [welcome]
-We couldn't bring you to the factory, so we brought the factory to you. This arm is building kits: an ABB GoFa, life-size, picking gears at full speed. Keep an eye on the tray. It is running low.
+We couldn't bring you to the factory, so we brought the factory to you. This arm is building kits: an ABB GoFa, life-size, picking gears at full speed. Watch it work for a moment.
 
 [story]
 Arms like this used to stand behind a fence. The safety standard now lets them share the floor with you, on one condition: the machine has to know where you are.
 
 [refill]
-The tray is almost empty. The next batch is waiting on the trolley behind you. Pick it up and load it into the rack, before the line stops.
+The tray is getting low. The next batch is waiting on the trolley behind you, in the orange box. Pick it up and load it into the rack, while the arm keeps working.
+
+[slow]
+Notice the arm slowing down as you come closer? It measures your distance all the time. The closer you are, the slower it moves.
 
 [standstill]
 It stopped. Not because anything broke. You are inside its reach.

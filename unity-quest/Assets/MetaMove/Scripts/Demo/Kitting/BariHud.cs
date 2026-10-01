@@ -28,7 +28,9 @@ namespace MetaMove.Demo.Kitting
         Image _pill, _dot, _gaugeFill, _gaugeTrack, _zoneBar;
         TextMeshProUGUI _state, _detail, _pct, _speedLabel, _dist, _zone;
         bool _placed;
-        float _shownFactor;
+        float _shownFactor, _ssmShown = 1f;
+        CanvasGroup _ssmGroup;
+        RectTransform _pillRt;
 
         void Start() => Build();
 
@@ -50,8 +52,16 @@ namespace MetaMove.Demo.Kitting
             _detail = UIKit.Text("Detail", _pill.transform, font, 26f, UIKit.TextLo, TextAlignmentOptions.MidlineLeft);
             UIKit.Place(_detail.rectTransform, new Vector2(0f, 0.5f), new Vector2(0f, 0.5f), new Vector2(76f, -30f), new Vector2(290f, 40f));
 
+            _pillRt = _pill.rectTransform;
+            // Gauge and distance belong to speed and separation monitoring; while the visitor
+            // guides the arm by hand it is not active, so they fade out (one group).
+            var ssm = new GameObject("SSM", typeof(RectTransform), typeof(CanvasGroup));
+            ssm.transform.SetParent(root, false);
+            UIKit.Stretch((RectTransform)ssm.transform);
+            _ssmGroup = ssm.GetComponent<CanvasGroup>();
+
             // --- speed gauge (centre)
-            var gauge = UIKit.Panel("Gauge", root, UIKit.Glass, 95f);
+            var gauge = UIKit.Panel("Gauge", ssm.transform, UIKit.Glass, 95f);
             UIKit.Place(gauge.rectTransform, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(190f, 190f));
             _gaugeTrack = Radial("Track", gauge.transform, new Color(1f, 1f, 1f, 0.10f), 1f);
             _gaugeFill = Radial("Fill", gauge.transform, UIKit.Ok, 0f);
@@ -63,7 +73,7 @@ namespace MetaMove.Demo.Kitting
             _speedLabel.characterSpacing = 8f;
 
             // --- distance (right)
-            var dp = UIKit.Panel("Distance", root, UIKit.Glass, 44f);
+            var dp = UIKit.Panel("Distance", ssm.transform, UIKit.Glass, 44f);
             UIKit.Place(dp.rectTransform, new Vector2(1f, 0.5f), new Vector2(1f, 0.5f), Vector2.zero, new Vector2(380f, 150f));
             _dist = UIKit.Text("Metres", dp.transform, font, 50f, UIKit.TextHi, TextAlignmentOptions.MidlineRight, FontStyles.Bold);
             UIKit.Place(_dist.rectTransform, new Vector2(1f, 0.5f), new Vector2(1f, 0.5f), new Vector2(-36f, 18f), new Vector2(300f, 60f));
@@ -89,6 +99,15 @@ namespace MetaMove.Demo.Kitting
         {
             if (_canvas == null || Camera.main == null) return;
             UIKit.LazyFollow(_canvas.transform, Camera.main.transform, distance, elevation, 18f, 0.25f, ref _placed);
+
+            bool ssmActive = cell == null || (cell.State != KittingCell.Phase.Guide && cell.State != KittingCell.Phase.Align);
+            _ssmShown = Mathf.MoveTowards(_ssmShown, ssmActive ? 1f : 0f, Time.deltaTime / 0.25f);
+            _ssmGroup.alpha = _ssmShown;
+            // the status pill slides to the centre while it is alone
+            float x = Mathf.Lerp((380f - W) / 2f, 0f, 1f - _ssmShown);
+            _pillRt.anchorMin = _pillRt.anchorMax = new Vector2(0.5f, 0.5f);
+            _pillRt.pivot = new Vector2(0.5f, 0.5f);
+            _pillRt.anchoredPosition = new Vector2(x, 0f);
 
             float f = speed != null ? Mathf.Clamp01(speed.Factor) : 1f;
             float d = speed != null ? speed.Distance : -1f;
@@ -125,7 +144,7 @@ namespace MetaMove.Demo.Kitting
                     break;
                 case KittingCell.Phase.Probe: state = "Checking"; detail = "Gripping " + (tray != null ? tray.label : ""); c = UIKit.Warn; break;
                 case KittingCell.Phase.Waiting: state = "No parts"; detail = "Bring the next batch"; c = UIKit.Stop; break;
-                case KittingCell.Phase.Guide: state = "Show the tray"; detail = "Pinch the tool, guide, Teach"; c = UIKit.Accent; break;
+                case KittingCell.Phase.Guide: state = "Hand guiding"; detail = "Speed monitoring paused"; c = UIKit.Accent; break;
                 case KittingCell.Phase.Align: state = "Aligning"; detail = "Locating the new tray"; c = UIKit.Accent; break;
                 default: state = "Idle"; detail = ""; c = UIKit.TextLo; break;
             }

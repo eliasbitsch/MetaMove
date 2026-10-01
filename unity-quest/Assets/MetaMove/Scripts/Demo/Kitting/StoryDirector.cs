@@ -36,7 +36,7 @@ namespace MetaMove.Demo.Kitting
         public List<Beat> beats = new List<Beat>();
 
         string _current;
-        bool _welcomed, _storyTold, _stood, _recovered, _emptyAsked;
+        bool _welcomed, _storyTold, _slowTold, _stood, _recovered, _emptyAsked;
         float _shownAt, _boundAt = -1f;
         Beat _beat;
 
@@ -45,9 +45,10 @@ namespace MetaMove.Demo.Kitting
 
         public static List<Beat> DefaultBeats() => new List<Beat>
         {
-            new Beat { key = "welcome", title = "The line is running", caption = "This arm is building kits: an ABB GoFa, life-size, picking gears at full speed. Keep an eye on the tray. It is running low." },
+            new Beat { key = "welcome", title = "The line is running", caption = "This arm is building kits: an ABB GoFa, life-size, picking gears at full speed. Watch it work for a moment." },
             new Beat { key = "story", title = "No fence", caption = "Arms like this used to stand behind a fence. The safety standard now lets them share the floor with you, on one condition: the machine has to know where you are.", hold = 14f },
-            new Beat { key = "refill", title = "Bring the next batch", caption = "The tray is almost empty. The next batch is waiting on the trolley behind you. Pick it up and load it into the rack, before the line stops." },
+            new Beat { key = "refill", title = "Bring the next batch", caption = "The tray is getting low. The next batch is waiting on the trolley behind you, in the orange box. Pick it up and load it into the rack, while the arm keeps working." },
+            new Beat { key = "slow", title = "It knows you are there", caption = "Notice the arm slowing down as you come closer? It measures your distance all the time. The closer you are, the slower it moves.", hold = 9f },
             new Beat { key = "standstill", title = "Standstill", caption = "It stopped. Not because anything broke. You are inside its reach.", hold = 6f },
             new Beat { key = "recover", title = "Trust comes back slowly", caption = "Step back. Notice that it does not pick up straight away? Slowing down is allowed to be abrupt. Speeding up is not.", hold = 9f },
             new Beat { key = "empty", title = "Clear the empty box", caption = "The robot has given up on the empty box. Take it out at the front and put it on the return lane below." },
@@ -92,7 +93,7 @@ namespace MetaMove.Demo.Kitting
                 case "guide": Play("guide"); break;
                 case "aligned": Play("aligned"); break;
                 case "resume": Play("release"); break;
-                case "restart": _welcomed = _storyTold = _stood = _recovered = _emptyAsked = false; _boundAt = Time.time; _pending.Clear(); break;
+                case "restart": _welcomed = _storyTold = _slowTold = _stood = _recovered = _emptyAsked = false; _boundAt = Time.time; _pending.Clear(); break;
             }
         }
 
@@ -108,6 +109,9 @@ namespace MetaMove.Demo.Kitting
             if (_welcomed && !_storyTold && _current == "welcome" && Time.time - _shownAt > Mathf.Max(8f, welcomeLen)) { _storyTold = true; Play("story"); }
 
             float f = speed != null ? speed.Factor : 1f;
+            // The slow-down is the point of the demo: name it the first time it happens.
+            if (!_slowTold && _welcomed && f < 0.85f && f > 0.001f && cell.State == KittingCell.Phase.Running && _current != "standstill")
+            { _slowTold = true; Play("slow"); }
             if (!_stood && f <= 0.001f && cell.State == KittingCell.Phase.Running) { _stood = true; Play("standstill"); }
             if (_stood && !_recovered && _current == "standstill" && f > 0.5f) { _recovered = true; Play("recover"); }
 

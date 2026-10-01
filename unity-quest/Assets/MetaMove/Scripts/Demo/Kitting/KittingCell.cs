@@ -14,7 +14,8 @@ namespace MetaMove.Demo.Kitting
     //   Running   pick from the taught tray, place into the kit, repeat
     //   Probe     taught tray is empty: go there once anyway and grip air
     //   Waiting   no tray the robot knows has parts; "starved" until tray B arrives
-    //   Guide     tray B is on the table but not taught: the visitor pinch-drags
+    //             and the empty tray A has been taken out
+    //   Guide     tray B is in the rack but not taught: the visitor pinch-drags
     //             the TCP roughly over it (grab interactors enabled)
     //   Align     Teach pressed near a tray: the robot centres itself on it
     //   -> Running from the new tray
@@ -64,6 +65,11 @@ namespace MetaMove.Demo.Kitting
         public float baseSpeed = 0.9f;         // m/s at factor 1 (GoFa max 2.2)
         public float acceleration = 3.0f;      // m/s^2, ramps in and out of every waypoint
         public float approachHeight = 0.12f;   // m above the grasp point
+        [Tooltip("Height above the table top (TCP) for every move between tray and kit. Clears the " +
+                 "KLT rim (0.26 m on the rack) with the gear hanging below the fingers.")]
+        public float transitHeight = 0.40f;
+        [Tooltip("Slower, visibly careful approach while locating a newly taught tray.")]
+        [Range(0.1f, 1f)] public float alignSpeedScale = 0.35f;
         [Tooltip("Flange above the part centre at grasp, until a real gripper defines the TCP.")]
         public float toolOffset = 0.07f;
         public float gripDwell = 0.25f;        // s at factor 1
@@ -73,7 +79,12 @@ namespace MetaMove.Demo.Kitting
         [Tooltip("Horizontal radius around a tray centre in which Teach counts as 'over the tray'.")]
         public float teachRadius = 0.15f;
         [Tooltip("Max height of the TCP above the tray for Teach to count.")]
-        public float teachMaxHeight = 0.35f;
+        public float teachMaxHeight = 0.55f;   // the guide filter keeps the tool above the tray rim
+
+        [Header("Story pacing")]
+        [Tooltip("Tray A parts left when the refill is asked for: early enough that the visitor walks " +
+                 "up while the arm is still working, so the slow-down is seen, not just a stop.")]
+        public int lowAt = 6;
 
         [Header("Manual guiding (lab rig)")]
         [Tooltip("Grab components enabled only in Guide.")]
@@ -95,6 +106,22 @@ namespace MetaMove.Demo.Kitting
         public int KitsDone { get; private set; }
         public string Status { get; private set; } = "";
         public bool IsBound => _bound;
+        // The refill has been asked for (tray A low) or the line is already starved.
+        public bool RefillDue => _lowCued || State == Phase.Waiting;
+        public bool TrayBInRack => _trayBOnTable;
+        public Quaternion GraspRotation => _graspRot;
+        public MetaMove.Robot.PhantomGrabRelay GuideRelay { get; private set; }
+        public bool GuideHeld => GuideRelay != null && GuideRelay.grabbable != null && GuideRelay.grabbable.SelectingPointsCount > 0;
+
+        // Tray A no longer stands in the pick lane: carried to the return lane (or never carryable).
+        public bool TrayACleared
+        {
+            get
+            {
+                var c = trayA != null ? trayA.GetComponent<CarryableTray>() : null;
+                return c == null || c.State == CarryableTray.Phase.Rolling || c.State == CarryableTray.Phase.Arrived;
+            }
+        }
 
         // The empty tray A may be carried to the return lane once the robot no longer
         // needs it: after its failed probe, or once it runs from tray B.
@@ -167,8 +194,11 @@ namespace MetaMove.Demo.Kitting
 
             // The lab grab handle on the TCP becomes the guide handle.
             var relay = robot.GetComponentInChildren<MetaMove.Robot.PhantomGrabRelay>(true);
+            GuideRelay = relay;
             if (relay != null)
             {
+                // Relative drag: the tool starts from where it is, it never jumps to the hand.
+                relay.attractToHand = false;
                 var list = new List<Behaviour>();
                 foreach (var b in relay.GetComponentsInChildren<Behaviour>(true)) list.Add(b);
                 grabInteractors = list.ToArray();
@@ -219,7 +249,12 @@ namespace MetaMove.Demo.Kitting
                 if (kb[restartKey].wasPressedThisFrame) Restart();
             }
             if (OVRInput.GetDown(teachButton)) Teach();
-            if (OVRInput.GetDown(placeTrayButton) && !_trayBOnTable) PlaceTrayB(trayBPlaced);
+            if (OVRInput.GetDown(placeTrayButton))
+            {
+                // Presenter fallback, one step per press: new batch in, then the empty out.
+                if (!_trayBOnTable) PlaceTrayB(trayBPlaced);
+                else if (!TrayACleared && AllowEmptyRemoval) trayA.GetComponent<CarryableTray>()?.SendToReturn();
+            }
         }
 
         // ---------------------------------------------------------------- public API
@@ -228,6 +263,7 @@ namespace MetaMove.Demo.Kitting
         {
             if (!_bound) return;
             if (_run != null) StopCoroutine(_run);
+            _speedScale = 1f;
             if (_held != null) { _held.SetActive(false); _held = null; }
             if (_gripper != null) _gripper.Open();
             trayA.Refill();
@@ -266,7 +302,6 @@ namespace MetaMove.Demo.Kitting
             _trayBOnTable = true;
             Debug.Log("[Kitting] tray B placed at " + trayB.transform.position.ToString("F3"));
             Emit("arrived", "New batch in the rack");
-            if (State == Phase.Waiting) EnterGuide();
         }
 
         // Home from the fingertip menu: stop the line and park the arm; Restart resumes.
@@ -284,15 +319,7 @@ namespace MetaMove.Demo.Kitting
         public void Teach()
         {
             if (State != Phase.Guide) return;
-            var p = ikTarget.position;
-            KittingTray hit = null;
-            foreach (var t in new[] { trayB, trayA })
-            {
-                if (t == null || t.Remaining == 0) continue;
-                var d = p - t.Center;
-                float horiz = new Vector2(d.x, d.z).magnitude;
-                if (horiz <= teachRadius && d.y >= -0.02f && d.y <= teachMaxHeight) { hit = t; break; }
-            }
+            var hit = TrayUnderTool();
             if (hit == null)
             {
                 Emit("teach_fail", "No tray under the gripper");
@@ -301,6 +328,21 @@ namespace MetaMove.Demo.Kitting
             SetGuide(false);
             if (_run != null) StopCoroutine(_run);
             _run = StartCoroutine(AlignThenRun(hit));
+        }
+
+        // The tray Teach would accept right now, or null. Also drives the hints.
+        public KittingTray TrayUnderTool()
+        {
+            if (ikTarget == null) return null;
+            var p = ikTarget.position;
+            foreach (var t in new[] { trayB, trayA })
+            {
+                if (t == null || t.Remaining == 0) continue;
+                var d = p - t.Center;
+                float horiz = new Vector2(d.x, d.z).magnitude;
+                if (horiz <= teachRadius && d.y >= -0.02f && d.y <= teachMaxHeight) return t;
+            }
+            return null;
         }
 
         // Editor stand-in for a coarse pinch: park the TCP a few cm off tray B.
@@ -335,7 +377,7 @@ namespace MetaMove.Demo.Kitting
                     yield return WaitForTray();
                     yield break;   // Guide takes over; AlignThenRun restarts the loop
                 }
-                if (!_lowCued && Taught == trayA && Taught.Remaining <= 2)
+                if (!_lowCued && Taught == trayA && Taught.Remaining <= lowAt)
                 {
                     _lowCued = true;
                     Emit("low", Taught.label + " running low");
@@ -349,6 +391,9 @@ namespace MetaMove.Demo.Kitting
             var n = tray.nests[nest];
             float up = toolOffset + tray.graspHeight + approachHeight;
             float at = toolOffset + tray.graspHeight;
+            // Over the box at transit height, then straight down into it: the gripper and the
+            // gear never cut through a box wall.
+            yield return MoveOver(n);
             yield return MoveAlong(n, up);
             yield return MoveAlong(n, at);
             if (_gripper != null) _gripper.CloseOnPart();
@@ -356,9 +401,10 @@ namespace MetaMove.Demo.Kitting
             _held = tray.parts[nest];
             _held.transform.SetParent(_holdAt != null ? _holdAt : ikTarget, true);
             yield return MoveAlong(n, up);
+            yield return MoveOver(n);
 
             var slot = kitSlots[_slot];
-            yield return MoveAlong(slot, up);
+            yield return MoveOver(slot);
             yield return MoveAlong(slot, at);
             if (_gripper != null) _gripper.Open();
             yield return Dwell(gripDwell);
@@ -366,7 +412,7 @@ namespace MetaMove.Demo.Kitting
             _held.transform.localPosition = Vector3.zero;
             _held.transform.localRotation = Quaternion.identity;
             _held = null;
-            yield return MoveAlong(slot, up);
+            yield return MoveOver(slot);
 
             _slot++;
             if (_slot >= kitSlots.Count)
@@ -386,6 +432,7 @@ namespace MetaMove.Demo.Kitting
             var n = tray.FirstNest;
             float up = toolOffset + tray.graspHeight + approachHeight;
             float at = toolOffset + tray.graspHeight;
+            yield return MoveOver(n);
             yield return MoveAlong(n, up);
             yield return MoveAlong(n, at);
             if (_gripper != null) _gripper.CloseEmpty();   // fingers close all the way: nothing there
@@ -393,15 +440,21 @@ namespace MetaMove.Demo.Kitting
             Emit("miss", tray.label + " is empty");
             if (_gripper != null) _gripper.Open();
             yield return MoveAlong(n, up);
+            yield return MoveOver(n);
             yield return MoveTo(home, Vector3.zero);
         }
 
         IEnumerator WaitForTray()
         {
             State = Phase.Waiting;
-            if (_trayBOnTable) { EnterGuide(); yield break; }
-            Emit("starved", "Line starved - waiting for parts");
-            while (State == Phase.Waiting) yield return null;
+            if (!_trayBOnTable) Emit("starved", "Line starved - waiting for parts");
+            // Guide only once the new batch is in AND the empty is out of the pick lane:
+            // one thing to do at a time.
+            while (State == Phase.Waiting)
+            {
+                if (_trayBOnTable && TrayACleared) { EnterGuide(); yield break; }
+                yield return null;
+            }
         }
 
         void EnterGuide()
@@ -416,11 +469,13 @@ namespace MetaMove.Demo.Kitting
             State = Phase.Align;
             // The visible correction: from wherever the visitor left the TCP to the
             // tray's own frame. This is the "fine alignment" the machine contributes.
+            _speedScale = alignSpeedScale;
             yield return MoveAlong(tray.transform, toolOffset + tray.graspHeight + approachHeight);
+            _speedScale = 1f;
             tray.SetRecognized(true);
             Taught = tray;
             Emit("aligned", tray.label + " taught");
-            yield return Dwell(0.6f);
+            yield return Dwell(2.0f);   // let the "taught" moment land before the line runs again
             Emit("resume", "Line running from " + tray.label);
             _run = StartCoroutine(RunLoop());
         }
@@ -436,6 +491,19 @@ namespace MetaMove.Demo.Kitting
             yield return MoveTo(goal, Vector3.zero, above);
         }
 
+        // Straight above the goal at transit height (cell frame, table top = 0), tool level.
+        IEnumerator MoveOver(Transform goal)
+        {
+            float v = 0f;
+            while (true)
+            {
+                var p = goal.position;
+                p.y = (cellFrame != null ? cellFrame.position.y : 0f) + transitHeight + toolOffset;
+                if (Step(p, _graspRot, ref v)) yield break;
+                yield return null;
+            }
+        }
+
         IEnumerator MoveTo(Transform goal, Vector3 worldOffset, float alongUp = 0f)
         {
             float v = 0f;
@@ -443,17 +511,24 @@ namespace MetaMove.Demo.Kitting
             {
                 var p = goal.position + worldOffset + goal.up * alongUp;
                 var rotGoal = alongUp != 0f ? Quaternion.FromToRotation(Vector3.up, goal.up) * _graspRot : _graspRot;
-                float dist = Vector3.Distance(ikTarget.position, p);
-                // Trapezoid profile: accelerate, cruise at baseSpeed * factor, brake into the
-                // goal. The SSM factor scales the cruise speed and brakes immediately.
-                float vMax = baseSpeed * F;
-                float vBrake = Mathf.Sqrt(2f * acceleration * dist);
-                v = Mathf.Min(Mathf.Min(v + acceleration * Time.deltaTime, vMax), vBrake);
-                ikTarget.position = Vector3.MoveTowards(ikTarget.position, p, v * Time.deltaTime);
-                ikTarget.rotation = Quaternion.RotateTowards(ikTarget.rotation, rotGoal, 360f * F * Time.deltaTime);
-                if ((ikTarget.position - p).sqrMagnitude <= arriveTol * arriveTol) yield break;
+                if (Step(p, rotGoal, ref v)) yield break;
                 yield return null;
             }
+        }
+
+        float _speedScale = 1f;
+
+        // One frame of the trapezoid profile: accelerate, cruise at baseSpeed * factor, brake
+        // into the goal. The SSM factor scales the cruise speed and brakes immediately.
+        bool Step(Vector3 p, Quaternion rotGoal, ref float v)
+        {
+            float dist = Vector3.Distance(ikTarget.position, p);
+            float vMax = baseSpeed * F * _speedScale;
+            float vBrake = Mathf.Sqrt(2f * acceleration * dist);
+            v = Mathf.Min(Mathf.Min(v + acceleration * Time.deltaTime, vMax), vBrake);
+            ikTarget.position = Vector3.MoveTowards(ikTarget.position, p, v * Time.deltaTime);
+            ikTarget.rotation = Quaternion.RotateTowards(ikTarget.rotation, rotGoal, 360f * F * Time.deltaTime);
+            return (ikTarget.position - p).sqrMagnitude <= arriveTol * arriveTol;
         }
 
         IEnumerator Dwell(float seconds)
