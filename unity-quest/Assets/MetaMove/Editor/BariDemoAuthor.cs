@@ -545,9 +545,9 @@ namespace MetaMove.EditorTools
         // side, facing the visitor). Logo files live in a git-excluded folder of this public repo.
         static void Logos(Transform rack)
         {
-            // Board between the two levels (flowrack.py BOARD_Z = 0.72), below the line of sight to the arm.
-            Sticker("Logo_FHTW", rack, "Assets/MetaMove/Private/Logos/logo_fhtw.png", new Vector3(-0.30f, 0.72f, -0.432f), 0.24f);
-            Sticker("Logo_ISMAR2026", rack, "Assets/MetaMove/Private/Logos/logo_ismar2026.png", new Vector3(0.28f, 0.72f, -0.432f), 0.46f);
+            // Board under the supply beam (flowrack.py BOARD_Z = 0.92): below the line of sight to the arm, above the return lane.
+            Sticker("Logo_FHTW", rack, "Assets/MetaMove/Private/Logos/logo_fhtw.png", new Vector3(-0.30f, 0.92f, -0.432f), 0.24f);
+            Sticker("Logo_ISMAR2026", rack, "Assets/MetaMove/Private/Logos/logo_ismar2026.png", new Vector3(0.28f, 0.92f, -0.432f), 0.46f);
         }
 
         static void Sticker(string name, Transform parent, string texPath, Vector3 local, float width, float yaw = 0f)

@@ -69,9 +69,9 @@ for sx in (-1, 1):
 for (zb, zf) in (SUPPLY, RETURN):
     blue.append(box((RW - 2 * POST, 0.035, 0.05), (0, Y0, zb - 0.035), "RackBeam", steel_blue))
     blue.append(box((RW - 2 * POST, 0.035, 0.05), (0, Y1, zf - 0.035), "RackBeam", steel_blue))
-# kanban board on the loading side, between the two levels: below the visitor's line of sight
+# kanban board on the loading side, under the supply beam: below the visitor's line of sight
 # to the robot behind the rack (on top it hid the arm), still at a glance from the loading side
-BOARD_Z = 0.72
+BOARD_Z = 0.92   # top flush with the blue loading-side beam of the supply level
 metal.append(box((RW, 0.02, 0.16), (0, RD / 2 - 0.01, BOARD_Z), "RackBoard", galv))
 
 for name, (zb, zf), ret in (("Supply", SUPPLY, False), ("Return", RETURN, True)):
