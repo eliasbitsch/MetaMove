@@ -396,6 +396,13 @@ namespace MetaMove.EditorTools
         {
             var floor = new Vector3(0f, -FloorBelowTable, 0f);
             var island = Model("bari_floor_island", "FactoryFloor", frame, floor, 0f);
+            // Walkway lines and hazard tape competed with the speed-and-separation rings on the
+            // floor; the rings are the only floor markings the visitor should have to read.
+            foreach (var n in new[] { "Fac_FloorLines", "Fac_HazardTape" })
+            {
+                var t = island.transform.Find(n);
+                if (t != null) Object.DestroyImmediate(t.gameObject);
+            }
             var wall = Model("bari_wall", "FactoryWall", frame, floor, 0f);
             Model("bari_conveyor", "Conveyor", frame, floor, 0f);
             var beam = Model("bari_beam_lamp", "BeamLamp", frame, floor, 0f);
