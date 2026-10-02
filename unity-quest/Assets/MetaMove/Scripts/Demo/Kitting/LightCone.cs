@@ -27,6 +27,14 @@ namespace MetaMove.Demo.Kitting
             if (_pool == null) _pool = Part("Pool", PoolMesh());
         }
 
+        // After changing size or material from code (AddComponent builds with the defaults).
+        public void Rebuild()
+        {
+            _cone = Part("Beam", ConeMesh());
+            _pool = Part("Pool", PoolMesh());
+            _pool.enabled = poolAlpha > 0f;
+        }
+
         void Update()
         {
             if (!Application.isPlaying || _cone == null) return;

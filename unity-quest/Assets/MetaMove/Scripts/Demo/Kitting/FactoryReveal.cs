@@ -3,18 +3,19 @@ using UnityEngine;
 namespace MetaMove.Demo.Kitting
 {
     // The moment the cell is placed: the slab of factory floor spreads out from under the
-    // robot, the wall rises out of the ground and the hall beam lowers in from above.
+    // robot, the wall rises out of the ground, the hall beam and the roof fragment with its
+    // sign lower in from above.
     //
     // Driven by a clock in Update rather than a coroutine, and the resting poses are taken
     // once in Awake: whatever re-enables or re-parents the cell, every part always ends
     // exactly where the builder put it.
     public class FactoryReveal : MonoBehaviour
     {
-        public Transform floorIsland, wall, beam, portalMask;
+        public Transform floorIsland, wall, beam, portalMask, roof;
         public float floorTime = 0.9f, wallTime = 0.8f, beamTime = 0.7f;
         public float wallDrop = 2.9f, beamLift = 1.5f;
 
-        Vector3 _wall, _beam, _mask;
+        Vector3 _wall, _beam, _mask, _roof;
         float _t = -1f;
         bool _captured;
 
@@ -26,6 +27,7 @@ namespace MetaMove.Demo.Kitting
             if (wall != null) _wall = wall.localPosition;
             if (beam != null) _beam = beam.localPosition;
             if (portalMask != null) _mask = portalMask.localPosition;
+            if (roof != null) _roof = roof.localPosition;
             _captured = true;
         }
 
@@ -50,6 +52,7 @@ namespace MetaMove.Demo.Kitting
             if (wall != null) wall.localPosition = _wall + Vector3.down * wallDrop * (1f - w);
             if (portalMask != null) portalMask.localPosition = _mask + Vector3.down * wallDrop * (1f - w);
             if (beam != null) beam.localPosition = _beam + Vector3.up * beamLift * (1f - b);
+            if (roof != null) roof.localPosition = _roof + Vector3.up * beamLift * (1f - b);
         }
     }
 }

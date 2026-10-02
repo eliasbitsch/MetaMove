@@ -479,6 +479,7 @@ namespace MetaMove.EditorTools
             cone.length = 2.425f - 0.012f;   // down to the factory floor top
             cone.bottomRadius = 1.35f;
             cone.poolRadius = 1.5f;
+            cone.Rebuild();
 
             var mask = Model("bari_portal_mask", "PortalMask", frame, floor, 0f);
             var reveal = frame.gameObject.AddComponent<FactoryReveal>();
@@ -500,7 +501,8 @@ namespace MetaMove.EditorTools
             hall.GetComponent<Renderer>().sharedMaterial = hallMat;
             hall.GetComponent<Renderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
 
-            if (IncludeRoofSign) BuildRoofSign(frame);
+            if (IncludeRoofSign) reveal.roof = BuildRoofSign(frame).transform;
+            BuildCellDetails(frame);
 
             var conv = frame.gameObject.AddComponent<KitConveyor>();
             conv.kitModel = kitModel;
@@ -511,8 +513,8 @@ namespace MetaMove.EditorTools
 
         // Roof fragment with the hanging title sign (tools/blender/bari/roof.py). Off until the
         // preview render (MetaMove > Bari > Render Sign Preview) has been signed off.
-        const bool IncludeRoofSign = false;
-        const string SignTex = "Assets/MetaMove/Private/Sign/metamove_sign.png";   // git-excluded
+        const bool IncludeRoofSign = true;
+        const string SignTex = "Assets/MetaMove/Private/Sign/metamove_sign_metal.png";   // git-excluded, brushed aluminium
 
         public static GameObject BuildRoofSign(Transform frame)
         {
@@ -523,7 +525,7 @@ namespace MetaMove.EditorTools
             q.name = "SignFace";
             Object.DestroyImmediate(q.GetComponent<Collider>());
             q.transform.SetParent(roof.transform, false);
-            q.transform.localPosition = new Vector3(0f, 2.52f, -0.437f);   // roof.py: sign face centre
+            q.transform.localPosition = new Vector3(0f, 2.52f, 0.463f);    // roof.py: sign face centre (SIGN_Z + 0.013)
             q.transform.localRotation = Quaternion.Euler(0f, 180f, 0f);    // quad front faces +Z, to the visitor
             q.transform.localScale = new Vector3(1.60f, 0.512f, 1f);
             var m = ShaderMat("SignFace", "Universal Render Pipeline/Unlit");
@@ -531,7 +533,80 @@ namespace MetaMove.EditorTools
             m.SetColor("_BaseColor", new Color(0.92f, 0.92f, 0.92f));
             q.GetComponent<Renderer>().sharedMaterial = m;
             q.GetComponent<Renderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+
+            // The two spots on the purlin tips (roof.py prints the lens positions): visible beams
+            // onto the sign. Their light on the plate is painted into the texture - no real-time
+            // lights on the Quest.
+            var face = new Vector3(0f, 2.52f, 0.461f);
+            foreach (var sx in new[] { -1f, 1f })
+            {
+                var lens = new Vector3(sx * 0.934f, 3.025f, 0.909f);
+                var go = new GameObject(sx < 0f ? "SpotBeamLeft" : "SpotBeamRight");
+                go.transform.SetParent(roof.transform, false);
+                go.transform.localPosition = lens;
+                go.transform.localRotation = Quaternion.FromToRotation(Vector3.down, (face - lens).normalized);
+                var beam = go.AddComponent<LightCone>();
+                beam.material = ShaderMat("LightCone", "MetaMove/LightCone");
+                beam.topRadius = 0.045f;
+                beam.bottomRadius = 0.40f;
+                beam.length = Vector3.Distance(face, lens) - 0.03f;
+                beam.topAlpha = 0.30f;
+                beam.poolAlpha = 0f;
+                beam.segments = 24;
+                beam.Rebuild();
+            }
             return roof;
+        }
+
+        // OmniCore controller, cables, a box PC (no monitor - the HUD is the screen) and the anchor plate
+        // (tools/blender/bari/cell_details.py; textures from tools/branding/make_cell_details.py).
+        static void BuildCellDetails(Transform frame)
+        {
+            var det = Model("bari_cell_details", "CellDetails", frame, new Vector3(0f, -FloorBelowTable, 0f), 0f);
+            // Anchor reference as a desk sign on the table corner, leaning back 30 deg and turned
+            // towards the side the visitor walks along with the orange box (flat, it hid behind the rack).
+            var flat = det.transform.Find("Det_QRPlate");
+            if (flat != null) Object.DestroyImmediate(flat.gameObject);
+            var face = new Vector3(Mathf.Sin(40f * Mathf.Deg2Rad), 0f, Mathf.Cos(40f * Mathf.Deg2Rad)) * Mathf.Cos(30f * Mathf.Deg2Rad)
+                       + Vector3.up * Mathf.Sin(30f * Mathf.Deg2Rad);
+            var plate = new GameObject("AnchorPlate").transform;
+            plate.SetParent(det.transform, false);
+            plate.localPosition = new Vector3(0.27f, 0.80f + 0.085f, 0.20f);
+            plate.localRotation = Quaternion.LookRotation(-face, Vector3.up);   // quad front (-Z) faces 'face'
+            var body = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            body.name = "Plate";
+            Object.DestroyImmediate(body.GetComponent<Collider>());
+            body.transform.SetParent(plate, false);
+            body.transform.localPosition = new Vector3(0f, 0f, 0.003f);
+            body.transform.localScale = new Vector3(0.165f, 0.20f, 0.004f);
+            body.GetComponent<Renderer>().sharedMaterial = SlotMat("Profile");
+            var strut = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            strut.name = "Strut";
+            Object.DestroyImmediate(strut.GetComponent<Collider>());
+            strut.transform.SetParent(plate, false);
+            strut.transform.localPosition = new Vector3(0f, -0.02f, 0.05f);
+            strut.transform.localRotation = Quaternion.Euler(-60f, 0f, 0f);
+            strut.transform.localScale = new Vector3(0.12f, 0.004f, 0.11f);
+            strut.GetComponent<Renderer>().sharedMaterial = SlotMat("Profile");
+            Face("AnchorQR", plate, TexDir + "qr_anchor.png", Vector3.zero, Quaternion.identity, new Vector2(0.15f, 0.183f), false);
+        }
+
+        static void Face(string name, Transform parent, string texPath, Vector3 local, Quaternion rot, Vector2 size, bool unlit)
+        {
+            var tex = AssetDatabase.LoadAssetAtPath<Texture2D>(texPath);
+            if (tex == null) { Debug.LogWarning("[BariDemoAuthor] texture missing: " + texPath); return; }
+            var q = GameObject.CreatePrimitive(PrimitiveType.Quad);
+            q.name = name;
+            Object.DestroyImmediate(q.GetComponent<Collider>());
+            q.transform.SetParent(parent, false);
+            q.transform.localPosition = local;
+            q.transform.localRotation = rot;
+            q.transform.localScale = new Vector3(size.x, size.y, 1f);
+            var m = unlit ? ShaderMat(name, "Universal Render Pipeline/Unlit") : Mat(name, Color.white, 0f, 0.3f);
+            m.SetTexture("_BaseMap", tex);
+            if (unlit) m.SetColor("_BaseColor", new Color(0.9f, 0.9f, 0.9f));
+            q.GetComponent<Renderer>().sharedMaterial = m;
+            q.GetComponent<Renderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
         }
 
         static Material ShaderMat(string name, string shader)
@@ -658,6 +733,10 @@ namespace MetaMove.EditorTools
                 case "FacSteel":     return TexMat("FacSteel", "Metal009", new Color(0.45f, 0.47f, 0.50f), 0.85f, 0.45f, 2f);
                 case "FacRebar":     return Mat("FacRebar", new Color(0.35f, 0.20f, 0.12f), 0.6f, 0.2f);
                 case "FacWallPaint": return TexMat("FacWallPaint", "Concrete034", new Color(0.22f, 0.40f, 0.68f), 0f, 0.2f, 1.5f, useAlbedo: false);
+                case "Controller":     return Mat("Controller", new Color(0.82f, 0.83f, 0.84f), 0.2f, 0.45f);
+                case "ControllerDark": return Mat("ControllerDark", new Color(0.16f, 0.17f, 0.19f), 0.3f, 0.4f);
+                case "Cable":          return Mat("Cable", new Color(0.04f, 0.04f, 0.045f), 0f, 0.3f);
+                case "PanelBezel":     return Mat("PanelBezel", new Color(0.09f, 0.10f, 0.11f), 0.4f, 0.45f);
                 case "FacChain":     return Mat("FacChain", new Color(0.62f, 0.63f, 0.65f), 0.9f, 0.6f);
                 case "FacSignBack":  return Mat("FacSignBack", new Color(0.10f, 0.12f, 0.14f), 0.5f, 0.4f);
                 case "FacLampShade": return Mat("FacLampShade", new Color(0.12f, 0.13f, 0.14f), 0.6f, 0.5f);
