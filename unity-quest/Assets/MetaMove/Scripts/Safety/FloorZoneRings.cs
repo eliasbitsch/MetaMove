@@ -28,6 +28,8 @@ namespace MetaMove.Safety
         public bool fillScaled = false;
         [Tooltip("If set, STOP and SLOW are written on the floor, readable from the cell front (+Z).")]
         public TMPro.TMP_FontAsset labelFont;
+        [Tooltip("Nothing is drawn behind this local Z (e.g. the front face of a wall behind the robot).")]
+        public float clipBehindZ = float.NegativeInfinity;
         public float wallRiseTime = 0.25f;
 
         LineRenderer _stopRing, _scaledRing;
@@ -96,7 +98,11 @@ namespace MetaMove.Safety
             go.transform.SetParent(transform, false);
             var lr = go.AddComponent<LineRenderer>();
             lr.useWorldSpace = false;
-            lr.loop = true;
+            // full circle, or the arc in front of clipBehindZ (local Y of the line = cell Z)
+            float c = Mathf.Clamp(clipBehindZ / r, -1f, 1f);
+            bool clipped = c > -1f;
+            float a0 = clipped ? Mathf.Asin(c) : 0f, a1 = clipped ? Mathf.PI - Mathf.Asin(c) : Mathf.PI * 2f;
+            lr.loop = !clipped;
             lr.positionCount = segments;
             lr.widthMultiplier = lineWidth;
             lr.alignment = LineAlignment.TransformZ;   // lie flat on the floor
@@ -105,7 +111,7 @@ namespace MetaMove.Safety
             lr.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
             for (int i = 0; i < segments; i++)
             {
-                float a = i * Mathf.PI * 2f / segments;
+                float a = clipped ? Mathf.Lerp(a0, a1, i / (segments - 1f)) : i * Mathf.PI * 2f / segments;
                 lr.SetPosition(i, new Vector3(Mathf.Cos(a) * r, Mathf.Sin(a) * r, 0f));
             }
             return lr;
@@ -140,6 +146,13 @@ namespace MetaMove.Safety
                 int k = i * 6, b = i * 2, n = ((i + 1) % segments) * 2;
                 t[k] = b; t[k + 1] = n; t[k + 2] = b + 1;
                 t[k + 3] = b + 1; t[k + 4] = n; t[k + 5] = n + 1;
+            }
+            // drop the part behind clipBehindZ
+            for (int i = 0; i < segments; i++)
+            {
+                int n = (i + 1) % segments;
+                if (v[i * 2 + 1].z < clipBehindZ || v[n * 2 + 1].z < clipBehindZ)
+                    for (int q = 0; q < 6; q++) t[i * 6 + q] = 0;
             }
             mesh.vertices = v; mesh.triangles = t; mesh.RecalculateBounds();
             return MeshObject(name, mesh, out _);

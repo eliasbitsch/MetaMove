@@ -34,6 +34,11 @@ namespace MetaMove.Demo.Kitting
         [Tooltip("Plays the spoken lines; 2D, it is the narrator in the visitor's ear.")]
         public AudioSource voiceSource;
         public List<Beat> beats = new List<Beat>();
+        [Tooltip("Silence after a line before the next one starts (s) - time to let it sink in.")]
+        public float gapAfterLine = 3f;
+        [Tooltip("Extra seconds a timed card stays up after its line ends.")]
+        public float lingerAfterLine = 3f;
+        float _lastVoiceEnd = -10f;
 
         string _current;
         // Key of the beat on the card right now (null when the card is down).
@@ -47,7 +52,7 @@ namespace MetaMove.Demo.Kitting
 
         public static List<Beat> DefaultBeats() => new List<Beat>
         {
-            new Beat { key = "welcome", title = "The line is running", caption = "Welcome to MetaMove. This is an ABB GoFa, a collaborative robot, life-size, packing gear kits. Watch it work for a moment." },
+            new Beat { key = "welcome", title = "The line is running", caption = "Welcome to MetaMove. This is an ABB GoFa, a collaborative robot, life-size. Right now, it is packing gear kits. Watch it work for a moment." },
             new Beat { key = "story", title = "No fence", caption = "Arms like this used to stand behind a fence. The safety standard now lets them share the floor with you, on one condition: the machine has to know where you are.", hold = 14f },
             new Beat { key = "tracking", title = "How it knows", caption = "How does it know? The QR code on the post is the spatial anchor. The headset's own SLAM tracking finds it, and the code is measured to the robot base. So your head and hands are known relative to the robot, and that distance sets the speed.", hold = 16f },
             new Beat { key = "refill", title = "Bring the next batch", caption = "The tray is getting low. The next batch is waiting on the trolley behind you, in the orange box. Pick it up and load it into the rack, while the arm keeps working." },
@@ -70,9 +75,11 @@ namespace MetaMove.Demo.Kitting
         void Play(string key)
         {
             bool urgent = key == "standstill";
-            if (!urgent && voiceSource != null && voiceSource.isPlaying) { if (!_pending.Contains(key)) _pending.Enqueue(key); return; }
+            if (!urgent && !QuietLongEnough()) { if (!_pending.Contains(key)) _pending.Enqueue(key); return; }
             PlayNow(key);
         }
+
+        bool QuietLongEnough() => voiceSource == null || (!voiceSource.isPlaying && Time.time - _lastVoiceEnd >= gapAfterLine);
 
         void PlayNow(string key)
         {
@@ -114,12 +121,13 @@ namespace MetaMove.Demo.Kitting
                 return;
             }
 
-            if (_pending.Count > 0 && (voiceSource == null || !voiceSource.isPlaying)) PlayNow(_pending.Dequeue());
+            if (voiceSource != null && voiceSource.isPlaying) _lastVoiceEnd = Time.time;
+            if (_pending.Count > 0 && QuietLongEnough()) PlayNow(_pending.Dequeue());
             // Straight away: "...so we brought the factory to you" lands while the hall grows out of the floor.
             // A muted headset holds the welcome (VolumeCheck shows where the button is), 20 s at most.
             if (!_welcomed && Time.time - _boundAt > 0.3f && (!VolumeCheck.Muted || Time.time - _boundAt > 20f))
             { _welcomed = true; _boundAt = Time.time - 0.3f; Play("welcome"); }
-            float welcomeLen = Find("welcome") != null && Find("welcome").voice != null ? Find("welcome").voice.length + 2f : 12f;
+            float welcomeLen = Find("welcome") != null && Find("welcome").voice != null ? Find("welcome").voice.length + 4f : 14f;
             // The story follows the welcome whatever else was said in between (it queues).
             if (_welcomed && !_storyTold && Time.time - _boundAt > 0.3f + Mathf.Max(8f, welcomeLen)) { _storyTold = true; Play("story"); Play("tracking"); }   // the how follows the why
 
@@ -145,7 +153,7 @@ namespace MetaMove.Demo.Kitting
             // A timed beat stays up at least as long as its line is being spoken.
             if (_beat != null && _beat.hold > 0f)
             {
-                float speaking = _beat.voice != null ? _beat.voice.length + 1.5f : 0f;
+                float speaking = _beat.voice != null ? _beat.voice.length + lingerAfterLine : 0f;
                 if (Time.time - _shownAt > Mathf.Max(_beat.hold, speaking)) { card.Hide(); _beat = null; }
             }
         }

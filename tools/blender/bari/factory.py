@@ -55,7 +55,10 @@ def jagged(rect, step=0.11, bite=0.10):
     return pts
 
 # ---------------------------------------------------------------- floor island
-ISLAND = (-1.75, -1.55, 1.75, 3.15)
+# wide enough that the 2.0 m speed-scaling ring stays on the slab, even at the jagged edge
+ISLAND = (-2.40, -1.55, 2.40, 3.15)
+OLD_ISLAND = (-1.75, -1.55, 1.75, 3.15)   # the first version; see the RNG replay below
+_rng_state = random.getstate()
 outline = jagged(ISLAND)
 isle = poly_prism(outline, -0.16, 0.012, "Fac_Floor", epoxy, concrete)
 # a few rebar stubs sticking out of the broken edge
@@ -68,6 +71,12 @@ for (x, z) in random.sample(outline, 14):
         rotation=(math.pi / 2, 0, -ang - math.pi / 2))
     b = bpy.context.active_object; b.data.materials.append(rebar); bars.append(b)
 rebars = join(bars, "Fac_Rebar")
+# Replay the random draws of the first, narrower island so everything after it - wall
+# outline, breach, rebar in the breach - comes out exactly as before.
+random.setstate(_rng_state)
+_old = jagged(OLD_ISLAND)
+random.sample(_old, 14)
+for _ in range(14): random.uniform(0.08, 0.2)
 
 # markings: yellow walkway lines, hazard tape around the robot table
 def strip(x0, z0, x1, z1, w, name, m):

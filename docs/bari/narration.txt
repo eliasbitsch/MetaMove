@@ -10,10 +10,10 @@
 # slows it only when someone comes close: safety without giving up throughput.
 
 [welcome]
-We couldn't bring you to the factory, so we brought the factory to you. Welcome to MetaMove. This is an ABB GoFa, a collaborative robot, life-size, packing gear kits. Watch it work for a moment.
+We couldn't bring you to the factory, so we brought the factory to you. Welcome to MetaMove. This is an ABB GoFa, a collaborative robot, life-size. Right now, it is packing gear kits. Watch it work for a moment.
 
 [story]
-Cobots are usually kept slow everywhere, just in case someone comes close. Safe, but it wastes most of the robot. MetaMove adds a safety layer: it knows where you are, so the arm runs at full speed until you come near.
+Cobots are usually kept slow everywhere, just in case someone comes close. Safe, but it wastes most of the robot. MetaMove adds a distance-based speed-scaling safety layer: it knows where you are, so the arm runs at full speed until you come near.
 
 [tracking]
 How does it know? The QR code on the post is the spatial anchor. The headset's own SLAM tracking finds it, and the code is measured to the robot base. So your head and hands are known relative to the robot, and that distance sets the speed.

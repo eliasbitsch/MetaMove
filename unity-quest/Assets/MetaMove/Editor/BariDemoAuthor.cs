@@ -362,6 +362,7 @@ namespace MetaMove.EditorTools
             rings.fillAlpha = 0.22f;
             rings.fillScaled = true;
             rings.labelFont = inter;
+            rings.clipBehindZ = -1.29f;   // front face of the back wall (factory.py WZ + WT/2)
 
             if (hud != null)
             {
@@ -1032,7 +1033,7 @@ namespace MetaMove.EditorTools
                 b.center = c; b.size = size;
             }
             float fy = -FloorBelowTable;
-            Add("Floor", new Vector3(0f, fy - 0.05f, 0.80f), new Vector3(3.5f, 0.1f, 4.7f));
+            Add("Floor", new Vector3(0f, fy - 0.05f, 0.80f), new Vector3(4.8f, 0.1f, 4.7f));
             Add("RobotTable", new Vector3(-0.15f, fy / 2f, 0f), new Vector3(1.0f, FloorBelowTable, 0.6f));
             Add("FlowRack", new Vector3(0f, fy + 0.49f, RackCenterZ), new Vector3(1.2f, 0.98f, 0.8f));
             Add("Trolley", new Vector3(0.90f, fy / 2f, 2.60f), new Vector3(0.55f, FloorBelowTable, 0.65f));

@@ -194,7 +194,7 @@ namespace MetaMove.Demo.Kitting
                 _voice.Play();
                 _hl = RowsFor(key);
                 Debug.Log("[Report] says " + key);
-                yield return new WaitForSeconds(line.voice.length + 0.35f);
+                yield return new WaitForSeconds(line.voice.length + 1.2f);
             }
             _hl = new int[0];
         }
