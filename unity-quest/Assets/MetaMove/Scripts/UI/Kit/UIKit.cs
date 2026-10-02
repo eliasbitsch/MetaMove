@@ -107,6 +107,18 @@ namespace MetaMove.UI.Kit
             return Mathf.Max(circle, inTri ? 1f : 0f);
         }));
 
+        // Arrow pointing right: a shaft and a long pointed head, so the direction reads at once.
+        static Sprite _arrow;
+        public static Sprite Arrow => _arrow != null ? _arrow : (_arrow = MakeSprite("UIKitArrow", 256, (x, y, r) =>
+        {
+            float ay = Mathf.Abs(y);
+            float shaft = Mathf.Min(Mathf.Min(x + 0.88f, 0.10f - x), 0.13f - ay);
+            const float tip = 0.92f, baseX = 0.02f, half = 0.52f;
+            float cos = Mathf.Cos(Mathf.Atan2(half, tip - baseX));
+            float head = Mathf.Min((half * (tip - x) / (tip - baseX) - ay) * cos, x - baseX);
+            return Mathf.Clamp01(Mathf.Max(shaft, head) * 128f);
+        }));
+
         delegate float Shape(float x, float y, float r);
 
         static Sprite MakeSprite(string name, int n, Shape shape)

@@ -38,6 +38,9 @@ namespace MetaMove.Demo.Kitting
         [Tooltip("Signal tower on the table (cell x, z), its radius and top height (m).")]
         public Vector2 towerXZ = new Vector2(-0.58f, -0.24f);
         public float towerRadius = 0.14f, towerTop = 0.62f;
+        [Tooltip("Anchor post beside the table (cell x, z): the tool never comes near it.")]
+        public Vector2 postXZ = new Vector2(0.58f, -0.30f);
+        public float postRadius = 0.12f;
 
         Vector3 _filtered, _vel;
         Quaternion _rot, _rawStart, _toolStart;
@@ -99,6 +102,14 @@ namespace MetaMove.Demo.Kitting
             float dt = Vector2.Distance(new Vector2(l.x, l.z), towerXZ);
             floorY = Mathf.Max(floorY, Mathf.Lerp(towerTop, minHeight, Mathf.InverseLerp(towerRadius, towerRadius + 0.08f, dt)));
             l.y = Mathf.Clamp(l.y, floorY + tool, maxHeight + tool);
+            // the post reaches above anything the arm does: push the tool out sideways instead
+            var fromPost = new Vector2(l.x, l.z) - postXZ;
+            float minD = postRadius + 0.10f;
+            if (fromPost.magnitude < minD)
+            {
+                var o = postXZ + (fromPost.sqrMagnitude < 1e-6f ? Vector2.left : fromPost.normalized) * minD;
+                l.x = o.x; l.z = o.y;
+            }
             return f.position + f.rotation * l;
         }
     }

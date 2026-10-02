@@ -30,8 +30,8 @@ def qr_plate(n=1024):
     code = q.make_image(fill_color="black", back_color="white").convert("RGB").resize((n - 160, n - 160), Image.NEAREST)
     img.paste(code, (80, 80))
     d.rectangle((0, 0, n - 1, img.height - 1), outline=(150, 154, 158), width=10)
-    d.text((n / 2, n + 40), "SPATIAL ANCHOR", font=f(64), fill=(30, 36, 44), anchor="mm", stroke_width=1, stroke_fill=(30, 36, 44))
-    d.text((n / 2, n + 120), "robot base reference  ·  " + PAYLOAD, font=f(34), fill=(80, 88, 98), anchor="mm")
+    d.text((n / 2, n + 55), "SPATIAL ANCHOR", font=f(104), fill=(30, 36, 44), anchor="mm", stroke_width=2, stroke_fill=(30, 36, 44))
+    d.text((n / 2, n + 160), "robot base reference", font=f(48), fill=(70, 78, 88), anchor="mm")
     return img
 
 

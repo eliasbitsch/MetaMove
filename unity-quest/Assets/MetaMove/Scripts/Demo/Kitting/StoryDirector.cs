@@ -36,6 +36,8 @@ namespace MetaMove.Demo.Kitting
         public List<Beat> beats = new List<Beat>();
 
         string _current;
+        // Key of the beat on the card right now (null when the card is down).
+        public string Current => card != null && card.Visible ? _current : null;
         bool _welcomed, _storyTold, _slowTold, _stood, _recovered, _emptyAsked, _grabTold;
         float _shownAt, _boundAt = -1f;
         Beat _beat;
@@ -47,6 +49,7 @@ namespace MetaMove.Demo.Kitting
         {
             new Beat { key = "welcome", title = "The line is running", caption = "Welcome to MetaMove. This is an ABB GoFa, a collaborative robot, life-size, packing gear kits. Watch it work for a moment." },
             new Beat { key = "story", title = "No fence", caption = "Arms like this used to stand behind a fence. The safety standard now lets them share the floor with you, on one condition: the machine has to know where you are.", hold = 14f },
+            new Beat { key = "tracking", title = "How it knows", caption = "How does it know? The QR code on the post is the spatial anchor. The headset's own SLAM tracking finds it, and the code is measured to the robot base. So your head and hands are known relative to the robot, and that distance sets the speed.", hold = 16f },
             new Beat { key = "refill", title = "Bring the next batch", caption = "The tray is getting low. The next batch is waiting on the trolley behind you, in the orange box. Pick it up and load it into the rack, while the arm keeps working." },
             new Beat { key = "slow", title = "It knows you are there", caption = "Notice the arm slowing down as you come closer? It measures your distance all the time. The closer you are, the slower it moves.", hold = 9f },
             new Beat { key = "standstill", title = "Standstill", caption = "It stopped. Not because anything broke. You are inside its reach.", hold = 6f },
@@ -118,7 +121,7 @@ namespace MetaMove.Demo.Kitting
             { _welcomed = true; _boundAt = Time.time - 0.3f; Play("welcome"); }
             float welcomeLen = Find("welcome") != null && Find("welcome").voice != null ? Find("welcome").voice.length + 2f : 12f;
             // The story follows the welcome whatever else was said in between (it queues).
-            if (_welcomed && !_storyTold && Time.time - _boundAt > 0.3f + Mathf.Max(8f, welcomeLen)) { _storyTold = true; Play("story"); }
+            if (_welcomed && !_storyTold && Time.time - _boundAt > 0.3f + Mathf.Max(8f, welcomeLen)) { _storyTold = true; Play("story"); Play("tracking"); }   // the how follows the why
 
             float f = speed != null ? speed.Factor : 1f;
             // The slow-down is the point of the demo: name it the first time it happens.

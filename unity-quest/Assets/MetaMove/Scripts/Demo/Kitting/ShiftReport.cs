@@ -47,6 +47,23 @@ namespace MetaMove.Demo.Kitting
         CanvasGroup _group;
         TextMeshProUGUI _title, _sub, _footer;
         readonly List<TextMeshProUGUI[]> _rows = new List<TextMeshProUGUI[]>();
+        readonly List<UnityEngine.UI.Image> _rowHl = new List<UnityEngine.UI.Image>();
+        readonly float[] _hlAmount = new float[8];
+        int[] _hl = new int[0];   // rows the voice is talking about right now
+
+        // which card rows each spoken line is about
+        static int[] RowsFor(string key)
+        {
+            switch (key)
+            {
+                case "report_far": case "report_slowed": case "report_stopped": return new[] { 1, 2, 3 };
+                case "report_pinch_exact": case "report_pinch_close": case "report_pinch_rough": return new[] { 7 };
+                case "report_teach_slow": case "report_teach_fast": return new[] { 6 };
+                case "report_outro": return new[] { 0, 3 };
+                case "report_outro_expert": return new[] { 0, 4, 5, 6 };
+                default: return new int[0];
+            }
+        }
         readonly UIKit.FollowState _follow = new UIKit.FollowState();
         float _shown, _target;
 
@@ -77,6 +94,7 @@ namespace MetaMove.Demo.Kitting
                     _target = 0f;
                     StopAllCoroutines();
                     if (_voice != null) _voice.Stop();
+                    _hl = new int[0];
                     break;
                 case "low": if (_lowAt < 0f) _lowAt = now; break;
                 case "arrived": if (_run != null && _lowAt >= 0f && _run.refill < 0f) _run.refill = now - _lowAt; break;
@@ -121,7 +139,18 @@ namespace MetaMove.Demo.Kitting
             _group.alpha = Mathf.SmoothStep(0f, 1f, _shown);
             _canvas.enabled = _shown > 0.001f;
             if (_canvas.enabled)
+            {
                 UIKit.LazyFollow(_canvas.transform, Camera.main.transform, 1.1f, 6f, 16f, 0.35f, _follow);
+                for (int i = 0; i < _rows.Count; i++)
+                {
+                    bool on = System.Array.IndexOf(_hl, i) >= 0;
+                    _hlAmount[i] = Mathf.MoveTowards(_hlAmount[i], on ? 1f : 0f, Time.deltaTime / 0.25f);
+                    float h = Mathf.SmoothStep(0f, 1f, _hlAmount[i]);
+                    _rowHl[i].color = new Color(UIKit.Accent.r, UIKit.Accent.g, UIKit.Accent.b, 0.16f * h);
+                    _rows[i][0].color = Color.Lerp(UIKit.TextLo, UIKit.Accent, h);
+                    _rows[i][1].rectTransform.localScale = Vector3.one * (1f + 0.07f * h);
+                }
+            }
         }
 
         void Finish()
@@ -163,9 +192,11 @@ namespace MetaMove.Demo.Kitting
                 if (line == null || line.voice == null) continue;
                 _voice.clip = line.voice;
                 _voice.Play();
+                _hl = RowsFor(key);
                 Debug.Log("[Report] says " + key);
                 yield return new WaitForSeconds(line.voice.length + 0.35f);
             }
+            _hl = new int[0];
         }
 
         // ---------------------------------------------------------------- text
@@ -229,6 +260,9 @@ namespace MetaMove.Demo.Kitting
                     var line = UIKit.Panel("Rule", root, new Color(1f, 1f, 1f, 0.06f), 1f, 0f, false);
                     UIKit.Place(line.rectTransform, new Vector2(0.5f, 1f), new Vector2(0.5f, 0.5f), new Vector2(0f, y), new Vector2(W - 88f, 2f));
                 }
+                var hl = UIKit.Panel("Highlight", root, new Color(0f, 0f, 0f, 0f), 14f, 0f, false);
+                UIKit.Place(hl.rectTransform, new Vector2(0.5f, 1f), new Vector2(0.5f, 0.5f), new Vector2(0f, y - RowH / 2f), new Vector2(W - 56f, RowH - 6f));
+                _rowHl.Add(hl);
                 var l = UIKit.Text("Label", root, font, 26f, UIKit.TextLo, TextAlignmentOptions.MidlineLeft);
                 UIKit.Place(l.rectTransform, new Vector2(0f, 1f), new Vector2(0f, 0.5f), new Vector2(44f, y - RowH / 2f), new Vector2(330f, RowH));
                 var v = UIKit.Text("Value", root, font, 30f, UIKit.TextHi, TextAlignmentOptions.MidlineRight, FontStyles.Bold);

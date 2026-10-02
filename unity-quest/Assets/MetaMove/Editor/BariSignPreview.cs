@@ -63,7 +63,7 @@ namespace MetaMove.EditorTools
                 var gh = cell.trayB != null ? cell.trayB.transform.Find("GhostHands") : null;
                 if (gh != null) gh.gameObject.SetActive(true);
                 Shot(cam, frame, new Vector3(0.90f, fy + 1.60f, 1.85f), new Vector3(0.90f, fy + 0.90f, 2.60f), "ghost_hands.png");
-                Shot(cam, frame, new Vector3(-0.90f, fy + 1.60f, 0.90f), new Vector3(-1.55f, fy + 1.45f, -1.0f), "qr_column.png");
+                Shot(cam, frame, new Vector3(0.30f, fy + 1.70f, 2.40f), new Vector3(0.55f, fy + 1.45f, -0.30f), "qr_column.png");
                 Debug.Log("[SignPreview] rendered to " + System.IO.Path.GetFullPath(OutDir));
             }
             catch (System.Exception e) { Debug.LogError("[SignPreview] " + e); code = 1; }

@@ -295,8 +295,13 @@ namespace MetaMove.EditorTools
             hints.rack = frame.GetComponentInChildren<FlowRack>(true);
             var guide = root.AddComponent<GuideMotionFilter>();
             guide.cell = cell;
+            guide.postXZ = AnchorPostXZ;
             // Sound, synthesised at runtime: a quiet hall behind the cut-out. (A synthesised motor
             // hum was tried and dropped - it never sounded like a drive, only like a tool.)
+            var viz = new GameObject("TrackingViz").AddComponent<TrackingViz>();
+            viz.transform.SetParent(root.transform, false);
+            viz.cell = cell; viz.speed = prox; viz.story = story; viz.font = inter;
+            viz.lineMaterial = SpriteMat("ZoneLine");
             var vol = new GameObject("VolumeCheck").AddComponent<VolumeCheck>();
             vol.transform.SetParent(root.transform, false);
             vol.font = inter;
@@ -521,7 +526,6 @@ namespace MetaMove.EditorTools
             if (IncludeRoofSign)
             {
                 reveal.roof = BuildRoofSign(frame).transform;
-                AnchorPlateOnColumn(reveal.roof);
             }
             BuildCellDetails(frame);
 
@@ -593,6 +597,51 @@ namespace MetaMove.EditorTools
             var det = Model("bari_cell_details", "CellDetails", frame, new Vector3(0f, -FloorBelowTable, 0f), 0f);
             var flat = det.transform.Find("Det_QRPlate");
             if (flat != null) Object.DestroyImmediate(flat.gameObject);
+            AnchorPost(det.transform);
+        }
+
+        // Cell-frame floor position of the anchor post, right behind the robot table (the visitor
+        // sees the plate over the rack). GuideMotionFilter keeps the tool clear of it.
+        public static readonly Vector2 AnchorPostXZ = new Vector2(0.58f, -0.30f);
+
+        // Anchor reference: a 300 mm plate on its own steel post at eye height beside the robot,
+        // facing the visitor - the QR code the lab rig anchors the robot to, measured to its base.
+        static void AnchorPost(Transform det)
+        {
+            var post = new GameObject("AnchorPost").transform;
+            post.SetParent(det, false);
+            post.localPosition = new Vector3(AnchorPostXZ.x, 0f, AnchorPostXZ.y);
+            Part("Foot", post, new Vector3(0f, 0.008f, 0f), new Vector3(0.30f, 0.016f, 0.30f), "ControllerDark");
+            Part("Tube", post, new Vector3(0f, 0.90f, 0f), new Vector3(0.06f, 1.80f, 0.06f), "FacSteel");
+            var plate = new GameObject("AnchorPlate").transform;
+            plate.SetParent(post, false);
+            plate.localPosition = new Vector3(0f, 1.55f, 0.034f);
+            plate.localRotation = Quaternion.Euler(0f, 180f, 0f);   // quad front (-Z) faces +Z, the visitor
+            Part("Plate", plate, new Vector3(0f, 0f, 0.003f), new Vector3(0.32f, 0.39f, 0.006f), "Profile");
+            foreach (var sx in new[] { -1f, 1f })
+                foreach (var sy in new[] { -1f, 1f })
+                {
+                    var screw = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+                    screw.name = "Screw";
+                    Object.DestroyImmediate(screw.GetComponent<Collider>());
+                    screw.transform.SetParent(plate, false);
+                    screw.transform.localPosition = new Vector3(sx * 0.145f, sy * 0.178f, -0.001f);
+                    screw.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
+                    screw.transform.localScale = new Vector3(0.012f, 0.002f, 0.012f);
+                    screw.GetComponent<Renderer>().sharedMaterial = SlotMat("ControllerDark");
+                }
+            Face("AnchorQR", plate, TexDir + "qr_anchor.png", new Vector3(0f, 0f, -0.0005f), Quaternion.identity, new Vector2(0.30f, 0.366f), false);
+        }
+
+        static void Part(string name, Transform parent, Vector3 pos, Vector3 size, string slot)
+        {
+            var c = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            c.name = name;
+            Object.DestroyImmediate(c.GetComponent<Collider>());
+            c.transform.SetParent(parent, false);
+            c.transform.localPosition = pos;
+            c.transform.localScale = size;
+            c.GetComponent<Renderer>().sharedMaterial = SlotMat(slot);
         }
 
         // Anchor reference plate screwed flat to the front flange of the left roof column, at

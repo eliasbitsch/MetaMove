@@ -89,7 +89,7 @@ namespace MetaMove.Demo.Kitting
             // arrow towards the lower right, where the button is
             var arrow = new GameObject("Arrow", typeof(Image)).GetComponent<Image>();
             arrow.transform.SetParent(root, false);
-            arrow.sprite = UIKit.Play; arrow.color = UIKit.Warn; arrow.raycastTarget = false;
+            arrow.sprite = UIKit.Arrow; arrow.color = UIKit.Warn; arrow.raycastTarget = false;
             UIKit.Place(arrow.rectTransform, new Vector2(1f, 0f), new Vector2(0.5f, 0.5f), new Vector2(-70f, 52f), new Vector2(64f, 64f));
             arrow.rectTransform.localRotation = Quaternion.Euler(0f, 0f, -45f);
             _canvas.enabled = false;
