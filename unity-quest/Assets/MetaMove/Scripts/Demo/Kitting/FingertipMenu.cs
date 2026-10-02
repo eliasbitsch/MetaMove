@@ -27,7 +27,9 @@ namespace MetaMove.Demo.Kitting
         Canvas _canvas;
         CanvasGroup _group;
         TextMeshProUGUI _status;
-        readonly Button[] _buttons = new Button[4];
+        readonly Button[] _buttons = new Button[5];
+        public CellPlacer placer;
+        float _placeArmed = -10f;   // Place needs a second tap within 3 s
         float _palmUpFor, _palmDownFor, _shown, _lastPress = -9f;
         bool _visible;
         OVRSkeleton _menuHand;   // the hand that holds the menu; the other one pokes
@@ -48,16 +50,17 @@ namespace MetaMove.Demo.Kitting
             _status = UIKit.Text("Status", root, font, 30f, UIKit.TextHi, TextAlignmentOptions.Center);
             UIKit.Place(_status.rectTransform, new Vector2(0.5f, 1f), new Vector2(0.5f, 1f), new Vector2(0f, -26f), new Vector2(W - 40f, 70f));
             _status.enableWordWrapping = true;
-            string[] names = { "Teach", "Home", "Restart", "Expert" };
+            string[] names = { "Teach", "Home", "Restart", "Expert", "Place" };
             System.Action[] acts = { () => cell.Teach(), () => cell.ParkHome(), () => cell.Restart(),
-                                     () => { cell.Expert = !cell.Expert; cell.Restart(); } };
-            for (int i = 0; i < 4; i++)
+                                     () => { cell.Expert = !cell.Expert; cell.Restart(); },
+                                     () => { if (Time.time - _placeArmed < 3f && placer != null) placer.Replace(); else _placeArmed = Time.time; } };
+            for (int i = 0; i < 5; i++)
             {
                 var b = new Button { act = acts[i] };
                 b.bg = UIKit.Panel("Btn_" + names[i], root, UIKit.GlassLight, 34f, 3f);
                 b.rt = b.bg.rectTransform;
-                UIKit.Place(b.rt, new Vector2(0.5f, 0f), new Vector2(0.5f, 0f), new Vector2((i - 1.5f) * 120f, 30f), new Vector2(110f, 150f));
-                b.label = UIKit.Text("Label", b.bg.transform, font, 26f, UIKit.TextHi, TextAlignmentOptions.Center, FontStyles.Bold);
+                UIKit.Place(b.rt, new Vector2(0.5f, 0f), new Vector2(0.5f, 0f), new Vector2((i - 2f) * 98f, 30f), new Vector2(90f, 150f));
+                b.label = UIKit.Text("Label", b.bg.transform, font, 21f, UIKit.TextHi, TextAlignmentOptions.Center, FontStyles.Bold);
                 UIKit.Stretch(b.label.rectTransform);
                 b.label.text = names[i];
                 _buttons[i] = b;
@@ -110,13 +113,16 @@ namespace MetaMove.Demo.Kitting
             _buttons[1].label.text = cell.Parked ? "Resume" : "Home";
             // Teach lights up once the tool is over a tray it would accept.
             bool ready = _buttons[0].enabled && cell.TrayUnderTool() != null;
-            for (int i = 0; i < 4; i++)
+            bool armed = Time.time - _placeArmed < 3f;
+            _buttons[4].label.text = armed ? "Sure?" : "Place";
+            for (int i = 0; i < 5; i++)
             {
                 var b = _buttons[i];
                 b.label.color = b.enabled ? UIKit.TextHi : UIKit.TextLo * 0.8f;
                 float pulse = ready && i == 0 ? 0.35f + 0.35f * Mathf.Sin(Time.time * 6f) : 0f;
                 b.bg.color = i == 0 && b.enabled ? new Color(UIKit.Accent.r, UIKit.Accent.g, UIKit.Accent.b, 0.55f + pulse)
                            : i == 3 && cell.Expert ? new Color(UIKit.Warn.r, UIKit.Warn.g, UIKit.Warn.b, 0.6f)
+                           : i == 4 && armed ? new Color(UIKit.Stop.r, UIKit.Stop.g, UIKit.Stop.b, 0.5f + 0.3f * Mathf.Sin(Time.time * 8f))
                            : i == 1 && cell.Parked ? new Color(UIKit.Warn.r, UIKit.Warn.g, UIKit.Warn.b, 0.45f + 0.3f * Mathf.Sin(Time.time * 5f))
                            : UIKit.GlassLight;
             }
@@ -153,7 +159,7 @@ namespace MetaMove.Demo.Kitting
         // Test hook for the Editor / Simulator: press a button by name.
         public void Press(string name)
         {
-            foreach (var b in _buttons) if ((b.label.text == name || (name == "Home" && b.label.text == "Resume")) && b.enabled) { b.act(); return; }
+            foreach (var b in _buttons) if ((b.label.text == name || (name == "Home" && b.label.text == "Resume") || (name == "Place" && b.label.text == "Sure?")) && b.enabled) { b.act(); return; }
         }
 
         bool PalmUp(OVRSkeleton hand, out Vector3 palm, out Vector3 normal, Transform head)

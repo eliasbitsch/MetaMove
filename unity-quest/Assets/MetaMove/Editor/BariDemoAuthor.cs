@@ -279,6 +279,7 @@ namespace MetaMove.EditorTools
             var menu = new GameObject("FingertipMenu").AddComponent<FingertipMenu>();
             menu.transform.SetParent(root.transform, false);
             menu.cell = cell; menu.speed = prox; menu.font = inter;
+            menu.placer = placer;
             var lhs = FindPath("[BuildingBlock] Camera Rig/TrackingSpace/LeftHandAnchor/[BuildingBlock] Hand Tracking left");
             var rhs = FindPath("[BuildingBlock] Camera Rig/TrackingSpace/RightHandAnchor/[BuildingBlock] Hand Tracking right");
             menu.leftHand = lhs != null ? lhs.GetComponentInChildren<OVRSkeleton>(true) : null;

@@ -17,8 +17,8 @@ namespace MetaMove.Demo
     //   2. Pinch and hold (~1.2 s, a ring fills up) confirms. The robot is spawned with its
     //      foot on the virtual table top and the whole cell hangs off one spatial anchor.
     //   3. On the headset the anchor is saved; next start it is loaded and the cell comes
-    //      back where it was, no placing needed. Pinch and hold with BOTH hands for 3 s
-    //      forgets it and starts placing again.
+    //      back where it was, no placing needed. "Place" in the hand menu (tap twice)
+    //      forgets it and starts placing again - a gesture would fire while carrying a box.
     //
     // A QR marker, if one is seen, still works as before (QrAnchorCalibrator).
     public class CellPlacer : MonoBehaviour
@@ -33,7 +33,6 @@ namespace MetaMove.Demo
         public float defaultDistance = 1.8f;
         public float minDistance = 0.9f, maxDistance = 4.0f;
         public float holdToConfirm = 1.2f;
-        public float holdToReset = 3.0f;
         [Tooltip("Place by hand in the Editor too (else the calibrator's editor auto-spawn is used).")]
         public bool placeInEditor = false;
         public Material ghostMaterial;
@@ -41,7 +40,7 @@ namespace MetaMove.Demo
         const string PrefKey = "MetaMove.Bari.CellAnchor";
         enum Phase { Idle, Loading, Placing, Spawning, Placed }
         Phase _phase = Phase.Idle;
-        float _hold, _resetHold;
+        float _hold;
         GameObject _ghost;
         Transform _ring;
         LineRenderer _ringLine;
@@ -82,15 +81,6 @@ namespace MetaMove.Demo
         void Update()
         {
             bool rPinch = Pinching(rightHand) || OVRInput.Get(OVRInput.Button.One);
-            bool lPinch = Pinching(leftHand);
-
-            // Both hands held long enough: forget the anchor and place again.
-            if (_phase == Phase.Placed && rPinch && lPinch)
-            {
-                _resetHold += Time.deltaTime;
-                if (_resetHold > holdToReset) ForgetAndReplace();
-            }
-            else _resetHold = 0f;
 
             if (_phase != Phase.Placing) return;
             if (!FloorTarget(out _point)) return;
@@ -198,6 +188,9 @@ namespace MetaMove.Demo
             done(true);
         }
 #endif
+
+        // Hand menu "Place": forget the saved anchor and place the cell again.
+        public void Replace() => ForgetAndReplace();
 
         void ForgetAndReplace()
         {
