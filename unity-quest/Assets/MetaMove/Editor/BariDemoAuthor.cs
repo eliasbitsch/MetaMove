@@ -225,6 +225,7 @@ namespace MetaMove.EditorTools
             var root = new GameObject("BariDemo");
 
             var standalone = root.AddComponent<StandaloneRobotMode>();
+            root.AddComponent<RecordingBackdrop>();   // record_mode file: no passthrough, dark backdrop
             standalone.rosObjects = rosObjects.ToArray();
 
             var frame = new GameObject("KittingCellFrame").transform;
