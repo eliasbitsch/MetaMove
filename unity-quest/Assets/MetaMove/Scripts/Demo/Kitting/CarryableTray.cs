@@ -49,9 +49,10 @@ namespace MetaMove.Demo.Kitting
 
         void Update()
         {
-            // Empties become grabbable only when the robot is done with them.
-            if (kind == Kind.Empty && State == Phase.Waiting)
-                SetGrabbable(cell != null && cell.AllowEmptyRemoval);
+            // Grabbable only when the story asks for it: the new batch once the refill is due,
+            // the empty once the robot is done with it. Before that the box is scenery.
+            if (State == Phase.Waiting)
+                SetGrabbable(cell != null && (kind == Kind.Empty ? cell.AllowEmptyRemoval : cell.RefillDue && !cell.TrayBInRack));
 
             bool held = _grabbable.SelectingPointsCount > 0;
             if (held && (State == Phase.Waiting || State == Phase.Falling))

@@ -9,6 +9,10 @@ namespace MetaMove.Demo.Kitting
     // on the thing ("PICK UP") and one on its destination ("LOAD HERE"), each a label that
     // turns to the viewer, a bobbing arrow and a pulsing ring on the surface underneath.
     // Everything is read from the cell's state, so a hint never runs ahead of the story.
+    //
+    // Lost visitor: when a task has been open for a while and the visitor is looking away
+    // from its target, an arrow launches in front of them and flies off towards it, again
+    // every few seconds, until they turn.
     public class KittingHints : MonoBehaviour
     {
         public KittingCell cell;
@@ -16,14 +20,25 @@ namespace MetaMove.Demo.Kitting
         public TMP_FontAsset font;
         [Tooltip("Hints only after the welcome, so the first look goes to the robot.")]
         public float quietAfterBind = 10f;
+        [Tooltip("Seconds a task may be open before the guide arrow helps.")]
+        public float lostAfter = 15f;
+        [Tooltip("Seconds of looking away from the target before an arrow launches.")]
+        public float lookAwayFor = 2.5f;
+        public float arrowEvery = 3.5f;
+        [Tooltip("Half-angle (deg) of 'looking at it'.")]
+        public float viewCone = 35f;
 
         Marker _what, _where;
+        FlyArrow _arrow;
         float _boundAt = -1f;
+        Transform _focus;
+        float _taskSince, _away, _nextArrow;
 
         void Start()
         {
             _what = new Marker("Hint_What", transform, font, UIKit.Warn);
             _where = new Marker("Hint_Where", transform, font, UIKit.Accent);
+            _arrow = new FlyArrow(transform);
         }
 
         void LateUpdate()
@@ -35,25 +50,26 @@ namespace MetaMove.Demo.Kitting
             var cb = cell.trayB != null ? cell.trayB.GetComponent<CarryableTray>() : null;
             var ca = cell.trayA != null ? cell.trayA.GetComponent<CarryableTray>() : null;
             bool shownWhat = false, shownWhere = false;
+            Transform focus = null;   // what the visitor should be looking at right now
 
             // 1. new batch: trolley -> rack
             if (cb != null && cell.RefillDue && !cell.TrayBInRack)
             {
                 if (cb.State == CarryableTray.Phase.Waiting)
-                { _what.Show(cell.trayB.transform, 0.15f, "PICK UP", 0.46f, head); shownWhat = true; }
+                { _what.Show(cell.trayB.transform, 0.15f, "PICK UP", 0.46f, head); shownWhat = true; focus = cell.trayB.transform; }
                 if (cb.State == CarryableTray.Phase.Held || cb.State == CarryableTray.Phase.Waiting)
                 {
                     int lane = rack != null ? rack.NearestLane(rack.entries[rack.LaneCount - 1].position, cell.trayA) : -1;
-                    if (lane >= 0) { _where.Show(rack.entries[lane], 0.0f, "LOAD HERE", 0.46f, head); shownWhere = true; }
+                    if (lane >= 0) { _where.Show(rack.entries[lane], 0.0f, "LOAD HERE", 0.46f, head); shownWhere = true; if (focus == null) focus = rack.entries[lane]; }
                 }
             }
             // 2. empty box: pick face -> return lane
             else if (ca != null && cell.AllowEmptyRemoval && !cell.TrayACleared)
             {
                 if (ca.State == CarryableTray.Phase.Waiting)
-                { _what.Show(cell.trayA.transform, 0.15f, "TAKE OUT", 0.46f, head); shownWhat = true; }
+                { _what.Show(cell.trayA.transform, 0.15f, "TAKE OUT", 0.46f, head); shownWhat = true; focus = cell.trayA.transform; }
                 int lane = rack != null ? rack.NearestLane(cell.trayA.transform.position) : -1;
-                if (lane >= 0) { _where.Show(rack.returns[lane], 0.0f, "RETURN LANE", 0.46f, head); shownWhere = true; }
+                if (lane >= 0) { _where.Show(rack.returns[lane], 0.0f, "RETURN LANE", 0.46f, head); shownWhere = true; if (focus == null) focus = rack.returns[lane]; }
             }
             // 3. hand guiding: grab the tool, bring it over the new box, Teach
             else if (cell.State == KittingCell.Phase.Guide && cell.tcp != null)
@@ -61,25 +77,96 @@ namespace MetaMove.Demo.Kitting
                 if (!cell.GuideHeld)
                 {
                     var handle = cell.GuideRelay != null ? cell.GuideRelay.transform : cell.tcp;
-                    _what.Show(handle, 0.06f, "PINCH HERE", 0.14f, head); shownWhat = true;
+                    _what.Show(handle, 0.06f, "PINCH HERE", 0.14f, head); shownWhat = true; focus = handle;
                 }
                 bool over = cell.TrayUnderTool() != null;
                 _where.Show(cell.trayB.transform, 0.15f, over ? "NOW PRESS TEACH" : "BRING IT HERE", 0.46f, head);
                 shownWhere = true;
+                if (focus == null) focus = cell.trayB.transform;
             }
 
             bool quiet = Time.time - _boundAt < quietAfterBind;
             if (!shownWhat || quiet) _what.Hide();
             if (!shownWhere || quiet) _where.Hide();
             _what.Tick(); _where.Tick();
+            GuideIfLost(quiet ? null : focus);
+            _arrow.Tick(Camera.main.transform);
         }
 
-        void Hide() { if (_what != null) { _what.Hide(); _where.Hide(); _what.Tick(); _where.Tick(); } }
+        void GuideIfLost(Transform focus)
+        {
+            if (focus != _focus) { _focus = focus; _taskSince = Time.time; _away = 0f; }
+            if (focus == null) return;
+            var cam = Camera.main.transform;
+            var to = focus.position - cam.position;
+            bool looking = Vector3.Angle(cam.forward, to) < viewCone;
+            _away = looking ? 0f : _away + Time.deltaTime;
+            if (Time.time - _taskSince > lostAfter && _away > lookAwayFor && Time.time >= _nextArrow)
+            {
+                _arrow.Launch(cam, focus.position);
+                _nextArrow = Time.time + arrowEvery;
+            }
+        }
+
+        void Hide() { if (_what != null) { _what.Hide(); _where.Hide(); _what.Tick(); _where.Tick(); _focus = null; _arrow?.Stop(); } }
 
         void OnCueRestart() => _boundAt = -1f;
         void OnEnable() { if (cell != null) cell.Cue += Cue; }
         void OnDisable() { if (cell != null) cell.Cue -= Cue; }
         void Cue(string key) { if (key == "restart") OnCueRestart(); }
+
+        // ---------------------------------------------------------------- guide arrow
+
+        // A big arrow that starts in front of the face and sweeps off towards the target
+        // (turned most of the way to it, never through the head), fading out as it goes.
+        class FlyArrow
+        {
+            readonly Transform _t;
+            readonly Image _img;
+            readonly CanvasGroup _g;
+            Vector3 _from, _to;
+            float _t0 = -10f;
+            const float Duration = 1.3f;
+
+            public FlyArrow(Transform parent)
+            {
+                var c = UIKit.WorldCanvas(parent, "GuideArrow", new Vector2(200f, 200f), 10);
+                _t = c.transform;
+                _t.localScale = Vector3.one * (0.16f / 200f);
+                _g = c.gameObject.AddComponent<CanvasGroup>();
+                _img = new GameObject("Arrow", typeof(Image)).GetComponent<Image>();
+                _img.transform.SetParent(_t, false);
+                _img.sprite = UIKit.Play; _img.color = UIKit.Warn; _img.raycastTarget = false;
+                UIKit.Stretch(_img.rectTransform);
+                _t.gameObject.SetActive(false);
+            }
+
+            public void Launch(Transform cam, Vector3 target)
+            {
+                var dir = (target - cam.position).normalized;
+                var fwd = cam.forward;
+                _from = cam.position + fwd * 0.75f - cam.up * 0.08f;
+                _to = cam.position + Vector3.Slerp(fwd, dir, 0.75f) * 1.3f;
+                _t0 = Time.time;
+                _t.gameObject.SetActive(true);
+            }
+
+            public void Stop() { _t0 = -10f; if (_t.gameObject.activeSelf) _t.gameObject.SetActive(false); }
+
+            public void Tick(Transform cam)
+            {
+                float u = (Time.time - _t0) / Duration;
+                if (u >= 1f) { if (_t.gameObject.activeSelf) _t.gameObject.SetActive(false); return; }
+                float e = 1f - (1f - u) * (1f - u);   // ease out
+                var pos = Vector3.Lerp(_from, _to, e);
+                var vel = _to - _from;
+                _t.position = pos;
+                _t.rotation = Quaternion.LookRotation(pos - cam.position, cam.up);   // faces the viewer
+                var local = _t.InverseTransformDirection(vel);
+                _img.rectTransform.localRotation = Quaternion.Euler(0f, 0f, Mathf.Atan2(local.y, local.x) * Mathf.Rad2Deg);
+                _g.alpha = Mathf.Clamp01(u * 6f) * Mathf.Clamp01((1f - u) * 2.5f);
+            }
+        }
 
         // ---------------------------------------------------------------- marker
 

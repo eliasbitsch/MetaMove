@@ -10,7 +10,7 @@
 # slows it only when someone comes close: safety without giving up throughput.
 
 [welcome]
-We couldn't bring you to the factory, so we brought the factory to you. Welcome to MetaMove. This is an ABB GoFa, a collaborative robot, life-size, building gear kits. Watch it work for a moment.
+We couldn't bring you to the factory, so we brought the factory to you. Welcome to MetaMove. This is an ABB GoFa, a collaborative robot, life-size, packing gear kits. Watch it work for a moment.
 
 [story]
 Cobots are usually kept slow everywhere, just in case someone comes close. Safe, but it wastes most of the robot. MetaMove adds a safety layer: it knows where you are, so the arm runs at full speed until you come near.
@@ -41,3 +41,40 @@ Found it, and lined up to the millimetre. You gave the intent, the machine added
 
 [release]
 The line runs again from the box you just showed it, at full speed now that you are clear. That is MetaMove: careful when you are close, fast when you are not, and taught without a single line of code.
+
+# ---------------------------------------------------------------- shift report, spoken
+# Assembled per run from the measurements: intro, one proximity line, one pinch line, one
+# pace line, outro. No numbers in the voice - they are on the card.
+
+[report_intro]
+That's how you performed.
+
+[report_far]
+You kept your distance the whole time. The arm never had to slow down for you. Efficient, if a little cautious.
+
+[report_slowed]
+You came close enough to slow the arm down, but never close enough to stop it. Textbook.
+
+[report_stopped]
+At one point you got close enough to stop the arm completely. It waited. It did not complain. Much.
+
+[report_pinch_exact]
+Your pinch was almost spot on. The robot barely had to correct you. Don't let it go to your head.
+
+[report_pinch_close]
+You didn't place it exactly, but the machine took over the last few centimetres. That is the whole idea.
+
+[report_pinch_rough]
+Your pinch was, let's say, generous. The machine took it from there. That is also the idea.
+
+[report_teach_slow]
+And you took your time to look around. Fair enough. It's not every day a factory grows out of the floor.
+
+[report_teach_fast]
+And you were quick about it.
+
+[report_outro]
+In short: the line kept running, you were never in danger, and you taught a robot without a line of code. Try it once more in expert mode, without the hints.
+
+[report_outro_expert]
+Same task, no help this time. Compare it with your first run. Whatever is better now, that is what stayed.

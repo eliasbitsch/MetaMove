@@ -45,7 +45,7 @@ namespace MetaMove.Demo.Kitting
 
         public static List<Beat> DefaultBeats() => new List<Beat>
         {
-            new Beat { key = "welcome", title = "The line is running", caption = "This arm is building kits: an ABB GoFa, life-size, picking gears at full speed. Watch it work for a moment." },
+            new Beat { key = "welcome", title = "The line is running", caption = "Welcome to MetaMove. This is an ABB GoFa, a collaborative robot, life-size, packing gear kits. Watch it work for a moment." },
             new Beat { key = "story", title = "No fence", caption = "Arms like this used to stand behind a fence. The safety standard now lets them share the floor with you, on one condition: the machine has to know where you are.", hold = 14f },
             new Beat { key = "refill", title = "Bring the next batch", caption = "The tray is getting low. The next batch is waiting on the trolley behind you, in the orange box. Pick it up and load it into the rack, while the arm keeps working." },
             new Beat { key = "slow", title = "It knows you are there", caption = "Notice the arm slowing down as you come closer? It measures your distance all the time. The closer you are, the slower it moves.", hold = 9f },

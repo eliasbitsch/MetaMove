@@ -133,6 +133,7 @@ namespace MetaMove.Demo.Kitting
         void Describe(float f, out string state, out string detail, out Color c)
         {
             if (cell == null || !cell.IsBound) { state = "Place cell"; detail = "Aim at the floor, pinch & hold"; c = UIKit.Accent; return; }
+            if (cell.Parked) { state = "Parked"; detail = "Home again to resume"; c = UIKit.Warn; return; }
             var tray = cell.Taught;
             string parts = tray != null ? tray.label + " · " + tray.Remaining + " parts" : "";
             switch (cell.State)

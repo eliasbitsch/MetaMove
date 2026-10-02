@@ -118,6 +118,8 @@ namespace MetaMove.Demo.Kitting
         [Tooltip("Second run: no hints, no narration - the visitor does it from memory.")]
         public bool Expert;
         public int PartsPlaced { get; private set; }
+        // Parked from the hand menu (Home). Home again resumes where the line stopped.
+        public bool Parked { get; private set; }
         // Horizontal distance (m) from the tool to the tray centre when Teach was pressed:
         // how coarse the visitor's pinch was, and how far the robot corrected on its own.
         public float TeachOffset { get; private set; } = -1f;
@@ -157,6 +159,7 @@ namespace MetaMove.Demo.Kitting
         bool _bound;
         MetaMove.Robot.RobotiqGripper _gripper;
         Pose? _aHome;
+        Phase _beforePark;
         Transform _holdAt;
 
         void OnEnable()
@@ -279,6 +282,7 @@ namespace MetaMove.Demo.Kitting
             if (!_bound) return;
             if (_run != null) StopCoroutine(_run);
             _speedScale = 1f;
+            Parked = false;
             if (_held != null) { _held.SetActive(false); _held = null; }
             if (_gripper != null) _gripper.Open();
             trayA.Refill();
@@ -322,15 +326,64 @@ namespace MetaMove.Demo.Kitting
             Emit("arrived", "New batch in the rack");
         }
 
-        // Home from the fingertip menu: stop the line and park the arm; Restart resumes.
+        // Home from the hand menu: park the arm. A toggle, so a stray press never ends the
+        // demo - Home again (labelled Resume) picks up exactly where the line stopped.
         public void ParkHome()
         {
             if (!_bound) return;
+            if (Parked) { Resume(); return; }
+            _beforePark = State;
             if (_run != null) StopCoroutine(_run);
+            ReturnHeldPart();
+            _speedScale = 1f;
             SetGuide(false);
+            Parked = true;
             State = Phase.Idle;
             _run = StartCoroutine(MoveTo(home, Vector3.zero));
-            Emit("home", "Parked at home");
+            Emit("home", "Parked - Home again to resume");
+        }
+
+        public void Resume()
+        {
+            if (!_bound || !Parked) return;
+            Parked = false;
+            if (_run != null) StopCoroutine(_run);
+            switch (_beforePark)
+            {
+                case Phase.Guide:
+                case Phase.Align:
+                    // back to guiding without replaying its narration
+                    State = Phase.Guide;
+                    SetGuide(true);
+                    break;
+                case Phase.Waiting:
+                    _run = StartCoroutine(WaitForTray());
+                    break;
+                case Phase.Idle:
+                    break;
+                default:
+                    _run = StartCoroutine(RunLoop());
+                    break;
+            }
+            Emit("unpark", "Resumed");
+        }
+
+        // A part in the gripper when the line is interrupted goes back into its nest.
+        void ReturnHeldPart()
+        {
+            if (_gripper != null) _gripper.Open();
+            if (_held == null) return;
+            foreach (var t in new[] { trayA, trayB, reserve })
+            {
+                if (t == null) continue;
+                int i = t.parts.IndexOf(_held);
+                if (i < 0) continue;
+                _held.transform.SetParent(t.nests[i], false);
+                _held.transform.localPosition = Vector3.zero;
+                _held.transform.localRotation = Quaternion.identity;
+                break;
+            }
+            _held = null;
         }
 
         // Teach: accept the tray under the TCP as the new work object.

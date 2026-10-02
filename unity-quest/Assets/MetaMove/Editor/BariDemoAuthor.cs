@@ -295,6 +295,12 @@ namespace MetaMove.EditorTools
             var report = new GameObject("ShiftReport").AddComponent<ShiftReport>();
             report.transform.SetParent(root.transform, false);
             report.cell = cell; report.speed = prox; report.font = inter;
+            report.lines = new List<StoryDirector.Beat>();
+            foreach (var k in new[] { "report_intro", "report_far", "report_slowed", "report_stopped",
+                                      "report_pinch_exact", "report_pinch_close", "report_pinch_rough",
+                                      "report_teach_slow", "report_teach_fast", "report_outro", "report_outro_expert" })
+                report.lines.Add(new StoryDirector.Beat { key = k });
+            ApplyNarration(report.lines);
             var amb = new GameObject("FactoryAmbience").AddComponent<FactoryAmbience>();
             amb.transform.SetParent(root.transform, false);
             amb.cell = cell;
@@ -346,6 +352,15 @@ namespace MetaMove.EditorTools
                 var lbl = hud.transform.Find("Canvas/Col_Connected/Label");
                 if (lbl != null) status.columnLabel = lbl.GetComponent<TMPro.TMP_Text>();
             }
+
+            // Only what the story needs can be touched: every interactable the lab scene brings
+            // along (grab handles, UI rays, poke panels) is switched off. The demo's own - the
+            // two boxes and, at runtime, the guide handle on the robot - gate themselves.
+            int off = 0;
+            foreach (var mb in Object.FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Include, FindObjectsSortMode.None))
+                if (mb is Oculus.Interaction.IInteractableView && mb.enabled && !mb.transform.IsChildOf(root.transform))
+                { Undo.RecordObject(mb, "Bari interactables"); mb.enabled = false; off++; }
+            Debug.Log("[BariDemoAuthor] lab interactables switched off: " + off);
 
             EditorSceneManager.MarkSceneDirty(scene);
             EditorSceneManager.SaveScene(scene);
@@ -485,11 +500,38 @@ namespace MetaMove.EditorTools
             hall.GetComponent<Renderer>().sharedMaterial = hallMat;
             hall.GetComponent<Renderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
 
+            if (IncludeRoofSign) BuildRoofSign(frame);
+
             var conv = frame.gameObject.AddComponent<KitConveyor>();
             conv.kitModel = kitModel;
             conv.start = Marker("ConveyorStart", frame, new Vector3(-0.45f, 0.0f, -0.40f), 0f);
             conv.end = Marker("ConveyorEnd", frame, new Vector3(-0.45f, 0.0f, -1.55f), 0f);
             cell.conveyor = conv;
+        }
+
+        // Roof fragment with the hanging title sign (tools/blender/bari/roof.py). Off until the
+        // preview render (MetaMove > Bari > Render Sign Preview) has been signed off.
+        const bool IncludeRoofSign = false;
+        const string SignTex = "Assets/MetaMove/Private/Sign/metamove_sign.png";   // git-excluded
+
+        public static GameObject BuildRoofSign(Transform frame)
+        {
+            var roof = Model("bari_roof", "RoofSign", frame, new Vector3(0f, -FloorBelowTable, 0f), 0f);
+            var tex = AssetDatabase.LoadAssetAtPath<Texture2D>(SignTex);
+            if (tex == null) { Debug.LogWarning("[BariDemoAuthor] sign texture missing: " + SignTex); return roof; }
+            var q = GameObject.CreatePrimitive(PrimitiveType.Quad);
+            q.name = "SignFace";
+            Object.DestroyImmediate(q.GetComponent<Collider>());
+            q.transform.SetParent(roof.transform, false);
+            q.transform.localPosition = new Vector3(0f, 2.52f, -0.437f);   // roof.py: sign face centre
+            q.transform.localRotation = Quaternion.Euler(0f, 180f, 0f);    // quad front faces +Z, to the visitor
+            q.transform.localScale = new Vector3(1.60f, 0.512f, 1f);
+            var m = ShaderMat("SignFace", "Universal Render Pipeline/Unlit");
+            m.SetTexture("_BaseMap", tex);
+            m.SetColor("_BaseColor", new Color(0.92f, 0.92f, 0.92f));
+            q.GetComponent<Renderer>().sharedMaterial = m;
+            q.GetComponent<Renderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+            return roof;
         }
 
         static Material ShaderMat(string name, string shader)
@@ -616,6 +658,8 @@ namespace MetaMove.EditorTools
                 case "FacSteel":     return TexMat("FacSteel", "Metal009", new Color(0.45f, 0.47f, 0.50f), 0.85f, 0.45f, 2f);
                 case "FacRebar":     return Mat("FacRebar", new Color(0.35f, 0.20f, 0.12f), 0.6f, 0.2f);
                 case "FacWallPaint": return TexMat("FacWallPaint", "Concrete034", new Color(0.22f, 0.40f, 0.68f), 0f, 0.2f, 1.5f, useAlbedo: false);
+                case "FacChain":     return Mat("FacChain", new Color(0.62f, 0.63f, 0.65f), 0.9f, 0.6f);
+                case "FacSignBack":  return Mat("FacSignBack", new Color(0.10f, 0.12f, 0.14f), 0.5f, 0.4f);
                 case "FacLampShade": return Mat("FacLampShade", new Color(0.12f, 0.13f, 0.14f), 0.6f, 0.5f);
                 case "FacLampGlow":  return Mat("FacLampGlow", new Color(1f, 0.93f, 0.78f), 0f, 0.5f, true);
                 case "FacPortalMask": return ShaderMat("PortalMask", "MetaMove/PortalMask");

@@ -107,6 +107,7 @@ namespace MetaMove.Demo.Kitting
             string state = (!cell.IsBound ? "Not placed" : cell.State.ToString()) + (cell.Expert ? " · expert" : "");
             _status.text = "<b>" + state + "</b>   " + Mathf.RoundToInt(f * 100f) + "%   " + (d < 0f ? "--" : d.ToString("0.00", inv) + " m");
             _buttons[0].enabled = cell.State == KittingCell.Phase.Guide;
+            _buttons[1].label.text = cell.Parked ? "Resume" : "Home";
             // Teach lights up once the tool is over a tray it would accept.
             bool ready = _buttons[0].enabled && cell.TrayUnderTool() != null;
             for (int i = 0; i < 4; i++)
@@ -116,6 +117,7 @@ namespace MetaMove.Demo.Kitting
                 float pulse = ready && i == 0 ? 0.35f + 0.35f * Mathf.Sin(Time.time * 6f) : 0f;
                 b.bg.color = i == 0 && b.enabled ? new Color(UIKit.Accent.r, UIKit.Accent.g, UIKit.Accent.b, 0.55f + pulse)
                            : i == 3 && cell.Expert ? new Color(UIKit.Warn.r, UIKit.Warn.g, UIKit.Warn.b, 0.6f)
+                           : i == 1 && cell.Parked ? new Color(UIKit.Warn.r, UIKit.Warn.g, UIKit.Warn.b, 0.45f + 0.3f * Mathf.Sin(Time.time * 5f))
                            : UIKit.GlassLight;
             }
         }
@@ -151,7 +153,7 @@ namespace MetaMove.Demo.Kitting
         // Test hook for the Editor / Simulator: press a button by name.
         public void Press(string name)
         {
-            foreach (var b in _buttons) if (b.label.text == name && b.enabled) { b.act(); return; }
+            foreach (var b in _buttons) if ((b.label.text == name || (name == "Home" && b.label.text == "Resume")) && b.enabled) { b.act(); return; }
         }
 
         bool PalmUp(OVRSkeleton hand, out Vector3 palm, out Vector3 normal, Transform head)

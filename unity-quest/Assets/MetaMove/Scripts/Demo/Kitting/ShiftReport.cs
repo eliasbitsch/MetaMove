@@ -20,6 +20,12 @@ namespace MetaMove.Demo.Kitting
         public KittingCell cell;
         public ProximitySpeedController speed;
         public TMP_FontAsset font;
+        [Tooltip("Spoken report lines (keys report_*), assembled per run. Clips from narration.txt.")]
+        public List<StoryDirector.Beat> lines = new List<StoryDirector.Beat>();
+        [Tooltip("Pinch offset (m) below which it counts as spot on, and above which as rough.")]
+        public float pinchExact = 0.03f, pinchRough = 0.08f;
+        [Tooltip("Seconds from 'show the box' to Teach above which the visitor took their time.")]
+        public float teachSlow = 25f;
         [Tooltip("Seconds after the line runs again before the report comes up (after the closing line).")]
         public float showDelay = 14f, showDelayExpert = 3f;
 
@@ -50,7 +56,15 @@ namespace MetaMove.Demo.Kitting
         void OnEnable() { if (cell != null) cell.Cue += OnCue; }
         void OnDisable() { if (cell != null) cell.Cue -= OnCue; }
 
-        void Start() => Build();
+        AudioSource _voice;
+
+        void Start()
+        {
+            Build();
+            _voice = gameObject.AddComponent<AudioSource>();
+            _voice.playOnAwake = false;
+            _voice.spatialBlend = 0f;
+        }
 
         void OnCue(string key)
         {
@@ -61,6 +75,8 @@ namespace MetaMove.Demo.Kitting
                     _run = new Run { number = _done.Count + 1, expert = cell.Expert };
                     _t0 = now; _lowAt = _missAt = _guideAt = _showAt = -1f; _clearedSeen = false;
                     _target = 0f;
+                    StopAllCoroutines();
+                    if (_voice != null) _voice.Stop();
                     break;
                 case "low": if (_lowAt < 0f) _lowAt = now; break;
                 case "arrived": if (_run != null && _lowAt >= 0f && _run.refill < 0f) _run.refill = now - _lowAt; break;
@@ -119,9 +135,37 @@ namespace MetaMove.Demo.Kitting
             Log(_run);
             _follow.placed = false;
             _target = 1f;
+            StartCoroutine(Speak(Verdict(_run, prev)));
             Debug.Log("[Report] run " + _run.number + (_run.expert ? " expert" : "") + " total=" + _run.total.ToString("0.0", Inv) +
                       " min=" + _run.minDist.ToString("0.00", Inv) + " lost=" + _run.lost.ToString("0.0", Inv) +
                       " teach=" + _run.teach.ToString("0.0", Inv) + " off=" + _run.teachOffset.ToString("0.000", Inv));
+        }
+
+        // ---------------------------------------------------------------- spoken verdict
+
+        List<string> Verdict(Run r, Run p)
+        {
+            var k = new List<string> { "report_intro" };
+            k.Add(r.stop > 0.5f ? "report_stopped" : r.slow > 1f ? "report_slowed" : "report_far");
+            if (r.teachOffset >= 0f)
+                k.Add(r.teachOffset < pinchExact ? "report_pinch_exact" : r.teachOffset > pinchRough ? "report_pinch_rough" : "report_pinch_close");
+            if (r.teach >= 0f) k.Add(r.teach > teachSlow ? "report_teach_slow" : "report_teach_fast");
+            k.Add(r.expert || p != null ? "report_outro_expert" : "report_outro");
+            return k;
+        }
+
+        System.Collections.IEnumerator Speak(List<string> keys)
+        {
+            yield return new WaitForSeconds(1.0f);   // let the card land first
+            foreach (var key in keys)
+            {
+                var line = lines.Find(b => b.key == key);
+                if (line == null || line.voice == null) continue;
+                _voice.clip = line.voice;
+                _voice.Play();
+                Debug.Log("[Report] says " + key);
+                yield return new WaitForSeconds(line.voice.length + 0.35f);
+            }
         }
 
         // ---------------------------------------------------------------- text
