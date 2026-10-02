@@ -31,7 +31,7 @@ Step back. Notice it does not rush off straight away? Slowing down may be abrupt
 The first box is empty. The arm noticed and switched to the reserve box on the left, so the line keeps running. Take the empty box out at the front and put it on the return lane below. Watch the arm while your hands are close.
 
 [guide]
-The new box sits in a lane the arm has never seen. Instead of programming it, show it. Pinch the cyan sphere on the tool and bring it over the orange box. Roughly is enough. Then turn your palm up and press Teach.
+The new box sits in a lane the arm has never seen. Instead of programming it, show it. Pinch the cyan sphere on the tool and bring it over the orange box. Roughly is enough. Then raise either hand, palm up, and a hand menu opens. Press Teach there once you are happy with the position.
 
 [grab]
 Steady. I will follow your hand anywhere, except into the rack. Someone has to be sensible here.

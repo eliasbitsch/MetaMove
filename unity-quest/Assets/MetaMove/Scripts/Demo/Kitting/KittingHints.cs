@@ -83,11 +83,11 @@ namespace MetaMove.Demo.Kitting
                 if (cell.FreeGuide)
                 {
                     // free guiding: any full box will do - only confirm the one under the tool
-                    if (under != null) { _where.Show(under.transform, 0.15f, "NOW PRESS TEACH", 0.46f, head); shownWhere = true; }
+                    if (under != null) { _where.Show(under.transform, 0.15f, "PALM UP, THEN TEACH", 0.46f, head); shownWhere = true; }
                 }
                 else
                 {
-                    _where.Show(cell.trayB.transform, 0.15f, under != null ? "NOW PRESS TEACH" : "BRING IT HERE", 0.46f, head);
+                    _where.Show(cell.trayB.transform, 0.15f, under != null ? "PALM UP, THEN TEACH" : "BRING IT HERE", 0.46f, head);
                     shownWhere = true;
                     if (focus == null) focus = cell.trayB.transform;
                 }
