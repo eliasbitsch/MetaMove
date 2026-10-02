@@ -30,6 +30,9 @@ namespace MetaMove.Demo.Kitting
         readonly UIKit.FollowState _follow = new UIKit.FollowState();
         float _shownFactor, _ssmShown = 1f;
         CanvasGroup _ssmGroup;
+        // tray fill: one segment per nest of the tray the robot picks from
+        const int MaxSegs = 12;
+        readonly Image[] _segs = new Image[MaxSegs];
         RectTransform _pillRt;
 
         void Start() => Build();
@@ -53,6 +56,12 @@ namespace MetaMove.Demo.Kitting
             UIKit.Place(_detail.rectTransform, new Vector2(0f, 0.5f), new Vector2(0f, 0.5f), new Vector2(76f, -30f), new Vector2(290f, 40f));
 
             _pillRt = _pill.rectTransform;
+            float segW = (290f - (MaxSegs - 1) * 5f) / MaxSegs;
+            for (int i = 0; i < MaxSegs; i++)
+            {
+                _segs[i] = UIKit.Panel("Seg" + i, _pill.transform, UIKit.TextLo, 4f, 0f, false);
+                UIKit.Place(_segs[i].rectTransform, new Vector2(0f, 0.5f), new Vector2(0f, 0.5f), new Vector2(76f + i * (segW + 5f), -58f), new Vector2(segW, 10f));
+            }
             // Gauge and distance belong to speed and separation monitoring; while the visitor
             // guides the arm by hand it is not active, so they fade out (one group).
             var ssm = new GameObject("SSM", typeof(RectTransform), typeof(CanvasGroup));
@@ -122,6 +131,17 @@ namespace MetaMove.Demo.Kitting
             _dist.text = d < 0f ? "--" : d.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture) + "<size=60%> m</size>";
             _zone.text = d < 0f ? "" : d <= near ? "STOP ZONE" : d <= far ? "SLOW ZONE" : "CLEAR";
             _zone.color = zc; _zoneBar.color = zc;
+
+            // tray fill: what is left in the box the arm works from, readable at a glance
+            var tr = cell != null ? cell.Taught : null;
+            int total = tr != null ? Mathf.Min(MaxSegs, tr.nests.Count) : 0, left = tr != null ? tr.Remaining : 0;
+            bool low = tr != null && tr == cell.trayA && left <= cell.lowAt;
+            bool showSegs = cell != null && cell.IsBound && (cell.State == KittingCell.Phase.Running || cell.State == KittingCell.Phase.Probe);
+            for (int i = 0; i < MaxSegs; i++)
+            {
+                _segs[i].enabled = showSegs && i < total;
+                _segs[i].color = i < left ? (low ? UIKit.Warn : UIKit.Ok) : new Color(1f, 1f, 1f, 0.12f);
+            }
 
             string state, detail; Color sc;
             Describe(f, out state, out detail, out sc);

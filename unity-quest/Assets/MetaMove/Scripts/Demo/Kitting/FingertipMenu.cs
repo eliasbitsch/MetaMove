@@ -51,7 +51,7 @@ namespace MetaMove.Demo.Kitting
             UIKit.Place(_status.rectTransform, new Vector2(0.5f, 1f), new Vector2(0.5f, 1f), new Vector2(0f, -26f), new Vector2(W - 40f, 70f));
             _status.enableWordWrapping = true;
             string[] names = { "Teach", "Home", "Restart", "Expert", "Place" };
-            System.Action[] acts = { () => cell.Teach(), () => cell.ParkHome(), () => cell.Restart(),
+            System.Action[] acts = { () => { if (cell.State == KittingCell.Phase.Guide) cell.Teach(); else cell.StartGuide(); }, () => cell.ParkHome(), () => cell.Restart(),
                                      () => { cell.Expert = !cell.Expert; cell.Restart(); },
                                      () => { if (Time.time - _placeArmed < 3f && placer != null) placer.Replace(); else _placeArmed = Time.time; } };
             for (int i = 0; i < 5; i++)
@@ -109,10 +109,12 @@ namespace MetaMove.Demo.Kitting
             var inv = System.Globalization.CultureInfo.InvariantCulture;
             string state = (!cell.IsBound ? "Not placed" : cell.State.ToString()) + (cell.Expert ? " · expert" : "");
             _status.text = "<b>" + state + "</b>   " + Mathf.RoundToInt(f * 100f) + "%   " + (d < 0f ? "--" : d.ToString("0.00", inv) + " m");
-            _buttons[0].enabled = cell.State == KittingCell.Phase.Guide;
+            // Teach while guiding; otherwise the same button starts guiding by hand.
+            _buttons[0].enabled = cell.IsBound && cell.State != KittingCell.Phase.Align;
+            _buttons[0].label.text = cell.State == KittingCell.Phase.Guide ? "Teach" : "Guide";
             _buttons[1].label.text = cell.Parked ? "Resume" : "Home";
             // Teach lights up once the tool is over a tray it would accept.
-            bool ready = _buttons[0].enabled && cell.TrayUnderTool() != null;
+            bool ready = cell.State == KittingCell.Phase.Guide && cell.TrayUnderTool() != null;
             bool armed = Time.time - _placeArmed < 3f;
             _buttons[4].label.text = armed ? "Sure?" : "Place";
             for (int i = 0; i < 5; i++)

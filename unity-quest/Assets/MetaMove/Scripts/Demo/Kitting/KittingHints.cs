@@ -24,7 +24,7 @@ namespace MetaMove.Demo.Kitting
         public float lostAfter = 15f;
         [Tooltip("Seconds of looking away from the target before an arrow launches.")]
         public float lookAwayFor = 2.5f;
-        public float arrowEvery = 3.5f;
+        public float arrowEvery = 5.5f;
         [Tooltip("Half-angle (deg) of 'looking at it'.")]
         public float viewCone = 35f;
 
@@ -79,13 +79,24 @@ namespace MetaMove.Demo.Kitting
                     var handle = cell.GuideRelay != null ? cell.GuideRelay.transform : cell.tcp;
                     _what.Show(handle, 0.06f, "PINCH HERE", 0.14f, head); shownWhat = true; focus = handle;
                 }
-                bool over = cell.TrayUnderTool() != null;
-                _where.Show(cell.trayB.transform, 0.15f, over ? "NOW PRESS TEACH" : "BRING IT HERE", 0.46f, head);
-                shownWhere = true;
-                if (focus == null) focus = cell.trayB.transform;
+                var under = cell.TrayUnderTool();
+                if (cell.FreeGuide)
+                {
+                    // free guiding: any full box will do - only confirm the one under the tool
+                    if (under != null) { _where.Show(under.transform, 0.15f, "NOW PRESS TEACH", 0.46f, head); shownWhere = true; }
+                }
+                else
+                {
+                    _where.Show(cell.trayB.transform, 0.15f, under != null ? "NOW PRESS TEACH" : "BRING IT HERE", 0.46f, head);
+                    shownWhere = true;
+                    if (focus == null) focus = cell.trayB.transform;
+                }
             }
 
             bool quiet = Time.time - _boundAt < quietAfterBind;
+            // ghost hands on the box that is the task right now
+            Ghosts(cell.trayB, !quiet && shownWhat && focus == cell.trayB.transform);
+            Ghosts(cell.trayA, !quiet && shownWhat && focus == cell.trayA.transform);
             if (!shownWhat || quiet) _what.Hide();
             if (!shownWhere || quiet) _where.Hide();
             _what.Tick(); _where.Tick();
@@ -108,7 +119,19 @@ namespace MetaMove.Demo.Kitting
             }
         }
 
-        void Hide() { if (_what != null) { _what.Hide(); _where.Hide(); _what.Tick(); _where.Tick(); _focus = null; _arrow?.Stop(); } }
+        static void Ghosts(KittingTray tray, bool on)
+        {
+            if (tray == null) return;
+            var g = tray.transform.Find("GhostHands");
+            if (g == null) return;
+            if (g.gameObject.activeSelf != on) g.gameObject.SetActive(on);
+            if (on) g.localPosition = new Vector3(0f, 0.02f + 0.02f * Mathf.Sin(Time.time * 2.4f), 0f);   // a slow "lift it" bob
+        }
+
+        void Hide()
+        {
+            if (cell != null) { Ghosts(cell.trayA, false); Ghosts(cell.trayB, false); }
+            if (_what != null) { _what.Hide(); _where.Hide(); _what.Tick(); _where.Tick(); _focus = null; _arrow?.Stop(); } }
 
         void OnCueRestart() => _boundAt = -1f;
         void OnEnable() { if (cell != null) cell.Cue += Cue; }
@@ -126,13 +149,15 @@ namespace MetaMove.Demo.Kitting
             readonly CanvasGroup _g;
             Vector3 _from, _to;
             float _t0 = -10f;
-            const float Duration = 1.3f;
+            // appear in front, hold and point, glide over slowly, fade out
+            const float FadeIn = 0.6f, Hold = 0.5f, Glide = 2.8f, FadeOut = 0.6f;
+            const float Duration = FadeIn + Hold + Glide + FadeOut;
 
             public FlyArrow(Transform parent)
             {
                 var c = UIKit.WorldCanvas(parent, "GuideArrow", new Vector2(200f, 200f), 10);
                 _t = c.transform;
-                _t.localScale = Vector3.one * (0.16f / 200f);
+                _t.localScale = Vector3.one * (0.20f / 200f);
                 _g = c.gameObject.AddComponent<CanvasGroup>();
                 _img = new GameObject("Arrow", typeof(Image)).GetComponent<Image>();
                 _img.transform.SetParent(_t, false);
@@ -145,8 +170,8 @@ namespace MetaMove.Demo.Kitting
             {
                 var dir = (target - cam.position).normalized;
                 var fwd = cam.forward;
-                _from = cam.position + fwd * 0.75f - cam.up * 0.08f;
-                _to = cam.position + Vector3.Slerp(fwd, dir, 0.75f) * 1.3f;
+                _from = cam.position + fwd * 0.9f - cam.up * 0.05f;
+                _to = cam.position + Vector3.Slerp(fwd, dir, 0.9f) * 1.5f;
                 _t0 = Time.time;
                 _t.gameObject.SetActive(true);
             }
@@ -155,16 +180,20 @@ namespace MetaMove.Demo.Kitting
 
             public void Tick(Transform cam)
             {
-                float u = (Time.time - _t0) / Duration;
-                if (u >= 1f) { if (_t.gameObject.activeSelf) _t.gameObject.SetActive(false); return; }
-                float e = 1f - (1f - u) * (1f - u);   // ease out
-                var pos = Vector3.Lerp(_from, _to, e);
+                float t = Time.time - _t0;
+                if (t >= Duration) { if (_t.gameObject.activeSelf) _t.gameObject.SetActive(false); return; }
+                float g = Mathf.SmoothStep(0f, 1f, Mathf.Clamp01((t - FadeIn - Hold) / Glide));   // ease in and out
+                var pos = Vector3.Lerp(_from, _to, g);
                 var vel = _to - _from;
                 _t.position = pos;
                 _t.rotation = Quaternion.LookRotation(pos - cam.position, cam.up);   // faces the viewer
                 var local = _t.InverseTransformDirection(vel);
                 _img.rectTransform.localRotation = Quaternion.Euler(0f, 0f, Mathf.Atan2(local.y, local.x) * Mathf.Rad2Deg);
-                _g.alpha = Mathf.Clamp01(u * 6f) * Mathf.Clamp01((1f - u) * 2.5f);
+                float a = t < FadeIn ? t / FadeIn : t > Duration - FadeOut ? (Duration - t) / FadeOut : 1f;
+                _g.alpha = Mathf.SmoothStep(0f, 1f, a);
+                // a gentle pulse while it waits, so the eye catches it
+                float pulse = t < FadeIn + Hold ? 1f + 0.12f * Mathf.Sin(t * 9f) : 1f;
+                _img.rectTransform.localScale = Vector3.one * pulse;
             }
         }
 

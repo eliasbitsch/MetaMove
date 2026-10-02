@@ -120,6 +120,8 @@ namespace MetaMove.Demo.Kitting
         public int PartsPlaced { get; private set; }
         // Parked from the hand menu (Home). Home again resumes where the line stopped.
         public bool Parked { get; private set; }
+        // Guiding started from the hand menu (not by the story): no narration, any full box.
+        public bool FreeGuide { get; private set; }
         // Horizontal distance (m) from the tool to the tray centre when Teach was pressed:
         // how coarse the visitor's pinch was, and how far the robot corrected on its own.
         public float TeachOffset { get; private set; } = -1f;
@@ -283,6 +285,7 @@ namespace MetaMove.Demo.Kitting
             if (_run != null) StopCoroutine(_run);
             _speedScale = 1f;
             Parked = false;
+            FreeGuide = false;
             if (_held != null) { _held.SetActive(false); _held = null; }
             if (_gripper != null) _gripper.Open();
             trayA.Refill();
@@ -368,6 +371,28 @@ namespace MetaMove.Demo.Kitting
             Emit("unpark", "Resumed");
         }
 
+        // Hand menu "Guide": stop the line at any time and guide the tool by hand to whichever
+        // box should be picked from next; Teach over it and the line runs from there.
+        public void StartGuide()
+        {
+            if (!_bound || State == Phase.Guide || State == Phase.Align) return;
+            if (_run != null) StopCoroutine(_run);
+            ReturnHeldPart();
+            _speedScale = 1f;
+            Parked = false;
+            FreeGuide = true;
+            _run = StartCoroutine(GuideFromReady());
+        }
+
+        IEnumerator GuideFromReady()
+        {
+            State = Phase.Waiting;
+            yield return MoveReady();
+            State = Phase.Guide;
+            SetGuide(true);
+            Emit("guide_free", "Guide the tool to a box, then Teach");
+        }
+
         // A part in the gripper when the line is interrupted goes back into its nest.
         void ReturnHeldPart()
         {
@@ -397,11 +422,14 @@ namespace MetaMove.Demo.Kitting
                 return;
             }
             var d = ikTarget.position - hit.Center;
-            TeachOffset = new Vector2(d.x, d.z).magnitude;
-            Emit("teach", "Teach accepted, " + (TeachOffset * 100f).ToString("0.0") + " cm off");
+            bool free = FreeGuide;
+            FreeGuide = false;
+            if (!free) TeachOffset = new Vector2(d.x, d.z).magnitude;
+            // free guiding stays out of the story and the shift report: its own cue names
+            Emit(free ? "teach_free" : "teach", "Teach accepted, " + (new Vector2(d.x, d.z).magnitude * 100f).ToString("0.0") + " cm off");
             SetGuide(false);
             if (_run != null) StopCoroutine(_run);
-            _run = StartCoroutine(AlignThenRun(hit));
+            _run = StartCoroutine(AlignThenRun(hit, free));
         }
 
         // The tray Teach would accept right now, or null. Also drives the hints.
@@ -409,7 +437,7 @@ namespace MetaMove.Demo.Kitting
         {
             if (ikTarget == null) return null;
             var p = ikTarget.position;
-            foreach (var t in new[] { trayB, trayA })
+            foreach (var t in new[] { trayB, trayA, reserve })
             {
                 if (t == null || t.Remaining == 0) continue;
                 var d = p - t.Center;
@@ -448,10 +476,19 @@ namespace MetaMove.Demo.Kitting
                 // is out, finish here and ask to be shown the new box.
                 if (Taught == reserve && _trayBOnTable && TrayACleared)
                 {
-                    yield return MoveTo(home, Vector3.zero);
+                    yield return MoveReady();
                     State = Phase.Waiting;
                     EnterGuide();
                     yield break;
+                }
+                // The line never starves while the visitor takes their time: an empty reserve is
+                // pushed out and a full one rolls in on its lane, so the arm keeps moving and
+                // the slow-down still shows whenever they come close.
+                if (Taught == reserve && reserve.NextFilled() < 0 && !(_trayBOnTable && TrayACleared))
+                {
+                    yield return MoveTo(home, Vector3.zero);
+                    yield return RestockReserve();
+                    continue;
                 }
                 int n = Taught.NextFilled();
                 if (n < 0)
@@ -549,7 +586,7 @@ namespace MetaMove.Demo.Kitting
             // one thing to do at a time.
             while (State == Phase.Waiting)
             {
-                if (_trayBOnTable && TrayACleared) { EnterGuide(); yield break; }
+                if (_trayBOnTable && TrayACleared) { yield return MoveReady(); EnterGuide(); yield break; }
                 yield return null;
             }
         }
@@ -561,7 +598,7 @@ namespace MetaMove.Demo.Kitting
             Emit("guide", "New tray - location not taught");
         }
 
-        IEnumerator AlignThenRun(KittingTray tray)
+        IEnumerator AlignThenRun(KittingTray tray, bool free = false)
         {
             State = Phase.Align;
             // The visible correction: from wherever the visitor left the TCP to the
@@ -571,9 +608,9 @@ namespace MetaMove.Demo.Kitting
             _speedScale = 1f;
             tray.SetRecognized(true);
             Taught = tray;
-            Emit("aligned", tray.label + " taught");
+            Emit(free ? "aligned_free" : "aligned", tray.label + " taught");
             yield return Dwell(2.0f);   // let the "taught" moment land before the line runs again
-            Emit("resume", "Line running from " + tray.label);
+            Emit(free ? "resume_free" : "resume", "Line running from " + tray.label);
             _run = StartCoroutine(RunLoop());
         }
 
@@ -588,15 +625,53 @@ namespace MetaMove.Demo.Kitting
             yield return MoveTo(goal, Vector3.zero, above);
         }
 
-        // Straight above the goal at transit height (cell frame, table top = 0), tool level.
-        IEnumerator MoveOver(Transform goal)
+        [Tooltip("Lane entry marker the restocked reserve rolls in from (set by the builder).")]
+        public Transform reserveEntry;
+
+        IEnumerator RestockReserve()
+        {
+            if (reserve == null) yield break;
+            var pick = new Pose(reserve.transform.position, reserve.transform.rotation);
+            var rack = reserve.GetComponentInParent<FlowRack>() ?? FindAnyObjectByType<FlowRack>();
+            Emit("restock", "Reserve restocked");
+            // the empty sinks away, a full box rolls down the lane to the stop
+            for (float t = 0f; t < 0.4f; t += Time.deltaTime) { reserve.transform.localScale = Vector3.one * (1f - t / 0.4f); yield return null; }
+            reserve.Refill();
+            if (reserveEntry != null) reserve.transform.SetPositionAndRotation(reserveEntry.position, reserveEntry.rotation);
+            reserve.transform.localScale = Vector3.one;
+            var stop = new GameObject("ReservePick").transform;
+            stop.SetPositionAndRotation(pick.position, pick.rotation);
+            if (rack != null && reserveEntry != null) yield return rack.Roll(reserve.transform, null, stop);
+            else reserve.transform.SetPositionAndRotation(pick.position, pick.rotation);
+            Destroy(stop.gameObject);
+        }
+
+        // A relaxed pose over the front of the table, well inside the arm's range: hand guiding
+        // always starts from here, never from wherever the last cycle ended.
+        IEnumerator MoveReady()
         {
             float v = 0f;
             while (true)
             {
+                var f = cellFrame;
+                var p = f.position + f.rotation * new Vector3(0f, transitHeight + toolOffset, 0.30f);
+                if (Step(p, _graspRot, ref v)) yield break;
+                yield return null;
+            }
+        }
+
+        // Straight above the goal at transit height (cell frame, table top = 0). The tool takes
+        // the goal's tilt (rack lanes slope ~8 deg) up here, during the long move, so going
+        // down into the box and back up is a pure translation - no turn at the box.
+        IEnumerator MoveOver(Transform goal)
+        {
+            float v = 0f;
+            var rot = Quaternion.FromToRotation(Vector3.up, goal.up) * _graspRot;
+            while (true)
+            {
                 var p = goal.position;
                 p.y = (cellFrame != null ? cellFrame.position.y : 0f) + transitHeight + toolOffset;
-                if (Step(p, _graspRot, ref v)) yield break;
+                if (Step(p, rot, ref v)) yield break;
                 yield return null;
             }
         }
@@ -625,7 +700,7 @@ namespace MetaMove.Demo.Kitting
             float vBrake = Mathf.Sqrt(2f * acceleration * dist);
             v = Mathf.Min(Mathf.Min(v + acceleration * Time.deltaTime, vMax), vBrake);
             ikTarget.position = Vector3.MoveTowards(ikTarget.position, p, v * Time.deltaTime);
-            ikTarget.rotation = Quaternion.RotateTowards(ikTarget.rotation, rotGoal, 360f * F * Time.deltaTime);
+            ikTarget.rotation = Quaternion.RotateTowards(ikTarget.rotation, rotGoal, 120f * F * Time.deltaTime);
             if ((ikTarget.position - p).sqrMagnitude > arriveTol * arriveTol) { _settle = 0f; return false; }
             // target is there; now wait for the arm itself (time only runs while the arm may move)
             _settle += Time.deltaTime * F;

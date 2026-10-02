@@ -79,7 +79,11 @@ namespace MetaMove.EditorTools
 
                 // The pinch handle on the tool in the UI accent cyan: the one thing on the arm
                 // the visitor may touch.
-                var handleMat = Mat("GuideHandle", new Color(0.25f, 0.82f, 0.88f), 0f, 0.7f, true);
+                // Bigger (easier to see and to pinch) and translucent, so the gripper stays visible.
+                var handleMat = Mat("GuideHandle", new Color(0.25f, 0.82f, 0.88f, 0.45f), 0f, 0.7f, true);
+                MakeTransparent(handleMat);
+                foreach (var relay in inst.GetComponentsInChildren<MetaMove.Robot.PhantomGrabRelay>(true))
+                    relay.transform.localScale *= 1.8f;
                 foreach (var relay in inst.GetComponentsInChildren<MetaMove.Robot.PhantomGrabRelay>(true))
                     foreach (var r in relay.GetComponentsInChildren<Renderer>(true))
                     {
@@ -344,6 +348,12 @@ namespace MetaMove.EditorTools
             var rings = zones.gameObject.AddComponent<FloorZoneRings>();
             rings.speed = prox;
             rings.material = SpriteMat("ZoneLine");
+            // The zones are the point of the demo: wide, fully lit lines, both bands filled, words on the floor.
+            rings.lineWidth = 0.07f;
+            rings.idleAlpha = 0.8f;
+            rings.fillAlpha = 0.22f;
+            rings.fillScaled = true;
+            rings.labelFont = inter;
 
             if (hud != null)
             {
@@ -409,6 +419,7 @@ namespace MetaMove.EditorTools
             cell.lowAt = 6;
             cell.trayA.transform.SetPositionAndRotation(rack.picks[1].position, rack.picks[1].rotation);
             MakeCarryable(cell, cell.trayA, rack, CarryableTray.Kind.Empty, rack.picks[1]);
+            AddGhostHands(cell.trayA.transform);
 
             // Tray B: the new batch - orange KLT, anodised helical gears in a staggered 2+3+2
             // layout. Waits on a trolley ~2.6 m out; the visitor carries it to the rack.
@@ -422,6 +433,7 @@ namespace MetaMove.EditorTools
             cell.trayBSpawn = Marker("TrayB_Spawn", frame, new Vector3(0.90f, 0f, 2.60f), 0f);
             cell.trayB.transform.SetPositionAndRotation(cell.trayBSpawn.position, cell.trayBSpawn.rotation);
             MakeCarryable(cell, cell.trayB, rack, CarryableTray.Kind.Supply, cell.trayBSpawn);
+            AddGhostHands(cell.trayB.transform);
             Model("bari_trolley", "Trolley", frame, new Vector3(0.90f, -FloorBelowTable, 2.60f), 0f);
             cell.trayBPlaced = rack.entries[2];   // presenter fallback: rolls into a free lane
 
@@ -432,6 +444,7 @@ namespace MetaMove.EditorTools
             cell.reserve = Tray("TrayReserve", "Reserve", frame, "KLT_Blue", "bari_gear_a", mGlow,
                 GridNests(2, 3, 0.09f, 0.10f, 0f), -1);
             cell.reserve.transform.SetPositionAndRotation(rack.picks[0].position, rack.picks[0].rotation);
+            cell.reserveEntry = rack.entries[0];
             StockBox("Stock_Return0", frame, rack.returns[0], false);
             for (int i = 0; i < 3; i++)
             {
@@ -502,7 +515,11 @@ namespace MetaMove.EditorTools
             hall.GetComponent<Renderer>().sharedMaterial = hallMat;
             hall.GetComponent<Renderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
 
-            if (IncludeRoofSign) reveal.roof = BuildRoofSign(frame).transform;
+            if (IncludeRoofSign)
+            {
+                reveal.roof = BuildRoofSign(frame).transform;
+                AnchorPlateOnColumn(reveal.roof);
+            }
             BuildCellDetails(frame);
 
             // Extraction (tools/blender/bari/duct.py): exhaust fan in the wall with a turning rotor
@@ -571,32 +588,38 @@ namespace MetaMove.EditorTools
         static void BuildCellDetails(Transform frame)
         {
             var det = Model("bari_cell_details", "CellDetails", frame, new Vector3(0f, -FloorBelowTable, 0f), 0f);
-            // Anchor reference as a desk sign on the table corner, leaning back 30 deg and turned
-            // towards the side the visitor walks along with the orange box (flat, it hid behind the rack).
             var flat = det.transform.Find("Det_QRPlate");
             if (flat != null) Object.DestroyImmediate(flat.gameObject);
-            var face = new Vector3(Mathf.Sin(40f * Mathf.Deg2Rad), 0f, Mathf.Cos(40f * Mathf.Deg2Rad)) * Mathf.Cos(30f * Mathf.Deg2Rad)
-                       + Vector3.up * Mathf.Sin(30f * Mathf.Deg2Rad);
+        }
+
+        // Anchor reference plate screwed flat to the front flange of the left roof column, at
+        // eye height, facing the visitor (roof.py: column at x -1.55, z -1.10, HEB 200).
+        static void AnchorPlateOnColumn(Transform roof)
+        {
             var plate = new GameObject("AnchorPlate").transform;
-            plate.SetParent(det.transform, false);
-            plate.localPosition = new Vector3(0.27f, 0.80f + 0.085f, 0.20f);
-            plate.localRotation = Quaternion.LookRotation(-face, Vector3.up);   // quad front (-Z) faces 'face'
+            plate.SetParent(roof, false);
+            plate.localPosition = new Vector3(-1.55f, 1.45f, -0.993f);
+            plate.localRotation = Quaternion.Euler(0f, 180f, 0f);   // quad front (-Z) faces +Z, the visitor
             var body = GameObject.CreatePrimitive(PrimitiveType.Cube);
             body.name = "Plate";
             Object.DestroyImmediate(body.GetComponent<Collider>());
             body.transform.SetParent(plate, false);
             body.transform.localPosition = new Vector3(0f, 0f, 0.003f);
-            body.transform.localScale = new Vector3(0.165f, 0.20f, 0.004f);
+            body.transform.localScale = new Vector3(0.20f, 0.245f, 0.005f);
             body.GetComponent<Renderer>().sharedMaterial = SlotMat("Profile");
-            var strut = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            strut.name = "Strut";
-            Object.DestroyImmediate(strut.GetComponent<Collider>());
-            strut.transform.SetParent(plate, false);
-            strut.transform.localPosition = new Vector3(0f, -0.02f, 0.05f);
-            strut.transform.localRotation = Quaternion.Euler(-60f, 0f, 0f);
-            strut.transform.localScale = new Vector3(0.12f, 0.004f, 0.11f);
-            strut.GetComponent<Renderer>().sharedMaterial = SlotMat("Profile");
-            Face("AnchorQR", plate, TexDir + "qr_anchor.png", Vector3.zero, Quaternion.identity, new Vector2(0.15f, 0.183f), false);
+            foreach (var sx in new[] { -1f, 1f })
+                foreach (var sy in new[] { -1f, 1f })
+                {
+                    var screw = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+                    screw.name = "Screw";
+                    Object.DestroyImmediate(screw.GetComponent<Collider>());
+                    screw.transform.SetParent(plate, false);
+                    screw.transform.localPosition = new Vector3(sx * 0.088f, sy * 0.110f, -0.001f);
+                    screw.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
+                    screw.transform.localScale = new Vector3(0.010f, 0.002f, 0.010f);
+                    screw.GetComponent<Renderer>().sharedMaterial = SlotMat("ControllerDark");
+                }
+            Face("AnchorQR", plate, TexDir + "qr_anchor.png", new Vector3(0f, 0f, -0.0005f), Quaternion.identity, new Vector2(0.17f, 0.207f), false);
         }
 
         static void Face(string name, Transform parent, string texPath, Vector3 local, Quaternion rot, Vector2 size, bool unlit)
@@ -615,6 +638,47 @@ namespace MetaMove.EditorTools
             if (unlit) m.SetColor("_BaseColor", new Color(0.9f, 0.9f, 0.9f));
             q.GetComponent<Renderer>().sharedMaterial = m;
             q.GetComponent<Renderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+        }
+
+        // Two ghost hands from the Interaction SDK on the long sides of a box: palms to the box,
+        // fingers over the rim - "take it with both hands". KittingHints shows them when the box
+        // is the task. Rest pose of the prefab: fingers +Z, palm -Y.
+        static void AddGhostHands(Transform tray)
+        {
+            var root = new GameObject("GhostHands").transform;
+            root.SetParent(tray, false);
+            foreach (var side in new[] { 1f, -1f })
+            {
+                string path = "Packages/com.meta.xr.sdk.interaction/Runtime/Prefabs/HandGrab/OpenXRGhost-Hand" + (side > 0f ? "Right" : "Left") + ".prefab";
+                var src = AssetDatabase.LoadAssetAtPath<GameObject>(path);
+                if (src == null) { Debug.LogWarning("[BariDemoAuthor] ghost hand missing: " + path); continue; }
+                var g = (GameObject)PrefabUtility.InstantiatePrefab(src);
+                PrefabUtility.UnpackPrefabInstance(g, PrefabUnpackMode.Completely, InteractionMode.AutomatedAction);
+                foreach (var mb in g.GetComponentsInChildren<MonoBehaviour>(true)) Object.DestroyImmediate(mb);   // static, no pose driving
+                foreach (var c in g.GetComponentsInChildren<Collider>(true)) Object.DestroyImmediate(c);
+                Vector3 palm = Vector3.zero;
+                foreach (var t in g.GetComponentsInChildren<Transform>(true)) if (t.name == "XRHand_Palm") palm = t.position;   // prefab at the origin
+                g.name = side > 0f ? "GhostRight" : "GhostLeft";
+                g.transform.SetParent(root, false);
+                var rot = Quaternion.LookRotation(Vector3.down, new Vector3(side, 0f, 0f));   // fingers down, palm towards the box
+                g.transform.localRotation = rot;
+                g.transform.localPosition = new Vector3(side * (KltSize.x / 2f + 0.035f), 0.17f, -0.03f) - rot * palm;
+            }
+            root.gameObject.SetActive(false);
+        }
+
+        // URP Lit -> alpha-blended transparent (alpha from _BaseColor).
+        static void MakeTransparent(Material m)
+        {
+            m.SetFloat("_Surface", 1f);
+            m.SetFloat("_Blend", 0f);
+            m.SetFloat("_SrcBlend", (float)UnityEngine.Rendering.BlendMode.SrcAlpha);
+            m.SetFloat("_DstBlend", (float)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+            m.SetFloat("_ZWrite", 0f);
+            m.EnableKeyword("_SURFACE_TYPE_TRANSPARENT");
+            m.renderQueue = (int)UnityEngine.Rendering.RenderQueue.Transparent;
+            m.SetOverrideTag("RenderType", "Transparent");
+            EditorUtility.SetDirty(m);
         }
 
         static Material ShaderMat(string name, string shader)

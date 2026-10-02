@@ -24,10 +24,15 @@ namespace MetaMove.Safety
         [Range(0f, 1f)] public float idleAlpha = 0.35f;
         [Range(0f, 1f)] public float fillAlpha = 0.18f;
         public float wallHeight = 1.1f;
+        [Tooltip("Also fill the scaled band between the two rings.")]
+        public bool fillScaled = false;
+        [Tooltip("If set, STOP and SLOW are written on the floor, readable from the cell front (+Z).")]
+        public TMPro.TMP_FontAsset labelFont;
         public float wallRiseTime = 0.25f;
 
         LineRenderer _stopRing, _scaledRing;
-        MeshRenderer _stopFill, _wall;
+        MeshRenderer _stopFill, _scaledFill, _wall;
+        TMPro.TextMeshProUGUI _stopLabel, _slowLabel;
         MeshFilter _wallMesh;
         float _wallT;
 
@@ -38,6 +43,13 @@ namespace MetaMove.Safety
             _stopRing = Ring("Ring_Stop", near);
             _scaledRing = Ring("Ring_Scaled", far);
             _stopFill = Disc("Fill_Stop", near);
+            if (fillScaled) _scaledFill = Annulus("Fill_Scaled", near, far);
+            if (labelFont != null)
+            {
+                // STOP beside the robot (the rack covers the front inside dNear), SLOW in front of the rack
+                _stopLabel = Label("Label_Stop", "STOP", new Vector2(Mathf.Sin(70f * Mathf.Deg2Rad), Mathf.Cos(70f * Mathf.Deg2Rad)) * near * 0.78f, 0.10f);
+                _slowLabel = Label("Label_Slow", "SLOW", new Vector2(0f, (near + far) * 0.5f + 0.15f), 0.20f);
+            }
             _wall = Wall("Wall_Stop", near, out _wallMesh);
         }
 
@@ -56,6 +68,12 @@ namespace MetaMove.Safety
             SetLine(_scaledRing, scaledColor, inScaled ? Mathf.Lerp(0.7f, 1f, pulse) : inStop ? 0.7f : idleAlpha);
             SetLine(_stopRing, stopColor, inStop ? Mathf.Lerp(0.75f, 1f, pulse) : inScaled ? Mathf.Lerp(idleAlpha, 0.8f, closeness) : idleAlpha);
             SetMesh(_stopFill, stopColor, inStop ? fillAlpha * 2f : fillAlpha * 0.5f);
+            if (_scaledFill != null) SetMesh(_scaledFill, scaledColor, inScaled ? fillAlpha * 1.4f : fillAlpha * 0.45f);
+            if (_stopLabel != null)
+            {
+                var sc = stopColor; sc.a = inStop ? 1f : 0.75f; _stopLabel.color = sc;
+                var lc = scaledColor; lc.a = inScaled ? 1f : 0.75f; _slowLabel.color = lc;
+            }
 
             // Light wall rises at standstill, sinks when the visitor steps out.
             _wallT = Mathf.MoveTowards(_wallT, inStop ? 1f : 0f, Time.deltaTime / Mathf.Max(0.01f, wallRiseTime));
@@ -104,6 +122,45 @@ namespace MetaMove.Safety
             }
             mesh.vertices = v; mesh.triangles = t; mesh.RecalculateBounds();
             return MeshObject(name, mesh, out _);
+        }
+
+        MeshRenderer Annulus(string name, float r0, float r1)
+        {
+            var mesh = new Mesh { name = name };
+            var v = new Vector3[segments * 2];
+            var t = new int[segments * 6];
+            for (int i = 0; i < segments; i++)
+            {
+                float a = i * Mathf.PI * 2f / segments;
+                var d = new Vector3(Mathf.Cos(a), 0f, Mathf.Sin(a));
+                v[i * 2] = d * r0 + Vector3.up * 0.001f; v[i * 2 + 1] = d * r1 + Vector3.up * 0.001f;
+                int k = i * 6, b = i * 2, n = ((i + 1) % segments) * 2;
+                t[k] = b; t[k + 1] = n; t[k + 2] = b + 1;
+                t[k + 3] = b + 1; t[k + 4] = n; t[k + 5] = n + 1;
+            }
+            mesh.vertices = v; mesh.triangles = t; mesh.RecalculateBounds();
+            return MeshObject(name, mesh, out _);
+        }
+
+        // Flat word on the floor at (x, z), cap height h (m), top of the letters away from the
+        // cell front (+Z) so it reads from where the visitor stands.
+        TMPro.TextMeshProUGUI Label(string name, string text, Vector2 xz, float h)
+        {
+            var go = new GameObject(name, typeof(Canvas));
+            go.transform.SetParent(transform, false);
+            var c = go.GetComponent<Canvas>();
+            c.renderMode = RenderMode.WorldSpace;
+            ((RectTransform)go.transform).sizeDelta = new Vector2(600f, 200f);
+            go.transform.localPosition = new Vector3(xz.x, 0.004f, xz.y);
+            go.transform.localRotation = Quaternion.Euler(90f, 180f, 0f);
+            go.transform.localScale = Vector3.one * (h / 140f);
+            var t = new GameObject("Text", typeof(RectTransform), typeof(TMPro.TextMeshProUGUI)).GetComponent<TMPro.TextMeshProUGUI>();
+            t.transform.SetParent(go.transform, false);
+            ((RectTransform)t.transform).sizeDelta = new Vector2(600f, 200f);
+            t.font = labelFont; t.fontSize = 190f; t.fontStyle = TMPro.FontStyles.Bold;
+            t.alignment = TMPro.TextAlignmentOptions.Center; t.characterSpacing = 12f;
+            t.text = text; t.raycastTarget = false;
+            return t;
         }
 
         MeshRenderer Wall(string name, float r, out MeshFilter mf)

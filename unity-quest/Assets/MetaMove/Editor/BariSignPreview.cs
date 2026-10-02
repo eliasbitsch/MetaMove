@@ -59,6 +59,11 @@ namespace MetaMove.EditorTools
                 // extraction: wall fan and duct along the roof
                 Shot(cam, frame, new Vector3(-0.20f, fy + 1.70f, 1.40f), new Vector3(0.90f, fy + 2.10f, -0.70f), "details_duct.png");
                 Shot(cam, frame, new Vector3(1.05f, fy + 1.35f, 0.75f), new Vector3(0.27f, fy + 0.88f, 0.20f), "details_table.png");
+                // ghost hands on the orange box (normally shown only when it is the task)
+                var gh = cell.trayB != null ? cell.trayB.transform.Find("GhostHands") : null;
+                if (gh != null) gh.gameObject.SetActive(true);
+                Shot(cam, frame, new Vector3(0.90f, fy + 1.60f, 1.85f), new Vector3(0.90f, fy + 0.90f, 2.60f), "ghost_hands.png");
+                Shot(cam, frame, new Vector3(-0.90f, fy + 1.60f, 0.90f), new Vector3(-1.55f, fy + 1.45f, -1.0f), "qr_column.png");
                 Debug.Log("[SignPreview] rendered to " + System.IO.Path.GetFullPath(OutDir));
             }
             catch (System.Exception e) { Debug.LogError("[SignPreview] " + e); code = 1; }
