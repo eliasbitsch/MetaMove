@@ -297,6 +297,9 @@ namespace MetaMove.EditorTools
             guide.cell = cell;
             // Sound, synthesised at runtime: a quiet hall behind the cut-out. (A synthesised motor
             // hum was tried and dropped - it never sounded like a drive, only like a tool.)
+            var vol = new GameObject("VolumeCheck").AddComponent<VolumeCheck>();
+            vol.transform.SetParent(root.transform, false);
+            vol.font = inter;
             var report = new GameObject("ShiftReport").AddComponent<ShiftReport>();
             report.transform.SetParent(root.transform, false);
             report.cell = cell; report.speed = prox; report.font = inter;
