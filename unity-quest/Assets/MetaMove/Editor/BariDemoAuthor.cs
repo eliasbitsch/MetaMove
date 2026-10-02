@@ -504,6 +504,13 @@ namespace MetaMove.EditorTools
             if (IncludeRoofSign) reveal.roof = BuildRoofSign(frame).transform;
             BuildCellDetails(frame);
 
+            // Extraction (tools/blender/bari/duct.py): exhaust fan in the wall with a turning rotor
+            // and the duct up to the roof. Hung on the wall, so it rises with it in the reveal.
+            var duct = Model("bari_duct", "Extraction", wall.transform, Vector3.zero, 0f);
+            var rotor = duct.transform.Find("Duct_Rotor");
+            if (rotor != null) rotor.gameObject.AddComponent<Spin>().parentAxis = Vector3.forward;
+            else Debug.LogWarning("[BariDemoAuthor] exhaust fan rotor not found");
+
             var conv = frame.gameObject.AddComponent<KitConveyor>();
             conv.kitModel = kitModel;
             conv.start = Marker("ConveyorStart", frame, new Vector3(-0.45f, 0.0f, -0.40f), 0f);

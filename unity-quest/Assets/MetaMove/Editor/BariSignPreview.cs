@@ -56,6 +56,8 @@ namespace MetaMove.EditorTools
                 Shot(cam, frame, new Vector3(0.10f, fy + 2.10f, 1.90f), new Vector3(0f, fy + 2.50f, 0.45f), "sign_close.png");
                 // cell details: controller under the table, PC on its stand, QR plate on the table
                 Shot(cam, frame, new Vector3(-1.30f, fy + 0.75f, 0.95f), new Vector3(-0.10f, fy + 0.15f, -0.05f), "details_pc.png");
+                // extraction: wall fan and duct along the roof
+                Shot(cam, frame, new Vector3(-0.20f, fy + 1.70f, 1.40f), new Vector3(0.90f, fy + 2.10f, -0.70f), "details_duct.png");
                 Shot(cam, frame, new Vector3(1.05f, fy + 1.35f, 0.75f), new Vector3(0.27f, fy + 0.88f, 0.20f), "details_table.png");
                 Debug.Log("[SignPreview] rendered to " + System.IO.Path.GetFullPath(OutDir));
             }
