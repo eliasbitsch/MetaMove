@@ -33,6 +33,8 @@ namespace MetaMove.Safety
         LineRenderer _stopRing, _scaledRing;
         MeshRenderer _stopFill, _scaledFill, _wall;
         TMPro.TextMeshProUGUI _stopLabel, _slowLabel;
+        readonly System.Collections.Generic.Dictionary<TMPro.TextMeshProUGUI, Vector2> _arc =
+            new System.Collections.Generic.Dictionary<TMPro.TextMeshProUGUI, Vector2>();   // (radius px, centre angle rad)
         MeshFilter _wallMesh;
         float _wallT;
 
@@ -46,9 +48,10 @@ namespace MetaMove.Safety
             if (fillScaled) _scaledFill = Annulus("Fill_Scaled", near, far);
             if (labelFont != null)
             {
-                // STOP beside the robot (the rack covers the front inside dNear), SLOW in front of the rack
-                _stopLabel = Label("Label_Stop", "STOP", new Vector2(Mathf.Sin(70f * Mathf.Deg2Rad), Mathf.Cos(70f * Mathf.Deg2Rad)) * near * 0.78f, 0.10f);
-                _slowLabel = Label("Label_Slow", "SLOW", new Vector2(0f, (near + far) * 0.5f + 0.15f), 0.20f);
+                // Written along the rings, read from outside: STOP ZONE inside the red ring beside the
+                // robot (the rack covers the front there), SPEED SCALING ZONE across the amber band in front.
+                _stopLabel = CurvedLabel("Label_Stop", "STOP ZONE", near - 0.13f, 75f, 0.075f);
+                _slowLabel = CurvedLabel("Label_Slow", "SPEED SCALING ZONE", (near + far) * 0.5f + 0.20f, 0f, 0.13f);
             }
             _wall = Wall("Wall_Stop", near, out _wallMesh);
         }
@@ -142,6 +145,43 @@ namespace MetaMove.Safety
             return MeshObject(name, mesh, out _);
         }
 
+        // Text laid along a circle of radius r (m) around the robot foot, centred at 'angleDeg'
+        // from the cell front (+Z, positive towards +X), letters' tops towards the robot.
+        TMPro.TextMeshProUGUI CurvedLabel(string name, string text, float r, float angleDeg, float h)
+        {
+            var t = Label(name, text, Vector2.zero, h);
+            float scale = h / 140f;
+            // canvas X runs towards cell -X, so an angle towards +X is negative on the canvas
+            _arc[t] = new Vector2(r / scale, -angleDeg * Mathf.Deg2Rad);
+            return t;
+        }
+
+        void LateUpdate()
+        {
+            foreach (var kv in _arc) Warp(kv.Key, kv.Value.x, kv.Value.y);
+        }
+
+        // Bend the text mesh: every character goes to its arc position, turned so its baseline
+        // is tangent and its top points to the centre (canvas origin = ring centre).
+        static void Warp(TMPro.TextMeshProUGUI t, float radius, float centre)
+        {
+            t.ForceMeshUpdate();
+            var info = t.textInfo;
+            for (int i = 0; i < info.characterCount; i++)
+            {
+                var ch = info.characterInfo[i];
+                if (!ch.isVisible) continue;
+                var verts = info.meshInfo[ch.materialReferenceIndex].vertices;
+                int vi = ch.vertexIndex;
+                var mid = new Vector3((ch.bottomLeft.x + ch.topRight.x) * 0.5f, ch.baseLine, 0f);
+                float phi = centre + mid.x / radius;
+                var rot = Quaternion.Euler(0f, 0f, phi * Mathf.Rad2Deg);
+                var at = new Vector3(radius * Mathf.Sin(phi), -radius * Mathf.Cos(phi), 0f);
+                for (int k = 0; k < 4; k++) verts[vi + k] = at + rot * (verts[vi + k] - mid);
+            }
+            t.UpdateVertexData(TMPro.TMP_VertexDataUpdateFlags.Vertices);
+        }
+
         // Flat word on the floor at (x, z), cap height h (m), top of the letters away from the
         // cell front (+Z) so it reads from where the visitor stands.
         TMPro.TextMeshProUGUI Label(string name, string text, Vector2 xz, float h)
@@ -150,13 +190,14 @@ namespace MetaMove.Safety
             go.transform.SetParent(transform, false);
             var c = go.GetComponent<Canvas>();
             c.renderMode = RenderMode.WorldSpace;
-            ((RectTransform)go.transform).sizeDelta = new Vector2(600f, 200f);
+            ((RectTransform)go.transform).sizeDelta = new Vector2(4000f, 200f);
             go.transform.localPosition = new Vector3(xz.x, 0.004f, xz.y);
             go.transform.localRotation = Quaternion.Euler(90f, 180f, 0f);
             go.transform.localScale = Vector3.one * (h / 140f);
             var t = new GameObject("Text", typeof(RectTransform), typeof(TMPro.TextMeshProUGUI)).GetComponent<TMPro.TextMeshProUGUI>();
             t.transform.SetParent(go.transform, false);
-            ((RectTransform)t.transform).sizeDelta = new Vector2(600f, 200f);
+            ((RectTransform)t.transform).sizeDelta = new Vector2(4000f, 200f);
+            t.enableWordWrapping = false;
             t.font = labelFont; t.fontSize = 190f; t.fontStyle = TMPro.FontStyles.Bold;
             t.alignment = TMPro.TextAlignmentOptions.Center; t.characterSpacing = 12f;
             t.text = text; t.raycastTarget = false;
