@@ -29,9 +29,39 @@ namespace MetaMove.EditorTools
         public static void BuildOnly()
         {
             int code;
-            try { ApplyBranding(); code = PaperDemoBuild.BuildApk(Scenes, PackageId, ProductName, OutputPath); }
+            try { ApplyBranding(); ApplySigning(); code = PaperDemoBuild.BuildApk(Scenes, PackageId, ProductName, OutputPath); }
             catch (Exception e) { Debug.LogError("[BariBuild] Build failed: " + e); code = 1; }
             if (Application.isBatchMode) EditorApplication.Exit(code);
+        }
+
+        // Release signing for the Meta release channels (a debug key is not accepted there). The
+        // key and its password live outside the public repo, in private/signing/keystore.properties;
+        // without that file the build stays debug-signed. Every build gets a fresh version code,
+        // which each upload to a channel needs.
+        const string SigningFile = "../private/signing/keystore.properties";
+
+        static void ApplySigning()
+        {
+            PlayerSettings.Android.bundleVersionCode = (int)((DateTime.UtcNow - new DateTime(2026, 1, 1)).TotalMinutes);
+            PlayerSettings.bundleVersion = "1.0." + PlayerSettings.Android.bundleVersionCode;
+            if (!System.IO.File.Exists(SigningFile))
+            {
+                PlayerSettings.Android.useCustomKeystore = false;
+                Debug.Log("[BariBuild] no signing file - debug-signed build");
+                return;
+            }
+            var kv = new System.Collections.Generic.Dictionary<string, string>();
+            foreach (var line in System.IO.File.ReadAllLines(SigningFile))
+            {
+                int i = line.IndexOf('=');
+                if (i > 0) kv[line.Substring(0, i).Trim()] = line.Substring(i + 1).Trim();
+            }
+            PlayerSettings.Android.useCustomKeystore = true;
+            PlayerSettings.Android.keystoreName = kv["keystore"];
+            PlayerSettings.Android.keystorePass = kv["password"];
+            PlayerSettings.Android.keyaliasName = kv["alias"];
+            PlayerSettings.Android.keyaliasPass = kv["password"];
+            Debug.Log("[BariBuild] release-signed, version " + PlayerSettings.bundleVersion);
         }
 
         // App icon for the library tile, Meta's system splash (shown by Horizon OS while the app
