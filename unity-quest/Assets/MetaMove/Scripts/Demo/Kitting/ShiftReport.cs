@@ -74,6 +74,10 @@ namespace MetaMove.Demo.Kitting
         void OnDisable() { if (cell != null) cell.Cue -= OnCue; }
 
         AudioSource _voice;
+        [Tooltip("The story's narrator: the report never talks over it.")]
+        public AudioSource storyVoice;
+        // True while the report is being read out; the story holds its next line meanwhile.
+        public static bool Speaking { get; private set; }
 
         void Start()
         {
@@ -93,6 +97,7 @@ namespace MetaMove.Demo.Kitting
                     _t0 = now; _lowAt = _missAt = _guideAt = _showAt = -1f; _clearedSeen = false;
                     _target = 0f;
                     StopAllCoroutines();
+                    Speaking = false;
                     if (_voice != null) _voice.Stop();
                     _hl = new int[0];
                     break;
@@ -186,8 +191,10 @@ namespace MetaMove.Demo.Kitting
         System.Collections.IEnumerator Speak(List<string> keys)
         {
             yield return new WaitForSeconds(1.0f);   // let the card land first
+            Speaking = true;
             foreach (var key in keys)
             {
+                while (storyVoice != null && storyVoice.isPlaying) yield return null;   // one voice at a time
                 var line = lines.Find(b => b.key == key);
                 if (line == null || line.voice == null) continue;
                 _voice.clip = line.voice;
@@ -197,7 +204,10 @@ namespace MetaMove.Demo.Kitting
                 yield return new WaitForSeconds(line.voice.length + 1.2f);
             }
             _hl = new int[0];
+            Speaking = false;
         }
+
+        void OnDestroy() => Speaking = false;
 
         // ---------------------------------------------------------------- text
 

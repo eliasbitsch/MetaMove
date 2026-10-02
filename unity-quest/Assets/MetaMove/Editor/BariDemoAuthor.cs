@@ -322,6 +322,7 @@ namespace MetaMove.EditorTools
             story.voiceSource.playOnAwake = false;
             story.voiceSource.spatialBlend = 0f;
             story.voiceSource.volume = 1f;
+            report.storyVoice = story.voiceSource;
 
             // Place by hand in the Simulator too: same flow as on the headset.
             placer.placeInEditor = true;

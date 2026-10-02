@@ -74,12 +74,13 @@ namespace MetaMove.Demo.Kitting
 
         void Play(string key)
         {
-            bool urgent = key == "standstill";
+            bool urgent = key == "standstill" && !ShiftReport.Speaking;
             if (!urgent && !QuietLongEnough()) { if (!_pending.Contains(key)) _pending.Enqueue(key); return; }
             PlayNow(key);
         }
 
-        bool QuietLongEnough() => voiceSource == null || (!voiceSource.isPlaying && Time.time - _lastVoiceEnd >= gapAfterLine);
+        bool QuietLongEnough() => !ShiftReport.Speaking &&
+            (voiceSource == null || (!voiceSource.isPlaying && Time.time - _lastVoiceEnd >= gapAfterLine));
 
         void PlayNow(string key)
         {
@@ -147,7 +148,7 @@ namespace MetaMove.Demo.Kitting
             }
 
             // First pinch on the tool: a dry remark, but never over another line.
-            if (!_grabTold && cell.State == KittingCell.Phase.Guide && cell.GuideHeld && (voiceSource == null || !voiceSource.isPlaying))
+            if (!_grabTold && cell.State == KittingCell.Phase.Guide && cell.GuideHeld && !ShiftReport.Speaking && (voiceSource == null || !voiceSource.isPlaying))
             { _grabTold = true; PlayNow("grab"); }
 
             // A timed beat stays up at least as long as its line is being spoken.
