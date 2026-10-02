@@ -463,6 +463,9 @@ namespace MetaMove.Demo.Kitting
         IEnumerator StartAfterSettle()
         {
             yield return new WaitForSeconds(0.5f);
+            // let the factory build itself around the visitor first; the arm starts once the hall stands
+            var reveal = cellFrame != null ? cellFrame.GetComponent<FactoryReveal>() : null;
+            if (reveal != null) while (!reveal.Done) yield return null;
             ikTarget.SetPositionAndRotation(home.position, _graspRot);
             yield return RunLoop();
         }

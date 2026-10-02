@@ -17,6 +17,8 @@ namespace MetaMove.Demo.Kitting
         public float poolRadius = 1.2f;
         [Range(0f, 1f)] public float poolAlpha = 0.35f;
         public float flickerAmount = 0.03f;
+        [Tooltip("0 = off, 1 = full. Driven by FactoryReveal when the hall's lights come on.")]
+        [Range(0f, 1f)] public float power = 1f;
 
         MeshRenderer _cone, _pool;
         MaterialPropertyBlock _mpb;
@@ -42,8 +44,12 @@ namespace MetaMove.Demo.Kitting
             float f = 1f + flickerAmount * (Mathf.PerlinNoise(Time.time * 7f, 0.3f) - 0.5f);
             if (_mpb == null) _mpb = new MaterialPropertyBlock();
             _cone.GetPropertyBlock(_mpb);
-            _mpb.SetFloat("_Intensity", 0.45f * f);
+            _mpb.SetFloat("_Intensity", 0.45f * f * power);
             _cone.SetPropertyBlock(_mpb);
+            if (_pool != null) { _pool.GetPropertyBlock(_mpb); _mpb.SetFloat("_Intensity", 0.45f * f * power); _pool.SetPropertyBlock(_mpb); }
+            bool on = power > 0.005f;
+            if (_cone.enabled != on) _cone.enabled = on;
+            if (_pool != null && _pool.enabled != (on && poolAlpha > 0f)) _pool.enabled = on && poolAlpha > 0f;
         }
 
         MeshRenderer Part(string name, Mesh mesh)

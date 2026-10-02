@@ -354,7 +354,7 @@ namespace MetaMove.EditorTools
 
             var zones = new GameObject("FloorZones").transform;
             zones.SetParent(frame, false);
-            zones.localPosition = new Vector3(0f, -FloorBelowTable + 0.02f, 0f);   // just above the factory floor
+            zones.localPosition = new Vector3(0f, -FloorBelowTable + 0.006f, 0f);   // just above the thin factory floor
             var rings = zones.gameObject.AddComponent<FloorZoneRings>();
             rings.speed = prox;
             rings.material = SpriteMat("ZoneLine");

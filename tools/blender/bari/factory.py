@@ -60,14 +60,15 @@ ISLAND = (-2.40, -1.55, 2.40, 3.15)
 OLD_ISLAND = (-1.75, -1.55, 1.75, 3.15)   # the first version; see the RNG replay below
 _rng_state = random.getstate()
 outline = jagged(ISLAND)
-isle = poly_prism(outline, -0.16, 0.012, "Fac_Floor", epoxy, concrete)
+# thin slab: its top sits 3 mm above the real floor and no thick broken edge shows below it
+isle = poly_prism(outline, -0.012, 0.003, "Fac_Floor", epoxy, concrete)
 # a few rebar stubs sticking out of the broken edge
 bars = []
 for (x, z) in random.sample(outline, 14):
     L = random.uniform(0.08, 0.2)
     ang = math.atan2(z - (ISLAND[1] + ISLAND[3]) / 2, x - (ISLAND[0] + ISLAND[2]) / 2)
     bpy.ops.mesh.primitive_cylinder_add(radius=0.006, depth=L, vertices=6,
-        location=U(x + math.cos(ang) * L / 2, -0.07, z + math.sin(ang) * L / 2),
+        location=U(x + math.cos(ang) * L / 2, -0.002, z + math.sin(ang) * L / 2),
         rotation=(math.pi / 2, 0, -ang - math.pi / 2))
     b = bpy.context.active_object; b.data.materials.append(rebar); bars.append(b)
 rebars = join(bars, "Fac_Rebar")
