@@ -51,13 +51,13 @@ namespace MetaMove.Demo.Kitting
 
         public bool IsBlocked(int lane) => blocked != null && lane < blocked.Length && blocked[lane];
 
-        // Lower level (return lanes): nearest free one. Lane 0 below holds the scenery's box.
+        // Lower level (return lanes): nearest free one.
         public int NearestReturnLane(Vector3 world, params KittingTray[] occupants)
         {
             int best = -1; float bestD = float.MaxValue;
             for (int i = 0; i < LaneCount; i++)
             {
-                if (IsBlocked(i) || IsOccupied(i, occupants, returns)) continue;
+                if (IsOccupied(i, occupants, returns)) continue;
                 float d = Mathf.Abs(transform.InverseTransformPoint(world).x - transform.InverseTransformPoint(returns[i].position).x);
                 if (d < bestD) { bestD = d; best = i; }
             }
@@ -82,24 +82,21 @@ namespace MetaMove.Demo.Kitting
         }
 
         // Box set on at 'from', rolls to 'to' along the lane with gravity-like acceleration.
-        // A box let go somewhere above or inside the rack: up over the lanes, out in front of
-        // the target lane, down to its height, then in - never straight through the rollers.
+        // A box let go by hand at the rack: into the target lane without cutting through the
+        // rollers (see below).
         public IEnumerator RollFromOutside(Transform box, Transform to)
         {
-            float top = to.position.y;
-            foreach (var e in entries) if (e != null) top = Mathf.Max(top, e.position.y);
-            top += 0.25f;
             var outward = to.position - transform.position; outward.y = 0f;
             outward = outward.sqrMagnitude > 1e-4f ? outward.normalized : -transform.forward;
             var front = to.position + outward * 0.35f;
-            // over the lanes only if it was let go above or inside the rack; from in front it
-            // goes straight to the lane's mouth
+            // Let go in the rack on the level it is meant for: it just rolls in. Otherwise it
+            // comes out to the front at the height it was let go, then up or down to the lane's
+            // mouth and in - never through a level, never in an arc over the rack.
             var l = transform.InverseTransformPoint(box.position);
             bool inside = Mathf.Abs(l.x) < 0.65f && Mathf.Abs(l.z) < 0.45f;
-            var pts = inside
-                ? new[] { new Vector3(box.position.x, Mathf.Max(box.position.y, top), box.position.z),
-                          new Vector3(front.x, Mathf.Max(box.position.y, top), front.z), front }
-                : new[] { front };
+            bool sameLevel = IsLowerLevel(box.position) == IsLowerLevel(to.position);
+            var pts = inside && sameLevel ? new Vector3[0]
+                : new[] { new Vector3(front.x, box.position.y, front.z), front };
             foreach (var p in pts)
             {
                 while ((box.position - p).sqrMagnitude > 1e-6f)

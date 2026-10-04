@@ -470,9 +470,9 @@ namespace MetaMove.EditorTools
             // layout. Waits on a trolley ~2.6 m out; the visitor carries it to the rack.
             var bNests = new List<Vector3>
             {
-                new Vector3( 0.07f, 0f, -0.06f), new Vector3( 0.07f, 0f,  0.06f),
-                new Vector3( 0.00f, 0f, -0.12f), new Vector3( 0.00f, 0f,  0.00f), new Vector3(0.00f, 0f, 0.12f),
-                new Vector3(-0.07f, 0f, -0.06f), new Vector3(-0.07f, 0f,  0.06f),
+                new Vector3( 0.065f, 0f, -0.05f), new Vector3( 0.065f, 0f,  0.05f),
+                new Vector3( 0.00f, 0f, -0.10f), new Vector3( 0.00f, 0f,  0.00f), new Vector3(0.00f, 0f, 0.10f),
+                new Vector3(-0.065f, 0f, -0.05f), new Vector3(-0.065f, 0f,  0.05f),
             };
             cell.trayB = Tray("TrayB", "Tray B", frame, "KLT_Orange", "bari_gear_b", mGlow, bNests, -1);
             // trolley front left of the rack, in plain view - in the slow zone, so fetching the box
@@ -494,7 +494,9 @@ namespace MetaMove.EditorTools
                 GridNests(2, 3, 0.09f, 0.10f, 0f), -1);
             cell.reserve.transform.SetPositionAndRotation(rack.picks[0].position, rack.picks[0].rotation);
             cell.reserveEntry = rack.entries[0];
-            StockBox("Stock_Return0", frame, rack.returns[0], false);
+            // the empty one on the lower left lane: scenery in the demo, movable in freestyle
+            var emptyStock = Tray("StockEmpty", "Empty", frame, "KLT_Blue", "bari_gear_a", mGlow, GridNests(2, 3, 0.09f, 0.10f, 0f), 0);
+            emptyStock.transform.SetPositionAndRotation(rack.returns[0].position, rack.returns[0].rotation);
             // Three full boxes stacked on the floor beside the rack: scenery in the demo, material
             // in freestyle (carry one to a lane, show the arm, it empties it).
             cell.stock.Clear();
@@ -507,6 +509,8 @@ namespace MetaMove.EditorTools
                 cell.stock.Add(stockTray);
             }
             MakeCarryable(cell, cell.reserve, rack, CarryableTray.Kind.Supply, rack.picks[0]);
+            MakeCarryable(cell, emptyStock, rack, CarryableTray.Kind.Supply, rack.returns[0]);
+            cell.stock.Add(emptyStock);
             rack.blocked = new[] { true, false, false };
             Colliders(frame);
 
