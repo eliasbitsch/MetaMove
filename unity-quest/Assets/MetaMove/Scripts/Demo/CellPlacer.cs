@@ -38,6 +38,7 @@ namespace MetaMove.Demo
         public Material ghostMaterial;
 
         const string PrefKey = "MetaMove.Bari.CellAnchor";
+        const string ReplaceMarker = "place_again";
         enum Phase { Idle, Loading, Placing, Spawning, Placed }
         Phase _phase = Phase.Idle;
         float _hold;
@@ -56,14 +57,27 @@ namespace MetaMove.Demo
             if (Application.isEditor && !placeInEditor) { _phase = Phase.Placed; yield break; }
 
 #if UNITY_ANDROID && !UNITY_EDITOR
+            // "Place" from the hand menu leaves a marker file before the app restarts: a file is
+            // on disk at once, PlayerPrefs may not be when the process ends right after.
+            var marker = System.IO.Path.Combine(Application.persistentDataPath, ReplaceMarker);
+            if (System.IO.File.Exists(marker))
+            {
+                System.IO.File.Delete(marker);
+                PlayerPrefs.DeleteKey(PrefKey); PlayerPrefs.Save();
+                Debug.Log("[CellPlacer] place again (requested before the restart)");
+            }
             var saved = PlayerPrefs.GetString(PrefKey, "");
             if (Guid.TryParse(saved, out var uuid))
             {
                 _phase = Phase.Loading;
-                bool ok = false;
-                yield return LoadAnchor(uuid, r => ok = r);
+                bool ok = false, done = false;
+                var load = StartCoroutine(LoadAnchor(uuid, r => { ok = r; done = true; }));
+                // a new room never finds the old anchor - do not wait for it forever
+                float t0 = Time.time;
+                while (!done && Time.time - t0 < 8f) yield return null;
                 if (ok) yield break;
-                Debug.LogWarning("[CellPlacer] saved anchor not found - placing again");
+                if (!done) { StopCoroutine(load); Debug.LogWarning("[CellPlacer] saved anchor not localised in 8 s - placing again"); }
+                else Debug.LogWarning("[CellPlacer] saved anchor not found - placing again");
             }
 #endif
             BeginPlacing();
@@ -212,6 +226,7 @@ namespace MetaMove.Demo
             Debug.Log("[CellPlacer] anchor forgotten - restarting the app to place again");
             try
             {
+                System.IO.File.WriteAllText(System.IO.Path.Combine(Application.persistentDataPath, ReplaceMarker), "1");
                 using (var player = new AndroidJavaClass("com.unity3d.player.UnityPlayer"))
                 using (var activity = player.GetStatic<AndroidJavaObject>("currentActivity"))
                 using (var pm = activity.Call<AndroidJavaObject>("getPackageManager"))
