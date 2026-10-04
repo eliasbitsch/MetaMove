@@ -80,7 +80,7 @@ No rush on the teaching. It's not every day a factory grows out of the floor.
 And it learned the new position in no time.
 
 [report_outro]
-In short: the line kept running, you were safe the whole time, and you just did in a minute what used to need an engineer: you taught a robot, without a single line of code. If you like, open Freestyle in the hand menu: let the line run on its own, or teach the robot any box you like.
+In short: the line kept running, you were safe the whole time, and you just did in a minute what used to need an engineer: you taught a robot, without a single line of code. Thanks for trying the demo. If you like, open the hand menu and pick a mode. Auto lets the line run on its own, so you can test the speed scaling as long as you like. Freestyle lets you pinch and teach the robot from where you stand, but the boxes are up to you: take out the empty ones and bring in full ones from the stack.
 
 [report_outro_expert]
-Same task, second time. Next to each number you see your first run. Whatever came easier now, that is what you learned.
+Same task, second time. Next to each number you see your first run. Whatever came easier now, that is what you learned. Thanks again for trying it. Auto and Freestyle are waiting in the hand menu.

@@ -127,6 +127,8 @@ namespace MetaMove.Demo.Kitting
 
         void OnCue(string key)
         {
+            // after the report the demo is over: no more lines until Restart
+            if (ShiftReport.RunReported && key != "restart") return;
             switch (key)
             {
                 case "low": Play("refill"); break;
@@ -152,6 +154,8 @@ namespace MetaMove.Demo.Kitting
 
             if (voiceSource != null && voiceSource.isPlaying) _lastVoiceEnd = Time.time;
             if (_pending.Count > 0 && QuietLongEnough()) PlayNow(_pending.Dequeue());
+            // the report has been given: the demo is over - no slow-down, standstill or task lines
+            if (ShiftReport.RunReported) { _pending.Clear(); _standWait = false; HideWhenDone(); return; }
             // Straight away: "...so we brought the factory to you" lands while the hall grows out of the floor.
             // A muted headset holds the welcome (VolumeCheck shows where the button is), 20 s at most.
             if (!_welcomed && Time.time - _boundAt > 0.3f && (!VolumeCheck.Blocking || Time.time - _boundAt > 20f))
@@ -192,7 +196,12 @@ namespace MetaMove.Demo.Kitting
             if (!_grabTold && cell.State == KittingCell.Phase.Guide && cell.GuideHeld)
             { _grabTold = true; Play("grab"); }
 
-            // A timed beat stays up at least as long as its line is being spoken.
+            HideWhenDone();
+        }
+
+        // A timed beat stays up at least as long as its line is being spoken.
+        void HideWhenDone()
+        {
             if (_beat != null && _beat.hold > 0f)
             {
                 float speaking = _beat.voice != null ? _beat.voice.length + lingerAfterLine : 0f;

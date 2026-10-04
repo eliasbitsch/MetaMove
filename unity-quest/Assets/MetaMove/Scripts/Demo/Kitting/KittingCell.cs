@@ -548,7 +548,8 @@ namespace MetaMove.Demo.Kitting
                     Emit("guide_free", Taught.label + " is empty - show the arm another box");
                     yield break;
                 }
-                if (n < 0 && Mode != Freestyle.None)
+                // freestyle auto, or the demo after its report: the story is told, the line just runs
+                if (n < 0 && (Mode == Freestyle.Auto || (Mode == Freestyle.None && ShiftReport.RunReported)))
                 {
                     // freestyle: nobody brings boxes - the empty one fills up again and on it goes
                     yield return MoveTo(home, Vector3.zero);
