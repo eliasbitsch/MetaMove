@@ -364,13 +364,12 @@ namespace MetaMove.EditorTools
             {
                 Undo.RecordObject(prox, "Bari prox");
                 prox.horizontalOnly = true;
-                // Where the visitor stands (head, on the floor plane), not the hands: the zones
-                // then match the floor rings exactly - slower in the amber ring, stop in the red.
-                // With the hands counted, a hand reaching out stopped the arm while the visitor
-                // still stood in amber, which looked like a jump from 13 % to nothing.
+                // Nearest of head and both hands, measured to the robot's tool (KittingCell sets
+                // the reference at runtime); the floor rings follow the tool, so what is drawn is
+                // what is measured.
                 var rig = "[BuildingBlock] Camera Rig/TrackingSpace/";
                 var pts = new List<Transform>();
-                foreach (var n in new[] { "CenterEyeAnchor" })
+                foreach (var n in new[] { "CenterEyeAnchor", "LeftHandAnchor", "RightHandAnchor" })
                 {
                     var go = FindPath(rig + n);
                     if (go != null) pts.Add(go.transform);
@@ -383,6 +382,7 @@ namespace MetaMove.EditorTools
             zones.SetParent(frame, false);
             zones.localPosition = new Vector3(0f, -FloorBelowTable + 0.006f, 0f);   // just above the thin factory floor
             var rings = zones.gameObject.AddComponent<FloorZoneRings>();
+            rings.followReference = true;
             rings.speed = prox;
             rings.material = SpriteMat("ZoneLine");
             // The zones are the point of the demo: wide, fully lit lines, both bands filled, words on the floor.
@@ -455,7 +455,7 @@ namespace MetaMove.EditorTools
             // Two full kits: the visitor watches the line run, and the refill is asked for at
             // half (KittingCell.lowAt), while the arm is still working.
             cell.trayA = Tray("TrayA", "Tray A", frame, "KLT_Blue", "bari_gear_a", mGlow,
-                GridNests(3, 4, 0.080f, 0.085f, 0f), -1);   // a little tighter: the outer row stays clear of the walls
+                GridNests(3, 4, 0.075f, 0.080f, 0f), -1);   // tight enough that the outer row stays clear of the walls
             cell.lowAt = 6;
             // brisk at full speed, so the slow-down when someone comes close is plain to see
             cell.baseSpeed = 1.4f;
@@ -1215,7 +1215,7 @@ namespace MetaMove.EditorTools
             tray.label = label;
             tray.fillCount = fill;
             tray.recognizedHighlight = hl;
-            tray.graspHeight = 0.03f;   // gears are gripped at the hub, 30 mm above the foot
+            tray.graspHeight = 0.036f;   // gripped high on the 40 mm hub, clear of the gear rim; the gripper body stays above the box edge
             for (int i = 0; i < nests.Count; i++)
             {
                 var nest = new GameObject("Nest_" + i).transform;

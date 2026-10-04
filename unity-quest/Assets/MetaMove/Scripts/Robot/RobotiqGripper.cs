@@ -20,8 +20,8 @@ namespace MetaMove.Robot
         public float speed = 2.5f;          // rad/s, ~0.3 s open -> closed
         public float closedOnPart = 0.52f;  // q at which the pads touch a Ø30 mm gear hub
         public float closedEmpty = 0.79f;   // fully closed (grip on air)
-        [Tooltip("Pre-closed for the way down into a box: ~5 cm between the pads, enough for the hub, the fingers stay clear of the box walls.")]
-        public float approachQ = 0.30f;
+        [Tooltip("Pre-closed for the way down into a box: ~4 cm between the pads, enough for the hub, the fingers stay clear of the box walls.")]
+        public float approachQ = 0.40f;
 
         float _target;
         Quaternion[] _rest;

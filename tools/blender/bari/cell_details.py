@@ -58,18 +58,24 @@ def cable_curve(points, radius, name):
     return ob
 
 back = CZ - CD / 2
+WALL = -1.29          # front face of the factory wall
+SLAB = 0.004          # top of the factory floor slab
+def lie(r): return SLAB + r + 0.004   # cable centre height when it lies on the floor
 cables = [
-    # robot foot -> over the back edge of the table -> controller back
+    # robot foot -> over the back edge of the table -> down -> controller back
     cable_curve([(0.02, TABLE_TOP + 0.03, -0.10), (0.02, TABLE_TOP + 0.015, -0.27), (0.0, TABLE_TOP - 0.10, -0.33),
                  (-0.08, 0.35, -0.34), (-0.25, 0.12, -0.30), (CX + 0.05, 0.10, back - 0.01)], 0.013, "c1"),
-    # controller -> box PC, a short loop along the floor
-    cable_curve([(CX + CW / 2 + 0.005, 0.08, CZ + 0.10), (CX + CW / 2 + 0.05, 0.012, CZ + 0.14),
-                 (0.02, 0.012, CZ + 0.12), (0.03, 0.04, CZ + 0.095)], 0.006, "c2"),
-    # mains: controller back -> along the floor -> up the wall into the socket
-    cable_curve([(CX - 0.10, 0.08, back - 0.01), (CX - 0.15, 0.009, back - 0.15), (-0.60, 0.009, -1.10),
-                 (-0.62, 0.05, -1.26), (-0.62, 0.36, -1.27)], 0.008, "c3"),
+    # controller -> box PC, a short loop lying on the floor (extra points: no sag below it)
+    cable_curve([(CX + CW / 2 + 0.005, 0.08, CZ + 0.10), (CX + CW / 2 + 0.03, lie(0.006) + 0.02, CZ + 0.13),
+                 (CX + CW / 2 + 0.06, lie(0.006), CZ + 0.14), (0.0, lie(0.006), CZ + 0.13),
+                 (0.025, lie(0.006) + 0.015, CZ + 0.11), (0.03, 0.04, CZ + 0.095)], 0.006, "c2"),
+    # mains: controller back -> along the floor -> bend -> up the wall face into the socket
+    cable_curve([(CX - 0.10, 0.08, back - 0.01), (CX - 0.13, lie(0.008) + 0.02, back - 0.10),
+                 (CX - 0.16, lie(0.008), back - 0.18), (-0.60, lie(0.008), -1.05), (-0.62, lie(0.008), -1.20),
+                 (-0.62, lie(0.008) + 0.03, WALL + 0.008 + 0.012), (-0.62, 0.12, WALL + 0.008 + 0.006),
+                 (-0.62, 0.36, WALL + 0.008 + 0.006)], 0.008, "c3"),
 ]
-socket = box((0.08, 0.04, 0.10), U(-0.62, 0.40, -1.27), "sock", dark)
+socket = box((0.08, 0.04, 0.10), U(-0.62, 0.40, WALL + 0.02), "sock", dark)
 cables_obj = join(cables + [socket], "Det_Cables")
 
 # ---------------------------------------------------------------- fanless box PC under the table

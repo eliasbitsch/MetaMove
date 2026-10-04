@@ -61,6 +61,34 @@ namespace MetaMove.Demo.Kitting
         }
 
         // Box set on at 'from', rolls to 'to' along the lane with gravity-like acceleration.
+        // A box let go somewhere above or inside the rack: up over the lanes, out in front of
+        // the target lane, down to its height, then in - never straight through the rollers.
+        public IEnumerator RollFromOutside(Transform box, Transform to)
+        {
+            float top = to.position.y;
+            foreach (var e in entries) if (e != null) top = Mathf.Max(top, e.position.y);
+            top += 0.25f;
+            var outward = to.position - transform.position; outward.y = 0f;
+            outward = outward.sqrMagnitude > 1e-4f ? outward.normalized : -transform.forward;
+            var front = to.position + outward * 0.35f;
+            var pts = new[]
+            {
+                new Vector3(box.position.x, Mathf.Max(box.position.y, top), box.position.z),
+                new Vector3(front.x, Mathf.Max(box.position.y, top), front.z),
+                front,
+            };
+            foreach (var p in pts)
+            {
+                while ((box.position - p).sqrMagnitude > 1e-6f)
+                {
+                    box.position = Vector3.MoveTowards(box.position, p, rollMaxSpeed * Time.deltaTime);
+                    box.rotation = Quaternion.RotateTowards(box.rotation, to.rotation, 120f * Time.deltaTime);
+                    yield return null;
+                }
+            }
+            yield return Roll(box, null, to);
+        }
+
         public IEnumerator Roll(Transform box, Transform from, Transform to)
         {
             if (from != null) box.SetPositionAndRotation(from.position, from.rotation);   // null: glide from where it is

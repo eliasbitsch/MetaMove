@@ -9,7 +9,8 @@ namespace MetaMove.Demo.Kitting
     // room, live:
     //   QR plate  -> robot base      measured offset (the anchor is surveyed to the robot)
     //   headset   -> QR plate        SLAM tracking (the headset localises the anchor)
-    //   robot base -> nearest of head/hands    the distance that sets the speed, in metres
+    //   robot base -> tool           the arm's own joint angles (inverse kinematics)
+    //   tool -> nearest of head/hands       the distance that sets the speed, in metres
     public class TrackingViz : MonoBehaviour
     {
         public KittingCell cell;
@@ -23,8 +24,8 @@ namespace MetaMove.Demo.Kitting
         static readonly Color Cyan = new Color(0.25f, 0.82f, 0.88f), White = new Color(0.95f, 0.97f, 1f), Amber = new Color(1f, 0.66f, 0.16f);
 
         Transform _qr;
-        LineRenderer _offset, _slam, _dist;
-        Tag _tOffset, _tSlam, _tDist;
+        LineRenderer _offset, _slam, _dist, _ik;
+        Tag _tOffset, _tSlam, _tDist, _tIk;
         float _shown;
 
         void Start()
@@ -32,6 +33,8 @@ namespace MetaMove.Demo.Kitting
             _offset = Line("Viz_Offset", Cyan, 0.010f);
             _slam = Line("Viz_Slam", White, 0.006f);
             _dist = Line("Viz_Distance", Amber, 0.012f);
+            _ik = Line("Viz_IK", Cyan, 0.008f);
+            _tIk = new Tag(transform, font, Cyan, "inverse kinematics");
             _tOffset = new Tag(transform, font, Cyan, "measured offset");
             _tSlam = new Tag(transform, font, White, "SLAM tracking");
             _tDist = new Tag(transform, font, Amber, "");
@@ -42,8 +45,8 @@ namespace MetaMove.Demo.Kitting
             bool on = story != null && story.Current == beatKey && cell != null && cell.IsBound && Camera.main != null;
             _shown = Mathf.MoveTowards(_shown, on ? 1f : 0f, Time.deltaTime / 0.5f);
             bool vis = _shown > 0.001f;
-            _offset.enabled = _slam.enabled = _dist.enabled = vis;
-            _tOffset.Show(vis); _tSlam.Show(vis); _tDist.Show(vis);
+            _offset.enabled = _slam.enabled = _dist.enabled = _ik.enabled = vis;
+            _tOffset.Show(vis); _tSlam.Show(vis); _tDist.Show(vis); _tIk.Show(vis);
             if (!vis) return;
 
             if (_qr == null && cell.cellFrame != null)
@@ -52,20 +55,23 @@ namespace MetaMove.Demo.Kitting
             if (_qr == null) return;
 
             var cam = Camera.main.transform;
-            var robotBase = speed != null && speed.robotBase != null ? speed.robotBase.position : cell.cellFrame.position;
-            var near = Nearest(robotBase, cam.position);
+            var robotBase = cell.BaseJoint != null ? cell.BaseJoint.position : cell.cellFrame.position;
+            var tool = speed != null && speed.robotBase != null ? speed.robotBase.position : robotBase;
+            var near = Nearest(tool, cam.position);
             float a = Mathf.SmoothStep(0f, 1f, _shown);
-            // the lines draw themselves one after another
-            Set(_offset, _qr.position, robotBase, Cyan, a, Mathf.Clamp01(_shown * 3f));
-            Set(_slam, cam.position + cam.forward * 0.25f - cam.up * 0.12f, _qr.position, White, a * 0.8f, Mathf.Clamp01(_shown * 3f - 1f));
-            var flat = new Vector3(near.x, robotBase.y, near.z);
-            Set(_dist, robotBase, flat, Amber, a, Mathf.Clamp01(_shown * 3f - 2f));
+            // the lines draw themselves one after another: SLAM, offset, IK, distance
+            Set(_slam, cam.position + cam.forward * 0.25f - cam.up * 0.12f, _qr.position, White, a * 0.8f, Mathf.Clamp01(_shown * 4f));
+            Set(_offset, _qr.position, robotBase, Cyan, a, Mathf.Clamp01(_shown * 4f - 1f));
+            Set(_ik, robotBase, tool, Cyan, a, Mathf.Clamp01(_shown * 4f - 2f));
+            var flat = new Vector3(near.x, tool.y, near.z);
+            Set(_dist, tool, flat, Amber, a, Mathf.Clamp01(_shown * 4f - 3f));
+            _tIk.Place((robotBase + tool) * 0.5f + Vector3.up * 0.06f, cam, a);
 
             _tOffset.Place((_qr.position + robotBase) * 0.5f + Vector3.up * 0.06f, cam, a);
             _tSlam.Place(Vector3.Lerp(cam.position, _qr.position, 0.55f) + Vector3.up * 0.05f, cam, a * 0.9f);
-            float d = speed != null && speed.Distance >= 0f ? speed.Distance : Vector3.Distance(new Vector3(robotBase.x, 0f, robotBase.z), new Vector3(near.x, 0f, near.z));
+            float d = speed != null && speed.Distance >= 0f ? speed.Distance : Vector3.Distance(new Vector3(tool.x, 0f, tool.z), new Vector3(near.x, 0f, near.z));
             _tDist.text.text = d.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture) + " m";
-            _tDist.Place((robotBase + flat) * 0.5f + Vector3.up * 0.08f, cam, a);
+            _tDist.Place((tool + flat) * 0.5f + Vector3.up * 0.08f, cam, a);
         }
 
         Vector3 Nearest(Vector3 robotBase, Vector3 fallback)

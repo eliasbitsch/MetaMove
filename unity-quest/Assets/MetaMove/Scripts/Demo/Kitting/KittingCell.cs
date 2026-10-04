@@ -44,6 +44,9 @@ namespace MetaMove.Demo.Kitting
         public Transform ikTarget;
         [Tooltip("Robot TCP, carried parts are parented here. Found at runtime if empty.")]
         public Transform tcp;
+        // The arm's base joint (set when the robot is bound); the speed monitoring measures to
+        // the tool (tcp), the chain anchor -> base -> joints -> tool is what TrackingViz draws.
+        public Transform BaseJoint { get; private set; }
         public ProximitySpeedController speed;
         [Tooltip("Home pose, child of this cell.")]
         public Transform home;
@@ -201,6 +204,7 @@ namespace MetaMove.Demo.Kitting
             ikTarget = ik.target;
             tcp = ik.endEffector;
             var baseJoint = ik.joints[0].joint;
+            BaseJoint = baseJoint;
 
             // Cell front = towards the visitor, who stands in front of the robot when the
             // anchor is placed (QR scan or editor spawn). Falls back to the arm's rest reach.
@@ -217,7 +221,9 @@ namespace MetaMove.Demo.Kitting
                     Quaternion.LookRotation(fwd.normalized, Vector3.up));
                 cellFrame.SetParent(robot.transform, true);
             }
-            if (speed != null) speed.robotBase = baseJoint;
+            // Separation is measured to the tool, the part of the arm that moves towards you:
+            // headset -> anchor -> base, then the arm's own joint angles (IK) out to the tool.
+            if (speed != null) speed.robotBase = tcp;
 
             // The lab grab handle on the TCP becomes the guide handle.
             var relay = robot.GetComponentInChildren<MetaMove.Robot.PhantomGrabRelay>(true);
@@ -574,6 +580,8 @@ namespace MetaMove.Demo.Kitting
             yield return MoveAlong(n, up);
             yield return MoveOver(n);
 
+            // a kit left full by an interruption is shipped before the next part goes in
+            if (_slot >= kitSlots.Count) ShipKit();
             var slot = kitSlots[_slot];
             yield return MoveOver(slot);
             yield return MoveAlong(slot, at);
@@ -584,16 +592,17 @@ namespace MetaMove.Demo.Kitting
             _held.transform.localRotation = Quaternion.identity;
             _held = null;
             PartsPlaced++;
+            _slot++;   // counted the moment the part is down: an interruption now never reuses the slot
             yield return MoveOver(slot);
+            if (_slot >= kitSlots.Count) ShipKit();
+        }
 
-            _slot++;
-            if (_slot >= kitSlots.Count)
-            {
-                if (conveyor != null) conveyor.Ship(kitSlots);   // the full kit leaves on the conveyor
-                KitsDone++;
-                Debug.Log("[Kitting] kit " + KitsDone + " complete");
-                ClearKit();
-            }
+        void ShipKit()
+        {
+            if (conveyor != null) conveyor.Ship(kitSlots);   // the full kit leaves on the conveyor
+            KitsDone++;
+            Debug.Log("[Kitting] kit " + KitsDone + " complete");
+            ClearKit();
         }
 
         // Taught tray is empty: the robot does not know that yet. It goes there,

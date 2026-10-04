@@ -192,7 +192,8 @@ namespace MetaMove.Demo.Kitting
             State = Phase.Rolling;
             SetGrabbable(false);
             Debug.Log("[Kitting] " + name + " rolling to " + to.name);
-            yield return rack.Roll(transform, from, to);
+            if (from == null) yield return rack.RollFromOutside(transform, to);   // let go by hand: around the lanes
+            else yield return rack.Roll(transform, from, to);
             State = Phase.Arrived;
             if (notifyCell && cell != null) cell.PlaceTrayB(null);
         }

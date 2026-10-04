@@ -41,6 +41,14 @@ namespace MetaMove.Safety
                 humanPoints = new[] { Camera.main.transform };
         }
 
+        // A hand that is not tracked keeps its last (or a default) pose - it must not stop the arm.
+        readonly System.Collections.Generic.Dictionary<Transform, OVRHand> _hands = new System.Collections.Generic.Dictionary<Transform, OVRHand>();
+        bool Tracked(Transform p)
+        {
+            if (!_hands.TryGetValue(p, out var h)) { h = p.GetComponentInChildren<OVRHand>(true); _hands[p] = h; }
+            return h == null || h.IsTracked;
+        }
+
         void Update()
         {
             // nearest distance
@@ -50,7 +58,7 @@ namespace MetaMove.Safety
                 float best = float.MaxValue;
                 foreach (var p in humanPoints)
                 {
-                    if (p == null) continue;
+                    if (p == null || !Tracked(p)) continue;
                     Vector3 v = p.position - robotBase.position;
                     if (horizontalOnly) v.y = 0f;
                     float dd = v.magnitude;

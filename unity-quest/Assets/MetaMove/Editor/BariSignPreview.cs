@@ -288,6 +288,46 @@ namespace MetaMove.EditorTools
             if (Application.isBatchMode) EditorApplication.Exit(code);
         }
 
+        // The hand menu in its three modes, as the visitor sees it.
+        public static void RenderMenu()
+        {
+            int code = 0;
+            try
+            {
+                EditorSceneManager.OpenScene(Scene, OpenSceneMode.Single);
+                var menu = Object.FindAnyObjectByType<FingertipMenu>(FindObjectsInactive.Include);
+                menu.gameObject.SetActive(true);
+                menu.transform.SetPositionAndRotation(new Vector3(0f, 50f, 0f), Quaternion.identity);
+                var flags = System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance;
+                typeof(FingertipMenu).GetMethod("Build", flags).Invoke(menu, null);
+                var canvas = menu.GetComponentInChildren<Canvas>(true);
+                canvas.enabled = true; canvas.GetComponent<CanvasGroup>().alpha = 1f;
+                canvas.transform.localPosition = Vector3.zero; canvas.transform.localRotation = Quaternion.identity;
+                var go = new GameObject("PreviewCam");
+                var cam = go.AddComponent<Camera>();
+                cam.enabled = false; cam.clearFlags = CameraClearFlags.SolidColor;
+                cam.backgroundColor = new Color(0.36f, 0.37f, 0.39f); cam.fieldOfView = 30f;
+                cam.transform.position = canvas.transform.position - Vector3.forward * 0.6f;
+                cam.transform.LookAt(canvas.transform.position);
+                foreach (var m in new[] { KittingCell.Freestyle.None, KittingCell.Freestyle.Auto, KittingCell.Freestyle.Teach })
+                {
+                    menu.cell.Mode = m;
+                    typeof(FingertipMenu).GetMethod("Refresh", flags).Invoke(menu, null);
+                    Canvas.ForceUpdateCanvases();
+                    var rt = new RenderTexture(1200, 800, 24, RenderTextureFormat.ARGB32) { antiAliasing = 4 };
+                    cam.targetTexture = rt; cam.Render(); RenderTexture.active = rt;
+                    var tex = new Texture2D(rt.width, rt.height, TextureFormat.RGB24, false);
+                    tex.ReadPixels(new Rect(0, 0, rt.width, rt.height), 0, 0); tex.Apply();
+                    RenderTexture.active = null; cam.targetTexture = null;
+                    System.IO.File.WriteAllBytes(System.IO.Path.Combine(OutDir, "menu_" + m + ".png"), tex.EncodeToPNG());
+                }
+                Debug.Log("[SignPreview] menu rendered");
+            }
+            catch (System.Exception e) { Debug.LogError("[SignPreview] " + e); code = 1; }
+            EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
+            if (Application.isBatchMode) EditorApplication.Exit(code);
+        }
+
         static void Shot(Camera cam, Transform frame, Vector3 eyeLocal, Vector3 atLocal, string file)
         {
             cam.transform.position = frame.TransformPoint(eyeLocal);

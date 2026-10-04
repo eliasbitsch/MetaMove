@@ -1,4 +1,4 @@
-using System.Linq;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,12 +7,19 @@ using MetaMove.UI.Kit;
 
 namespace MetaMove.Demo.Kitting
 {
-    // Palm-up menu on the left hand (one hand only, so it never jumps between hands): status line plus Teach / Home /
-    // Report / Restart / Freestyle / Place. Freestyle opens a row on top: Auto (the line just
-    // runs, to show the speed scaling), Teach (free guiding and teaching), Story (back to the
-    // guided demo), poked with the index finger of the other hand. Expert restarts the
-    // run without hints or narration - the second go, from memory. It is there when you look for it and gone when you work, so it
-    // never covers the cell. Teach is only live while the cell is waiting to be shown a tray.
+    // Palm-up menu on the left hand, poked with the right index finger.
+    //
+    //   [ Story | Auto | Teach ]            (gear)    mode, one tap; gear = calibrate room
+    //      (o)        (o)        (o)                  at most three round buttons with icon
+    //     left       middle    Restart                and label - only what makes sense now
+    //
+    //   Story   Teach (only while the arm waits to be shown a box, pulses when the spot is
+    //           right) - Report (once there is one) - Restart
+    //   Auto    the line just runs to show the speed scaling - Restart
+    //   Teach   Guide / Teach here - Home (always: if the arm got tangled, it goes home) - Restart
+    //
+    // Restart and calibrate ask "Sure?" first. It is there when you look for it and gone when
+    // you work, so it never covers the cell.
     public class FingertipMenu : MonoBehaviour
     {
         public KittingCell cell;
@@ -22,37 +29,61 @@ namespace MetaMove.Demo.Kitting
 
         [Range(0f, 1f)] public float palmUpThreshold = 0.55f;
         public float showDelay = 0.15f, hideDelay = 0.25f;
-        public float worldWidth = 0.322f;   // six buttons of ~4.5 cm with ~8 mm gaps: pokeable live
+        public float worldWidth = 0.30f;      // round buttons of ~6.5 cm: easy to poke
         public float pokeDepth = 0.018f;      // m in front of / behind the panel counts as a press
         public float pressCooldown = 0.8f;
-
-        const float W = 764f, H = 330f;
-        Canvas _canvas;
-        CanvasGroup _group;
-        TextMeshProUGUI _status;
-        readonly Button[] _buttons = new Button[6];
         public CellPlacer placer;
         [Tooltip("Found in the scene when empty.")]
         public ShiftReport report;
-        float _placeArmed = -10f;   // Place needs a second tap within 3 s
-        float _restartArmed = -10f; // so does Restart
+
+        const float W = 600f, H = 340f, Round = 128f, RowY = -186f;
+        static readonly Color BtnBg = new Color(0.22f, 0.25f, 0.29f, 1f);   // stands out from the glass
+        static readonly float[] SlotX = { -180f, 0f, 180f };
+
+        Canvas _canvas;
+        CanvasGroup _group;
         float _palmUpFor, _palmDownFor, _shown, _lastPress = -9f;
         bool _visible;
-        OVRSkeleton _menuHand;   // the hand that holds the menu; the other one pokes
+        OVRSkeleton _menuHand;
+        float _restartArmed = -10f, _calibArmed = -10f;
 
-        class Button { public Image bg; public TextMeshProUGUI label; public RectTransform rt; public System.Action act; public bool enabled = true; }
-        readonly Button[] _subs = new Button[3];
-        bool _subOpen;
-
-        void Freestyle(KittingCell.Freestyle mode)
+        class Hit
         {
-            _subOpen = false;
+            public RectTransform rt; public Image bg, icon; public TextMeshProUGUI label;
+            public System.Action act; public bool enabled = true, visible = true;
+        }
+        readonly Hit[] _seg = new Hit[3];
+        readonly Hit[] _slot = new Hit[3];
+        Hit _gear;
+        TextMeshProUGUI _gearHint;
+
+        void Start() => Build();
+
+        // ------------------------------------------------------------ modes
+
+        KittingCell.Freestyle ModeOf(int seg) => seg == 1 ? KittingCell.Freestyle.Auto : seg == 2 ? KittingCell.Freestyle.Teach : KittingCell.Freestyle.None;
+
+        void SetMode(KittingCell.Freestyle mode)
+        {
+            if (cell.Mode == mode) return;
             cell.Mode = mode;
-            cell.Expert = mode != KittingCell.Freestyle.None;   // no story, no hints
+            cell.Expert = mode != KittingCell.Freestyle.None;   // freestyle: no story, no hints
             cell.Restart();
         }
 
-        void Start() => Build();
+        void Restart()
+        {
+            if (Time.time - _restartArmed < 3f) { _restartArmed = -10f; cell.Restart(); }
+            else _restartArmed = Time.time;
+        }
+
+        void Calibrate()
+        {
+            if (Time.time - _calibArmed < 3f && placer != null) placer.Replace();
+            else _calibArmed = Time.time;
+        }
+
+        // ------------------------------------------------------------ build
 
         void Build()
         {
@@ -63,65 +94,68 @@ namespace MetaMove.Demo.Kitting
             var root = (RectTransform)_canvas.transform;
             var bg = UIKit.Panel("Glass", root, UIKit.Glass, 40f, 4f);
             UIKit.Stretch(bg.rectTransform);
-            _status = UIKit.Text("Status", root, font, 30f, UIKit.TextHi, TextAlignmentOptions.Center);
-            UIKit.Place(_status.rectTransform, new Vector2(0.5f, 1f), new Vector2(0.5f, 1f), new Vector2(0f, -26f), new Vector2(W - 40f, 70f));
-            _status.enableWordWrapping = true;
-            UIKit.Fit(_status, 20f, 10f);
             if (report == null) report = FindAnyObjectByType<ShiftReport>();
-            string[] names = { "Teach", "Home", "Restart", "Freestyle", "Calibrate room", "Report" };
-            int[] slot = { 0, 1, 3, 4, 5, 2 };   // left to right: Teach Home Report Restart Expert Place
-            System.Action[] acts = { () => { if (cell.State == KittingCell.Phase.Guide) cell.Teach(); else cell.StartGuide(); }, () => cell.ParkHome(),
-                                     () => { if (Time.time - _restartArmed < 3f) { _restartArmed = -10f; cell.Restart(); } else _restartArmed = Time.time; },
-                                     () => { _subOpen = !_subOpen; },
-                                     () => { if (Time.time - _placeArmed < 3f && placer != null) placer.Replace(); else _placeArmed = Time.time; },
-                                     () => { if (report != null) report.Toggle(); } };
-            for (int i = 0; i < 6; i++)
-            {
-                var b = new Button { act = acts[i] };
-                b.bg = UIKit.Panel("Btn_" + names[i], root, UIKit.GlassLight, 34f, 3f);
-                b.rt = b.bg.rectTransform;
-                UIKit.Place(b.rt, new Vector2(0.5f, 0f), new Vector2(0.5f, 0f), new Vector2((slot[i] - 2.5f) * 124f, 26f), new Vector2(106f, 170f));
-                b.label = UIKit.Text("Label", b.bg.transform, font, 25f, UIKit.TextHi, TextAlignmentOptions.Center, FontStyles.Bold);
-                UIKit.Stretch(b.label.rectTransform);
-                UIKit.Fit(b.label, 15f, 6f);
-                b.label.enableWordWrapping = true;   // "Calibrate room" goes on two lines
-                b.label.text = names[i];
-                _buttons[i] = b;
-            }
-            // freestyle row, in place of the status line while open
-            string[] subNames = { "Auto", "Teach", "Story" };
-            System.Action[] subActs = { () => Freestyle(KittingCell.Freestyle.Auto), () => Freestyle(KittingCell.Freestyle.Teach),
-                                        () => Freestyle(KittingCell.Freestyle.None) };
+
+            // mode switch: one track, three segments
+            var track = UIKit.Panel("ModeTrack", root, new Color(1f, 1f, 1f, 0.06f), 32f, 0f, false);
+            UIKit.Place(track.rectTransform, new Vector2(0f, 1f), new Vector2(0f, 1f), new Vector2(24f, -22f), new Vector2(462f, 66f));
+            string[] segNames = { "Story", "Auto", "Teach" };
             for (int i = 0; i < 3; i++)
             {
-                var b = new Button { act = subActs[i] };
-                b.bg = UIKit.Panel("Sub_" + subNames[i], root, UIKit.GlassLight, 30f, 3f);
-                b.rt = b.bg.rectTransform;
-                UIKit.Place(b.rt, new Vector2(0.5f, 1f), new Vector2(0.5f, 1f), new Vector2((i - 1f) * 236f, -14f), new Vector2(220f, 104f));
-                b.label = UIKit.Text("Label", b.bg.transform, font, 28f, UIKit.TextHi, TextAlignmentOptions.Center, FontStyles.Bold);
-                UIKit.Stretch(b.label.rectTransform);
-                b.label.text = subNames[i];
-                b.bg.gameObject.SetActive(false);
-                _subs[i] = b;
+                int k = i;
+                var h = new Hit { act = () => SetMode(ModeOf(k)) };
+                h.bg = UIKit.Panel("Seg_" + segNames[i], root, new Color(0f, 0f, 0f, 0f), 28f, 0f, false);
+                h.rt = h.bg.rectTransform;
+                UIKit.Place(h.rt, new Vector2(0f, 1f), new Vector2(0f, 1f), new Vector2(28f + i * 152f, -26f), new Vector2(150f, 58f));
+                h.label = UIKit.Text("Label", h.rt, font, 26f, UIKit.TextHi, TextAlignmentOptions.Center, FontStyles.Bold);
+                UIKit.Stretch(h.label.rectTransform);
+                h.label.text = segNames[i];
+                _seg[i] = h;
             }
+
+            // calibrate: small gear in the corner, out of the way
+            _gear = Round_("Calibrate", root, new Vector2(1f, 1f), new Vector2(-26f, -22f), 66f, UIIcons.Gear, null, Calibrate);
+            _gearHint = UIKit.Text("GearHint", root, font, 20f, UIKit.Stop, TextAlignmentOptions.Right, FontStyles.Bold);
+            UIKit.Place(_gearHint.rectTransform, new Vector2(1f, 1f), new Vector2(1f, 1f), new Vector2(-24f, -92f), new Vector2(260f, 26f));
+
+            for (int i = 0; i < 3; i++)
+                _slot[i] = Round_("Slot" + i, root, new Vector2(0.5f, 1f), new Vector2(SlotX[i], RowY + Round / 2f), Round, UIIcons.Restart, "", null);
             _canvas.enabled = false;
         }
+
+        // A round button: disc, icon, label underneath (label null: no label).
+        Hit Round_(string name, RectTransform root, Vector2 anchor, Vector2 pos, float size, Sprite icon, string label, System.Action act)
+        {
+            var h = new Hit { act = act };
+            h.bg = new GameObject(name, typeof(Image)).GetComponent<Image>();
+            h.bg.transform.SetParent(root, false);
+            h.bg.sprite = UIKit.Disc; h.bg.color = BtnBg; h.bg.raycastTarget = false;
+            h.rt = h.bg.rectTransform;
+            UIKit.Place(h.rt, anchor, new Vector2(anchor.x == 1f ? 1f : 0.5f, 1f), pos, new Vector2(size, size));
+            h.icon = new GameObject("Icon", typeof(Image)).GetComponent<Image>();
+            h.icon.transform.SetParent(h.rt, false);
+            h.icon.sprite = icon; h.icon.color = UIKit.TextHi; h.icon.raycastTarget = false;
+            UIKit.Place(h.icon.rectTransform, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(size * 0.5f, size * 0.5f));
+            if (label != null)
+            {
+                h.label = UIKit.Text("Label", h.rt, font, 24f, UIKit.TextHi, TextAlignmentOptions.Top, FontStyles.Bold);
+                UIKit.Place(h.label.rectTransform, new Vector2(0.5f, 0f), new Vector2(0.5f, 1f), new Vector2(0f, -8f), new Vector2(176f, 30f));
+                UIKit.Fit(h.label, 16f, 4f);
+                h.label.text = label;
+            }
+            return h;
+        }
+
+        // ------------------------------------------------------------ per frame
 
         void Update()
         {
             if (_canvas == null || Camera.main == null || cell == null) return;
             var head = Camera.main.transform;
 
-            Vector3 palm, normal;
-            // The left hand holds the menu, the right one pokes.
-            bool up = false;
-            if (_menuHand != null) up = PalmUp(_menuHand, out palm, out normal, head);
-            else { palm = normal = Vector3.zero; }
-            if (!up)
-            {
-                foreach (var h in new[] { leftHand })
-                    if (h != null && h != _menuHand && PalmUp(h, out palm, out normal, head)) { up = true; _menuHand = h; break; }
-            }
+            Vector3 palm = Vector3.zero, normal = Vector3.zero;
+            bool up = leftHand != null && PalmUp(leftHand, out palm, out normal, head);
+            if (up) _menuHand = leftHand;
             if (up) { _palmUpFor += Time.deltaTime; _palmDownFor = 0f; } else { _palmDownFor += Time.deltaTime; _palmUpFor = 0f; }
             if (!_visible && _palmUpFor > showDelay) _visible = true;
             if (_visible && _palmDownFor > hideDelay) _visible = false;
@@ -133,7 +167,7 @@ namespace MetaMove.Demo.Kitting
 
             if (up)
             {
-                var pos = palm + normal * 0.10f + Vector3.up * 0.05f;   // clear of the menu hand's fingers
+                var pos = palm + normal * 0.10f + Vector3.up * 0.06f;   // clear of the menu hand's fingers
                 var look = pos - head.position; look.y = 0f;
                 _canvas.transform.SetPositionAndRotation(pos, Quaternion.LookRotation(look.normalized, Vector3.up) * Quaternion.Euler(20f, 0f, 0f));
             }
@@ -143,77 +177,106 @@ namespace MetaMove.Demo.Kitting
 
         void Refresh()
         {
-            float f = speed != null ? speed.Factor : 1f;
-            float d = speed != null ? speed.Distance : -1f;
-            var inv = System.Globalization.CultureInfo.InvariantCulture;
-            string state = (!cell.IsBound ? "Not placed" : cell.State.ToString()) + (cell.Expert ? " · expert" : "");
-            _status.text = "<b>" + state + "</b>   " + Mathf.RoundToInt(f * 100f) + "%   " + (d < 0f ? "--" : d.ToString("0.00", inv) + " m");
-            // Teach while guiding; otherwise the same button starts guiding by hand.
-            _buttons[0].enabled = cell.IsBound && cell.State != KittingCell.Phase.Align;
-            _buttons[0].label.text = cell.State == KittingCell.Phase.Guide ? "Teach" : "Guide";
-            _buttons[1].label.text = cell.Parked ? "Resume" : "Home";
-            // Teach lights up once the tool is over a tray it would accept.
-            bool ready = cell.State == KittingCell.Phase.Guide && cell.TrayUnderTool() != null;
-            bool armed = Time.time - _placeArmed < 3f;
-            _buttons[4].label.text = armed ? "Sure?" : "Calibrate room";
-            bool restartArmed = Time.time - _restartArmed < 3f;
-            _buttons[2].label.text = restartArmed ? "Sure?" : "Restart";
-            // the last shift report, again or away; there is none before the first run ends
-            _buttons[5].enabled = report != null && report.HasReport;
-            _status.gameObject.SetActive(!_subOpen);
+            // mode switch
             for (int i = 0; i < 3; i++)
             {
-                var sb = _subs[i];
-                if (sb.bg.gameObject.activeSelf != _subOpen) sb.bg.gameObject.SetActive(_subOpen);
-                var mode = i == 0 ? KittingCell.Freestyle.Auto : i == 1 ? KittingCell.Freestyle.Teach : KittingCell.Freestyle.None;
-                sb.bg.color = cell.Mode == mode ? new Color(UIKit.Accent.r, UIKit.Accent.g, UIKit.Accent.b, 0.55f) : UIKit.GlassLight;
+                bool on = cell.Mode == ModeOf(i);
+                _seg[i].bg.color = on ? new Color(UIKit.Accent.r, UIKit.Accent.g, UIKit.Accent.b, 0.85f) : new Color(0f, 0f, 0f, 0f);
+                _seg[i].label.color = on ? new Color(0.05f, 0.07f, 0.09f, 1f) : UIKit.TextLo;
             }
-            for (int i = 0; i < 6; i++)
+            bool calibArmed = Time.time - _calibArmed < 3f;
+            _gear.bg.color = calibArmed ? Pulse(UIKit.Stop, 8f) : BtnBg;
+            _gearHint.text = calibArmed ? "Calibrate room? Tap again" : "";
+
+            // the three slots, by mode and moment
+            bool guiding = cell.State == KittingCell.Phase.Guide;
+            bool ready = guiding && cell.TrayUnderTool() != null;
+            bool restartArmed = Time.time - _restartArmed < 3f;
+            switch (cell.Mode)
             {
-                var b = _buttons[i];
-                b.label.color = b.enabled ? UIKit.TextHi : UIKit.TextLo * 0.8f;
-                float pulse = ready && i == 0 ? 0.35f + 0.35f * Mathf.Sin(Time.time * 6f) : 0f;
-                b.bg.color = i == 0 && b.enabled ? new Color(UIKit.Accent.r, UIKit.Accent.g, UIKit.Accent.b, 0.55f + pulse)
-                           : i == 3 && (_subOpen || cell.Mode != KittingCell.Freestyle.None) ? new Color(UIKit.Warn.r, UIKit.Warn.g, UIKit.Warn.b, 0.6f)
-                           : (i == 4 && armed) || (i == 2 && restartArmed) ? new Color(UIKit.Stop.r, UIKit.Stop.g, UIKit.Stop.b, 0.5f + 0.3f * Mathf.Sin(Time.time * 8f))
-                           : i == 5 && report != null && report.Showing ? new Color(UIKit.Accent.r, UIKit.Accent.g, UIKit.Accent.b, 0.45f)
-                           : i == 1 && cell.Parked ? new Color(UIKit.Warn.r, UIKit.Warn.g, UIKit.Warn.b, 0.45f + 0.3f * Mathf.Sin(Time.time * 5f))
-                           : UIKit.GlassLight;
+                case KittingCell.Freestyle.None:
+                    Set(_slot[0], guiding || cell.State == KittingCell.Phase.Align, UIIcons.Check, "Teach", () => cell.Teach(), guiding,
+                        ready ? Pulse(UIKit.Ok, 6f) : new Color(UIKit.Accent.r, UIKit.Accent.g, UIKit.Accent.b, 0.55f));
+                    Set(_slot[1], report != null && report.HasReport, UIIcons.Report, "Report", () => report.Toggle(), true,
+                        report != null && report.Showing ? new Color(UIKit.Accent.r, UIKit.Accent.g, UIKit.Accent.b, 0.55f) : BtnBg);
+                    break;
+                case KittingCell.Freestyle.Auto:
+                    Set(_slot[0], false, null, "", null, false, BtnBg);
+                    Set(_slot[1], false, null, "", null, false, BtnBg);
+                    break;
+                case KittingCell.Freestyle.Teach:
+                    if (guiding || cell.State == KittingCell.Phase.Align)
+                        Set(_slot[0], true, UIIcons.Check, "Teach here", () => cell.Teach(), guiding,
+                            ready ? Pulse(UIKit.Ok, 6f) : new Color(UIKit.Accent.r, UIKit.Accent.g, UIKit.Accent.b, 0.45f));
+                    else
+                        Set(_slot[0], cell.IsBound, UIIcons.Guide, "Guide", () => cell.StartGuide(), true, new Color(UIKit.Accent.r, UIKit.Accent.g, UIKit.Accent.b, 0.45f));
+                    Set(_slot[1], cell.IsBound, UIIcons.Home, cell.Parked ? "Resume" : "Home", () => cell.ParkHome(), true,
+                        cell.Parked ? Pulse(UIKit.Warn, 5f) : BtnBg);
+                    break;
             }
+            Set(_slot[2], true, UIIcons.Restart, restartArmed ? "Sure?" : "Restart", Restart, true,
+                restartArmed ? Pulse(UIKit.Stop, 8f) : BtnBg);
+        }
+
+        static Color Pulse(Color c, float hz) => new Color(c.r, c.g, c.b, 0.55f + 0.3f * Mathf.Sin(Time.time * hz));
+
+        static void Set(Hit h, bool visible, Sprite icon, string label, System.Action act, bool enabled, Color bg)
+        {
+            h.visible = visible;
+            if (h.rt.gameObject.activeSelf != visible) h.rt.gameObject.SetActive(visible);
+            if (!visible) return;
+            if (h.icon.sprite != icon) h.icon.sprite = icon;
+            if (h.label != null && h.label.text != label) h.label.text = label;
+            h.act = act; h.enabled = enabled;
+            h.bg.color = bg;
+            var fg = enabled ? UIKit.TextHi : UIKit.TextLo * 0.8f;
+            h.icon.color = fg;
+            if (h.label != null) h.label.color = fg;
+        }
+
+        IEnumerable<Hit> Hits()
+        {
+            foreach (var s in _seg) yield return s;
+            yield return _gear;
+            foreach (var s in _slot) if (s.visible) yield return s;
         }
 
         void Poke()
         {
             Vector3 tip;
-            var poker = _menuHand == leftHand ? rightHand : leftHand;
-            if (!Bone(poker, OVRSkeleton.BoneId.XRHand_IndexTip, OVRSkeleton.BoneId.Hand_IndexTip, out tip)) return;
+            if (!Bone(rightHand, OVRSkeleton.BoneId.XRHand_IndexTip, OVRSkeleton.BoneId.Hand_IndexTip, out tip)) return;
             if (Time.time - _lastPress < pressCooldown) return;
-            foreach (var b in _buttons.Concat(_subOpen ? _subs : new Button[0]))
+            foreach (var h in Hits())
             {
-                var local = b.rt.InverseTransformPoint(tip);
-                var r = b.rt.rect;
+                var local = h.rt.InverseTransformPoint(tip);
+                var r = h.rt.rect;
                 float depth = local.z * _canvas.transform.lossyScale.z;
                 if (r.Contains(new Vector2(local.x, local.y)) && Mathf.Abs(depth) < pokeDepth)
                 {
                     _lastPress = Time.time;
-                    if (b.enabled) { b.act(); StartCoroutine(Flash(b)); }
-                    Debug.Log("[FingertipMenu] " + b.label.text + (b.enabled ? "" : " (disabled)"));
+                    if (h.enabled && h.act != null) { h.act(); StartCoroutine(Flash(h)); }
+                    Debug.Log("[FingertipMenu] " + (h.label != null ? h.label.text : h.rt.name) + (h.enabled ? "" : " (disabled)"));
                     break;
                 }
             }
         }
 
-        System.Collections.IEnumerator Flash(Button b)
+        System.Collections.IEnumerator Flash(Hit h)
         {
-            b.rt.localScale = Vector3.one * 0.92f;
+            h.rt.localScale = Vector3.one * 0.92f;
             yield return new WaitForSeconds(0.12f);
-            b.rt.localScale = Vector3.one;
+            h.rt.localScale = Vector3.one;
         }
 
-        // Test hook for the Editor / Simulator: press a button by name.
+        // Test hook for the Editor / Simulator: press by label ("Story", "Auto", "Teach", "Teach here",
+        // "Guide", "Home", "Report", "Restart", "Calibrate").
         public void Press(string name)
         {
-            foreach (var b in _buttons.Concat(_subOpen ? _subs : new Button[0])) if ((b.label.text == name || (name == "Home" && b.label.text == "Resume") || ((name == "Place" || name == "Calibrate room" || name == "Restart") && b.label.text == "Sure?") || (name == "Place" && b.label.text == "Calibrate room")) && b.enabled) { b.act(); return; }
+            if (name == "Calibrate" || name == "Place") { Calibrate(); return; }
+            if (name == "Restart") { Restart(); return; }
+            if (_canvas != null) Refresh();
+            foreach (var h in Hits())
+                if (h.label != null && (h.label.text == name || (name == "Home" && h.label.text == "Resume")) && h.enabled && h.act != null) { h.act(); return; }
         }
 
         bool PalmUp(OVRSkeleton hand, out Vector3 palm, out Vector3 normal, Transform head)

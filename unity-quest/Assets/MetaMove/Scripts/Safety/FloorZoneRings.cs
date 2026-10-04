@@ -34,6 +34,8 @@ namespace MetaMove.Safety
         [Tooltip("Nothing is drawn behind this local Z (e.g. the front face of a wall behind the robot).")]
         public float clipBehindZ = float.NegativeInfinity;
         public float wallRiseTime = 0.25f;
+        [Tooltip("Move the rings with the speed controller's reference point (e.g. the robot's tool), so they show the zones that are actually measured.")]
+        public bool followReference = false;
 
         LineRenderer _stopRing, _scaledRing;
         MeshRenderer _stopFill, _scaledFill, _wall;
@@ -64,6 +66,11 @@ namespace MetaMove.Safety
 
         void Update()
         {
+            if (followReference && speed != null && speed.robotBase != null)
+            {
+                var p = speed.robotBase.position;
+                transform.position = new Vector3(p.x, transform.position.y, p.z);
+            }
             float d = speed != null ? speed.Distance : -1f;
             float near = speed != null ? speed.dNear : 0.6f;
             float far = speed != null ? speed.dFar : 2.0f;
