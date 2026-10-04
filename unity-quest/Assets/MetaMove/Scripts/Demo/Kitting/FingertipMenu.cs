@@ -73,7 +73,7 @@ namespace MetaMove.Demo.Kitting
 
         void Restart()
         {
-            if (Time.time - _restartArmed < 3f) { _restartArmed = -10f; cell.Restart(); }
+            if (Time.time - _restartArmed < 3f) { _restartArmed = -10f; cell.Restart(true); }   // the factory builds itself again
             else _restartArmed = Time.time;
         }
 

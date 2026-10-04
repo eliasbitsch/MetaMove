@@ -106,6 +106,15 @@ namespace MetaMove.Demo.Kitting
             _captured = true;
         }
 
+        // Restart from the hand menu: the whole build-up again, from the floor up.
+        public void Replay()
+        {
+            Capture();
+            _t = 0f; _wallThud = _roofThud = false;
+            foreach (var p in pieces) p.thudded = false;
+            Apply(0f);
+        }
+
         // Editor preview: the build-up frozen at t seconds.
         public void Preview(float t) { Capture(); Apply(t); }
 

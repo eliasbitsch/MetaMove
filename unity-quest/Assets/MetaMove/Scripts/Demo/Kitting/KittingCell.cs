@@ -311,6 +311,18 @@ namespace MetaMove.Demo.Kitting
 
         // ---------------------------------------------------------------- public API
 
+        // Restart with the factory build-up again (hand menu Restart); a mode switch restarts
+        // without it, so switching stays quick.
+        public void Restart(bool rebuildFactory)
+        {
+            if (rebuildFactory && _bound && cellFrame != null)
+            {
+                var reveal = cellFrame.GetComponent<FactoryReveal>();
+                if (reveal != null && reveal.isActiveAndEnabled) reveal.Replay();
+            }
+            Restart();
+        }
+
         public void Restart()
         {
             if (!_bound) return;
