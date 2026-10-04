@@ -7,7 +7,7 @@ using MetaMove.UI.Kit;
 namespace MetaMove.Demo.Kitting
 {
     // Palm-up menu on either hand (left- and right-handers): status line plus Teach / Home /
-    // Restart / Expert, poked with the index finger of the other hand. Expert restarts the
+    // Report / Restart / Expert / Place, poked with the index finger of the other hand. Expert restarts the
     // run without hints or narration - the second go, from memory. It is there when you look for it and gone when you work, so it
     // never covers the cell. Teach is only live while the cell is waiting to be shown a tray.
     public class FingertipMenu : MonoBehaviour
@@ -19,16 +19,18 @@ namespace MetaMove.Demo.Kitting
 
         [Range(0f, 1f)] public float palmUpThreshold = 0.55f;
         public float showDelay = 0.15f, hideDelay = 0.25f;
-        public float worldWidth = 0.27f;   // five buttons of ~4.5 cm with ~8 mm gaps: pokeable live
+        public float worldWidth = 0.322f;   // six buttons of ~4.5 cm with ~8 mm gaps: pokeable live
         public float pokeDepth = 0.018f;      // m in front of / behind the panel counts as a press
         public float pressCooldown = 0.8f;
 
-        const float W = 640f, H = 330f;
+        const float W = 764f, H = 330f;
         Canvas _canvas;
         CanvasGroup _group;
         TextMeshProUGUI _status;
-        readonly Button[] _buttons = new Button[5];
+        readonly Button[] _buttons = new Button[6];
         public CellPlacer placer;
+        [Tooltip("Found in the scene when empty.")]
+        public ShiftReport report;
         float _placeArmed = -10f;   // Place needs a second tap within 3 s
         float _palmUpFor, _palmDownFor, _shown, _lastPress = -9f;
         bool _visible;
@@ -50,16 +52,19 @@ namespace MetaMove.Demo.Kitting
             _status = UIKit.Text("Status", root, font, 30f, UIKit.TextHi, TextAlignmentOptions.Center);
             UIKit.Place(_status.rectTransform, new Vector2(0.5f, 1f), new Vector2(0.5f, 1f), new Vector2(0f, -26f), new Vector2(W - 40f, 70f));
             _status.enableWordWrapping = true;
-            string[] names = { "Teach", "Home", "Restart", "Expert", "Place" };
+            if (report == null) report = FindAnyObjectByType<ShiftReport>();
+            string[] names = { "Teach", "Home", "Restart", "Expert", "Place", "Report" };
+            int[] slot = { 0, 1, 3, 4, 5, 2 };   // left to right: Teach Home Report Restart Expert Place
             System.Action[] acts = { () => { if (cell.State == KittingCell.Phase.Guide) cell.Teach(); else cell.StartGuide(); }, () => cell.ParkHome(), () => cell.Restart(),
                                      () => { cell.Expert = !cell.Expert; cell.Restart(); },
-                                     () => { if (Time.time - _placeArmed < 3f && placer != null) placer.Replace(); else _placeArmed = Time.time; } };
-            for (int i = 0; i < 5; i++)
+                                     () => { if (Time.time - _placeArmed < 3f && placer != null) placer.Replace(); else _placeArmed = Time.time; },
+                                     () => { if (report != null) report.Toggle(); } };
+            for (int i = 0; i < 6; i++)
             {
                 var b = new Button { act = acts[i] };
                 b.bg = UIKit.Panel("Btn_" + names[i], root, UIKit.GlassLight, 34f, 3f);
                 b.rt = b.bg.rectTransform;
-                UIKit.Place(b.rt, new Vector2(0.5f, 0f), new Vector2(0.5f, 0f), new Vector2((i - 2f) * 124f, 26f), new Vector2(106f, 170f));
+                UIKit.Place(b.rt, new Vector2(0.5f, 0f), new Vector2(0.5f, 0f), new Vector2((slot[i] - 2.5f) * 124f, 26f), new Vector2(106f, 170f));
                 b.label = UIKit.Text("Label", b.bg.transform, font, 25f, UIKit.TextHi, TextAlignmentOptions.Center, FontStyles.Bold);
                 UIKit.Stretch(b.label.rectTransform);
                 b.label.text = names[i];
@@ -117,7 +122,9 @@ namespace MetaMove.Demo.Kitting
             bool ready = cell.State == KittingCell.Phase.Guide && cell.TrayUnderTool() != null;
             bool armed = Time.time - _placeArmed < 3f;
             _buttons[4].label.text = armed ? "Sure?" : "Place";
-            for (int i = 0; i < 5; i++)
+            // the last shift report, again or away; there is none before the first run ends
+            _buttons[5].enabled = report != null && report.HasReport;
+            for (int i = 0; i < 6; i++)
             {
                 var b = _buttons[i];
                 b.label.color = b.enabled ? UIKit.TextHi : UIKit.TextLo * 0.8f;
@@ -125,6 +132,7 @@ namespace MetaMove.Demo.Kitting
                 b.bg.color = i == 0 && b.enabled ? new Color(UIKit.Accent.r, UIKit.Accent.g, UIKit.Accent.b, 0.55f + pulse)
                            : i == 3 && cell.Expert ? new Color(UIKit.Warn.r, UIKit.Warn.g, UIKit.Warn.b, 0.6f)
                            : i == 4 && armed ? new Color(UIKit.Stop.r, UIKit.Stop.g, UIKit.Stop.b, 0.5f + 0.3f * Mathf.Sin(Time.time * 8f))
+                           : i == 5 && report != null && report.Showing ? new Color(UIKit.Accent.r, UIKit.Accent.g, UIKit.Accent.b, 0.45f)
                            : i == 1 && cell.Parked ? new Color(UIKit.Warn.r, UIKit.Warn.g, UIKit.Warn.b, 0.45f + 0.3f * Mathf.Sin(Time.time * 5f))
                            : UIKit.GlassLight;
             }

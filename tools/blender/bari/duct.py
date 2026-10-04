@@ -83,7 +83,8 @@ def pipe(points, radius, name):
 
 TOPY = 2.95
 path = [(FX, FY + 0.31, FZ - 0.05), (FX, 2.40, FZ - 0.05), (FX, TOPY - 0.12, FZ - 0.03), (FX, TOPY, FZ + 0.12),
-        (FX - 0.02, TOPY, -0.60), (FX - 0.04, TOPY, 0.05), (FX - 0.05, TOPY - 0.10, 0.22), (FX - 0.05, 2.62, 0.26)]
+        (FX - 0.02, TOPY, -0.60), (FX - 0.04, TOPY, 0.05), (FX - 0.05, TOPY - 0.10, 0.25),
+        (FX - 0.05, 2.72, 0.26), (FX - 0.05, 2.56, 0.26)]   # last run straight down and into the bell's neck
 duct = [pipe(path, DUCT_R, "Duct_Pipe")]
 # ring bands every ~0.6 m along the straight run, the bell at the end, two hangers to the purlin
 for z in (-0.95, -0.35, 0.05):
@@ -92,6 +93,9 @@ for z in (-0.95, -0.35, 0.05):
     b = bpy.context.active_object; b.data.materials.append(galv); duct.append(b)
 bpy.ops.mesh.primitive_cone_add(radius1=0.22, radius2=DUCT_R + 0.005, depth=0.16, vertices=24, location=U(FX - 0.05, 2.52, 0.26))
 bell = bpy.context.active_object; bell.data.materials.append(galv); duct.append(bell)
+bpy.ops.mesh.primitive_torus_add(major_radius=DUCT_R + 0.006, minor_radius=0.012, major_segments=24, minor_segments=6,
+                                 location=U(FX - 0.05, 2.605, 0.26))   # collar over the joint
+b = bpy.context.active_object; b.data.materials.append(galv); duct.append(b)
 for z in (-0.65, -0.05):
     duct.append(box((0.01, 0.01, 0.18), U(FX - 0.03, TOPY + 0.19, z), "hang", galv))
 pipe_obj = join(duct, "Duct_Pipe")

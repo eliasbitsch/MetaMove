@@ -20,6 +20,9 @@ namespace MetaMove.Safety
         public Color stopColor = new Color(0.95f, 0.25f, 0.22f);
         public Color scaledColor = new Color(1f, 0.62f, 0.1f);
         public float lineWidth = 0.035f;
+        [Tooltip("The stop ring is drawn bolder and stays brighter at rest: most of it lies under the table and rack, and it is the zone that matters most.")]
+        public float stopLineWidth = 0.055f;
+        [Range(0f, 1f)] public float stopIdleAlpha = 0.65f;
         public int segments = 96;
         [Range(0f, 1f)] public float idleAlpha = 0.35f;
         [Range(0f, 1f)] public float fillAlpha = 0.18f;
@@ -45,6 +48,7 @@ namespace MetaMove.Safety
             float near = speed != null ? speed.dNear : 0.6f;
             float far = speed != null ? speed.dFar : 2.0f;
             _stopRing = Ring("Ring_Stop", near);
+            _stopRing.widthMultiplier = stopLineWidth;
             _scaledRing = Ring("Ring_Scaled", far);
             _stopFill = Disc("Fill_Stop", near);
             if (fillScaled) _scaledFill = Annulus("Fill_Scaled", near, far);
@@ -71,8 +75,8 @@ namespace MetaMove.Safety
             float pulse = 0.5f + 0.5f * Mathf.Sin(Time.time * Mathf.Lerp(3f, 12f, closeness));
 
             SetLine(_scaledRing, scaledColor, inScaled ? Mathf.Lerp(0.7f, 1f, pulse) : inStop ? 0.7f : idleAlpha);
-            SetLine(_stopRing, stopColor, inStop ? Mathf.Lerp(0.75f, 1f, pulse) : inScaled ? Mathf.Lerp(idleAlpha, 0.8f, closeness) : idleAlpha);
-            SetMesh(_stopFill, stopColor, inStop ? fillAlpha * 2f : fillAlpha * 0.5f);
+            SetLine(_stopRing, stopColor, inStop ? Mathf.Lerp(0.75f, 1f, pulse) : inScaled ? Mathf.Lerp(stopIdleAlpha, 0.95f, closeness) : stopIdleAlpha);
+            SetMesh(_stopFill, stopColor, inStop ? fillAlpha * 2.2f : inScaled ? Mathf.Lerp(fillAlpha, fillAlpha * 1.6f, closeness) : fillAlpha);
             if (_scaledFill != null) SetMesh(_scaledFill, scaledColor, inScaled ? fillAlpha * 1.4f : fillAlpha * 0.45f);
             if (_stopLabel != null)
             {

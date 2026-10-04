@@ -82,6 +82,8 @@ namespace MetaMove.EditorTools
                 }
                 Shot(cam, frame, new Vector3(0.90f, fy + 1.60f, 1.85f), new Vector3(0.90f, fy + 0.90f, 2.60f), "ghost_hands.png");
                 Shot(cam, frame, new Vector3(0.30f, fy + 1.70f, 2.40f), new Vector3(0.55f, fy + 1.45f, -0.30f), "qr_column.png");
+                // suction bell at the end of the duct, from below and in front
+                Shot(cam, frame, new Vector3(0.35f, fy + 1.95f, 1.25f), new Vector3(1.0f, fy + 2.58f, 0.26f), "duct_bell.png");
                 Debug.Log("[SignPreview] rendered to " + System.IO.Path.GetFullPath(OutDir));
             }
             catch (System.Exception e) { Debug.LogError("[SignPreview] " + e); code = 1; }
@@ -172,6 +174,91 @@ namespace MetaMove.EditorTools
             }
             catch (System.Exception e) { Debug.LogError("[SignPreview] " + e); code = 1; }
             EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);   // never save
+            if (Application.isBatchMode) EditorApplication.Exit(code);
+        }
+
+        // The "sound is off" card, pressed and released.
+        public static void RenderVolume()
+        {
+            int code = 0;
+            try
+            {
+                EditorSceneManager.OpenScene(Scene, OpenSceneMode.Single);
+                var vc = Object.FindAnyObjectByType<VolumeCheck>(FindObjectsInactive.Include);
+                vc.gameObject.SetActive(true);
+                vc.transform.SetPositionAndRotation(new Vector3(0f, 50f, 0f), Quaternion.identity);
+                var go = new GameObject("PreviewCam");
+                var cam = go.AddComponent<Camera>();
+                cam.enabled = false;
+                cam.clearFlags = CameraClearFlags.SolidColor;
+                cam.backgroundColor = new Color(0.36f, 0.37f, 0.39f);
+                cam.fieldOfView = 40f;
+                System.IO.Directory.CreateDirectory(OutDir);
+                foreach (var t in new[] { 0.0f, 0.8f })
+                {
+                    var canvas = vc.Preview(t);
+                    canvas.transform.localPosition = Vector3.zero;
+                    canvas.transform.localRotation = Quaternion.identity;
+                    Canvas.ForceUpdateCanvases();
+                    var c = canvas.transform.position;
+                    cam.transform.position = c - Vector3.forward * 0.9f;
+                    cam.transform.LookAt(c);
+                    var rt = new RenderTexture(1600, 1000, 24, RenderTextureFormat.ARGB32) { antiAliasing = 4 };
+                    cam.targetTexture = rt;
+                    cam.Render();
+                    RenderTexture.active = rt;
+                    var tex = new Texture2D(rt.width, rt.height, TextureFormat.RGB24, false);
+                    tex.ReadPixels(new Rect(0, 0, rt.width, rt.height), 0, 0);
+                    tex.Apply();
+                    RenderTexture.active = null;
+                    cam.targetTexture = null;
+                    System.IO.File.WriteAllBytes(System.IO.Path.Combine(OutDir, t > 0f ? "volume_pressed.png" : "volume_idle.png"), tex.EncodeToPNG());
+                }
+                Debug.Log("[SignPreview] volume card rendered");
+            }
+            catch (System.Exception e) { Debug.LogError("[SignPreview] " + e); code = 1; }
+            EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
+            if (Application.isBatchMode) EditorApplication.Exit(code);
+        }
+
+        // The factory build-up as stills from the visitor's place, plus one contact sheet.
+        public static void RenderReveal()
+        {
+            int code = 0;
+            try
+            {
+                EditorSceneManager.OpenScene(Scene, OpenSceneMode.Single);
+                var cell = Object.FindAnyObjectByType<KittingCell>(FindObjectsInactive.Include);
+                var frame = cell.cellFrame;
+                frame.gameObject.SetActive(true);
+                var reveal = frame.GetComponent<FactoryReveal>();
+                var go = new GameObject("PreviewCam");
+                var cam = go.AddComponent<Camera>();
+                cam.enabled = false;
+                cam.clearFlags = CameraClearFlags.SolidColor;
+                cam.backgroundColor = new Color(0.36f, 0.37f, 0.39f);
+                cam.fieldOfView = 75f;
+                float fy = -0.80f;
+                float[] times = { 1.2f, 3.2f, 4.6f, 5.8f, 7.4f, 8.6f, 9.4f, 10.6f, 11.6f, 13.5f };
+                const int TW = 640, TH = 400;
+                var sheet = new Texture2D(TW * 5, TH * 2, TextureFormat.RGB24, false);
+                for (int i = 0; i < times.Length; i++)
+                {
+                    reveal.Preview(times[i]);
+                    cam.transform.position = frame.TransformPoint(new Vector3(0.5f, fy + 1.70f, 3.1f));
+                    cam.transform.LookAt(frame.TransformPoint(new Vector3(0.1f, fy + 1.45f, -0.4f)));
+                    var rt = new RenderTexture(TW, TH, 24, RenderTextureFormat.ARGB32) { antiAliasing = 4 };
+                    cam.targetTexture = rt; cam.Render(); RenderTexture.active = rt;
+                    sheet.ReadPixels(new Rect(0, 0, TW, TH), (i % 5) * TW, (1 - i / 5) * TH);
+                    RenderTexture.active = null; cam.targetTexture = null; rt.Release();
+                }
+                sheet.Apply();
+                System.IO.Directory.CreateDirectory(OutDir);
+                System.IO.File.WriteAllBytes(System.IO.Path.Combine(OutDir, "reveal_sheet.png"), sheet.EncodeToPNG());
+                Debug.Log("[SignPreview] reveal rendered, duration " + reveal.Duration);
+            }
+            catch (System.Exception e) { Debug.LogError("[SignPreview] " + e); code = 1; }
+            EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
             if (Application.isBatchMode) EditorApplication.Exit(code);
         }
 

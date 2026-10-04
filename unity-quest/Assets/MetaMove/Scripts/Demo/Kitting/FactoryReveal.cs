@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace MetaMove.Demo.Kitting
@@ -7,7 +9,10 @@ namespace MetaMove.Demo.Kitting
     //   2. the wall rises out of the ground, overshoots a touch and settles - a low thud
     //   3. the roof fragment with its sign and the lamp beam lower in from above - a thud
     //   4. the lights flicker on like a hall being switched on
-    // Slow enough (~6 s) to be watched, timed under the welcome line.
+    // Between them, 'pieces' arrive one by one - duct, conveyor, roof frame, chains, the sign,
+    // controller, PC - each sliding in from its own direction (or growing, for parts whose
+    // origin is their own centre, like the fan rotor), the heavy ones
+    // with a thud. Slow enough (~13 s) to be enjoyed; the story holds until it stands.
     //
     // Driven by a clock in Update rather than a coroutine, and the resting poses are taken
     // once in Awake: whatever re-enables or re-parents the cell, every part always ends
@@ -26,7 +31,32 @@ namespace MetaMove.Demo.Kitting
         [Header("Sound")]
         [Range(0f, 1f)] public float thudVolume = 0.55f;
 
-        public float Duration => lightsStart + lightsTime;
+        [Serializable]
+        public class Piece
+        {
+            public Transform t;
+            public float start, time = 0.9f;
+            [Tooltip("Where it comes from, in its parent's space, relative to its resting place.")]
+            public Vector3 from;
+            [Tooltip("Grows from nothing instead of (or as well as) sliding in.")]
+            public bool pop;
+            [Range(0f, 1f)] public float thud;
+            [NonSerialized] public Vector3 rest, restScale;
+            [NonSerialized] public Renderer[] renderers;
+            [NonSerialized] public bool[] wasOn;
+            [NonSerialized] public bool thudded;
+        }
+        public List<Piece> pieces = new List<Piece>();
+
+        public float Duration
+        {
+            get
+            {
+                float d = lightsStart + lightsTime;
+                foreach (var p in pieces) if (p.t != null) d = Mathf.Max(d, p.start + p.time);
+                return d;
+            }
+        }
         public bool Done => _t < 0f && _captured;
 
         Vector3 _wall, _beam, _mask, _roof;
@@ -46,6 +76,14 @@ namespace MetaMove.Demo.Kitting
             if (portalMask != null) _mask = portalMask.localPosition;
             if (roof != null) _roof = roof.localPosition;
             _lights = GetComponentsInChildren<LightCone>(true);
+            foreach (var p in pieces)
+            {
+                if (p.t == null) continue;
+                p.rest = p.t.localPosition; p.restScale = p.t.localScale;
+                p.renderers = p.t.GetComponentsInChildren<Renderer>(true);
+                p.wasOn = new bool[p.renderers.Length];
+                for (int i = 0; i < p.renderers.Length; i++) p.wasOn[i] = p.renderers[i].enabled;
+            }
             _audio = gameObject.AddComponent<AudioSource>();
             _audio.playOnAwake = false;
             _audio.spatialBlend = 0.6f;
@@ -53,7 +91,15 @@ namespace MetaMove.Demo.Kitting
             _captured = true;
         }
 
-        void OnEnable() { Capture(); _t = 0f; _wallThud = _roofThud = false; Apply(0f); }
+        // Editor preview: the build-up frozen at t seconds.
+        public void Preview(float t) { Capture(); Apply(t); }
+
+        void OnEnable()
+        {
+            Capture(); _t = 0f; _wallThud = _roofThud = false;
+            foreach (var p in pieces) p.thudded = false;
+            Apply(0f);
+        }
 
         void Update()
         {
@@ -62,6 +108,8 @@ namespace MetaMove.Demo.Kitting
             Apply(_t);
             if (!_wallThud && _t >= wallStart + wallTime * 0.8f) { _wallThud = true; Thud(1f); }
             if (!_roofThud && _t >= roofStart + roofTime * 0.9f) { _roofThud = true; Thud(0.7f); }
+            foreach (var p in pieces)
+                if (p.t != null && !p.thudded && p.thud > 0f && _t >= p.start + p.time * 0.8f) { p.thudded = true; Thud(p.thud); }
             if (_t > Duration) { Apply(1e3f); _t = -1f; }
         }
 
@@ -87,10 +135,24 @@ namespace MetaMove.Demo.Kitting
             if (beam != null) beam.localPosition = _beam + Vector3.up * beamLift * (1f - r);
             if (roof != null) roof.localPosition = _roof + Vector3.up * roofLift * (1f - r);
 
+            foreach (var p in pieces) ApplyPiece(p, t);
+
             // lights: off until the hall stands, then a fluorescent-style start-up flicker
             float l = (t - lightsStart) / lightsTime;
             float power = l <= 0f ? 0f : l >= 1f ? 1f : Flicker(l);
             if (_lights != null) foreach (var c in _lights) if (c != null) c.power = power;
+        }
+
+        void ApplyPiece(Piece p, float t)
+        {
+            if (p.t == null || p.renderers == null) return;
+            float x = (t - p.start) / Mathf.Max(0.01f, p.time);
+            bool on = x > 0f;
+            // not there at all before its moment (a part waiting in mid-air would give it away)
+            for (int i = 0; i < p.renderers.Length; i++) if (p.renderers[i] != null) p.renderers[i].enabled = on && p.wasOn[i];
+            float e = EaseOutBack(x, overshoot);
+            p.t.localPosition = p.rest + p.from * (1f - e);
+            p.t.localScale = p.pop ? p.restScale * Mathf.Max(0.001f, EaseOutBack(x, 0.12f)) : p.restScale;
         }
 
         static float Flicker(float l)

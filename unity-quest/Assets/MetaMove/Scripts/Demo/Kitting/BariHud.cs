@@ -8,9 +8,11 @@ namespace MetaMove.Demo.Kitting
 {
     // Operator HUD for the travel demo, replacing the lab's developer panel.
     //
-    //   [ status pill ]   [ speed gauge ]   [ distance ]
-    //    line state        ring + percent    metres + zone
+    //   [ speed gauge ] [ distance ]
+    //    ring + percent  metres + zone
+    //   ▬▬▬▬▬▬▬▬▬▬▬▬▬▬  parts left in the box the arm works from
     //
+    // Deliberately little: no line-state text, the story card says what happens.
     // Sits low in the view and follows the head lazily. Colours carry the same meaning as
     // the floor rings and the signal tower: green clear, amber scaled, red standstill.
     public class BariHud : MonoBehaviour
@@ -21,19 +23,18 @@ namespace MetaMove.Demo.Kitting
 
         public float distance = 0.95f;
         public float elevation = -33f;   // degrees below the horizon, under the story card
-        public float worldWidth = 0.50f;
+        public float worldWidth = 0.306f;   // same element size as the wider HUD with the status pill (0.50 m over 980)
 
-        const float W = 980f, H = 190f;
+        const float W = 600f, H = 230f, GaugeX = -203f, DistX = 105f, SegY = -103f;
         Canvas _canvas;
-        Image _pill, _dot, _gaugeFill, _gaugeTrack, _zoneBar;
-        TextMeshProUGUI _state, _detail, _pct, _speedLabel, _dist, _zone;
+        Image _gaugeFill, _gaugeTrack, _zoneBar;
+        TextMeshProUGUI _pct, _speedLabel, _dist, _zone;
         readonly UIKit.FollowState _follow = new UIKit.FollowState();
         float _shownFactor, _ssmShown = 1f;
         CanvasGroup _ssmGroup;
         // tray fill: one segment per nest of the tray the robot picks from
         const int MaxSegs = 12;
         readonly Image[] _segs = new Image[MaxSegs];
-        RectTransform _pillRt;
 
         void Start() => Build();
 
@@ -43,25 +44,6 @@ namespace MetaMove.Demo.Kitting
             var root = (RectTransform)_canvas.transform;
             _canvas.transform.localScale = Vector3.one * (worldWidth / W);
 
-            // --- status pill (left)
-            _pill = UIKit.Panel("StatusPill", root, UIKit.Glass, 44f);
-            UIKit.Place(_pill.rectTransform, new Vector2(0f, 0.5f), new Vector2(0f, 0.5f), new Vector2(0f, 0f), new Vector2(380f, 150f));
-            _dot = new GameObject("Dot", typeof(Image)).GetComponent<Image>();
-            _dot.transform.SetParent(_pill.transform, false);
-            _dot.sprite = UIKit.Disc; _dot.raycastTarget = false;
-            UIKit.Place(_dot.rectTransform, new Vector2(0f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(46f, 18f), new Vector2(26f, 26f));
-            _state = UIKit.Text("State", _pill.transform, font, 40f, UIKit.TextHi, TextAlignmentOptions.MidlineLeft, FontStyles.Bold);
-            UIKit.Place(_state.rectTransform, new Vector2(0f, 0.5f), new Vector2(0f, 0.5f), new Vector2(76f, 18f), new Vector2(290f, 54f));
-            _detail = UIKit.Text("Detail", _pill.transform, font, 26f, UIKit.TextLo, TextAlignmentOptions.MidlineLeft);
-            UIKit.Place(_detail.rectTransform, new Vector2(0f, 0.5f), new Vector2(0f, 0.5f), new Vector2(76f, -30f), new Vector2(290f, 40f));
-
-            _pillRt = _pill.rectTransform;
-            float segW = (290f - (MaxSegs - 1) * 5f) / MaxSegs;
-            for (int i = 0; i < MaxSegs; i++)
-            {
-                _segs[i] = UIKit.Panel("Seg" + i, _pill.transform, UIKit.TextLo, 4f, 0f, false);
-                UIKit.Place(_segs[i].rectTransform, new Vector2(0f, 0.5f), new Vector2(0f, 0.5f), new Vector2(76f + i * (segW + 5f), -58f), new Vector2(segW, 10f));
-            }
             // Gauge and distance belong to speed and separation monitoring; while the visitor
             // guides the arm by hand it is not active, so they fade out (one group).
             var ssm = new GameObject("SSM", typeof(RectTransform), typeof(CanvasGroup));
@@ -71,7 +53,7 @@ namespace MetaMove.Demo.Kitting
 
             // --- speed gauge (centre)
             var gauge = UIKit.Panel("Gauge", ssm.transform, UIKit.Glass, 95f);
-            UIKit.Place(gauge.rectTransform, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(190f, 190f));
+            UIKit.Place(gauge.rectTransform, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(GaugeX, 18f), new Vector2(190f, 190f));
             _gaugeTrack = Radial("Track", gauge.transform, new Color(1f, 1f, 1f, 0.10f), 1f);
             _gaugeFill = Radial("Fill", gauge.transform, UIKit.Ok, 0f);
             _pct = UIKit.Text("Pct", gauge.transform, font, 54f, UIKit.TextHi, TextAlignmentOptions.Center, FontStyles.Bold);
@@ -83,7 +65,7 @@ namespace MetaMove.Demo.Kitting
 
             // --- distance (right)
             var dp = UIKit.Panel("Distance", ssm.transform, UIKit.Glass, 44f);
-            UIKit.Place(dp.rectTransform, new Vector2(1f, 0.5f), new Vector2(1f, 0.5f), Vector2.zero, new Vector2(380f, 150f));
+            UIKit.Place(dp.rectTransform, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(DistX, 18f), new Vector2(380f, 150f));
             _dist = UIKit.Text("Metres", dp.transform, font, 50f, UIKit.TextHi, TextAlignmentOptions.MidlineRight, FontStyles.Bold);
             UIKit.Place(_dist.rectTransform, new Vector2(1f, 0.5f), new Vector2(1f, 0.5f), new Vector2(-36f, 18f), new Vector2(300f, 60f));
             _zone = UIKit.Text("Zone", dp.transform, font, 24f, UIKit.TextLo, TextAlignmentOptions.MidlineRight);
@@ -91,6 +73,15 @@ namespace MetaMove.Demo.Kitting
             _zone.characterSpacing = 4f;
             _zoneBar = UIKit.Panel("ZoneBar", dp.transform, UIKit.Ok, 4f, 0f, false);
             UIKit.Place(_zoneBar.rectTransform, new Vector2(0f, 0.5f), new Vector2(0f, 0.5f), new Vector2(28f, 0f), new Vector2(8f, 96f));
+
+            // --- parts left, a slim bar under both
+            float span = DistX + 190f - (GaugeX - 95f);
+            float segW = (span - (MaxSegs - 1) * 6f) / MaxSegs;
+            for (int i = 0; i < MaxSegs; i++)
+            {
+                _segs[i] = UIKit.Panel("Seg" + i, root, UIKit.TextLo, 4f, 0f, false);
+                UIKit.Place(_segs[i].rectTransform, new Vector2(0.5f, 0.5f), new Vector2(0f, 0.5f), new Vector2(GaugeX - 95f + i * (segW + 6f), SegY), new Vector2(segW, 10f));
+            }
         }
 
         Image Radial(string name, Transform parent, Color c, float fill)
@@ -112,11 +103,6 @@ namespace MetaMove.Demo.Kitting
             bool ssmActive = cell == null || (cell.State != KittingCell.Phase.Guide && cell.State != KittingCell.Phase.Align);
             _ssmShown = Mathf.MoveTowards(_ssmShown, ssmActive ? 1f : 0f, Time.deltaTime / 0.25f);
             _ssmGroup.alpha = _ssmShown;
-            // the status pill slides to the centre while it is alone
-            float x = Mathf.Lerp((380f - W) / 2f, 0f, 1f - _ssmShown);
-            _pillRt.anchorMin = _pillRt.anchorMax = new Vector2(0.5f, 0.5f);
-            _pillRt.pivot = new Vector2(0.5f, 0.5f);
-            _pillRt.anchoredPosition = new Vector2(x, 0f);
 
             float f = speed != null ? Mathf.Clamp01(speed.Factor) : 1f;
             float d = speed != null ? speed.Distance : -1f;
@@ -137,38 +123,21 @@ namespace MetaMove.Demo.Kitting
             int total = tr != null ? Mathf.Min(MaxSegs, tr.nests.Count) : 0, left = tr != null ? tr.Remaining : 0;
             bool low = tr != null && tr == cell.trayA && left <= cell.lowAt;
             bool showSegs = cell != null && cell.IsBound && (cell.State == KittingCell.Phase.Running || cell.State == KittingCell.Phase.Probe);
+            // the bar spans the full width whatever the tray size: segments share it
+            float span = DistX + 190f - (GaugeX - 95f);
+            float segW = total > 0 ? (span - (total - 1) * 6f) / total : 0f;
             for (int i = 0; i < MaxSegs; i++)
             {
                 _segs[i].enabled = showSegs && i < total;
-                _segs[i].color = i < left ? (low ? UIKit.Warn : UIKit.Ok) : new Color(1f, 1f, 1f, 0.12f);
+                if (!_segs[i].enabled) continue;
+                var rt = _segs[i].rectTransform;
+                rt.anchoredPosition = new Vector2(GaugeX - 95f + i * (segW + 6f), SegY);
+                rt.sizeDelta = new Vector2(segW, 10f);
+                var c = i < left ? (low ? UIKit.Warn : UIKit.Ok) : new Color(1f, 1f, 1f, 0.12f);
+                c.a *= _ssmShown;
+                _segs[i].color = c;
             }
 
-            string state, detail; Color sc;
-            Describe(f, out state, out detail, out sc);
-            _state.text = state; _detail.text = detail; _dot.color = sc;
-            // soft pulse on the dot when something needs attention
-            if (sc != UIKit.Ok) _dot.color = Color.Lerp(sc, sc * 0.45f, 0.5f + 0.5f * Mathf.Sin(Time.time * 6f));
-        }
-
-        void Describe(float f, out string state, out string detail, out Color c)
-        {
-            if (cell == null || !cell.IsBound) { state = "Place cell"; detail = "Aim at the floor, pinch & hold"; c = UIKit.Accent; return; }
-            if (cell.Parked) { state = "Parked"; detail = "Home again to resume"; c = UIKit.Warn; return; }
-            var tray = cell.Taught;
-            string parts = tray != null ? tray.label + " · " + tray.Remaining + " parts" : "";
-            switch (cell.State)
-            {
-                case KittingCell.Phase.Running:
-                    if (f <= 0.001f) { state = "Standstill"; detail = "Person in reach"; c = UIKit.Stop; }
-                    else if (f < 0.99f) { state = "Running"; detail = "Slowed · " + parts; c = UIKit.Warn; }
-                    else { state = "Running"; detail = parts; c = tray != null && tray == cell.trayA && tray.Remaining <= cell.lowAt ? UIKit.Warn : UIKit.Ok; }
-                    break;
-                case KittingCell.Phase.Probe: state = "Checking"; detail = "Gripping " + (tray != null ? tray.label : ""); c = UIKit.Warn; break;
-                case KittingCell.Phase.Waiting: state = "No parts"; detail = "Bring the next batch"; c = UIKit.Stop; break;
-                case KittingCell.Phase.Guide: state = "Hand guiding"; detail = "Speed monitoring paused"; c = UIKit.Accent; break;
-                case KittingCell.Phase.Align: state = "Aligning"; detail = "Locating the new tray"; c = UIKit.Accent; break;
-                default: state = "Idle"; detail = ""; c = UIKit.TextLo; break;
-            }
         }
     }
 }

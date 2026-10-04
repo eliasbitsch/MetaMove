@@ -54,7 +54,7 @@ namespace MetaMove.Demo.Kitting
         const float MaxDist = 3f, Split = 0.62f;   // timeline: distance axis 0..MaxDist m in the lower Split
         Run _run;
         float _t0, _lowAt = -1f, _missAt = -1f, _guideAt = -1f, _showAt = -1f;
-        bool _clearedSeen;
+        bool _clearedSeen, _finished;
 
         Canvas _canvas;
         CanvasGroup _group;
@@ -107,7 +107,7 @@ namespace MetaMove.Demo.Kitting
             {
                 case "restart":
                     _run = new Run { number = _done.Count + 1, expert = cell.Expert };
-                    _t0 = now; _lowAt = _missAt = _guideAt = _showAt = -1f; _clearedSeen = false;
+                    _t0 = now; _lowAt = _missAt = _guideAt = _showAt = -1f; _clearedSeen = false; _finished = false;
                     _trace.Clear(); _marks.Clear(); _nextSample = 0f; _stopMarked = false;
                     _target = 0f;
                     StopAllCoroutines();
@@ -160,7 +160,7 @@ namespace MetaMove.Demo.Kitting
                 if (!_clearedSeen && _missAt >= 0f && cell.TrayACleared) { _clearedSeen = true; _run.clear = Time.time - _missAt; }
                 Sample(f, d);
             }
-            else if (_target < 0.5f && Time.time >= _showAt)
+            else if (!_finished && Time.time >= _showAt)
             {
                 Finish();
             }
@@ -187,6 +187,7 @@ namespace MetaMove.Demo.Kitting
 
         void Finish()
         {
+            _finished = true;
             _run.total = _showAt - _t0 - (cell.Expert ? showDelayExpert : showDelay);
             _run.parts = cell.PartsPlaced;
             if (_run.minDist == float.MaxValue) _run.minDist = -1f;
@@ -236,6 +237,18 @@ namespace MetaMove.Demo.Kitting
         }
 
         void OnDestroy() => Speaking = false;
+
+        // Hand menu: the last report again, or away. It is not read out a second time.
+        public bool HasReport => _done.Count > 0;
+        public bool Showing => _target > 0.5f;
+
+        public void Toggle()
+        {
+            if (!HasReport) return;
+            if (Showing) { _target = 0f; return; }
+            _follow.placed = false;   // come up in front of the visitor, wherever they look now
+            _target = 1f;
+        }
 
         // ---------------------------------------------------------------- text
 

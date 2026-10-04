@@ -45,6 +45,7 @@ namespace MetaMove.Demo.Kitting
         public event Action<string> BeatStarted;
         // Key of the beat on the card right now (null when the card is down).
         public string Current => card != null && card.Visible ? _current : null;
+        FactoryReveal _reveal;
         bool _welcomed, _storyTold, _slowTold, _stood, _recovered, _emptyAsked, _grabTold;
         float _shownAt, _boundAt = -1f;
         Beat _beat;
@@ -133,7 +134,9 @@ namespace MetaMove.Demo.Kitting
             { _welcomed = true; _boundAt = Time.time - 0.3f; Play("welcome"); }
             float welcomeLen = Find("welcome") != null && Find("welcome").voice != null ? Find("welcome").voice.length + 4f : 14f;
             // The story follows the welcome whatever else was said in between (it queues).
-            if (_welcomed && !_storyTold && Time.time - _boundAt > 0.3f + Mathf.Max(8f, welcomeLen)) { _storyTold = true; Play("story"); Play("tracking"); }   // the how follows the why
+            if (_reveal == null) _reveal = FindAnyObjectByType<FactoryReveal>();
+            bool hallStands = _reveal == null || _reveal.Done || !_reveal.isActiveAndEnabled;
+            if (_welcomed && !_storyTold && hallStands && Time.time - _boundAt > 0.3f + Mathf.Max(8f, welcomeLen)) { _storyTold = true; Play("story"); Play("tracking"); }   // the how follows the why
 
             float f = speed != null ? speed.Factor : 1f;
             // The slow-down is the point of the demo: name it the first time it happens.

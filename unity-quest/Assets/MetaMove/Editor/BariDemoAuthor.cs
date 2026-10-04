@@ -77,6 +77,15 @@ namespace MetaMove.EditorTools
                 // Gripper on the flange, IK with orientation so the tool points down.
                 MountGripper(dst.endEffector);
 
+                // The arm's own LED rings (green in the model, like on the real GoFa) light up with
+                // the speed monitoring: green / amber / red, cyan while hand guided.
+                var ringMat = ShaderMat("ArmStatusRing", "Universal Render Pipeline/Unlit");
+                ringMat.SetColor("_BaseColor", new Color(0.30f, 0.90f, 0.52f));
+                EditorUtility.SetDirty(ringMat);
+                var led = inst.GetComponent<ArmStatusLight>();
+                if (led == null) led = inst.AddComponent<ArmStatusLight>();
+                led.ledMaterial = ringMat;
+
                 // The pinch handle on the tool in the UI accent cyan: the one thing on the arm
                 // the visitor may touch.
                 // Bigger (easier to see and to pinch) and translucent, so the gripper stays visible.
@@ -206,6 +215,14 @@ namespace MetaMove.EditorTools
             var hud = Object.FindAnyObjectByType<SafetyHud>(FindObjectsInactive.Include);
             var prox = Object.FindAnyObjectByType<ProximitySpeedController>(FindObjectsInactive.Include);
             var calib = Object.FindAnyObjectByType<QrAnchorCalibrator>(FindObjectsInactive.Include);
+            if (prox != null)
+            {
+                // the arm keeps moving at a quarter speed through the whole slow zone and only
+                // stops in the red one - otherwise it looks stopped long before the stop zone
+                Undo.RecordObject(prox, "Bari speed floor");
+                prox.slowFloor = 0.25f;
+                PrefabUtility.RecordPrefabInstancePropertyModifications(prox);
+            }
             if (hud != null)
             {
                 Undo.RecordObject(hud, "Bari HUD");
@@ -530,10 +547,7 @@ namespace MetaMove.EditorTools
             hall.GetComponent<Renderer>().sharedMaterial = hallMat;
             hall.GetComponent<Renderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
 
-            if (IncludeRoofSign)
-            {
-                reveal.roof = BuildRoofSign(frame).transform;
-            }
+            Transform roofT = IncludeRoofSign ? BuildRoofSign(frame).transform : null;
             BuildCellDetails(frame);
 
             // Extraction (tools/blender/bari/duct.py): exhaust fan in the wall with a turning rotor
@@ -548,6 +562,34 @@ namespace MetaMove.EditorTools
             conv.start = Marker("ConveyorStart", frame, new Vector3(-0.45f, 0.0f, -0.40f), 0f);
             conv.end = Marker("ConveyorEnd", frame, new Vector3(-0.45f, 0.0f, -1.55f), 0f);
             cell.conveyor = conv;
+
+            // The build-up, piece by piece (s from placement). Floor, wall and beam keep their own
+            // motions; everything else arrives here in turn. 'from' is in the parent's space.
+            reveal.floorStart = 0.3f; reveal.floorTime = 2.4f;
+            reveal.wallStart = 2.2f; reveal.wallTime = 2.2f;
+            reveal.roofStart = 6.0f; reveal.roofTime = 1.3f;   // drives the beam (roof itself goes in pieces)
+            reveal.lightsStart = 11.8f; reveal.lightsTime = 1.2f;
+            reveal.pieces.Clear();
+            void Piece(Transform t, float start, float time, Vector3 from, bool pop = false, float thud = 0f)
+            {
+                if (t == null) { Debug.LogWarning("[BariDemoAuthor] reveal: missing piece at " + start + " s"); return; }
+                reveal.pieces.Add(new FactoryReveal.Piece { t = t, start = start, time = time, from = from, pop = pop, thud = thud });
+            }
+            Transform Under(Transform root, string n) { if (root == null) return null; foreach (var t in root.GetComponentsInChildren<Transform>(true)) if (t.name == n) return t; return null; }
+            var ductT = duct.transform;
+            Piece(Under(ductT, "Duct_Housing"), 4.4f, 0.8f, new Vector3(0f, 0f, -0.35f), false, 0.35f);   // out of the wall
+            Piece(Under(ductT, "Duct_Rotor"), 5.0f, 0.5f, Vector3.zero, true);
+            Piece(Under(ductT, "Duct_Pipe"), 5.3f, 1.0f, new Vector3(0f, 1.4f, 0f), false, 0.3f);
+            Piece(Under(frame, "Conveyor"), 4.0f, 1.4f, new Vector3(2.5f, 0f, 0f), false, 0.4f);
+            Piece(Under(roofT, "Roof_Frame"), 7.0f, 1.6f, new Vector3(0f, 2.2f, 0f), false, 0.8f);
+            Piece(Under(roofT, "Roof_Chains"), 8.4f, 0.7f, new Vector3(0f, 0.9f, 0f));
+            Piece(Under(roofT, "Roof_Sign"), 8.8f, 1.1f, new Vector3(0f, 1.3f, 0f), false, 0.45f);
+            Piece(Under(roofT, "SignFace"), 8.8f, 1.1f, new Vector3(0f, 1.3f, 0f));
+            Piece(Under(roofT, "Roof_Spots"), 9.8f, 0.5f, new Vector3(0f, 0.4f, 0f));
+            Piece(Under(frame, "SignalTower"), 10.1f, 0.7f, new Vector3(0f, 0.6f, 0f), false, 0.25f);
+            Piece(Under(frame, "Det_Controller"), 10.4f, 0.6f, new Vector3(0f, 0.7f, 0f), false, 0.3f);
+            Piece(Under(frame, "Det_PC"), 10.8f, 0.5f, new Vector3(0f, 0.5f, 0f), false, 0.15f);
+            Piece(Under(frame, "Det_Cables"), 11.1f, 0.5f, new Vector3(0f, 0.4f, 0f));
         }
 
         // Roof fragment with the hanging title sign (tools/blender/bari/roof.py). Off until the

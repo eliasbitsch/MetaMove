@@ -20,6 +20,8 @@ namespace MetaMove.Safety
         [Header("Mapping (m)")]
         public float dNear = 0.6f;   // <= this -> 0 (freeze)
         public float dFar = 2.0f;    // >= this -> 1 (full speed)
+        [Tooltip("Slowest speed inside the slow zone, just outside dNear. Above 0 the arm keeps visibly moving until the stop zone is entered, then stops at once (reduced speed, then protective stop). 0 = linear down to standstill.")]
+        [Range(0f, 0.8f)] public float slowFloor = 0f;
 
         [Header("Smoothing")]
         [Range(0f, 1f)] public float emaAlpha = 0.3f;   // distance low-pass
@@ -69,6 +71,7 @@ namespace MetaMove.Safety
             {
                 _distFilt = _distFilt < 0f ? d : emaAlpha * d + (1f - emaAlpha) * _distFilt;
                 target = Mathf.Clamp01((_distFilt - dNear) / Mathf.Max(1e-4f, dFar - dNear));
+                target = Mathf.Lerp(slowFloor, 1f, target);
                 if (d <= dNear) target = 0f;   // safety on raw distance
             }
 
