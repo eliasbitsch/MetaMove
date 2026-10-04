@@ -119,6 +119,18 @@ namespace MetaMove.UI.Kit
             return Mathf.Clamp01(Mathf.Max(shaft, head) * 128f);
         }));
 
+        // Pointer: a long, slim isosceles triangle pointing right inside a thin ring - reads as
+        // "this way" at a glance and stays calm next to the rest of the UI.
+        static Sprite _pointer;
+        public static Sprite Pointer => _pointer != null ? _pointer : (_pointer = MakeSprite("UIKitPointer", 256, (x, y, r) =>
+        {
+            float circle = Mathf.Min(r - 0.86f, 0.96f - r);
+            const float tip = 0.64f, baseX = -0.44f, half = 0.27f;
+            float cos = Mathf.Cos(Mathf.Atan2(half, tip - baseX));
+            float tri = Mathf.Min((half * (tip - x) / (tip - baseX) - Mathf.Abs(y)) * cos, x - baseX);
+            return Mathf.Clamp01(Mathf.Max(circle, tri) * 128f);
+        }));
+
         delegate float Shape(float x, float y, float r);
 
         static Sprite MakeSprite(string name, int n, Shape shape)

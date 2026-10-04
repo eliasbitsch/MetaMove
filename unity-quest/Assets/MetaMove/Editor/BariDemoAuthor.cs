@@ -1017,6 +1017,16 @@ namespace MetaMove.EditorTools
             var grabbable = go.AddComponent<Oculus.Interaction.Grabbable>();
             grabbable.InjectOptionalRigidbody(rb);
             grabbable.InjectOptionalThrowWhenUnselected(false);
+            // Fixed size in the hand: absolute scale 1, whatever scale the box had when the
+            // transformer first woke (the default constraint is relative to that moment).
+            var free = go.AddComponent<Oculus.Interaction.GrabFreeTransformer>();
+            var one = new Oculus.Interaction.TransformerUtils.ConstrainedAxis { ConstrainAxis = true, AxisRange = new Oculus.Interaction.TransformerUtils.FloatRange { Min = 1f, Max = 1f } };
+            free.InjectOptionalScaleConstraints(new Oculus.Interaction.TransformerUtils.ScaleConstraints
+            {
+                ConstraintsAreRelative = false, XAxis = one, YAxis = one, ZAxis = one,
+            });
+            grabbable.InjectOptionalOneGrabTransformer(free);
+            grabbable.InjectOptionalTwoGrabTransformer(free);
 
             var hand = go.AddComponent<Oculus.Interaction.HandGrab.HandGrabInteractable>();
             hand.InjectRigidbody(rb);

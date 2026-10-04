@@ -9,9 +9,9 @@ namespace MetaMove.Demo.Kitting
     // the refill, the reserve box when the arm switches to it. Each pops in with a short
     // overshoot. Fallbacks make sure nothing the visitor needs stays hidden (refill due,
     // reserve in use, a minute gone), and an expert run shows everything from the start.
-    // A grabbable object is switched on at its full size and only its children pop: the
-    // Interaction SDK's grab transformer locks in the scale it sees on its first frame, and
-    // a box woken mid-pop would stay a fifth of its size in the hand.
+    // A grabbable object is never scaled: it simply appears. The Interaction SDK's grab
+    // transformer locks in the scale it sees on its first frame, and popping the box or its
+    // contents left it, or its gears, a fifth of their size.
     public class StagedReveal : MonoBehaviour
     {
         [Serializable]
@@ -40,8 +40,7 @@ namespace MetaMove.Demo.Kitting
         {
             if (_pop.TryGetValue(o, out var list)) return list;
             list = new List<Transform>();
-            if (o.GetComponent<Oculus.Interaction.Grabbable>() != null) foreach (Transform c in o.transform) list.Add(c);
-            else list.Add(o.transform);
+            if (o.GetComponent<Oculus.Interaction.Grabbable>() == null) list.Add(o.transform);
             foreach (var t in list) if (!_base.ContainsKey(t)) _base[t] = t.localScale;
             _pop[o] = list;
             return list;

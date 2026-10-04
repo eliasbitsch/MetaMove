@@ -232,7 +232,7 @@ namespace MetaMove.Demo.Kitting
                 _g = c.gameObject.AddComponent<CanvasGroup>();
                 _img = new GameObject("Arrow", typeof(Image)).GetComponent<Image>();
                 _img.transform.SetParent(_t, false);
-                _img.sprite = UIKit.Arrow; _img.color = UIKit.Warn; _img.raycastTarget = false;
+                _img.sprite = UIKit.Pointer; _img.color = UIKit.Warn; _img.raycastTarget = false;
                 UIKit.Stretch(_img.rectTransform);
                 _t.gameObject.SetActive(false);
             }
@@ -298,7 +298,7 @@ namespace MetaMove.Demo.Kitting
                 _text.characterSpacing = 6f;
                 _arrowImg = new GameObject("Arrow", typeof(Image)).GetComponent<Image>();
                 _arrowImg.transform.SetParent(_label, false);
-                _arrowImg.sprite = UIKit.Arrow; _arrowImg.color = color; _arrowImg.raycastTarget = false;
+                _arrowImg.sprite = UIKit.Pointer; _arrowImg.color = color; _arrowImg.raycastTarget = false;
                 _arrow = _arrowImg.transform;
                 UIKit.Place((RectTransform)_arrow, new Vector2(0.5f, 0f), new Vector2(0.5f, 0.5f), new Vector2(0f, 60f), new Vector2(90f, 90f));
                 _arrow.localRotation = Quaternion.Euler(0f, 0f, -90f);   // play triangle points down
