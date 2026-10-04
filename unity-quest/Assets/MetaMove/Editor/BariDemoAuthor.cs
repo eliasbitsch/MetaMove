@@ -217,10 +217,10 @@ namespace MetaMove.EditorTools
             var calib = Object.FindAnyObjectByType<QrAnchorCalibrator>(FindObjectsInactive.Include);
             if (prox != null)
             {
-                // the arm keeps moving at a quarter speed through the whole slow zone and only
-                // stops in the red one - otherwise it looks stopped long before the stop zone
+                // the arm keeps moving at 12 % or more through the whole slow zone and only stops
+                // in the red one (braking on a short ramp) - otherwise it looks stopped long before
                 Undo.RecordObject(prox, "Bari speed floor");
-                prox.slowFloor = 0.25f;
+                prox.slowFloor = 0.12f;
                 PrefabUtility.RecordPrefabInstancePropertyModifications(prox);
             }
             if (hud != null)
@@ -455,6 +455,10 @@ namespace MetaMove.EditorTools
             cell.trayA = Tray("TrayA", "Tray A", frame, "KLT_Blue", "bari_gear_a", mGlow,
                 GridNests(3, 4, 0.080f, 0.085f, 0f), -1);   // a little tighter: the outer row stays clear of the walls
             cell.lowAt = 6;
+            // brisk at full speed, so the slow-down when someone comes close is plain to see
+            cell.baseSpeed = 1.4f;
+            cell.acceleration = 4.5f;
+            cell.ssmBrake = 3.5f;
             cell.trayA.transform.SetPositionAndRotation(rack.picks[1].position, rack.picks[1].rotation);
             MakeCarryable(cell, cell.trayA, rack, CarryableTray.Kind.Empty, rack.picks[1]);
             AddGhostHands(cell.trayA.transform);
@@ -468,11 +472,13 @@ namespace MetaMove.EditorTools
                 new Vector3(-0.07f, 0f, -0.06f), new Vector3(-0.07f, 0f,  0.06f),
             };
             cell.trayB = Tray("TrayB", "Tray B", frame, "KLT_Orange", "bari_gear_b", mGlow, bNests, -1);
-            cell.trayBSpawn = Marker("TrayB_Spawn", frame, new Vector3(0.90f, 0f, 2.60f), 0f);
+            // trolley front left of the rack, in plain view - in the slow zone, so fetching the box
+            // shows the slow-down by itself
+            cell.trayBSpawn = Marker("TrayB_Spawn", frame, new Vector3(TrolleyX, 0f, TrolleyZ), 0f);
             cell.trayB.transform.SetPositionAndRotation(cell.trayBSpawn.position, cell.trayBSpawn.rotation);
             MakeCarryable(cell, cell.trayB, rack, CarryableTray.Kind.Supply, cell.trayBSpawn);
             AddGhostHands(cell.trayB.transform);
-            Model("bari_trolley", "Trolley", frame, new Vector3(0.90f, -FloorBelowTable, 2.60f), 0f);
+            Model("bari_trolley", "Trolley", frame, new Vector3(TrolleyX, -FloorBelowTable, TrolleyZ), 0f);
             cell.trayBPlaced = rack.entries[2];   // presenter fallback: rolls into a free lane
 
             // Stock: more blue boxes make it a working rack, not a prop. Lane 0 is theirs on
@@ -1028,6 +1034,7 @@ namespace MetaMove.EditorTools
         // Table top above the floor. The robot foot sits on the table, so the floor is
         // this far below the cell frame.
         const float FloorBelowTable = 0.80f;
+        const float TrolleyX = 1.05f, TrolleyZ = 0.95f;   // cell frame: +X is the visitor's left
 
         static Material SpriteMat(string name)
         {
@@ -1173,7 +1180,7 @@ namespace MetaMove.EditorTools
             Add("Floor", new Vector3(0f, fy - 0.05f, 0.80f), new Vector3(4.8f, 0.1f, 4.7f));
             Add("RobotTable", new Vector3(-0.15f, fy / 2f, 0f), new Vector3(1.0f, FloorBelowTable, 0.6f));
             Add("FlowRack", new Vector3(0f, fy + 0.49f, RackCenterZ), new Vector3(1.2f, 0.98f, 0.8f));
-            Add("Trolley", new Vector3(0.90f, fy / 2f, 2.60f), new Vector3(0.55f, FloorBelowTable, 0.65f));
+            Add("Trolley", new Vector3(TrolleyX, fy / 2f, TrolleyZ), new Vector3(0.55f, FloorBelowTable, 0.65f));
         }
 
         static KittingTray Tray(string name, string label, Transform parent,

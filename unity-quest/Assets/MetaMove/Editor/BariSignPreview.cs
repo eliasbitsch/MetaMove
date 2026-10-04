@@ -77,7 +77,7 @@ namespace MetaMove.EditorTools
                     var handleW = frame.TransformPoint(new Vector3(0.2f, 0.35f, 0.25f));
                     var fwdW = handleW - eye; fwdW.y = 0f; fwdW.Normalize();
                     var rightW = Vector3.Cross(Vector3.up, fwdW);
-                    var startW = eye + fwdW * 0.42f - Vector3.up * 0.18f + rightW * 0.10f;
+                    var startW = eye + fwdW * 0.60f - Vector3.up * 0.22f + rightW * 0.25f;
                     var aim = handleW - startW; aim.y = Mathf.Max(aim.y, 0f) + 0.15f * aim.magnitude;
                     ph.gameObject.SetActive(true);
                     ph.transform.rotation = Quaternion.LookRotation(aim.normalized, Vector3.up) * Quaternion.Euler(0f, 0f, 180f) * Quaternion.Euler(0f, 60f, 0f);
@@ -94,7 +94,7 @@ namespace MetaMove.EditorTools
                         System.IO.File.WriteAllBytes(System.IO.Path.Combine(OutDir, pv > 0f ? "ghost_pinch.png" : "ghost_open.png"), tex.EncodeToPNG());
                     }
                 }
-                Shot(cam, frame, new Vector3(0.90f, fy + 1.60f, 1.85f), new Vector3(0.90f, fy + 0.90f, 2.60f), "ghost_hands.png");
+                Shot(cam, frame, new Vector3(1.05f, fy + 1.60f, 2.10f), new Vector3(1.05f, fy + 0.90f, 0.95f), "ghost_hands.png");
                 Shot(cam, frame, new Vector3(0.30f, fy + 1.70f, 2.40f), new Vector3(0.55f, fy + 1.45f, -0.30f), "qr_column.png");
                 // suction bell at the end of the duct, from below and in front
                 Shot(cam, frame, new Vector3(0.35f, fy + 1.95f, 1.25f), new Vector3(1.0f, fy + 2.58f, 0.26f), "duct_bell.png");

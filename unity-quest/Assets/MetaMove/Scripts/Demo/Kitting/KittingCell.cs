@@ -68,6 +68,8 @@ namespace MetaMove.Demo.Kitting
                  "realistic cobot pick-and-place pace so the slow-down is obvious.")]
         public float baseSpeed = 0.9f;         // m/s at factor 1 (GoFa max 2.2)
         public float acceleration = 3.0f;      // m/s^2, ramps in and out of every waypoint
+        [Tooltip("m/s^2: how fast the arm brakes when the speed monitoring asks for less - quick, but a ramp, never a freeze mid-move.")]
+        public float ssmBrake = 3.5f;
         public float approachHeight = 0.12f;   // m above the grasp point
         [Tooltip("Height above the table top (TCP) for every move between tray and kit. Clears the " +
                  "KLT rim (0.26 m on the rack) with the gear hanging below the fingers.")]
@@ -736,7 +738,9 @@ namespace MetaMove.Demo.Kitting
             float dist = Vector3.Distance(ikTarget.position, p);
             float vMax = baseSpeed * F * _speedScale;
             float vBrake = Mathf.Sqrt(2f * acceleration * dist);
-            v = Mathf.Min(Mathf.Min(v + acceleration * Time.deltaTime, vMax), vBrake);
+            // up with the normal ramp; down (slow zone, stop) with a short braking ramp
+            float vSsm = v <= vMax ? Mathf.Min(v + acceleration * Time.deltaTime, vMax) : Mathf.Max(vMax, v - ssmBrake * Time.deltaTime);
+            v = Mathf.Min(vSsm, vBrake);
             ikTarget.position = Vector3.MoveTowards(ikTarget.position, p, v * Time.deltaTime);
             ikTarget.rotation = Quaternion.RotateTowards(ikTarget.rotation, rotGoal, 120f * F * Time.deltaTime);
             if ((ikTarget.position - p).sqrMagnitude > arriveTol * arriveTol) { _settle = 0f; return false; }

@@ -87,7 +87,7 @@ namespace MetaMove.Demo.Kitting
             Rect(px, size, -1.7f, -1.51f, 1.7f, -1.29f, U, V, new Color(0.55f, 0.56f, 0.58f, 0.6f), true);
             Rect(px, size, -0.65f, -0.30f, 0.35f, 0.30f, U, V, Steel, false);
             Rect(px, size, -0.62f, 0.31f, 0.62f, 1.17f, U, V, new Color(0.25f, 0.45f, 0.85f, 1f), false);
-            Rect(px, size, 0.65f, 2.30f, 1.15f, 2.90f, U, V, Steel, false);
+            Rect(px, size, 0.78f, 0.63f, 1.32f, 1.27f, U, V, Steel, false);   // trolley, front left of the rack
             Circle(px, size, U(0f), V(0f), near / span * (size - 1), Red, 2.2f);
             Circle(px, size, U(0f), V(0f), far / span * (size - 1), Amber, 2.2f);
             Disc(px, size, U(0f), V(0f), 9f, ArmGrey);   // robot base

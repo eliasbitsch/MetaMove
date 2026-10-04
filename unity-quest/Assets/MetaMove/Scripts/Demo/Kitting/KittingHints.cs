@@ -45,6 +45,10 @@ namespace MetaMove.Demo.Kitting
         // "good spot" over the box as soon as the tool is over one Teach would accept, a low
         // buzz and "move over a box" when Teach is pressed anywhere else.
         Marker _ready;
+        // big green check beside the tool while it is over a box Teach would accept
+        Canvas _check;
+        Image _checkImg;
+        float _checkT;
         AudioSource _sfx;
         AudioClip _okClip, _noClip;
         KittingTray _readyTray;
@@ -60,6 +64,13 @@ namespace MetaMove.Demo.Kitting
         {
             _what = new Marker("Hint_What", transform, font, UIKit.Warn);
             _ready = new Marker("Hint_TeachReady", transform, font, UIKit.Ok);
+            _check = UIKit.WorldCanvas(transform, "TeachCheck", new Vector2(200f, 200f), 11);
+            _check.transform.localScale = Vector3.one * (0.11f / 200f);   // 11 cm across
+            _checkImg = new GameObject("Check", typeof(Image)).GetComponent<Image>();
+            _checkImg.transform.SetParent(_check.transform, false);
+            _checkImg.sprite = CheckSprite(); _checkImg.raycastTarget = false;
+            UIKit.Stretch(_checkImg.rectTransform);
+            _check.gameObject.SetActive(false);
             _sfx = gameObject.AddComponent<AudioSource>();
             _sfx.playOnAwake = false; _sfx.spatialBlend = 0f;
             _okClip = Tone("TeachOk", new[] { 659.3f, 880f }, 0.13f, 0.5f);
@@ -116,6 +127,54 @@ namespace MetaMove.Demo.Kitting
                 _ready.Show(t.transform, 0.15f, "GOOD SPOT · PRESS TEACH", 0.46f, head);
             else _ready.Hide();
             _ready.Tick();
+
+            // the check pops up beside the tool - where the eye is while dragging
+            bool ok = t != null && cell.tcp != null;
+            if (ok != _check.gameObject.activeSelf) { _check.gameObject.SetActive(ok); _checkT = 0f; }
+            if (ok && Camera.main != null)
+            {
+                _checkT += Time.deltaTime;
+                var cam = Camera.main.transform;
+                var p = cell.tcp.position + Vector3.up * 0.14f;
+                p += (cam.position - p).normalized * 0.06f;   // a little towards the viewer, clear of the gripper
+                _check.transform.position = p;
+                _check.transform.rotation = Quaternion.LookRotation(p - cam.position, Vector3.up);
+                float pop = _checkT < 0.35f ? 1f + 0.35f * Mathf.Sin(_checkT / 0.35f * Mathf.PI) : 1f + 0.05f * Mathf.Sin((_checkT - 0.35f) * 5f);
+                _checkImg.rectTransform.localScale = Vector3.one * Mathf.Min(1f, _checkT / 0.12f) * pop;
+            }
+        }
+
+        // A green disc with a white check mark.
+        static Sprite _checkSprite;
+        static Sprite CheckSprite()
+        {
+            if (_checkSprite != null) return _checkSprite;
+            const int n = 192;
+            var tex = new Texture2D(n, n, TextureFormat.RGBA32, false) { wrapMode = TextureWrapMode.Clamp };
+            var px = new Color[n * n];
+            var a = new Vector2(-0.42f, 0.02f); var b = new Vector2(-0.12f, -0.30f); var c = new Vector2(0.45f, 0.32f);
+            var green = UIKit.Ok;
+            for (int j = 0; j < n; j++)
+                for (int i = 0; i < n; i++)
+                {
+                    var q = new Vector2((i + 0.5f) / n * 2f - 1f, (j + 0.5f) / n * 2f - 1f);
+                    float disc = Mathf.Clamp01((0.97f - q.magnitude) * n * 0.5f);
+                    float d = Mathf.Min(SegDist(q, a, b), SegDist(q, b, c));
+                    float tick = Mathf.Clamp01((0.11f - d) * n * 0.5f);
+                    var col = Color.Lerp(green, Color.white, tick);
+                    col.a = disc;
+                    px[j * n + i] = col;
+                }
+            tex.SetPixels(px);
+            tex.Apply(false, true);
+            return _checkSprite = Sprite.Create(tex, new Rect(0, 0, n, n), new Vector2(0.5f, 0.5f), 100f);
+        }
+
+        static float SegDist(Vector2 p, Vector2 a, Vector2 b)
+        {
+            var ab = b - a;
+            float t = Mathf.Clamp01(Vector2.Dot(p - a, ab) / ab.sqrMagnitude);
+            return Vector2.Distance(p, a + ab * t);
         }
 
         // Short synthesised tones: one note after the other, soft attack and release.
@@ -195,12 +254,13 @@ namespace MetaMove.Demo.Kitting
             // ghost hands on the box that is the task right now
             Ghosts(cell.trayB, !quiet && shownWhat && focus == cell.trayB.transform);
             Ghosts(cell.trayA, !quiet && shownWhat && focus == cell.trayA.transform);
-            PinchDemo(!quiet && cell.State == KittingCell.Phase.Guide && !cell.GuideHeld && cell.GuideRelay != null);
+            // the demo hand only while the tool is not yet over a box: once it is, Teach is the next step
+            PinchDemo(!quiet && cell.State == KittingCell.Phase.Guide && !cell.GuideHeld && cell.GuideRelay != null && cell.TrayUnderTool() == null);
             if (!shownWhat || quiet) _what.Hide();
             if (!shownWhere || quiet) _where.Hide();
             Announce(ref _lastWhat, shownWhat && !quiet ? _what.Label : null);
             Announce(ref _lastWhere, shownWhere && !quiet ? _where.Label : null);
-            bool demo = !quiet && cell.State == KittingCell.Phase.Guide && !cell.GuideHeld && cell.GuideRelay != null;
+            bool demo = !quiet && cell.State == KittingCell.Phase.Guide && !cell.GuideHeld && cell.GuideRelay != null && cell.TrayUnderTool() == null;
             if (demo && !_demoOn) HintShown?.Invoke("demo", "pinch");
             _demoOn = demo;
             _what.Tick(); _where.Tick();
@@ -269,7 +329,7 @@ namespace MetaMove.Demo.Kitting
             var dest = cell.trayB.Center + Vector3.up * 0.30f;
             // in front, a little right and below the eyes; the move is short and points the way
             // the handle has to go
-            var start = cam.position + fwd * 0.42f - Vector3.up * 0.18f + right * 0.10f;
+            var start = cam.position + fwd * 0.60f - Vector3.up * 0.22f + right * 0.25f;
             var way = dest - handle; way.y = 0f;
             var move = way.sqrMagnitude > 1e-4f ? way.normalized * 0.16f : right * 0.16f;
 

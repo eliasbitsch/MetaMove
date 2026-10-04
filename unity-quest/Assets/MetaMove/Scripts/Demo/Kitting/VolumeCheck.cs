@@ -76,7 +76,16 @@ namespace MetaMove.Demo.Kitting
             _canvas.enabled = _shown > 0.001f;
             if (_canvas.enabled)
             {
-                UIKit.LazyFollow(_canvas.transform, Camera.main.transform, 0.9f, -4f, 12f, 0.3f, _follow);
+                // placed once in front, then it stays put so the X can be poked; only if the
+                // visitor turns well away does it come round again
+                if (!_follow.placed) UIKit.LazyFollow(_canvas.transform, Camera.main.transform, 0.9f, -4f, 12f, 0.3f, _follow);
+                else
+                {
+                    var cam = Camera.main.transform;
+                    var to = _canvas.transform.position - cam.position; to.y = 0f;
+                    var f = cam.forward; f.y = 0f;
+                    if (to.sqrMagnitude > 1e-4f && f.sqrMagnitude > 1e-4f && Vector3.Angle(to, f) > 55f) _follow.placed = false;
+                }
                 _draw = Mathf.MoveTowards(_draw, 1f, Time.unscaledDeltaTime / 0.6f);
                 Animate(Mathf.Repeat(Time.unscaledTime, 2f));
                 if (_shown > 0.9f && Poked(_close)) { _dismissed = true; Debug.Log("[Volume] hint closed"); }
