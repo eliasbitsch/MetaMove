@@ -451,7 +451,7 @@ namespace MetaMove.EditorTools
             // Two full kits: the visitor watches the line run, and the refill is asked for at
             // half (KittingCell.lowAt), while the arm is still working.
             cell.trayA = Tray("TrayA", "Tray A", frame, "KLT_Blue", "bari_gear_a", mGlow,
-                GridNests(3, 4, 0.085f, 0.09f, 0f), -1);
+                GridNests(3, 4, 0.080f, 0.085f, 0f), -1);   // a little tighter: the outer row stays clear of the walls
             cell.lowAt = 6;
             cell.trayA.transform.SetPositionAndRotation(rack.picks[1].position, rack.picks[1].rotation);
             MakeCarryable(cell, cell.trayA, rack, CarryableTray.Kind.Empty, rack.picks[1]);

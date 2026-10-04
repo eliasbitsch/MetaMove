@@ -558,6 +558,8 @@ namespace MetaMove.Demo.Kitting
             // gear never cut through a box wall.
             yield return MoveOver(n);
             yield return MoveAlong(n, up);
+            // pre-close above the box: the open 2F-85 is wider than the gap to the box wall
+            if (_gripper != null) _gripper.Approach();
             yield return MoveAlong(n, at);
             if (_gripper != null) _gripper.CloseOnPart();
             yield return Dwell(gripDwell);
@@ -602,12 +604,14 @@ namespace MetaMove.Demo.Kitting
             float at = toolOffset + tray.graspHeight;
             yield return MoveOver(n);
             yield return MoveAlong(n, up);
+            if (_gripper != null) _gripper.Approach();
             yield return MoveAlong(n, at);
             if (_gripper != null) _gripper.CloseEmpty();   // fingers close all the way: nothing there
             yield return Dwell(gripDwell * 2f);
             Emit("miss", tray.label + " is empty");
-            if (_gripper != null) _gripper.Open();
+            if (_gripper != null) _gripper.Approach();   // open only as far as the box allows
             yield return MoveAlong(n, up);
+            if (_gripper != null) _gripper.Open();
             yield return MoveOver(n);
             State = Phase.Running;
         }
