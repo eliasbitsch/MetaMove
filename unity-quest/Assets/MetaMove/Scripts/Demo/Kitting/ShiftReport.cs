@@ -261,18 +261,18 @@ namespace MetaMove.Demo.Kitting
 
         void Fill(Run r, Run p)
         {
-            _title.text = "SHIFT REPORT";
+            _title.text = "HOW THE CELL WORKED WITH YOU";
             _sub.text = "Run " + r.number + (r.expert ? "  ·  expert, no hints" : "  ·  guided");
             var lines = new[]
             {
                 new[] { "Shift completed in", V(S(r.total), p != null ? S(p.total) : null) },
                 new[] { "Closest to the arm", V(M(r.minDist), p != null ? M(p.minDist) : null) },
                 new[] { "Arm slowed / stopped", V(S(r.slow) + " / " + S(r.stop), p != null ? S(p.slow) + " / " + S(p.stop) : null) },
-                new[] { "Production lost to proximity", V(S(r.lost) + "  ~ " + r.LostParts.ToString("0.0", Inv) + " parts", p != null ? S(p.lost) : null) },
+                new[] { "Slowed down for you", V(S(r.lost) + "  ~ " + r.LostParts.ToString("0.0", Inv) + " parts", p != null ? S(p.lost) : null) },
                 new[] { "New batch brought in", V(S(r.refill), p != null ? S(p.refill) : null) },
                 new[] { "Empty box cleared", V(S(r.clear), p != null ? S(p.clear) : null) },
-                new[] { "Robot taught in", V(S(r.teach), p != null ? S(p.teach) : null) },
-                new[] { "Your pinch was off by", V(r.teachOffset < 0f ? "--" : (r.teachOffset * 100f).ToString("0.0", Inv) + " cm, the robot corrected it",
+                new[] { "New position learned in", V(S(r.teach), p != null ? S(p.teach) : null) },
+                new[] { "Fine-tuned by the robot", V(r.teachOffset < 0f ? "--" : (r.teachOffset * 100f).ToString("0.0", Inv) + " cm",
                                                    p != null && p.teachOffset >= 0f ? (p.teachOffset * 100f).ToString("0.0", Inv) + " cm" : null) },
             };
             for (int i = 0; i < _rows.Count; i++)
@@ -281,8 +281,8 @@ namespace MetaMove.Demo.Kitting
                 _rows[i][1].text = i < lines.Length ? lines[i][1] : "";
             }
             _footer.text = r.expert || p != null
-                ? "Logged as run " + r.number + ". Same task, second time: what stayed?"
-                : "Logged as run " + r.number + ". Try it again in expert mode: hand menu, Expert.";
+                ? "Run " + r.number + ". Same task, second time: what came easier?"
+                : "Run " + r.number + ". Want another go? Hand menu, Expert: no hints.";
         }
 
         void Build()
@@ -299,7 +299,8 @@ namespace MetaMove.Demo.Kitting
 
             _title = UIKit.Text("Title", root, font, 40f, UIKit.Accent, TextAlignmentOptions.Left, FontStyles.Bold);
             UIKit.Place(_title.rectTransform, new Vector2(0f, 1f), new Vector2(0f, 1f), new Vector2(44f, -34f), new Vector2(ColW - 88f, 50f));
-            _title.characterSpacing = 8f;
+            _title.characterSpacing = 4f;
+            _title.enableAutoSizing = true; _title.fontSizeMin = 28f; _title.fontSizeMax = 40f;
             _sub = UIKit.Text("Sub", root, font, 26f, UIKit.TextLo, TextAlignmentOptions.Left);
             UIKit.Place(_sub.rectTransform, new Vector2(0f, 1f), new Vector2(0f, 1f), new Vector2(44f, -86f), new Vector2(ColW - 88f, 36f));
 

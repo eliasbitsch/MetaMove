@@ -50,34 +50,34 @@ The line runs again from the box you just showed it, at full speed now that you 
 # pace line, outro. No numbers in the voice - they are on the card.
 
 [report_intro]
-That's how you performed.
+Here is how the cell worked with you.
 
 [report_far]
-You kept your distance the whole time. The arm never had to slow down for you. Efficient, if a little cautious.
+You gave the arm plenty of room, so it could work at full speed the whole time.
 
 [report_slowed]
-You came close enough to slow the arm down, but never close enough to stop it. Textbook.
+Whenever you came closer, the arm slowed down for you, and picked up speed again as you stepped back. That is the safety layer at work.
 
 [report_stopped]
-At one point you got close enough to stop the arm completely. It waited. It did not complain. Much.
+At one point you came close enough for the arm to stop. It waited patiently. Robots are good at that.
 
 [report_pinch_exact]
-Your pinch was almost spot on. The robot barely had to correct you. Don't let it go to your head.
+You showed it the spot almost exactly. The robot only fine-tuned the last few millimetres.
 
 [report_pinch_close]
-You didn't place it exactly, but the machine took over the last few centimetres. That is the whole idea.
+You showed it roughly where, and the robot worked out the last few centimetres. That is the whole idea: you point, it does the precise part.
 
 [report_pinch_rough]
-Your pinch was, let's say, generous. The machine took it from there. That is also the idea.
+You showed it the general direction, and the robot found the exact spot on its own. Roughly is all it needs.
 
 [report_teach_slow]
-And you took your time to look around. Fair enough. It's not every day a factory grows out of the floor.
+No rush on the teaching. It's not every day a factory grows out of the floor.
 
 [report_teach_fast]
-And you were quick about it.
+And it learned the new position in no time.
 
 [report_outro]
-In short: the line kept running, you were never in danger, and you taught a robot without a line of code. Try it once more in expert mode, without the hints.
+In short: the line kept running, you were safe the whole time, and you taught a robot without writing a single line of code. If you like, try it once more in expert mode, without the hints.
 
 [report_outro_expert]
-Same task, no help this time. Compare it with your first run. Whatever is better now, that is what stayed.
+Same task, no hints this time. Next to each number you see your first run. Whatever came easier now, that is what you learned.
