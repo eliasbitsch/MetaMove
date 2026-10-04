@@ -41,6 +41,14 @@ namespace MetaMove.Demo.Kitting
         bool _demoOn;
 
         Marker _what, _where;
+        // Teach feedback, also in freestyle (where the other hints are off): a chime and a green
+        // "good spot" over the box as soon as the tool is over one Teach would accept, a low
+        // buzz and "move over a box" when Teach is pressed anywhere else.
+        Marker _ready;
+        AudioSource _sfx;
+        AudioClip _okClip, _noClip;
+        KittingTray _readyTray;
+        float _failUntil = -1f;
         Canvas _pinchTag;
         TextMeshProUGUI _pinchText;
         FlyArrow _arrow;
@@ -51,6 +59,12 @@ namespace MetaMove.Demo.Kitting
         void Start()
         {
             _what = new Marker("Hint_What", transform, font, UIKit.Warn);
+            _ready = new Marker("Hint_TeachReady", transform, font, UIKit.Ok);
+            _sfx = gameObject.AddComponent<AudioSource>();
+            _sfx.playOnAwake = false; _sfx.spatialBlend = 0f;
+            _okClip = Tone("TeachOk", new[] { 659.3f, 880f }, 0.13f, 0.5f);
+            _noClip = Tone("TeachNo", new[] { 196f, 165f }, 0.16f, 0.6f);
+            if (cell != null) cell.Cue += OnCue;
             _where = new Marker("Hint_Where", transform, font, UIKit.Accent);
             _arrow = new FlyArrow(transform);
             // white caption that travels with the demo hand
@@ -74,8 +88,57 @@ namespace MetaMove.Demo.Kitting
             _pinchRay.enabled = false;
         }
 
+        void OnDestroy() { if (cell != null) cell.Cue -= OnCue; }
+
+        void OnCue(string key)
+        {
+            if (key != "teach_fail") return;
+            _failUntil = Time.time + 2.2f;
+            if (_sfx != null) _sfx.PlayOneShot(_noClip, 0.8f);
+        }
+
+        void TeachFeedback()
+        {
+            if (_ready == null) return;
+            var head = Camera.main != null ? Camera.main.transform.position : Vector3.zero;
+            bool guiding = cell != null && cell.IsBound && cell.State == KittingCell.Phase.Guide;
+            var t = guiding ? cell.TrayUnderTool() : null;
+            if (t != _readyTray)
+            {
+                if (t != null && _sfx != null) _sfx.PlayOneShot(_okClip, 0.7f);
+                _readyTray = t;
+            }
+            bool freestyle = cell != null && cell.Mode != KittingCell.Freestyle.None;
+            if (guiding && t == null && Time.time < _failUntil && cell.tcp != null)
+                _ready.Show(cell.tcp, 0.10f, "MOVE OVER A BOX", 0.14f, head);
+            else if (t != null && freestyle)
+                _ready.Show(t.transform, 0.15f, "GOOD SPOT · PRESS TEACH", 0.46f, head);
+            else _ready.Hide();
+            _ready.Tick();
+        }
+
+        // Short synthesised tones: one note after the other, soft attack and release.
+        static AudioClip Tone(string name, float[] notes, float noteLen, float amp)
+        {
+            int rate = AudioSettings.outputSampleRate > 0 ? AudioSettings.outputSampleRate : 48000;
+            int per = (int)(rate * noteLen), n = per * notes.Length + rate / 10;
+            var data = new float[n];
+            for (int k = 0; k < notes.Length; k++)
+                for (int i = 0; i < per + rate / 10 && k * per + i < n; i++)
+                {
+                    float t = i / (float)rate;
+                    float env = Mathf.Min(1f, t / 0.008f) * Mathf.Exp(-t * 9f);
+                    float w = Mathf.Sin(2f * Mathf.PI * notes[k] * t) + 0.25f * Mathf.Sin(4f * Mathf.PI * notes[k] * t);
+                    data[k * per + i] += amp * env * w * 0.8f;
+                }
+            var clip = AudioClip.Create(name, n, 1, rate, false);
+            clip.SetData(data, 0);
+            return clip;
+        }
+
         void LateUpdate()
         {
+            TeachFeedback();
             if (_what == null || cell == null || !cell.IsBound || cell.Expert || ShiftReport.RunReported || Camera.main == null) { Hide(); return; }
             if (_boundAt < 0f) _boundAt = Time.time;
             var head = Camera.main.transform.position;
