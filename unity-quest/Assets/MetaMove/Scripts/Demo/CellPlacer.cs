@@ -166,7 +166,9 @@ namespace MetaMove.Demo
             }
 #endif
             _phase = Phase.Placed;
-            Debug.Log("[CellPlacer] cell placed at " + floorPoint.ToString("F2") + " yaw " + rot.eulerAngles.y.ToString("F0"));
+            Debug.Log("[CellPlacer] cell placed at " + floorPoint.ToString("F2") + " yaw " + rot.eulerAngles.y.ToString("F0") +
+                      " head y " + (head != null ? head.position.y.ToString("F2") : "?") +
+                      " tracking y " + (head != null && head.parent != null ? head.parent.position.y.ToString("F2") : "?"));
         }
 
 #if UNITY_ANDROID && !UNITY_EDITOR
@@ -199,10 +201,30 @@ namespace MetaMove.Demo
         // Hand menu "Place": forget the saved anchor and place the cell again.
         public void Replace() => ForgetAndReplace();
 
+        // On the headset the whole app restarts: a reloaded scene came back with the tracking
+        // origin shifted (the cell looked smaller and sunk into the floor), a fresh start is
+        // exactly the first launch. The editor just reloads the scene.
         void ForgetAndReplace()
         {
             PlayerPrefs.DeleteKey(PrefKey);
             PlayerPrefs.Save();
+#if UNITY_ANDROID && !UNITY_EDITOR
+            Debug.Log("[CellPlacer] anchor forgotten - restarting the app to place again");
+            try
+            {
+                using (var player = new AndroidJavaClass("com.unity3d.player.UnityPlayer"))
+                using (var activity = player.GetStatic<AndroidJavaObject>("currentActivity"))
+                using (var pm = activity.Call<AndroidJavaObject>("getPackageManager"))
+                using (var intent = pm.Call<AndroidJavaObject>("getLaunchIntentForPackage", activity.Call<string>("getPackageName")))
+                {
+                    intent.Call<AndroidJavaObject>("addFlags", 0x10008000);   // NEW_TASK | CLEAR_TASK
+                    activity.Call("startActivity", intent);
+                }
+                using (var sys = new AndroidJavaClass("java.lang.System")) sys.CallStatic("exit", 0);
+                return;
+            }
+            catch (System.Exception e) { Debug.LogWarning("[CellPlacer] restart failed, reloading the scene: " + e.Message); }
+#endif
             Debug.Log("[CellPlacer] anchor forgotten - reloading to place again");
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
