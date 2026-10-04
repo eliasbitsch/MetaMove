@@ -69,14 +69,17 @@ namespace MetaMove.Demo.Kitting
         void Awake()
         {
             Capture();
-            // Test switch: a file 'no_floor' in the app's files folder hides the factory floor
-            // slab - the real floor shows, the zone rings stay.
-            //   adb shell touch /sdcard/Android/data/com.MetaMove.Bari/files/no_floor
-            if (floorIsland != null && System.IO.File.Exists(System.IO.Path.Combine(Application.persistentDataPath, "no_floor")))
+            // The real floor shows by default: the factory floor slab is hidden, the zone rings
+            // stay. It is back for recordings (record_mode: no passthrough in a capture, the
+            // cell would float on black) or on request:
+            //   adb shell touch /sdcard/Android/data/com.MetaMove.Bari/files/with_floor
+            var dir = Application.persistentDataPath;
+            bool slab = System.IO.File.Exists(System.IO.Path.Combine(dir, "with_floor")) || System.IO.File.Exists(System.IO.Path.Combine(dir, "record_mode"));
+            if (floorIsland != null && !slab)
             {
                 foreach (var r in floorIsland.GetComponentsInChildren<Renderer>(true)) r.enabled = false;
                 floorIsland = null;   // nothing to animate
-                Debug.Log("[FactoryReveal] no_floor: factory floor hidden");
+                Debug.Log("[FactoryReveal] real floor: factory floor slab hidden");
             }
         }
 

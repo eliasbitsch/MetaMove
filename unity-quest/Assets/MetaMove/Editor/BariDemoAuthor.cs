@@ -291,11 +291,17 @@ namespace MetaMove.EditorTools
             hudGo.transform.SetParent(root.transform, false);
             var bhud = hudGo.AddComponent<BariHud>();
             bhud.cell = cell; bhud.speed = prox; bhud.font = inter;
-            bhud.mount = HudStand(frame);
+            // compact head-up display in the lower right of the view (the paper's HUD); the stand
+            // beside the cell keeps the story card
+            var standMount = HudStand(frame);
+            bhud.mount = null;
+            bhud.compact = true;
+            bhud.distance = 0.75f; bhud.elevation = -38f; bhud.azimuth = 24f;
+            bhud.worldWidth = 0.25f;   // gauge ~8 cm across
             var cardGo = new GameObject("StoryCard");
             cardGo.transform.SetParent(root.transform, false);
             var card = cardGo.AddComponent<MetaMove.UI.Kit.StoryCard>();
-            card.mount = bhud.mount.parent.Find("CardMount");   // under the speed panel, on the same stand
+            card.mount = standMount.parent.Find("CardMount");   // on the stand beside the cell
             card.font = inter;
             card.mediaSlot = false;   // text only, like game subtitles
             var story = root.AddComponent<StoryDirector>();
@@ -865,7 +871,7 @@ namespace MetaMove.EditorTools
             // the story card under it: 1.0 m wide, top edge a hand below the speed panel
             var card = new GameObject("CardMount").transform;
             card.SetParent(stand, false);
-            card.localPosition = at + Vector3.down * 0.40f;
+            card.localPosition = at + Vector3.down * 0.25f;   // about eye height: the speed panel moved into the HUD
             card.localRotation = mount.localRotation;
             return mount;
         }

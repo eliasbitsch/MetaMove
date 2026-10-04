@@ -23,6 +23,10 @@ namespace MetaMove.Demo.Kitting
         public TMP_FontAsset font;
 
         public float distance = 0.95f;
+        [Tooltip("Degrees to the right of straight ahead (head-following only).")]
+        public float azimuth = 0f;
+        [Tooltip("Gauge on top, metres and zone under it - a small head-up display for the lower periphery.")]
+        public bool compact = false;
         public float elevation = -33f;   // degrees below the horizon, under the story card
         public float worldWidth = 0.306f;   // head-following: same element size as the wider HUD with the status pill (0.50 m over 980)
         [Tooltip("Fixed place in the cell. Empty: follows the head.")]
@@ -41,7 +45,7 @@ namespace MetaMove.Demo.Kitting
 
         void Build()
         {
-            _canvas = UIKit.WorldCanvas(transform, "BariHudCanvas", new Vector2(W, H), 6);
+            _canvas = UIKit.WorldCanvas(transform, "BariHudCanvas", new Vector2(W, compact ? 360f : H), 6);
             var root = (RectTransform)_canvas.transform;
             _canvas.transform.localScale = Vector3.one * (worldWidth / W);
             if (mount != null)
@@ -65,7 +69,7 @@ namespace MetaMove.Demo.Kitting
 
             // --- speed gauge (centre)
             var gauge = UIKit.Panel("Gauge", ssm.transform, UIKit.Glass, 95f);
-            UIKit.Place(gauge.rectTransform, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(GaugeX, 0f), new Vector2(190f, 190f));
+            UIKit.Place(gauge.rectTransform, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), compact ? new Vector2(0f, 70f) : new Vector2(GaugeX, 0f), new Vector2(190f, 190f));
             _gaugeTrack = Radial("Track", gauge.transform, new Color(1f, 1f, 1f, 0.10f), 1f);
             _gaugeFill = Radial("Fill", gauge.transform, UIKit.Ok, 0f);
             _pct = UIKit.Text("Pct", gauge.transform, font, 54f, UIKit.TextHi, TextAlignmentOptions.Center, FontStyles.Bold);
@@ -77,7 +81,7 @@ namespace MetaMove.Demo.Kitting
 
             // --- distance (right)
             var dp = UIKit.Panel("Distance", ssm.transform, UIKit.Glass, 44f);
-            UIKit.Place(dp.rectTransform, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(DistX, 0f), new Vector2(380f, 150f));
+            UIKit.Place(dp.rectTransform, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), compact ? new Vector2(0f, -100f) : new Vector2(DistX, 0f), compact ? new Vector2(300f, 120f) : new Vector2(380f, 150f));
             _dist = UIKit.Text("Metres", dp.transform, font, 50f, UIKit.TextHi, TextAlignmentOptions.MidlineRight, FontStyles.Bold);
             UIKit.Place(_dist.rectTransform, new Vector2(1f, 0.5f), new Vector2(1f, 0.5f), new Vector2(-36f, 18f), new Vector2(300f, 60f));
             _zone = UIKit.Text("Zone", dp.transform, font, 24f, UIKit.TextLo, TextAlignmentOptions.MidlineRight);
@@ -85,6 +89,15 @@ namespace MetaMove.Demo.Kitting
             _zone.characterSpacing = 4f;
             _zoneBar = UIKit.Panel("ZoneBar", dp.transform, UIKit.Ok, 4f, 0f, false);
             UIKit.Place(_zoneBar.rectTransform, new Vector2(0f, 0.5f), new Vector2(0f, 0.5f), new Vector2(28f, 0f), new Vector2(8f, 96f));
+            if (compact)
+            {
+                // metres and zone centred under the gauge
+                _dist.alignment = TextAlignmentOptions.Center; _zone.alignment = TextAlignmentOptions.Center;
+                UIKit.Place(_dist.rectTransform, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(6f, 18f), new Vector2(260f, 60f));
+                UIKit.Place(_zone.rectTransform, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(6f, -30f), new Vector2(260f, 36f));
+                UIKit.Fit(_zone, 16f, 4f);
+                UIKit.Place(_zoneBar.rectTransform, new Vector2(0f, 0.5f), new Vector2(0f, 0.5f), new Vector2(20f, 0f), new Vector2(8f, 80f));
+            }
         }
 
         Image Radial(string name, Transform parent, Color c, float fill)
@@ -114,7 +127,7 @@ namespace MetaMove.Demo.Kitting
                     _canvas.transform.rotation = Quaternion.Slerp(_canvas.transform.rotation,
                         Quaternion.LookRotation(to.normalized, Vector3.up), 1f - Mathf.Exp(-Time.deltaTime / 0.6f));
             }
-            else UIKit.LazyFollow(_canvas.transform, Camera.main.transform, distance, elevation, 18f, 0.25f, _follow);
+            else UIKit.LazyFollow(_canvas.transform, Camera.main.transform, distance, elevation, 18f, 0.25f, _follow, azimuth);
 
             bool ssmActive = cell == null || (cell.State != KittingCell.Phase.Guide && cell.State != KittingCell.Phase.Align);
             _ssmShown = Mathf.MoveTowards(_ssmShown, ssmActive ? 1f : 0f, Time.deltaTime / 0.25f);
