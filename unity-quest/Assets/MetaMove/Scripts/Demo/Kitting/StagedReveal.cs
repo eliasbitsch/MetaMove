@@ -9,6 +9,9 @@ namespace MetaMove.Demo.Kitting
     // the refill, the reserve box when the arm switches to it. Each pops in with a short
     // overshoot. Fallbacks make sure nothing the visitor needs stays hidden (refill due,
     // reserve in use, a minute gone), and an expert run shows everything from the start.
+    // A grabbable object is switched on at its full size and only its children pop: the
+    // Interaction SDK's grab transformer locks in the scale it sees on its first frame, and
+    // a box woken mid-pop would stay a fifth of its size in the hand.
     public class StagedReveal : MonoBehaviour
     {
         [Serializable]
@@ -29,6 +32,25 @@ namespace MetaMove.Demo.Kitting
         public float showAllAfter = 75f;
 
         float _since = -1f;
+        readonly Dictionary<Transform, Vector3> _base = new Dictionary<Transform, Vector3>();
+        readonly Dictionary<GameObject, List<Transform>> _pop = new Dictionary<GameObject, List<Transform>>();
+
+        // The transforms that pop for an object, with their authored scales remembered once.
+        List<Transform> Pop(GameObject o)
+        {
+            if (_pop.TryGetValue(o, out var list)) return list;
+            list = new List<Transform>();
+            if (o.GetComponent<Oculus.Interaction.Grabbable>() != null) foreach (Transform c in o.transform) list.Add(c);
+            else list.Add(o.transform);
+            foreach (var t in list) if (!_base.ContainsKey(t)) _base[t] = t.localScale;
+            _pop[o] = list;
+            return list;
+        }
+
+        void SetPop(GameObject o, float s)
+        {
+            foreach (var t in Pop(o)) t.localScale = _base[t] * s;
+        }
 
         void OnEnable()
         {
@@ -55,7 +77,7 @@ namespace MetaMove.Demo.Kitting
             foreach (var g in groups)
             {
                 g.shown = expert; g.t = expert ? 1f : 0f;
-                foreach (var o in g.objects) if (o != null) { o.SetActive(expert); o.transform.localScale = Vector3.one; }
+                foreach (var o in g.objects) if (o != null) { SetPop(o, 1f); o.SetActive(expert); }
             }
         }
 
@@ -63,7 +85,7 @@ namespace MetaMove.Demo.Kitting
         {
             if (g.shown) return;
             g.shown = true; g.t = 0f;
-            foreach (var o in g.objects) if (o != null) { o.transform.localScale = Vector3.one * 0.001f; o.SetActive(true); }
+            foreach (var o in g.objects) if (o != null) { SetPop(o, 0.001f); o.SetActive(true); }
         }
 
         void Update()
@@ -79,7 +101,7 @@ namespace MetaMove.Demo.Kitting
                 if (!g.shown || g.t >= 1f) continue;
                 g.t = Mathf.Min(1f, g.t + Time.deltaTime / popTime);
                 float s = EaseOutBack(g.t);
-                foreach (var o in g.objects) if (o != null) o.transform.localScale = Vector3.one * Mathf.Max(0.001f, s);
+                foreach (var o in g.objects) if (o != null) SetPop(o, Mathf.Max(0.001f, s));
             }
         }
 
