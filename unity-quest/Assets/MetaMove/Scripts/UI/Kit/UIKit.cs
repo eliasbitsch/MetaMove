@@ -178,9 +178,13 @@ namespace MetaMove.UI.Kit
             }
             var cur = panel.position - head.position;
             float off = Vector3.Angle(new Vector3(cur.x, 0f, cur.z), fwd);
+            // the height too: tracking drift (or standing up, crouching) would otherwise carry a
+            // resting panel slowly up or down, out of its place under the view
+            float offV = Vector3.Angle(cur, dir);
+            float offEl = Mathf.Abs(Mathf.Asin(Mathf.Clamp(cur.normalized.y, -1f, 1f)) - Mathf.Asin(Mathf.Clamp(dir.y, -1f, 1f))) * Mathf.Rad2Deg;
             float dd = Mathf.Abs(cur.magnitude - distance);
-            if (!st.following && (off > deadzoneDeg || dd > 0.20f)) st.following = true;
-            if (st.following && off < 2f && dd < 0.03f) { st.following = false; st.velocity = Vector3.zero; }
+            if (!st.following && (off > deadzoneDeg || offEl > 6f || dd > 0.20f)) st.following = true;
+            if (st.following && offV < 2f && dd < 0.03f) { st.following = false; st.velocity = Vector3.zero; }
             if (st.following)
                 panel.position = Vector3.SmoothDamp(panel.position, goal, ref st.velocity, Mathf.Max(0.05f, followTime));
             var look = panel.position - head.position; look.y = 0f;

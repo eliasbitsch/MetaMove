@@ -239,10 +239,43 @@ namespace MetaMove.Demo
             Rect(_ghost.transform, new Vector3(0f, 0f, 0.74f), new Vector2(1.24f, 0.86f), new Color(0.4f, 0.9f, 1f));    // flow rack
             Circle(_ghost.transform, 0.6f, new Color(0.95f, 0.25f, 0.22f), 0.02f);
             Circle(_ghost.transform, 2.0f, new Color(1f, 0.62f, 0.1f), 0.02f);
+            // where the factory wall will stand: line it up with a real wall, or keep it clear of one
+            WallGhost(_ghost.transform, -1.29f, 1.70f, 2.90f, new Color(0.4f, 0.9f, 1f, 0.9f));
+            // where the visitor is meant to stand: step into the white circle, then confirm
+            var spot = Circle(_ghost.transform, 0.35f, new Color(1f, 1f, 1f, 0.95f), 0.035f);
+            spot.transform.localPosition = new Vector3(VisitorSpot.x, 0.01f, VisitorSpot.y);
             _ringLine = Circle(_ghost.transform, 0.18f, Color.white, 0.03f);
             _ring = _ringLine.transform;
             _ring.localPosition = new Vector3(0f, 0.01f, 1.6f);   // progress ring on the user's side
             UpdateRing(0f);
+        }
+
+        // The visitor's place in the cell frame (x, z): in front of the rack, beside the trolley.
+        static readonly Vector2 VisitorSpot = new Vector2(0.30f, 2.45f);
+
+        // Upright outline of the wall at cell z, half-width hx, height h, with a few uprights so
+        // it reads as a surface.
+        void WallGhost(Transform parent, float z, float hx, float h, Color col)
+        {
+            var go = new GameObject("WallGhost");
+            go.transform.SetParent(parent, false);
+            var pts = new System.Collections.Generic.List<Vector3>
+            {
+                new Vector3(-hx, 0f, z), new Vector3(hx, 0f, z), new Vector3(hx, h, z), new Vector3(-hx, h, z), new Vector3(-hx, 0f, z)
+            };
+            var lr = go.AddComponent<LineRenderer>();
+            lr.useWorldSpace = false; lr.loop = false; lr.widthMultiplier = 0.025f;
+            lr.sharedMaterial = ghostMaterial; lr.startColor = lr.endColor = col;
+            lr.positionCount = pts.Count; lr.SetPositions(pts.ToArray());
+            for (int i = 1; i < 4; i++)
+            {
+                float x = -hx + i * hx * 2f / 4f;
+                var u = new GameObject("Upright").AddComponent<LineRenderer>();
+                u.transform.SetParent(go.transform, false);
+                u.useWorldSpace = false; u.widthMultiplier = 0.012f; u.sharedMaterial = ghostMaterial;
+                var c = col; c.a *= 0.5f; u.startColor = u.endColor = c;
+                u.positionCount = 2; u.SetPositions(new[] { new Vector3(x, 0f, z), new Vector3(x, h, z) });
+            }
         }
 
         LineRenderer Line(Transform parent, string name, Color c, float w)
