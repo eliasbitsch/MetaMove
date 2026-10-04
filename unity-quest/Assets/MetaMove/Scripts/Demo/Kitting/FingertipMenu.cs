@@ -9,14 +9,14 @@ namespace MetaMove.Demo.Kitting
 {
     // Palm-up menu on the left hand, poked with the right index finger.
     //
-    //   [ Demo | Auto | Free ]              (gear)    mode, one tap; gear = calibrate room
+    //   [ Demo | Auto | Freestyle ]         (gear)    mode, one tap; gear = calibrate room
     //      (o)        (o)        (o)                  at most three round buttons with icon
     //     left       middle    Restart                and label - only what makes sense now
     //
     //   Demo    Teach (only while the arm waits to be shown a box, pulses when the spot is
     //           right) - Report (once there is one) - Restart
     //   Auto    the line just runs to show the speed scaling - Restart
-    //   Free    Guide / Teach here - Home (always: if the arm got tangled, it goes home) - Restart
+    //   Freestyle  Guide / Teach here - Home (always: if the arm got tangled, it goes home) - Restart
     //
     // Restart and calibrate ask "Sure?" first. It is there when you look for it and gone when
     // you work, so it never covers the cell.
@@ -99,7 +99,7 @@ namespace MetaMove.Demo.Kitting
             // mode switch: one track, three segments
             var track = UIKit.Panel("ModeTrack", root, new Color(1f, 1f, 1f, 0.06f), 32f, 0f, false);
             UIKit.Place(track.rectTransform, new Vector2(0f, 1f), new Vector2(0f, 1f), new Vector2(24f, -22f), new Vector2(462f, 66f));
-            string[] segNames = { "Demo", "Auto", "Free" };   // "Teach" stays the button's word only
+            string[] segNames = { "Demo", "Auto", "Freestyle" };   // "Teach" stays the button's word only
             for (int i = 0; i < 3; i++)
             {
                 int k = i;
@@ -110,6 +110,7 @@ namespace MetaMove.Demo.Kitting
                 h.label = UIKit.Text("Label", h.rt, font, 26f, UIKit.TextHi, TextAlignmentOptions.Center, FontStyles.Bold);
                 UIKit.Stretch(h.label.rectTransform);
                 h.label.text = segNames[i];
+                UIKit.Fit(h.label, 18f, 6f);
                 _seg[i] = h;
             }
 
@@ -268,7 +269,7 @@ namespace MetaMove.Demo.Kitting
             h.rt.localScale = Vector3.one;
         }
 
-        // Test hook for the Editor / Simulator: press by label ("Demo", "Auto", "Free", "Teach", "Teach here",
+        // Test hook for the Editor / Simulator: press by label ("Demo", "Auto", "Freestyle", "Teach", "Teach here",
         // "Guide", "Home", "Report", "Restart", "Calibrate").
         public void Press(string name)
         {
