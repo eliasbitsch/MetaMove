@@ -277,6 +277,7 @@ namespace MetaMove.EditorTools
             cardGo.transform.SetParent(root.transform, false);
             var card = cardGo.AddComponent<MetaMove.UI.Kit.StoryCard>();
             card.font = inter;
+            card.mediaSlot = false;   // text only, like game subtitles
             var story = root.AddComponent<StoryDirector>();
             story.cell = cell; story.speed = prox; story.card = card;
             story.beats = StoryDirector.DefaultBeats();

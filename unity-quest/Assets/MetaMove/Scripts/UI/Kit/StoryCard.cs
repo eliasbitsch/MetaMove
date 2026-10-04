@@ -17,15 +17,17 @@ namespace MetaMove.UI.Kit
     {
         public TMP_FontAsset font;
         [Header("Placement")]
-        public float distance = 1.15f;
-        public float elevation = 16f;       // degrees above the horizon: centred, above the robot
+        public float distance = 1.0f;
+        public float elevation = -12f;      // like game subtitles: straight ahead, just below the eye line
         public float azimuth = 0f;          // straight ahead, where the eye already is
         public float worldWidth = 0.56f;
-        public float deadzone = 14f;
-        public float followTime = 0.35f;
+        public float deadzone = 7f;          // small: the card stays with the view
+        public float followTime = 0.3f;
         public float fadeTime = 0.2f;
         [Header("Media")]
         public bool showPlaceholder = true;
+        [Tooltip("Off: text only - no picture/clip slot, the card is just title and caption.")]
+        public bool mediaSlot = true;
         public string placeholderLabel = "TUTORIAL";
 
         const float W = 900f, MediaH = 340f, TitleH = 64f, TextH = 190f, Pad = 30f;
@@ -80,7 +82,7 @@ namespace MetaMove.UI.Kit
             bool ph = !hasImage && !hasClip && showPlaceholder;
             _placeholderIcon.gameObject.SetActive(ph);
             _placeholderText.gameObject.SetActive(ph);
-            _mediaFrame.gameObject.SetActive(hasImage || hasClip || showPlaceholder);
+            _mediaFrame.gameObject.SetActive(mediaSlot && (hasImage || hasClip || showPlaceholder));
             if (hasImage) _mediaImage.sprite = image;
             if (hasClip)
             {
@@ -170,7 +172,8 @@ namespace MetaMove.UI.Kit
 
         void Build()
         {
-            _canvas = UIKit.WorldCanvas(transform, "StoryCardCanvas", new Vector2(W, H), 7);
+            float cardH = mediaSlot ? H : Pad + TitleH + TextH + Pad;
+            _canvas = UIKit.WorldCanvas(transform, "StoryCardCanvas", new Vector2(W, cardH), 7);
             _group = _canvas.gameObject.AddComponent<CanvasGroup>();
             _group.alpha = 0f;
             var root = (RectTransform)_canvas.transform;
