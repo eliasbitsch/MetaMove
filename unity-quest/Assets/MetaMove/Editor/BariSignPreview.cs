@@ -89,6 +89,37 @@ namespace MetaMove.EditorTools
             if (Application.isBatchMode) EditorApplication.Exit(code);
         }
 
+        // The shift report plots from a made-up run, to check them without a headset.
+        public static void RenderPlots()
+        {
+            var s = new System.Collections.Generic.List<MetaMove.Demo.Kitting.RunPlots.Sample>();
+            var path = new[] { new Vector2(0.3f, 2.9f), new Vector2(0.9f, 2.2f), new Vector2(0.4f, 1.5f), new Vector2(0.1f, 0.7f),
+                               new Vector2(0.4f, 1.6f), new Vector2(-0.8f, 2.4f), new Vector2(0f, 2.6f) };
+            float T = 140f;
+            for (float t = 0f; t <= T; t += 0.2f)
+            {
+                float u = t / T * (path.Length - 1);
+                int i = Mathf.Min(path.Length - 2, (int)u);
+                var p = Vector2.Lerp(path[i], path[i + 1], u - i);
+                float d = p.magnitude;
+                float f = Mathf.Clamp01((d - 0.6f) / 1.4f);
+                s.Add(new MetaMove.Demo.Kitting.RunPlots.Sample { t = t, dist = d, factor = f, x = p.x, z = p.y });
+            }
+            var marks = new System.Collections.Generic.List<MetaMove.Demo.Kitting.RunPlots.Mark>
+            {
+                new MetaMove.Demo.Kitting.RunPlots.Mark { t = 18f, label = "Refill asked" },
+                new MetaMove.Demo.Kitting.RunPlots.Mark { t = 52f, label = "Box in" },
+                new MetaMove.Demo.Kitting.RunPlots.Mark { t = 66f, label = "Stop" },
+                new MetaMove.Demo.Kitting.RunPlots.Mark { t = 110f, label = "Teach" },
+            };
+            var mx = new System.Collections.Generic.List<float>();
+            System.IO.Directory.CreateDirectory(OutDir);
+            System.IO.File.WriteAllBytes(System.IO.Path.Combine(OutDir, "plot_timeline.png"), MetaMove.Demo.Kitting.RunPlots.Timeline(s, marks, 0.6f, 2f, 3f, 1120, 460, mx).EncodeToPNG());
+            System.IO.File.WriteAllBytes(System.IO.Path.Combine(OutDir, "plot_path.png"), MetaMove.Demo.Kitting.RunPlots.Path(s, 0.6f, 2f, 600).EncodeToPNG());
+            Debug.Log("[SignPreview] plots rendered");
+            if (Application.isBatchMode) EditorApplication.Exit(0);
+        }
+
         static void Shot(Camera cam, Transform frame, Vector3 eyeLocal, Vector3 atLocal, string file)
         {
             cam.transform.position = frame.TransformPoint(eyeLocal);

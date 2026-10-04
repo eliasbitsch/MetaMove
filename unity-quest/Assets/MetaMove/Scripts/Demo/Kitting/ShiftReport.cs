@@ -15,6 +15,8 @@ namespace MetaMove.Demo.Kitting
     //   production lost to proximity (s of full-speed work, and parts)
     //   time to bring the new batch, to clear the empty, to teach
     //   teach accuracy: how far the pinch was off and the robot corrected on its own
+    // plus two plots (RunPlots): speed and distance over the shift, and the visitor's path
+    // from above - also saved on the headset as PNG and as a CSV trace.
     public class ShiftReport : MonoBehaviour
     {
         public KittingCell cell;
@@ -39,6 +41,14 @@ namespace MetaMove.Demo.Kitting
         }
 
         readonly List<Run> _done = new List<Run>();
+        readonly List<RunPlots.Sample> _trace = new List<RunPlots.Sample>();
+        readonly List<RunPlots.Mark> _marks = new List<RunPlots.Mark>();
+        readonly List<float> _markX = new List<float>();
+        float _nextSample;
+        bool _stopMarked;
+        UnityEngine.UI.RawImage _timeline, _path;
+        readonly List<TextMeshProUGUI> _markLabels = new List<TextMeshProUGUI>();
+        const float TlW = 560f, TlH = 230f, PathS = 300f, PlotX = 900f;   // plot column on the card
         Run _run;
         float _t0, _lowAt = -1f, _missAt = -1f, _guideAt = -1f, _showAt = -1f;
         bool _clearedSeen;
@@ -67,7 +77,7 @@ namespace MetaMove.Demo.Kitting
         readonly UIKit.FollowState _follow = new UIKit.FollowState();
         float _shown, _target;
 
-        const float W = 860f, H = 700f, RowH = 64f;
+        const float W = 1500f, H = 760f, RowH = 64f, ColW = 860f;   // numbers left (ColW), plots right
         static readonly CultureInfo Inv = CultureInfo.InvariantCulture;
 
         void OnEnable() { if (cell != null) cell.Cue += OnCue; }
@@ -95,23 +105,36 @@ namespace MetaMove.Demo.Kitting
                 case "restart":
                     _run = new Run { number = _done.Count + 1, expert = cell.Expert };
                     _t0 = now; _lowAt = _missAt = _guideAt = _showAt = -1f; _clearedSeen = false;
+                    _trace.Clear(); _marks.Clear(); _nextSample = 0f; _stopMarked = false;
                     _target = 0f;
                     StopAllCoroutines();
                     Speaking = false;
                     if (_voice != null) _voice.Stop();
                     _hl = new int[0];
                     break;
-                case "low": if (_lowAt < 0f) _lowAt = now; break;
-                case "arrived": if (_run != null && _lowAt >= 0f && _run.refill < 0f) _run.refill = now - _lowAt; break;
+                case "low": if (_lowAt < 0f) { _lowAt = now; Mark("Refill asked"); } break;
+                case "arrived": if (_run != null && _lowAt >= 0f && _run.refill < 0f) { _run.refill = now - _lowAt; Mark("Box in"); } break;
                 case "miss": if (_missAt < 0f) _missAt = now; break;
                 case "guide": if (_guideAt < 0f) _guideAt = now; break;
                 case "teach":
-                    if (_run != null && _guideAt >= 0f && _run.teach < 0f) { _run.teach = now - _guideAt; _run.teachOffset = cell.TeachOffset; }
+                    if (_run != null && _guideAt >= 0f && _run.teach < 0f) { _run.teach = now - _guideAt; _run.teachOffset = cell.TeachOffset; Mark("Teach"); }
                     break;
                 case "resume":
                     if (_run != null && _showAt < 0f) _showAt = now + (cell.Expert ? showDelayExpert : showDelay);
                     break;
             }
+        }
+
+        void Mark(string label) { if (_run != null) _marks.Add(new RunPlots.Mark { t = Time.time - _t0, label = label }); }
+
+        void Sample(float f, float d)
+        {
+            if (Time.time < _nextSample || Camera.main == null || cell.cellFrame == null) return;
+            _nextSample = Time.time + 0.2f;
+            var fr = cell.cellFrame;
+            var l = Quaternion.Inverse(fr.rotation) * (Camera.main.transform.position - fr.position);
+            _trace.Add(new RunPlots.Sample { t = Time.time - _t0, dist = d, factor = f, x = l.x, z = l.z });
+            if (!_stopMarked && f <= 0.001f && cell.State == KittingCell.Phase.Running) { _stopMarked = true; Mark("Stop"); }
         }
 
         void Update()
@@ -132,6 +155,7 @@ namespace MetaMove.Demo.Kitting
                     if (f <= 0.001f) _run.stop += dt; else if (f < 0.99f) _run.slow += dt;
                 }
                 if (!_clearedSeen && _missAt >= 0f && cell.TrayACleared) { _clearedSeen = true; _run.clear = Time.time - _missAt; }
+                Sample(f, d);
             }
             else if (_target < 0.5f && Time.time >= _showAt)
             {
@@ -166,6 +190,7 @@ namespace MetaMove.Demo.Kitting
             var prev = _done.Count > 0 ? _done[_done.Count - 1] : null;
             _done.Add(_run);
             Fill(_run, prev);
+            Plots(_run);
             Log(_run);
             _follow.placed = false;
             _target = 1f;
@@ -249,7 +274,7 @@ namespace MetaMove.Demo.Kitting
             _canvas = UIKit.WorldCanvas(transform, "ShiftReportCanvas", new Vector2(W, H), 7);
             _group = _canvas.gameObject.AddComponent<CanvasGroup>();
             _group.alpha = 0f;
-            _canvas.transform.localScale = Vector3.one * (0.58f / W);
+            _canvas.transform.localScale = Vector3.one * (0.58f / 860f);   // same text size as before; the card grew to the right
             var root = (RectTransform)_canvas.transform;
             var bg = UIKit.Panel("Glass", root, new Color(UIKit.Glass.r, UIKit.Glass.g, UIKit.Glass.b, 0.96f), 46f, 5f);
             UIKit.Stretch(bg.rectTransform);
@@ -257,10 +282,10 @@ namespace MetaMove.Demo.Kitting
             UIKit.Place(accent.rectTransform, new Vector2(0.5f, 1f), new Vector2(0.5f, 1f), new Vector2(0f, -10f), new Vector2(W * 0.4f, 8f));
 
             _title = UIKit.Text("Title", root, font, 40f, UIKit.Accent, TextAlignmentOptions.Left, FontStyles.Bold);
-            UIKit.Place(_title.rectTransform, new Vector2(0f, 1f), new Vector2(0f, 1f), new Vector2(44f, -34f), new Vector2(W - 88f, 50f));
+            UIKit.Place(_title.rectTransform, new Vector2(0f, 1f), new Vector2(0f, 1f), new Vector2(44f, -34f), new Vector2(ColW - 88f, 50f));
             _title.characterSpacing = 8f;
             _sub = UIKit.Text("Sub", root, font, 26f, UIKit.TextLo, TextAlignmentOptions.Left);
-            UIKit.Place(_sub.rectTransform, new Vector2(0f, 1f), new Vector2(0f, 1f), new Vector2(44f, -86f), new Vector2(W - 88f, 36f));
+            UIKit.Place(_sub.rectTransform, new Vector2(0f, 1f), new Vector2(0f, 1f), new Vector2(44f, -86f), new Vector2(ColW - 88f, 36f));
 
             float y = -140f;
             for (int i = 0; i < 8; i++)
@@ -268,23 +293,92 @@ namespace MetaMove.Demo.Kitting
                 if (i > 0)
                 {
                     var line = UIKit.Panel("Rule", root, new Color(1f, 1f, 1f, 0.06f), 1f, 0f, false);
-                    UIKit.Place(line.rectTransform, new Vector2(0.5f, 1f), new Vector2(0.5f, 0.5f), new Vector2(0f, y), new Vector2(W - 88f, 2f));
+                    UIKit.Place(line.rectTransform, new Vector2(0f, 1f), new Vector2(0f, 0.5f), new Vector2(44f, y), new Vector2(ColW - 88f, 2f));
                 }
                 var hl = UIKit.Panel("Highlight", root, new Color(0f, 0f, 0f, 0f), 14f, 0f, false);
-                UIKit.Place(hl.rectTransform, new Vector2(0.5f, 1f), new Vector2(0.5f, 0.5f), new Vector2(0f, y - RowH / 2f), new Vector2(W - 56f, RowH - 6f));
+                UIKit.Place(hl.rectTransform, new Vector2(0f, 1f), new Vector2(0f, 0.5f), new Vector2(28f, y - RowH / 2f), new Vector2(ColW - 56f, RowH - 6f));
                 _rowHl.Add(hl);
                 var l = UIKit.Text("Label", root, font, 26f, UIKit.TextLo, TextAlignmentOptions.MidlineLeft);
                 UIKit.Place(l.rectTransform, new Vector2(0f, 1f), new Vector2(0f, 0.5f), new Vector2(44f, y - RowH / 2f), new Vector2(330f, RowH));
                 var v = UIKit.Text("Value", root, font, 30f, UIKit.TextHi, TextAlignmentOptions.MidlineRight, FontStyles.Bold);
-                UIKit.Place(v.rectTransform, new Vector2(1f, 1f), new Vector2(1f, 0.5f), new Vector2(-44f, y - RowH / 2f), new Vector2(W - 88f - 340f, RowH));
+                UIKit.Place(v.rectTransform, new Vector2(0f, 1f), new Vector2(1f, 0.5f), new Vector2(ColW - 44f, y - RowH / 2f), new Vector2(ColW - 88f - 340f, RowH));
                 v.enableWordWrapping = true; v.enableAutoSizing = true; v.fontSizeMin = 20f; v.fontSizeMax = 30f;
                 _rows.Add(new[] { l, v });
                 y -= RowH;
             }
+            BuildPlots(root);
             _footer = UIKit.Text("Footer", root, font, 24f, UIKit.Accent, TextAlignmentOptions.Center);
             UIKit.Place(_footer.rectTransform, new Vector2(0.5f, 0f), new Vector2(0.5f, 0f), new Vector2(0f, 26f), new Vector2(W - 88f, 40f));
             _canvas.enabled = false;
         }
+
+        // ---------------------------------------------------------------- plots
+
+        void BuildPlots(RectTransform root)
+        {
+            var t1 = UIKit.Text("TimelineTitle", root, font, 22f, UIKit.TextLo, TextAlignmentOptions.Left);
+            UIKit.Place(t1.rectTransform, new Vector2(0f, 1f), new Vector2(0f, 1f), new Vector2(PlotX, -40f), new Vector2(TlW, 30f));
+            t1.text = "ARM SPEED  \u00b7  YOUR DISTANCE TO THE ARM";
+            t1.characterSpacing = 4f;
+            _timeline = Img("Timeline", root, new Vector2(PlotX, -76f), new Vector2(TlW, TlH));
+            for (int i = 0; i < 6; i++)
+            {
+                var m = UIKit.Text("Mark", _timeline.transform, font, 17f, UIKit.Accent, TextAlignmentOptions.Top);
+                UIKit.Place(m.rectTransform, new Vector2(0f, 0f), new Vector2(0.5f, 1f), new Vector2(0f, -2f), new Vector2(140f, 22f));   // under the plot
+                m.gameObject.SetActive(false);
+                _markLabels.Add(m);
+            }
+            var t2 = UIKit.Text("PathTitle", root, font, 22f, UIKit.TextLo, TextAlignmentOptions.Left);
+            UIKit.Place(t2.rectTransform, new Vector2(0f, 1f), new Vector2(0f, 1f), new Vector2(PlotX, -76f - TlH - 34f), new Vector2(TlW, 30f));
+            t2.text = "YOUR PATH  \u00b7  green full speed, amber slowed, red stopped";
+            t2.characterSpacing = 2f;
+            _path = Img("Path", root, new Vector2(PlotX + (TlW - PathS) / 2f, -76f - TlH - 70f), new Vector2(PathS, PathS));
+        }
+
+        UnityEngine.UI.RawImage Img(string name, RectTransform root, Vector2 pos, Vector2 size)
+        {
+            var img = new GameObject(name, typeof(UnityEngine.UI.RawImage)).GetComponent<UnityEngine.UI.RawImage>();
+            img.transform.SetParent(root, false);
+            img.raycastTarget = false;
+            UIKit.Place(img.rectTransform, new Vector2(0f, 1f), new Vector2(0f, 1f), pos, size);
+            img.color = new Color(1f, 1f, 1f, 0f);
+            return img;
+        }
+
+        void Plots(Run r)
+        {
+            float near = speed != null ? speed.dNear : 0.6f, far = speed != null ? speed.dFar : 2f;
+            try
+            {
+                if (_timeline.texture != null) Destroy(_timeline.texture);
+                if (_path.texture != null) Destroy(_path.texture);
+                var tl = RunPlots.Timeline(_trace, _marks, near, far, 3f, 1120, 460, _markX);
+                var pa = RunPlots.Path(_trace, near, far, 600);
+                _timeline.texture = tl; _timeline.color = Color.white;
+                _path.texture = pa; _path.color = Color.white;
+                for (int i = 0; i < _markLabels.Count; i++)
+                {
+                    bool on = i < _marks.Count;
+                    _markLabels[i].gameObject.SetActive(on);
+                    if (!on) continue;
+                    _markLabels[i].text = _marks[i].label;
+                    _markLabels[i].rectTransform.anchoredPosition = new Vector2(_markX[i] * TlW, -2f - (i % 2) * 18f);
+                }
+                string dir = Application.persistentDataPath, stamp = System.DateTime.Now.ToString("yyyyMMdd_HHmmss", Inv);
+                System.IO.File.WriteAllBytes(System.IO.Path.Combine(dir, "run" + r.number + "_" + stamp + "_timeline.png"), tl.EncodeToPNG());
+                System.IO.File.WriteAllBytes(System.IO.Path.Combine(dir, "run" + r.number + "_" + stamp + "_path.png"), pa.EncodeToPNG());
+                using (var w = new System.IO.StreamWriter(System.IO.Path.Combine(dir, "run" + r.number + "_" + stamp + "_trace.csv")))
+                {
+                    w.WriteLine("t_s,distance_m,speed_factor,head_x_m,head_z_m");
+                    foreach (var p in _trace)
+                        w.WriteLine(F2(p.t) + "," + F2(p.dist) + "," + F2(p.factor) + "," + F2(p.x) + "," + F2(p.z));
+                    foreach (var m in _marks) w.WriteLine("# " + F2(m.t) + " " + m.label);
+                }
+            }
+            catch (System.Exception e) { Debug.LogWarning("[Report] plots failed: " + e.Message); }
+        }
+
+        static string F2(float v) => v.ToString("0.00", Inv);
 
         // ---------------------------------------------------------------- CSV
 
