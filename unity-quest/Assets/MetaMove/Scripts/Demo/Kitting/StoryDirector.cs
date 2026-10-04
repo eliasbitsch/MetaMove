@@ -41,6 +41,8 @@ namespace MetaMove.Demo.Kitting
         float _lastVoiceEnd = -10f;
 
         string _current;
+        // Raised when a beat starts (card up, line playing) - StagedReveal shows its objects.
+        public event Action<string> BeatStarted;
         // Key of the beat on the card right now (null when the card is down).
         public string Current => card != null && card.Visible ? _current : null;
         bool _welcomed, _storyTold, _slowTold, _stood, _recovered, _emptyAsked, _grabTold;
@@ -94,6 +96,7 @@ namespace MetaMove.Demo.Kitting
                 voiceSource.Stop();
                 if (b.voice != null) { voiceSource.clip = b.voice; voiceSource.Play(); }
             }
+            BeatStarted?.Invoke(key);
             Debug.Log("[Story] " + key + (b.voice != null ? " (" + b.voice.length.ToString("F1") + " s)" : ""));
         }
 

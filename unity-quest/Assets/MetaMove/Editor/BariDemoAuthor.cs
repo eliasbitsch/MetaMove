@@ -293,6 +293,7 @@ namespace MetaMove.EditorTools
             if (menu.leftHand == null || menu.rightHand == null) Debug.LogWarning("[BariDemoAuthor] fingertip menu: hand skeletons not found");
             var hints = new GameObject("Hints").AddComponent<KittingHints>();
             hints.transform.SetParent(root.transform, false);
+            hints.pinchHand = MakePinchHand(hints.transform);
             hints.cell = cell; hints.font = inter;
             hints.rack = frame.GetComponentInChildren<FlowRack>(true);
             var guide = root.AddComponent<GuideMotionFilter>();
@@ -384,6 +385,8 @@ namespace MetaMove.EditorTools
                 if (mb is Oculus.Interaction.IInteractableView && mb.enabled && !mb.transform.IsChildOf(root.transform))
                 { Undo.RecordObject(mb, "Bari interactables"); mb.enabled = false; off++; }
             Debug.Log("[BariDemoAuthor] lab interactables switched off: " + off);
+
+            StageReveal(root, cell, story, frame);
 
             EditorSceneManager.MarkSceneDirty(scene);
             EditorSceneManager.SaveScene(scene);
@@ -710,8 +713,9 @@ namespace MetaMove.EditorTools
                 if (src == null) { Debug.LogWarning("[BariDemoAuthor] ghost hand missing: " + path); continue; }
                 var g = (GameObject)PrefabUtility.InstantiatePrefab(src);
                 PrefabUtility.UnpackPrefabInstance(g, PrefabUnpackMode.Completely, InteractionMode.AutomatedAction);
-                foreach (var mb in g.GetComponentsInChildren<MonoBehaviour>(true)) Object.DestroyImmediate(mb);   // static, no pose driving
+                foreach (var mb in g.GetComponentsInChildren<MonoBehaviour>(true)) Object.DestroyImmediate(mb);   // no SDK pose driving
                 foreach (var c in g.GetComponentsInChildren<Collider>(true)) Object.DestroyImmediate(c);
+                g.AddComponent<GhostHandPose>();   // grip animated by KittingHints
                 Vector3 palm = Vector3.zero;
                 foreach (var t in g.GetComponentsInChildren<Transform>(true)) if (t.name == "XRHand_Palm") palm = t.position;   // prefab at the origin
                 g.name = side > 0f ? "GhostRight" : "GhostLeft";
@@ -721,6 +725,40 @@ namespace MetaMove.EditorTools
                 g.transform.localPosition = new Vector3(side * (KltSize.x / 2f + 0.035f), 0.17f, -0.03f) - rot * palm;
             }
             root.gameObject.SetActive(false);
+        }
+
+        // The ghost right hand that demonstrates hand guiding (KittingHints moves and poses it).
+        static GhostHandPose MakePinchHand(Transform parent)
+        {
+            var src = AssetDatabase.LoadAssetAtPath<GameObject>("Packages/com.meta.xr.sdk.interaction/Runtime/Prefabs/HandGrab/OpenXRGhost-HandRight.prefab");
+            if (src == null) { Debug.LogWarning("[BariDemoAuthor] ghost hand prefab missing"); return null; }
+            var g = (GameObject)PrefabUtility.InstantiatePrefab(src);
+            PrefabUtility.UnpackPrefabInstance(g, PrefabUnpackMode.Completely, InteractionMode.AutomatedAction);
+            foreach (var mb in g.GetComponentsInChildren<MonoBehaviour>(true)) Object.DestroyImmediate(mb);
+            foreach (var c in g.GetComponentsInChildren<Collider>(true)) Object.DestroyImmediate(c);
+            g.name = "PinchDemoHand";
+            g.transform.SetParent(parent, false);
+            var pose = g.AddComponent<GhostHandPose>();
+            g.SetActive(false);
+            return pose;
+        }
+
+        // Parts of the cell appear with the story instead of all at once.
+        static void StageReveal(GameObject root, KittingCell cell, StoryDirector story, Transform frame)
+        {
+            var sr = root.AddComponent<StagedReveal>();
+            sr.cell = cell; sr.story = story;
+            Transform Deep(string n) { foreach (var t in frame.GetComponentsInChildren<Transform>(true)) if (t.name == n) return t; return null; }
+            void Group(string key, params Transform[] ts)
+            {
+                var g = new StagedReveal.Group { key = key };
+                foreach (var t in ts) if (t != null) g.objects.Add(t.gameObject); else Debug.LogWarning("[BariDemoAuthor] staged reveal: missing object for " + key);
+                sr.groups.Add(g);
+            }
+            Group("story", Deep("FloorZones"));                              // the safety layer: zones on the floor
+            Group("tracking", Deep("AnchorPost"));                           // the anchor the tracking explains
+            Group("refill", cell.trayB.transform, Deep("Trolley"));          // the new batch, when it is asked for
+            Group("reserve", cell.reserve != null ? cell.reserve.transform : null);   // when the arm switches to it
         }
 
         // URP Lit -> alpha-blended transparent (alpha from _BaseColor).

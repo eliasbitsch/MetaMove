@@ -20,7 +20,7 @@ namespace MetaMove.Demo.Kitting
         public TMP_FontAsset font;
 
         public float distance = 0.95f;
-        public float elevation = -28f;   // degrees below the horizon, under the story card
+        public float elevation = -33f;   // degrees below the horizon, under the story card
         public float worldWidth = 0.50f;
 
         const float W = 980f, H = 190f;

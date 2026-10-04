@@ -18,11 +18,11 @@ namespace MetaMove.UI.Kit
         public TMP_FontAsset font;
         [Header("Placement")]
         public float distance = 1.0f;
-        public float elevation = -12f;      // like game subtitles: straight ahead, just below the eye line
+        public float elevation = -18f;      // like game subtitles: below the line of sight, never across it
         public float azimuth = 0f;          // straight ahead, where the eye already is
         public float worldWidth = 0.56f;
-        public float deadzone = 7f;          // small: the card stays with the view
-        public float followTime = 0.3f;
+        public float deadzone = 20f;         // stays put while you look around a little, follows when you turn
+        public float followTime = 0.6f;      // and then glides over calmly
         public float fadeTime = 0.2f;
         [Header("Media")]
         public bool showPlaceholder = true;

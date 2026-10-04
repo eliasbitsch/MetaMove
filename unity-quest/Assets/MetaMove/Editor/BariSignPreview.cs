@@ -61,7 +61,25 @@ namespace MetaMove.EditorTools
                 Shot(cam, frame, new Vector3(1.05f, fy + 1.35f, 0.75f), new Vector3(0.27f, fy + 0.88f, 0.20f), "details_table.png");
                 // ghost hands on the orange box (normally shown only when it is the task)
                 var gh = cell.trayB != null ? cell.trayB.transform.Find("GhostHands") : null;
-                if (gh != null) gh.gameObject.SetActive(true);
+                if (gh != null)
+                {
+                    gh.gameObject.SetActive(true);
+                    foreach (var p in gh.GetComponentsInChildren<GhostHandPose>(true)) { p.grip = 1f; p.Apply(); }
+                }
+                // the guiding demo hand, pinching, in front of the table
+                var ph = Object.FindAnyObjectByType<GhostHandPose>(FindObjectsInactive.Include);
+                foreach (var p in Object.FindObjectsByType<GhostHandPose>(FindObjectsInactive.Include, FindObjectsSortMode.None))
+                    if (p.name == "PinchDemoHand") ph = p;
+                if (ph != null)
+                {
+                    ph.gameObject.SetActive(true);
+                    ph.transform.position = frame.TransformPoint(new Vector3(0.2f, 0.45f, 0.35f));
+                    ph.transform.rotation = frame.rotation * Quaternion.LookRotation(new Vector3(0f, -0.3f, -1f), Vector3.up);
+                    ph.pinch = 1f; ph.Apply();
+                    Shot(cam, frame, new Vector3(0.45f, 0.62f, 0.75f), new Vector3(0.2f, 0.42f, 0.30f), "ghost_pinch.png");
+                    ph.pinch = 0f; ph.Apply();
+                    Shot(cam, frame, new Vector3(0.45f, 0.62f, 0.75f), new Vector3(0.2f, 0.42f, 0.30f), "ghost_open.png");
+                }
                 Shot(cam, frame, new Vector3(0.90f, fy + 1.60f, 1.85f), new Vector3(0.90f, fy + 0.90f, 2.60f), "ghost_hands.png");
                 Shot(cam, frame, new Vector3(0.30f, fy + 1.70f, 2.40f), new Vector3(0.55f, fy + 1.45f, -0.30f), "qr_column.png");
                 Debug.Log("[SignPreview] rendered to " + System.IO.Path.GetFullPath(OutDir));
