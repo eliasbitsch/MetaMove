@@ -49,7 +49,8 @@ namespace MetaMove.Demo.Kitting
         // cell holds back the "running low" moment until then - one thing at a time.
         public bool IntroDone { get; private set; }
         FactoryReveal _reveal;
-        bool _standWait;
+        bool _standWait, _standSaid, _stepTold;
+        float _standSaidAt = -1f;
         bool _welcomed, _storyTold, _slowTold, _stood, _recovered, _emptyAsked, _grabTold;
         float _shownAt, _boundAt = -1f;
         Beat _beat;
@@ -65,6 +66,7 @@ namespace MetaMove.Demo.Kitting
             new Beat { key = "refill", title = "Bring the next batch", caption = "The tray is getting low. The next batch is waiting on the trolley behind you, in the orange box. Pick it up and load it into the rack, while the arm keeps working." },
             new Beat { key = "slow", title = "It knows you are there", caption = "Notice the arm slowing down as you come closer? It measures your distance all the time. The closer you are, the slower it moves.", hold = 9f },
             new Beat { key = "standstill", title = "Standstill", caption = "It stopped. Not because anything broke. You are inside its reach.", hold = 6f },
+            new Beat { key = "stepback", title = "A step back, please", caption = "Would you be so kind as to take a step back? Then the arm can carry on, and I can finish showing you around.", hold = 7f },
             new Beat { key = "recover", title = "Trust comes back slowly", caption = "Step back. Notice that it does not pick up straight away? Slowing down is allowed to be abrupt. Speeding up is not.", hold = 9f },
             new Beat { key = "empty", title = "Clear the empty box", caption = "The first box is empty. The arm noticed and switched to the reserve box on the left, so the line keeps running. Take the empty box out at the front and put it on the return lane below. Watch the arm while your hands are close." },
             new Beat { key = "guide", title = "Show it the new tray", caption = "The arm still believes in the old box. Pinch the glowing point on the tool and bring it over the new box, from where you stand. Roughly is enough. Then raise either hand, palm up, and a hand menu opens. Press Teach there once you are happy with the position." },
@@ -101,6 +103,7 @@ namespace MetaMove.Demo.Kitting
             var b = Find(key);
             if (b == null || card == null) return;
             _beat = b; _current = key; _shownAt = Time.time;
+            if (key == "standstill") { _standSaid = true; _standSaidAt = Time.time + (b.voice != null ? b.voice.length : 0f); }
             int idx = beats.IndexOf(b) + 1;
             card.Show(b.title, b.caption, b.image, b.clip, idx + " / " + beats.Count, b.voice != null ? b.voice.length : 0f);
             if (voiceSource != null)
@@ -112,15 +115,25 @@ namespace MetaMove.Demo.Kitting
             Debug.Log("[Story] " + key + (b.voice != null ? " (" + b.voice.length.ToString("F1") + " s)" : ""));
         }
 
+        // The slow-down line is the heart of the demo. If the visitor never walked through the
+        // amber zone at the moment it is told (went straight to the red, or stayed away), it is
+        // told before the next task instead - no line of the tutorial is lost.
+        void SaySlowIfMissed()
+        {
+            if (_slowTold) return;
+            _slowTold = true;
+            Play("slow");
+        }
+
         void OnCue(string key)
         {
             switch (key)
             {
                 case "low": Play("refill"); break;
-                case "guide": Play("guide"); break;
+                case "guide": SaySlowIfMissed(); Play("guide"); break;
                 case "aligned": Play("aligned"); break;
                 case "resume": Play("release"); break;
-                case "restart": IntroDone = false; _standWait = false; _welcomed = _storyTold = _slowTold = _stood = _recovered = _emptyAsked = _grabTold = false; _boundAt = Time.time; _pending.Clear(); break;
+                case "restart": IntroDone = false; _standWait = _standSaid = _stepTold = false; _standSaidAt = -1f; _welcomed = _storyTold = _slowTold = _stood = _recovered = _emptyAsked = _grabTold = false; _boundAt = Time.time; _pending.Clear(); break;
             }
         }
 
@@ -164,17 +177,20 @@ namespace MetaMove.Demo.Kitting
                 else _stood = false;   // they stepped back meanwhile: say it the next time it happens
             }
             if (!_stood && f <= 0.001f && cell.State == KittingCell.Phase.Running) { _stood = true; Play("standstill"); }
-            if (_stood && !_recovered && _current == "standstill" && f > 0.5f) { _recovered = true; Play("recover"); }
+            if (_stood && _standSaid && !_recovered && f > 0.5f) { _recovered = true; Play("recover"); }
+            // still inside the stop zone well after the standstill was explained: ask politely
+            if (_standSaid && !_stepTold && !_recovered && f <= 0.001f && _standSaidAt > 0f && Time.time - _standSaidAt > 8f)
+            { _stepTold = true; Play("stepback"); }
 
             if (!_emptyAsked && cell.AllowEmptyRemoval && _current != "standstill")
             {
                 var ca = cell.trayA != null ? cell.trayA.GetComponent<CarryableTray>() : null;
-                if (ca != null && ca.State == CarryableTray.Phase.Waiting) { _emptyAsked = true; Play("empty"); }
+                if (ca != null && ca.State == CarryableTray.Phase.Waiting) { _emptyAsked = true; SaySlowIfMissed(); Play("empty"); }
             }
 
             // First pinch on the tool: a dry remark, but never over another line.
-            if (!_grabTold && cell.State == KittingCell.Phase.Guide && cell.GuideHeld && !ShiftReport.Speaking && (voiceSource == null || !voiceSource.isPlaying))
-            { _grabTold = true; PlayNow("grab"); }
+            if (!_grabTold && cell.State == KittingCell.Phase.Guide && cell.GuideHeld)
+            { _grabTold = true; Play("grab"); }
 
             // A timed beat stays up at least as long as its line is being spoken.
             if (_beat != null && _beat.hold > 0f)

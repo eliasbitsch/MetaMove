@@ -27,6 +27,9 @@ Notice the arm slowing down as you come closer? That is distance-based speed sca
 [standstill]
 And now it stops. Nothing broke. You are inside its reach, and it would rather wait than meet you.
 
+[stepback]
+Would you be so kind as to take a step back? Then the arm can carry on, and I can finish showing you around.
+
 [recover]
 Step back. Notice it does not rush off straight away? Slowing down may be abrupt. Speeding up is not.
 

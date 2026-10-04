@@ -21,6 +21,10 @@ namespace MetaMove.UI.Kit
         public float elevation = -18f;      // like game subtitles: below the line of sight, never across it
         public float azimuth = 0f;          // straight ahead, where the eye already is
         public float worldWidth = 0.56f;
+        [Tooltip("Fixed place (e.g. the status stand beside the cell). Empty: follows the head like subtitles.")]
+        public Transform mount;
+        public float mountWidth = 1.0f;
+        float Width => mount != null ? mountWidth : worldWidth;
         public float deadzone = 20f;         // stays put while you look around a little, follows when you turn
         public float followTime = 0.6f;      // and then glides over calmly
         public float fadeTime = 0.2f;
@@ -162,11 +166,19 @@ namespace MetaMove.UI.Kit
             _group.alpha = Mathf.SmoothStep(0f, 1f, _shown);
             _canvas.enabled = _shown > 0.001f;
             if (!_canvas.enabled) return;
-            UIKit.LazyFollow(_canvas.transform, Camera.main.transform, distance, elevation, deadzone, followTime, _follow, azimuth);
+            if (mount != null)
+            {
+                // on the stand: swivels to face the viewer, a little behind the head
+                var to = _canvas.transform.position - Camera.main.transform.position; to.y = 0f;
+                if (to.sqrMagnitude > 1e-4f)
+                    _canvas.transform.rotation = Quaternion.Slerp(_canvas.transform.rotation,
+                        Quaternion.LookRotation(to.normalized, Vector3.up), 1f - Mathf.Exp(-Time.deltaTime / 0.6f));
+            }
+            else UIKit.LazyFollow(_canvas.transform, Camera.main.transform, distance, elevation, deadzone, followTime, _follow, azimuth);
             // scale-in while appearing, and a short pop on every new step so it is noticed
             _pop = Mathf.MoveTowards(_pop, 1f, Time.deltaTime / 0.35f);
             float pop = 1f + 0.06f * Mathf.Sin(_pop * Mathf.PI);
-            _canvas.transform.localScale = Vector3.one * (worldWidth / W) * Mathf.Lerp(0.94f, 1f, _group.alpha) * pop;
+            _canvas.transform.localScale = Vector3.one * (Width / W) * Mathf.Lerp(0.94f, 1f, _group.alpha) * pop;
             _accent.color = new Color(UIKit.Accent.r, UIKit.Accent.g, UIKit.Accent.b, 0.55f + 0.45f * Mathf.Sin(_pop * Mathf.PI));
         }
 
@@ -177,7 +189,14 @@ namespace MetaMove.UI.Kit
             _group = _canvas.gameObject.AddComponent<CanvasGroup>();
             _group.alpha = 0f;
             var root = (RectTransform)_canvas.transform;
-            _canvas.transform.localScale = Vector3.one * (worldWidth / W);
+            _canvas.transform.localScale = Vector3.one * (Width / W);
+            if (mount != null)
+            {
+                _canvas.transform.SetParent(mount, false);
+                _canvas.transform.localPosition = Vector3.zero;
+                _canvas.transform.localRotation = Quaternion.identity;
+                _canvas.transform.localScale = Vector3.one * (Width / W);
+            }
 
             var bg = UIKit.Panel("Glass", root, new Color(UIKit.Glass.r, UIKit.Glass.g, UIKit.Glass.b, 0.95f), 46f, 5f);
             UIKit.Stretch(bg.rectTransform);

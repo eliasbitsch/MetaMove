@@ -295,6 +295,7 @@ namespace MetaMove.EditorTools
             var cardGo = new GameObject("StoryCard");
             cardGo.transform.SetParent(root.transform, false);
             var card = cardGo.AddComponent<MetaMove.UI.Kit.StoryCard>();
+            card.mount = bhud.mount.parent.Find("CardMount");   // under the speed panel, on the same stand
             card.font = inter;
             card.mediaSlot = false;   // text only, like game subtitles
             var story = root.AddComponent<StoryDirector>();
@@ -816,7 +817,7 @@ namespace MetaMove.EditorTools
             if (old != null) Object.DestroyImmediate(old.gameObject);
             var stand = new GameObject("StatusStand").transform;
             stand.SetParent(frame, false);
-            var at = new Vector3(-1.45f, 1.55f - FloorBelowTable, 0.05f);   // out of the arm's reach (GoFa ~0.95 m)   // panel centre, 1.62 m above the floor; cell -X is the visitor's right
+            var at = new Vector3(-1.45f, 1.85f - FloorBelowTable, 0.05f);   // out of the arm's reach (GoFa ~0.95 m); story card hangs below   // panel centre, 1.62 m above the floor; cell -X is the visitor's right
             var visitor = new Vector3(0.30f, 1.60f - FloorBelowTable, 2.45f);
             var pole = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
             pole.name = "Pole";
@@ -838,6 +839,11 @@ namespace MetaMove.EditorTools
             mount.localPosition = at;
             var look = at - visitor; look.y = 0f;
             mount.localRotation = Quaternion.LookRotation(look.normalized, Vector3.up);   // canvas front faces the visitor
+            // the story card under it: 1.0 m wide, top edge a hand below the speed panel
+            var card = new GameObject("CardMount").transform;
+            card.SetParent(stand, false);
+            card.localPosition = at + Vector3.down * 0.40f;
+            card.localRotation = mount.localRotation;
             return mount;
         }
 

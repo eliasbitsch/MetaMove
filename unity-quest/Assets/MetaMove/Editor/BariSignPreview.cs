@@ -101,8 +101,14 @@ namespace MetaMove.EditorTools
                 // the status panel on its stand, as built at runtime, from the visitor's spot
                 foreach (var hud in Object.FindObjectsByType<BariHud>(FindObjectsInactive.Include, FindObjectsSortMode.None))
                     typeof(BariHud).GetMethod("Build", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).Invoke(hud, null);
+                foreach (var sc in Object.FindObjectsByType<MetaMove.UI.Kit.StoryCard>(FindObjectsInactive.Include, FindObjectsSortMode.None))
+                {
+                    typeof(MetaMove.UI.Kit.StoryCard).GetMethod("Build", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).Invoke(sc, null);
+                    sc.Show("It knows you are there", "Notice the arm slowing down as you come closer? It measures your distance all the time.", null, null, "5 / 12", 0f);
+                    foreach (var cv in (sc.mount != null ? sc.mount : sc.transform).GetComponentsInChildren<Canvas>(true)) { cv.enabled = true; var g = cv.GetComponent<CanvasGroup>(); if (g != null) g.alpha = 1f; }
+                }
                 Canvas.ForceUpdateCanvases();
-                Shot(cam, frame, new Vector3(0.30f, fy + 1.62f, 2.45f), new Vector3(0.45f, fy + 1.25f, 0.0f), "status_panel.png");
+                Shot(cam, frame, new Vector3(0.30f, fy + 1.62f, 2.45f), new Vector3(-0.2f, fy + 1.45f, 0.0f), "status_panel.png");
                 Debug.Log("[SignPreview] rendered to " + System.IO.Path.GetFullPath(OutDir));
             }
             catch (System.Exception e) { Debug.LogError("[SignPreview] " + e); code = 1; }
