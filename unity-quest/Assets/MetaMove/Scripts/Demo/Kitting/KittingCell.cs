@@ -127,6 +127,22 @@ namespace MetaMove.Demo.Kitting
         //   Teach  starts in free guiding: pinch, guide to any box, Teach; Guide again any time
         public enum Freestyle { None, Auto, Teach }
         public Freestyle Mode;
+        [Tooltip("Full boxes on the floor beside the rack: freestyle material, scenery in the demo.")]
+        public List<KittingTray> stock = new List<KittingTray>();
+        [Tooltip("Home in freestyle, joint angles in degrees (J1..J6).")]
+        public float[] freestyleHomeDeg = { 0f, 0f, 0f, 0f, 30f, 0f };
+        MetaMove.Robot.GoFaDLSIK _ik;
+
+        public IEnumerable<KittingTray> AllTrays
+        {
+            get
+            {
+                if (trayB != null) yield return trayB;
+                if (trayA != null) yield return trayA;
+                if (reserve != null) yield return reserve;
+                foreach (var t in stock) if (t != null) yield return t;
+            }
+        }
         public int PartsPlaced { get; private set; }
         // Parked from the hand menu (Home). Home again resumes where the line stopped.
         public bool Parked { get; private set; }
@@ -205,6 +221,7 @@ namespace MetaMove.Demo.Kitting
             }
             ikTarget = ik.target;
             tcp = ik.endEffector;
+            _ik = ik;
             var baseJoint = ik.joints[0].joint;
             BaseJoint = baseJoint;
 
@@ -305,7 +322,13 @@ namespace MetaMove.Demo.Kitting
             if (_gripper != null) _gripper.Open();
             trayA.Refill();
             trayB.Refill();
-            if (reserve != null) { reserve.Refill(); reserve.SetRecognized(false); }
+            if (reserve != null) { reserve.Refill(); reserve.SetRecognized(false); reserve.GetComponent<CarryableTray>()?.ResetToStart(); }
+            foreach (var s in stock)
+            {
+                if (s == null) continue;
+                s.Refill(); s.SetRecognized(false);
+                s.GetComponent<CarryableTray>()?.ResetToStart();
+            }
             trayA.SetRecognized(false);
             trayB.SetRecognized(false);
             if (_aHome.HasValue)
@@ -357,7 +380,12 @@ namespace MetaMove.Demo.Kitting
             SetGuide(false);
             Parked = true;
             State = Phase.Idle;
-            _run = StartCoroutine(MoveTo(home, Vector3.zero));
+            if (Mode != Freestyle.None && _ik != null)
+            {
+                _ik.ForwardPose(freestyleHomeDeg, out var hp, out var hr);
+                _run = StartCoroutine(MoveToWorld(hp, hr));
+            }
+            else _run = StartCoroutine(MoveTo(home, Vector3.zero));
             Emit("home", "Parked - Home again to resume");
         }
 
@@ -413,7 +441,7 @@ namespace MetaMove.Demo.Kitting
         {
             if (_gripper != null) _gripper.Open();
             if (_held == null) return;
-            foreach (var t in new[] { trayA, trayB, reserve })
+            foreach (var t in AllTrays)
             {
                 if (t == null) continue;
                 int i = t.parts.IndexOf(_held);
@@ -452,7 +480,7 @@ namespace MetaMove.Demo.Kitting
         {
             if (ikTarget == null) return null;
             var p = ikTarget.position;
-            foreach (var t in new[] { trayB, trayA, reserve })
+            foreach (var t in AllTrays)
             {
                 if (t == null || t.Remaining == 0) continue;
                 var d = p - t.Center;
@@ -510,6 +538,16 @@ namespace MetaMove.Demo.Kitting
                     continue;
                 }
                 int n = Taught.NextFilled();
+                if (n < 0 && Mode == Freestyle.Teach)
+                {
+                    // freestyle teach: nothing refills itself - bring a full box, show it the way
+                    yield return MoveReady();
+                    FreeGuide = true;
+                    State = Phase.Guide;
+                    SetGuide(true);
+                    Emit("guide_free", Taught.label + " is empty - show the arm another box");
+                    yield break;
+                }
                 if (n < 0 && Mode != Freestyle.None)
                 {
                     // freestyle: nobody brings boxes - the empty one fills up again and on it goes
@@ -699,6 +737,12 @@ namespace MetaMove.Demo.Kitting
 
         // A relaxed pose over the front of the table, well inside the arm's range: hand guiding
         // always starts from here, never from wherever the last cycle ended.
+        IEnumerator MoveToWorld(Vector3 p, Quaternion r)
+        {
+            float v = 0f;
+            while (!Step(p, r, ref v)) yield return null;
+        }
+
         IEnumerator MoveReady()
         {
             float v = 0f;

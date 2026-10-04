@@ -76,7 +76,7 @@ namespace MetaMove.Demo.Kitting
             switch (key)
             {
                 case "report_far": case "report_slowed": case "report_stopped": return new[] { 1, 2, 3 };
-                case "report_pinch_exact": case "report_pinch_close": case "report_pinch_rough": return new[] { 7 };
+                case "report_pinch_exact": case "report_pinch_close": case "report_pinch_rough": return new[] { 6 };
                 case "report_teach_slow": case "report_teach_fast": return new[] { 6 };
                 case "report_outro": return new[] { 0, 3 };
                 case "report_outro_expert": return new[] { 0, 4, 5, 6 };
@@ -86,7 +86,7 @@ namespace MetaMove.Demo.Kitting
         readonly UIKit.FollowState _follow = new UIKit.FollowState();
         float _shown, _target;
 
-        const float W = 1500f, H = 760f, RowH = 57f, ColW = 860f;   // numbers left (ColW), plots right
+        const float W = 1500f, H = 760f, RowH = 64f, ColW = 860f;   // numbers left (ColW), plots right
         static readonly CultureInfo Inv = CultureInfo.InvariantCulture;
 
         void OnEnable()
@@ -320,8 +320,6 @@ namespace MetaMove.Demo.Kitting
                 new[] { "New batch brought in", V(S(r.refill), p != null ? S(p.refill) : null) },
                 new[] { "Empty box cleared", V(S(r.clear), p != null ? S(p.clear) : null) },
                 new[] { "New position learned in", V(S(r.teach), p != null ? S(p.teach) : null) },
-                new[] { "Fine-tuned by the robot", V(r.teachOffset < 0f ? "--" : (r.teachOffset * 100f).ToString("0.0", Inv) + " cm",
-                                                   p != null && p.teachOffset >= 0f ? (p.teachOffset * 100f).ToString("0.0", Inv) + " cm" : null) },
                 new[] { "Help needed", V(Hints(r), p != null ? Hints(p) : null) },
             };
             for (int i = 0; i < _rows.Count; i++)
@@ -356,7 +354,7 @@ namespace MetaMove.Demo.Kitting
             UIKit.Place(_sub.rectTransform, new Vector2(0f, 1f), new Vector2(0f, 1f), new Vector2(44f, -86f), new Vector2(ColW - 88f, 36f));
 
             float y = -140f;
-            for (int i = 0; i < 9; i++)
+            for (int i = 0; i < 8; i++)
             {
                 if (i > 0)
                 {

@@ -39,23 +39,33 @@ namespace MetaMove.Demo.Kitting
 
         Grabbable _grabbable;
         Rigidbody _rb;
+        KittingTray _tray;
+        bool Freestyle => cell != null && cell.Mode == KittingCell.Freestyle.Teach;
         float _fallStart, _restSince;
 
         void Awake()
         {
             _grabbable = GetComponent<Grabbable>();
             _rb = GetComponent<Rigidbody>();
+            _tray = GetComponent<KittingTray>();
         }
 
         void Update()
         {
             // Grabbable only when the story asks for it: the new batch once the refill is due,
             // the empty once the robot is done with it. Before that the box is scenery.
-            if (State == Phase.Waiting)
-                SetGrabbable(cell != null && (kind == Kind.Empty ? cell.AllowEmptyRemoval : cell.RefillDue && !cell.TrayBInRack));
+            // Freestyle: every box, except the one the arm is working from right now.
+            if (Freestyle && (State == Phase.Waiting || State == Phase.Arrived))
+            {
+                bool busy = cell.Taught == _tray && (cell.State == KittingCell.Phase.Running || cell.State == KittingCell.Phase.Probe || cell.State == KittingCell.Phase.Align);
+                SetGrabbable(!busy);
+            }
+            else if (State == Phase.Waiting)
+                SetGrabbable(cell != null && (kind == Kind.Empty ? cell.AllowEmptyRemoval
+                    : cell.trayB == _tray && cell.RefillDue && !cell.TrayBInRack));
 
             bool held = _grabbable.SelectingPointsCount > 0;
-            if (held && (State == Phase.Waiting || State == Phase.Falling))
+            if (held && (State == Phase.Waiting || State == Phase.Falling || (Freestyle && State == Phase.Arrived)))
             {
                 State = Phase.Held;
                 Debug.Log("[Kitting] " + name + " picked up");
@@ -70,6 +80,13 @@ namespace MetaMove.Demo.Kitting
 
         void OnReleased()
         {
+            if (Freestyle)
+            {
+                // over the rack: into a free lane; anywhere else it stays where it lands
+                if (rack != null && (rack.InLoadZone(transform.position) || NearRack())) LoadIntoRack();
+                else Drop();
+                return;
+            }
             if (kind == Kind.Empty)
             {
                 if (rack != null && NearRack()) { SendToReturn(); return; }
@@ -113,6 +130,13 @@ namespace MetaMove.Demo.Kitting
             if (resting && _restSince < 0f) _restSince = Time.time;
             if (!resting) _restSince = -1f;
             bool lost = cell != null && cell.cellFrame != null && transform.position.y < cell.cellFrame.position.y - 2f;
+            if (Freestyle && !lost && _restSince > 0f && Time.time - _restSince > 0.4f)
+            {
+                // freestyle: it stays where it was put down
+                Freeze();
+                State = Phase.Waiting;
+                return;
+            }
             if ((_restSince > 0f && Time.time - _restSince > respawnDelay) || Time.time - _fallStart > 6f || lost)
                 StartCoroutine(Respawn());
         }
@@ -165,11 +189,19 @@ namespace MetaMove.Demo.Kitting
         public void LoadIntoRack()
         {
             if (rack == null) return;
-            int lane = rack.NearestLane(transform.position, cell != null ? cell.trayA : null);
+            int lane;
+            if (Freestyle)
+            {
+                var others = new System.Collections.Generic.List<KittingTray>();
+                foreach (var t in cell.AllTrays) if (t != _tray) others.Add(t);
+                lane = rack.NearestLane(transform.position, true, others.ToArray());
+            }
+            else lane = rack.NearestLane(transform.position, cell != null ? cell.trayA : null);
             if (lane < 0) { Drop(); return; }
             Lane = lane;
             Freeze();
-            StartCoroutine(RollTo(rack.entries[lane], rack.picks[lane], true));
+            // only the demo's new batch tells the cell it has arrived
+            StartCoroutine(RollTo(rack.entries[lane], rack.picks[lane], !Freestyle && cell != null && cell.trayB == _tray));
         }
 
         // The empty onto the return lane, gliding from where it is. Presenter fallback too.

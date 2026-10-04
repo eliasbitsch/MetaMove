@@ -66,7 +66,19 @@ namespace MetaMove.Demo.Kitting
         AudioSource _audio;
         AudioClip _thud;
 
-        void Awake() => Capture();
+        void Awake()
+        {
+            Capture();
+            // Test switch: a file 'no_floor' in the app's files folder hides the factory floor
+            // slab - the real floor shows, the zone rings stay.
+            //   adb shell touch /sdcard/Android/data/com.MetaMove.Bari/files/no_floor
+            if (floorIsland != null && System.IO.File.Exists(System.IO.Path.Combine(Application.persistentDataPath, "no_floor")))
+            {
+                foreach (var r in floorIsland.GetComponentsInChildren<Renderer>(true)) r.enabled = false;
+                floorIsland = null;   // nothing to animate
+                Debug.Log("[FactoryReveal] no_floor: factory floor hidden");
+            }
+        }
 
         void Capture()
         {

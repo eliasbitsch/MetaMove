@@ -19,7 +19,7 @@ Cobots are usually kept slow everywhere, just in case someone comes close. Safe,
 How does it know? The QR code on the post is the spatial anchor. The headset's own SLAM tracking finds it, and the code is measured to the robot base. So your head and hands are known relative to the robot, and that distance sets the speed.
 
 [refill]
-The tray is getting low. The next batch is waiting on the trolley behind you, in the orange box. Pick it up and load it into the rack, while the arm keeps working.
+The tray is getting low. The next batch is waiting on the trolley on your left, in the orange box. Pick it up and load it into the rack, while the arm keeps working.
 
 [slow]
 Notice the arm slowing down as you come closer? That is distance-based speed scaling. The closer you are, the slower it moves. Nothing personal.
@@ -31,7 +31,7 @@ And now it stops. Nothing broke. You are inside its reach, and it would rather w
 Would you be so kind as to take a step back? Then the arm can carry on, and I can finish showing you around.
 
 [recover]
-Step back. Notice it does not rush off straight away? Slowing down may be abrupt. Speeding up is not.
+Step back. Notice it does not rush off straight away?
 
 [empty]
 The first box is empty. The arm noticed and switched to the reserve box on the left, so the line keeps running. Take the empty box out at the front and put it on the return lane below. Watch the arm while your hands are close.
@@ -62,7 +62,7 @@ You gave the arm plenty of room, so it could work at full speed the whole time.
 Whenever you came closer, the arm slowed down for you, and picked up speed again as you stepped back. That is the safety layer at work.
 
 [report_stopped]
-At one point you came close enough for the arm to stop. It waited patiently. Robots are good at that.
+At one point you came close enough for the arm to stop, and it waited until you stepped back.
 
 [report_pinch_exact]
 You showed it the spot almost exactly. The robot only fine-tuned the last few millimetres.

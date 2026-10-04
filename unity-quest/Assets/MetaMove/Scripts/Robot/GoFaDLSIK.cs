@@ -352,6 +352,23 @@ namespace MetaMove.Robot
             return true;
         }
 
+        // Where the tool would be for these joint angles (deg, from the rest pose): the joints
+        // are set, the end effector read, and everything put back as it was.
+        public void ForwardPose(float[] deg, out Vector3 pos, out Quaternion rot)
+        {
+            if (_restLocalRot == null || _restLocalRot.Length != joints.Length) CacheRestPose();
+            var saved = new Quaternion[joints.Length];
+            for (int i = 0; i < joints.Length; i++)
+            {
+                if (joints[i].joint == null) continue;
+                saved[i] = joints[i].joint.localRotation;
+                float a = i < deg.Length ? deg[i] : 0f;
+                joints[i].joint.localRotation = _restLocalRot[i] * Quaternion.AngleAxis(a, joints[i].localAxis.normalized);
+            }
+            pos = endEffector.position; rot = endEffector.rotation;
+            for (int i = 0; i < joints.Length; i++) if (joints[i].joint != null) joints[i].joint.localRotation = saved[i];
+        }
+
         public float[] GetJointAnglesDeg()
         {
             if (_angleDeg == null) return new float[joints?.Length ?? 0];

@@ -495,11 +495,18 @@ namespace MetaMove.EditorTools
             cell.reserve.transform.SetPositionAndRotation(rack.picks[0].position, rack.picks[0].rotation);
             cell.reserveEntry = rack.entries[0];
             StockBox("Stock_Return0", frame, rack.returns[0], false);
+            // Three full boxes stacked on the floor beside the rack: scenery in the demo, material
+            // in freestyle (carry one to a lane, show the arm, it empties it).
+            cell.stock.Clear();
             for (int i = 0; i < 3; i++)
             {
                 var at = Marker("StockPile_" + i, frame, new Vector3(-1.15f, -FloorBelowTable + i * KltSize.y, 1.35f), (i - 1) * 4f);
-                StockBox("StockPile_Box" + i, frame, at, i == 2);
+                var stockTray = Tray("Stock" + i, "Stock " + (i + 1), frame, "KLT_Blue", "bari_gear_a", mGlow, GridNests(2, 3, 0.09f, 0.10f, 0f), -1);
+                stockTray.transform.SetPositionAndRotation(at.position, at.rotation);
+                MakeCarryable(cell, stockTray, rack, CarryableTray.Kind.Supply, at);
+                cell.stock.Add(stockTray);
             }
+            MakeCarryable(cell, cell.reserve, rack, CarryableTray.Kind.Supply, rack.picks[0]);
             rack.blocked = new[] { true, false, false };
             Colliders(frame);
 
@@ -835,14 +842,15 @@ namespace MetaMove.EditorTools
             Object.DestroyImmediate(pole.GetComponent<Collider>());
             pole.transform.SetParent(stand, false);
             float bottom = -FloorBelowTable, top = at.y - 0.17f;
-            pole.transform.localPosition = new Vector3(at.x, (bottom + top) / 2f, at.z - 0.03f);
+            var behind = at + (at - visitor).normalized * 0.12f; behind.y = at.y;   // 12 cm behind the panels
+            pole.transform.localPosition = new Vector3(behind.x, (bottom + top) / 2f, behind.z);
             pole.transform.localScale = new Vector3(0.04f, (top - bottom) / 2f, 0.04f);
             pole.GetComponent<Renderer>().sharedMaterial = SlotMat("ControllerDark");
             var foot = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
             foot.name = "Foot";
             Object.DestroyImmediate(foot.GetComponent<Collider>());
             foot.transform.SetParent(stand, false);
-            foot.transform.localPosition = new Vector3(at.x, bottom + 0.01f, at.z - 0.03f);
+            foot.transform.localPosition = new Vector3(behind.x, bottom + 0.01f, behind.z);
             foot.transform.localScale = new Vector3(0.30f, 0.01f, 0.30f);
             foot.GetComponent<Renderer>().sharedMaterial = SlotMat("ControllerDark");
             var mount = new GameObject("PanelMount").transform;

@@ -124,7 +124,7 @@ namespace MetaMove.Demo.Kitting
             if (guiding && t == null && Time.time < _failUntil && cell.tcp != null)
                 _ready.Show(cell.tcp, 0.10f, "MOVE OVER A BOX", 0.14f, head);
             else if (t != null && freestyle)
-                _ready.Show(t.transform, 0.15f, "GOOD SPOT · PRESS TEACH", 0.46f, head);
+                _ready.Show(t.transform, 0.42f, "GOOD SPOT · PRESS TEACH", 0.46f, head);
             else _ready.Hide();
             _ready.Tick();
 
@@ -240,11 +240,11 @@ namespace MetaMove.Demo.Kitting
                 if (cell.FreeGuide)
                 {
                     // free guiding: any full box will do - only confirm the one under the tool
-                    if (under != null) { _where.Show(under.transform, 0.15f, "PALM UP, THEN TEACH", 0.46f, head); shownWhere = true; }
+                    if (under != null) { _where.Show(under.transform, 0.42f, "PALM UP, THEN TEACH", 0.46f, head); shownWhere = true; }
                 }
                 else
                 {
-                    _where.Show(cell.trayB.transform, 0.15f, under != null ? "PALM UP, THEN TEACH" : "BRING IT HERE", 0.46f, head);
+                    _where.Show(cell.trayB.transform, 0.42f, under != null ? "PALM UP, THEN TEACH" : "BRING IT HERE", 0.46f, head);
                     shownWhere = true;
                     if (focus == null) focus = cell.trayB.transform;
                 }

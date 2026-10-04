@@ -131,7 +131,7 @@ namespace MetaMove.Demo.Kitting
             _pct.text = Mathf.RoundToInt(_shownFactor * 100f) + "<size=60%>%</size>";
 
             _dist.text = d < 0f ? "--" : d.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture) + "<size=60%> m</size>";
-            _zone.text = d < 0f ? "" : d <= near ? "STOP ZONE" : d <= far ? "SLOW ZONE" : "CLEAR";
+            _zone.text = d < 0f ? "" : d <= near ? "STOP ZONE" : d <= far ? "SPEED SCALING" : "FULL SPEED";
             _zone.color = zc; _zoneBar.color = zc;
         }
     }

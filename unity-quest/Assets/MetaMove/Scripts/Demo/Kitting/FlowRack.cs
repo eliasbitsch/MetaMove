@@ -32,12 +32,15 @@ namespace MetaMove.Demo.Kitting
         public bool InLoadZone(Vector3 world) => loadZone.Contains(transform.InverseTransformPoint(world));
 
         // Lane closest to a world position, skipping occupied lanes.
-        public int NearestLane(Vector3 world, params KittingTray[] occupants)
+        public int NearestLane(Vector3 world, params KittingTray[] occupants) => NearestLane(world, false, occupants);
+
+        // ignoreBlocked: freestyle - every lane is the visitor's, as long as no box stands in it
+        public int NearestLane(Vector3 world, bool ignoreBlocked, params KittingTray[] occupants)
         {
             int best = -1; float bestD = float.MaxValue;
             for (int i = 0; i < LaneCount; i++)
             {
-                if (IsOccupied(i, occupants) || IsBlocked(i)) continue;
+                if (IsOccupied(i, occupants) || (!ignoreBlocked && IsBlocked(i))) continue;
                 var local = transform.InverseTransformPoint(world);
                 var lane = transform.InverseTransformPoint(entries[i].position);
                 float d = Mathf.Abs(local.x - lane.x);
