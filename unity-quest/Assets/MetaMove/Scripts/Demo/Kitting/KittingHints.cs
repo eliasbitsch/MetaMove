@@ -154,7 +154,8 @@ namespace MetaMove.Demo.Kitting
             {
                 if (cb.State == CarryableTray.Phase.Waiting)
                 { _what.Show(cell.trayB.transform, 0.15f, "PICK UP", 0.46f, head); shownWhat = true; focus = cell.trayB.transform; }
-                if (cb.State == CarryableTray.Phase.Held || cb.State == CarryableTray.Phase.Waiting)
+                // one step at a time: where it goes only once it is in the hands
+                if (cb.State == CarryableTray.Phase.Held)
                 {
                     int lane = rack != null ? rack.NearestLane(rack.entries[rack.LaneCount - 1].position, cell.trayA) : -1;
                     if (lane >= 0) { _where.Show(rack.entries[lane], 0.0f, "LOAD HERE", 0.46f, head); shownWhere = true; if (focus == null) focus = rack.entries[lane]; }
@@ -165,7 +166,7 @@ namespace MetaMove.Demo.Kitting
             {
                 if (ca.State == CarryableTray.Phase.Waiting)
                 { _what.Show(cell.trayA.transform, 0.15f, "TAKE OUT", 0.46f, head); shownWhat = true; focus = cell.trayA.transform; }
-                int lane = rack != null ? rack.NearestLane(cell.trayA.transform.position) : -1;
+                int lane = rack != null && ca.State == CarryableTray.Phase.Held ? rack.NearestLane(cell.trayA.transform.position) : -1;
                 if (lane >= 0) { _where.Show(rack.returns[lane], 0.0f, "RETURN LANE", 0.46f, head); shownWhere = true; if (focus == null) focus = rack.returns[lane]; }
             }
             // 3. hand guiding: grab the tool, bring it over the new box, Teach

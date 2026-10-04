@@ -49,6 +49,7 @@ namespace MetaMove.Demo.Kitting
         // cell holds back the "running low" moment until then - one thing at a time.
         public bool IntroDone { get; private set; }
         FactoryReveal _reveal;
+        bool _standWait;
         bool _welcomed, _storyTold, _slowTold, _stood, _recovered, _emptyAsked, _grabTold;
         float _shownAt, _boundAt = -1f;
         Beat _beat;
@@ -80,8 +81,15 @@ namespace MetaMove.Demo.Kitting
 
         void Play(string key)
         {
-            bool urgent = key == "standstill" && !ShiftReport.Speaking;
-            if (!urgent && !QuietLongEnough()) { if (!_pending.Contains(key)) _pending.Enqueue(key); return; }
+            // The standstill never cuts a line short: it waits for the voice to finish and then
+            // goes first, without the usual pause (see Update).
+            if (key == "standstill")
+            {
+                if (!ShiftReport.Speaking && (voiceSource == null || !voiceSource.isPlaying)) PlayNow(key);
+                else _standWait = true;
+                return;
+            }
+            if (!QuietLongEnough()) { if (!_pending.Contains(key)) _pending.Enqueue(key); return; }
             PlayNow(key);
         }
 
@@ -112,7 +120,7 @@ namespace MetaMove.Demo.Kitting
                 case "guide": Play("guide"); break;
                 case "aligned": Play("aligned"); break;
                 case "resume": Play("release"); break;
-                case "restart": IntroDone = false; _welcomed = _storyTold = _slowTold = _stood = _recovered = _emptyAsked = _grabTold = false; _boundAt = Time.time; _pending.Clear(); break;
+                case "restart": IntroDone = false; _standWait = false; _welcomed = _storyTold = _slowTold = _stood = _recovered = _emptyAsked = _grabTold = false; _boundAt = Time.time; _pending.Clear(); break;
             }
         }
 
@@ -149,6 +157,12 @@ namespace MetaMove.Demo.Kitting
             // start is not "coming closer", and it must not push the story aside.
             if (!_slowTold && _storyTold && cell.RefillDue && f < 0.85f && f > 0.001f && cell.State == KittingCell.Phase.Running && _current != "standstill")
             { _slowTold = true; Play("slow"); }
+            if (_standWait && !ShiftReport.Speaking && (voiceSource == null || !voiceSource.isPlaying))
+            {
+                _standWait = false;
+                if (f <= 0.001f) PlayNow("standstill");
+                else _stood = false;   // they stepped back meanwhile: say it the next time it happens
+            }
             if (!_stood && f <= 0.001f && cell.State == KittingCell.Phase.Running) { _stood = true; Play("standstill"); }
             if (_stood && !_recovered && _current == "standstill" && f > 0.5f) { _recovered = true; Play("recover"); }
 
