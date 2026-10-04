@@ -8,7 +8,8 @@ namespace MetaMove.Demo.Kitting
     // The demo is narrated, and a headset handed from visitor to visitor is often muted. The
     // media volume is read from Android's AudioManager (Horizon OS is Android); while it is at
     // zero a card in the middle of the view shows a muted speaker and a photo of the headset
-    // from below, its volume-up button blinking cyan with an arrow pointing at it (a drawn
+    // from below, its volume-up button glowing cyan with a thin callout line and "Volume +",
+    // the way product manuals label a part (a drawn
     // headset stands in when the photo is not in the project). StoryDirector
     // holds the welcome until the sound is on (bounded), so nobody misses the first line.
     public class VolumeCheck : MonoBehaviour
@@ -28,11 +29,13 @@ namespace MetaMove.Demo.Kitting
         CanvasGroup _group;
         readonly UIKit.FollowState _follow = new UIKit.FollowState();
         float _next, _shown;
-        RectTransform _glow, _arrow;
-        Image _glowImg, _rockerImg, _arrowImg;
-        Vector2 _rockerAt;   // card px
-        const float W = 900f, H = 520f;
-        static readonly Vector2 PicAt = new Vector2(110f, -78f), PicSize = new Vector2(430f, 350f);   // 920 x 749 photo
+        RectTransform _glow, _line;
+        Image _glowImg, _rockerImg, _dot;
+        TextMeshProUGUI _label;
+        Vector2 _rockerAt, _lineFrom, _lineTo;   // card px
+        float _draw;   // callout line drawn out 0..1 each time the card comes up
+        const float W = 1040f, H = 520f;
+        static readonly Vector2 PicAt = new Vector2(70f, -78f), PicSize = new Vector2(430f, 350f);   // 920 x 749 photo
 #if UNITY_ANDROID && !UNITY_EDITOR
         AndroidJavaObject _audio;
 #endif
@@ -64,19 +67,26 @@ namespace MetaMove.Demo.Kitting
             _shown = Mathf.MoveTowards(_shown, Muted ? 1f : 0f, Time.unscaledDeltaTime / 0.3f);
             _group.alpha = Mathf.SmoothStep(0f, 1f, _shown);
             _canvas.enabled = _shown > 0.001f;
-            if (_canvas.enabled) { UIKit.LazyFollow(_canvas.transform, Camera.main.transform, 0.9f, -4f, 12f, 0.3f, _follow); Animate(Mathf.Repeat(Time.unscaledTime, 2f)); }
-            else _follow.placed = false;
+            if (_canvas.enabled)
+            {
+                UIKit.LazyFollow(_canvas.transform, Camera.main.transform, 0.9f, -4f, 12f, 0.3f, _follow);
+                _draw = Mathf.MoveTowards(_draw, 1f, Time.unscaledDeltaTime / 0.6f);
+                Animate(Mathf.Repeat(Time.unscaledTime, 2f));
+            }
+            else { _follow.placed = false; _draw = 0f; }
         }
 
-        // 2 s loop: the button blinks cyan, a soft glow breathes around it, the arrow beside it nudges in.
+        // A calm pulse on the button; the callout line draws itself out once, then stands.
         void Animate(float t)
         {
-            float blink = 0.5f + 0.5f * Mathf.Cos(t * Mathf.PI * 2f);   // 1 at the start of the loop
-            _rockerImg.color = new Color(UIKit.Accent.r, UIKit.Accent.g, UIKit.Accent.b, Mathf.Lerp(0.25f, 0.95f, blink));
-            _glowImg.color = new Color(UIKit.Accent.r, UIKit.Accent.g, UIKit.Accent.b, 0.30f * blink);
-            _glow.localScale = Vector3.one * Mathf.Lerp(1.0f, 1.35f, 1f - blink);
-            float nudge = Mathf.Abs(Mathf.Sin(t * Mathf.PI));   // two pokes per loop
-            _arrow.anchoredPosition = _rockerAt + new Vector2(138f - 18f * nudge, 0f);
+            float pulse = 0.5f + 0.5f * Mathf.Cos(t * Mathf.PI);   // 2 s period
+            _rockerImg.color = new Color(UIKit.Accent.r, UIKit.Accent.g, UIKit.Accent.b, Mathf.Lerp(0.45f, 0.90f, pulse));
+            _glowImg.color = new Color(UIKit.Accent.r, UIKit.Accent.g, UIKit.Accent.b, 0.18f * pulse);
+            _glow.localScale = Vector3.one * Mathf.Lerp(1.0f, 1.2f, 1f - pulse);
+            float d = Mathf.SmoothStep(0f, 1f, _draw);
+            var v = _lineTo - _lineFrom;
+            _line.sizeDelta = new Vector2(v.magnitude * d, 3f);
+            _label.alpha = Mathf.Clamp01((_draw - 0.7f) / 0.3f);
         }
 
         bool ReadMuted()
@@ -109,7 +119,7 @@ namespace MetaMove.Demo.Kitting
             UIKit.Place(body.rectTransform, new Vector2(0.5f, 1f), new Vector2(0.5f, 1f), new Vector2(0f, -98f), new Vector2(W - 80f, 44f));
             body.text = "This demo talks to you. Volume up: <b>underside, right</b>.";
 
-            Img("Speaker", root, MutedSpeaker(), UIKit.Warn, new Vector2(-280f, PicAt.y), new Vector2(150f, 150f));
+            Img("Speaker", root, MutedSpeaker(), UIKit.Warn, new Vector2(-330f, PicAt.y), new Vector2(150f, 150f));
 
             // the headset from below; where its volume-up button sits on the card
             Vector2 uv;
@@ -134,9 +144,21 @@ namespace MetaMove.Demo.Kitting
             _glow = _glowImg.rectTransform;
             _rockerImg = Img("Rocker", root, Capsule(), UIKit.Accent, _rockerAt, rs + new Vector2(4f, 4f));
             _glow.localRotation = _rockerImg.rectTransform.localRotation = Quaternion.Euler(0f, 0f, rockerTilt);
-            _arrowImg = Img("Arrow", root, UIKit.Pointer, UIKit.Accent, _rockerAt, new Vector2(64f, 64f));
-            _arrow = _arrowImg.rectTransform;
-            _arrow.localRotation = Quaternion.Euler(0f, 0f, 180f);   // points left, at the button
+            // callout: dot on the button, a thin line up and out, the name of the button at its end
+            _lineFrom = _rockerAt + new Vector2(rs.x * 0.5f + 4f, 2f);
+            _lineTo = _rockerAt + new Vector2(156f, 58f);   // out past the strap, into the free space
+            _dot = Img("CalloutDot", root, UIKit.Disc, UIKit.Accent, _lineFrom, new Vector2(10f, 10f));
+            var line = new GameObject("CalloutLine", typeof(Image)).GetComponent<Image>();
+            line.transform.SetParent(root, false);
+            line.color = UIKit.Accent; line.raycastTarget = false;
+            _line = line.rectTransform;
+            UIKit.Place(_line, new Vector2(0.5f, 0.5f), new Vector2(0f, 0.5f), _lineFrom, new Vector2(0f, 3f));
+            var dir = _lineTo - _lineFrom;
+            _line.localRotation = Quaternion.Euler(0f, 0f, Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg);
+            _label = UIKit.Text("CalloutLabel", root, font, 28f, UIKit.Accent, TextAlignmentOptions.MidlineLeft, FontStyles.Bold);
+            UIKit.Place(_label.rectTransform, new Vector2(0.5f, 0.5f), new Vector2(0f, 0.5f), _lineTo + new Vector2(12f, 0f), new Vector2(170f, 40f));
+            _label.text = "Volume +";
+            _label.characterSpacing = 2f;
             _canvas.enabled = false;
         }
 
@@ -145,6 +167,7 @@ namespace MetaMove.Demo.Kitting
         {
             if (_canvas == null) Build();
             _canvas.enabled = true; _group.alpha = 1f;
+            _draw = 1f;
             Animate(t);
             return _canvas;
         }
