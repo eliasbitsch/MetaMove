@@ -45,6 +45,9 @@ namespace MetaMove.Demo.Kitting
         public event Action<string> BeatStarted;
         // Key of the beat on the card right now (null when the card is down).
         public string Current => card != null && card.Visible ? _current : null;
+        // The opening is told: story and tracking have been said and their cards are gone. The
+        // cell holds back the "running low" moment until then - one thing at a time.
+        public bool IntroDone { get; private set; }
         FactoryReveal _reveal;
         bool _welcomed, _storyTold, _slowTold, _stood, _recovered, _emptyAsked, _grabTold;
         float _shownAt, _boundAt = -1f;
@@ -109,7 +112,7 @@ namespace MetaMove.Demo.Kitting
                 case "guide": Play("guide"); break;
                 case "aligned": Play("aligned"); break;
                 case "resume": Play("release"); break;
-                case "restart": _welcomed = _storyTold = _slowTold = _stood = _recovered = _emptyAsked = _grabTold = false; _boundAt = Time.time; _pending.Clear(); break;
+                case "restart": IntroDone = false; _welcomed = _storyTold = _slowTold = _stood = _recovered = _emptyAsked = _grabTold = false; _boundAt = Time.time; _pending.Clear(); break;
             }
         }
 
@@ -136,6 +139,8 @@ namespace MetaMove.Demo.Kitting
             // The story follows the welcome whatever else was said in between (it queues).
             if (_reveal == null) _reveal = FindAnyObjectByType<FactoryReveal>();
             bool hallStands = _reveal == null || _reveal.Done || !_reveal.isActiveAndEnabled;
+            if (_storyTold && !IntroDone && Current != "story" && Current != "tracking" && !_pending.Contains("story") && !_pending.Contains("tracking"))
+                IntroDone = true;
             if (_welcomed && !_storyTold && hallStands && Time.time - _boundAt > 0.3f + Mathf.Max(8f, welcomeLen)) { _storyTold = true; Play("story"); Play("tracking"); }   // the how follows the why
 
             float f = speed != null ? speed.Factor : 1f;

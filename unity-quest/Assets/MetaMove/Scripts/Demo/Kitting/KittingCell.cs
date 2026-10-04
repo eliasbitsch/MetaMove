@@ -509,6 +509,13 @@ namespace MetaMove.Demo.Kitting
                     yield return WaitForTray();
                     yield break;   // Guide takes over; AlignThenRun restarts the loop
                 }
+                if (!_lowCued && Taught == trayA && Taught.Remaining <= lowAt && !IntroOver())
+                {
+                    // not while the anchor is being explained: wait at home until the story is through
+                    yield return MoveTo(home, Vector3.zero);
+                    float since = Time.time;
+                    while (!IntroOver() && Time.time - since < 45f) yield return null;
+                }
                 if (!_lowCued && Taught == trayA && Taught.Remaining <= lowAt)
                 {
                     _lowCued = true;
@@ -516,6 +523,14 @@ namespace MetaMove.Demo.Kitting
                 }
                 yield return PickPlace(Taught, n);
             }
+        }
+
+        StoryDirector _story;
+        bool IntroOver()
+        {
+            if (Expert) return true;
+            if (_story == null) _story = FindAnyObjectByType<StoryDirector>();
+            return _story == null || !_story.isActiveAndEnabled || _story.IntroDone;
         }
 
         IEnumerator PickPlace(KittingTray tray, int nest)
