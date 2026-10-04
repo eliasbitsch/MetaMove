@@ -72,6 +72,16 @@ namespace MetaMove.UI.Kit
             return t;
         }
 
+        // Shrink to fit instead of running out of the box: from the set size down to 'min',
+        // with a little air left and right.
+        public static void Fit(TextMeshProUGUI t, float min, float side = 14f)
+        {
+            t.enableAutoSizing = true;
+            t.fontSizeMax = t.fontSize;
+            t.fontSizeMin = min;
+            t.margin = new Vector4(side, 0f, side, 0f);
+        }
+
         public static void Place(RectTransform r, Vector2 anchor, Vector2 pivot, Vector2 pos, Vector2 size)
         {
             r.anchorMin = r.anchorMax = anchor;

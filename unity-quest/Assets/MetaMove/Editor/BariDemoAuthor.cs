@@ -272,6 +272,7 @@ namespace MetaMove.EditorTools
 
             // Placement without QR: ghost footprint + pinch-and-hold, persisted as a spatial anchor.
             var placer = root.AddComponent<CellPlacer>();
+            placer.labelFont = AssetDatabase.LoadAssetAtPath<TMPro.TMP_FontAsset>("Assets/MRTemplateAssets/Fonts/Inter/Inter-Regular_SDF.asset");
             placer.calibrator = calib;
             placer.cell = cell;
             placer.ghostMaterial = SpriteMat("ZoneLine");

@@ -85,6 +85,10 @@ namespace MetaMove.Demo.Kitting
         void LateUpdate()
         {
             if (_canvas == null || Camera.main == null) return;
+            // nothing to show while the cell is being placed
+            bool placed = cell == null || cell.IsBound;
+            if (_canvas.enabled != placed) _canvas.enabled = placed;
+            if (!placed) return;
             UIKit.LazyFollow(_canvas.transform, Camera.main.transform, distance, elevation, 18f, 0.25f, _follow);
 
             bool ssmActive = cell == null || (cell.State != KittingCell.Phase.Guide && cell.State != KittingCell.Phase.Align);

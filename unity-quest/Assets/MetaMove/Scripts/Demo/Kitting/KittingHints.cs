@@ -68,13 +68,14 @@ namespace MetaMove.Demo.Kitting
             _where = new Marker("Hint_Where", transform, font, UIKit.Accent);
             _arrow = new FlyArrow(transform);
             // white caption that travels with the demo hand
-            _pinchTag = UIKit.WorldCanvas(transform, "PinchDemoTag", new Vector2(520f, 90f), 10);
-            _pinchTag.transform.localScale = Vector3.one * (0.20f / 520f);
+            _pinchTag = UIKit.WorldCanvas(transform, "PinchDemoTag", new Vector2(700f, 90f), 10);
+            _pinchTag.transform.localScale = Vector3.one * (0.20f / 520f);   // same letter size, wider tag
             var bg = UIKit.Panel("Bg", _pinchTag.transform, UIKit.Glass, 40f, 2f);
             UIKit.Stretch(bg.rectTransform);
             _pinchText = UIKit.Text("Text", _pinchTag.transform, font, 40f, UIKit.TextHi, TextAlignmentOptions.Center, FontStyles.Bold);
             UIKit.Stretch(_pinchText.rectTransform);
             _pinchText.characterSpacing = 6f;
+            UIKit.Fit(_pinchText, 24f, 22f);
             _pinchTag.gameObject.SetActive(false);
             var rayGo = new GameObject("PinchDemoRay");
             rayGo.transform.SetParent(transform, false);
@@ -397,15 +398,16 @@ namespace MetaMove.Demo.Kitting
                 _root.SetParent(parent, false);
 
                 // label pill + arrow, facing the viewer
-                var c = UIKit.WorldCanvas(_root, "Label", new Vector2(420f, 220f), 9);
+                var c = UIKit.WorldCanvas(_root, "Label", new Vector2(640f, 220f), 9);
                 _label = c.transform;
                 _label.localScale = Vector3.one * (0.22f / 420f);
                 _labelGroup = c.gameObject.AddComponent<CanvasGroup>();
                 var pill = UIKit.Panel("Pill", _label, UIKit.Glass, 40f, 3f);
-                UIKit.Place(pill.rectTransform, new Vector2(0.5f, 1f), new Vector2(0.5f, 1f), Vector2.zero, new Vector2(420f, 90f));
+                UIKit.Place(pill.rectTransform, new Vector2(0.5f, 1f), new Vector2(0.5f, 1f), Vector2.zero, new Vector2(640f, 90f));
                 _text = UIKit.Text("Text", pill.transform, font, 40f, color, TextAlignmentOptions.Center, FontStyles.Bold);
                 UIKit.Stretch(_text.rectTransform);
                 _text.characterSpacing = 6f;
+                UIKit.Fit(_text, 24f, 22f);
                 _arrowImg = new GameObject("Arrow", typeof(Image)).GetComponent<Image>();
                 _arrowImg.transform.SetParent(_label, false);
                 _arrowImg.sprite = UIKit.Pointer; _arrowImg.color = color; _arrowImg.raycastTarget = false;

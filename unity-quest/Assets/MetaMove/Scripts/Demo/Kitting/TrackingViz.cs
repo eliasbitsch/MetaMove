@@ -111,7 +111,7 @@ namespace MetaMove.Demo.Kitting
 
             public Tag(Transform parent, TMP_FontAsset font, Color color, string s)
             {
-                var c = UIKit.WorldCanvas(parent, "VizTag", new Vector2(420f, 80f), 9);
+                var c = UIKit.WorldCanvas(parent, "VizTag", new Vector2(560f, 80f), 9);
                 _t = c.transform;
                 _t.localScale = Vector3.one * (0.16f / 420f);
                 _g = c.gameObject.AddComponent<CanvasGroup>();
@@ -120,6 +120,7 @@ namespace MetaMove.Demo.Kitting
                 text = UIKit.Text("Text", _t, font, 40f, color, TextAlignmentOptions.Center, FontStyles.Bold);
                 UIKit.Stretch(text.rectTransform);
                 text.text = s;
+                UIKit.Fit(text, 22f, 18f);
                 _t.gameObject.SetActive(false);
             }
 

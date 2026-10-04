@@ -66,6 +66,7 @@ namespace MetaMove.Demo.Kitting
             _status = UIKit.Text("Status", root, font, 30f, UIKit.TextHi, TextAlignmentOptions.Center);
             UIKit.Place(_status.rectTransform, new Vector2(0.5f, 1f), new Vector2(0.5f, 1f), new Vector2(0f, -26f), new Vector2(W - 40f, 70f));
             _status.enableWordWrapping = true;
+            UIKit.Fit(_status, 20f, 10f);
             if (report == null) report = FindAnyObjectByType<ShiftReport>();
             string[] names = { "Teach", "Home", "Restart", "Freestyle", "Place", "Report" };
             int[] slot = { 0, 1, 3, 4, 5, 2 };   // left to right: Teach Home Report Restart Expert Place
@@ -82,6 +83,7 @@ namespace MetaMove.Demo.Kitting
                 UIKit.Place(b.rt, new Vector2(0.5f, 0f), new Vector2(0.5f, 0f), new Vector2((slot[i] - 2.5f) * 124f, 26f), new Vector2(106f, 170f));
                 b.label = UIKit.Text("Label", b.bg.transform, font, 25f, UIKit.TextHi, TextAlignmentOptions.Center, FontStyles.Bold);
                 UIKit.Stretch(b.label.rectTransform);
+                UIKit.Fit(b.label, 15f, 6f);
                 b.label.text = names[i];
                 _buttons[i] = b;
             }

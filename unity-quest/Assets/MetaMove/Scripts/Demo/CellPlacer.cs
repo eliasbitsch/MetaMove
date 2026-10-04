@@ -36,6 +36,8 @@ namespace MetaMove.Demo
         [Tooltip("Place by hand in the Editor too (else the calibrator's editor auto-spawn is used).")]
         public bool placeInEditor = false;
         public Material ghostMaterial;
+        [Tooltip("Labels on the placement ghost (YOU, ROBOT, RACK, WALL).")]
+        public TMPro.TMP_FontAsset labelFont;
 
         const string PrefKey = "MetaMove.Bari.CellAnchor";
         const string ReplaceMarker = "place_again";
@@ -102,9 +104,18 @@ namespace MetaMove.Demo
 
             if (_phase != Phase.Placing) return;
             if (!FloorTarget(out _point)) return;
-            Vector3 toUser = head.position - _point; toUser.y = 0f;
-            if (toUser.sqrMagnitude < 1e-4f) toUser = Vector3.back;
-            _rot = Quaternion.LookRotation(toUser.normalized, Vector3.up);   // cell +Z faces the user
+            // The visitor's spot (white circle, YOU) lies under the head; the hand only says
+            // in which direction the robot goes. The cell is turned so that its spot is exactly
+            // where the visitor stands - no aiming sideways to hit the circle.
+            var feet = new Vector3(head.position.x, _point.y, head.position.z);
+            Vector3 dir = _point - feet; dir.y = 0f;
+            if (dir.sqrMagnitude < 1e-4f) { dir = head.forward; dir.y = 0f; }
+            if (dir.sqrMagnitude < 1e-4f) dir = Vector3.forward;
+            var spot = new Vector3(VisitorSpot.x, 0f, VisitorSpot.y);
+            float spotYaw = Mathf.Atan2(spot.x, spot.z) * Mathf.Rad2Deg;   // the spot seen from the robot foot
+            // the robot lies along dir from the visitor: cell +Z points back at the visitor
+            _rot = Quaternion.LookRotation(-dir.normalized, Vector3.up) * Quaternion.Euler(0f, -spotYaw, 0f);
+            _point = feet - _rot * spot;
             _ghost.transform.SetPositionAndRotation(_point, _rot);
 
             var kb = Keyboard.current;
@@ -259,9 +270,13 @@ namespace MetaMove.Demo
             // where the visitor is meant to stand: step into the white circle, then confirm
             var spot = Circle(_ghost.transform, 0.35f, new Color(1f, 1f, 1f, 0.95f), 0.035f);
             spot.transform.localPosition = new Vector3(VisitorSpot.x, 0.01f, VisitorSpot.y);
+            FloorLabel("YOU", new Vector3(VisitorSpot.x, 0.012f, VisitorSpot.y), 0.11f, Color.white);
+            FloorLabel("ROBOT", new Vector3(-0.15f, 0.012f, 0f), 0.10f, new Color(0.4f, 0.9f, 1f));
+            FloorLabel("RACK", new Vector3(0f, 0.012f, 0.74f), 0.10f, new Color(0.4f, 0.9f, 1f));
+            UprightLabel("WALL", new Vector3(0f, 1.45f, -1.27f), 0.22f, new Color(0.4f, 0.9f, 1f));
             _ringLine = Circle(_ghost.transform, 0.18f, Color.white, 0.03f);
             _ring = _ringLine.transform;
-            _ring.localPosition = new Vector3(0f, 0.01f, 1.6f);   // progress ring on the user's side
+            _ring.localPosition = new Vector3(VisitorSpot.x, 0.01f, VisitorSpot.y - 0.75f);   // progress ring just in front of YOU
             UpdateRing(0f);
         }
 
@@ -291,6 +306,39 @@ namespace MetaMove.Demo
                 var c = col; c.a *= 0.5f; u.startColor = u.endColor = c;
                 u.positionCount = 2; u.SetPositions(new[] { new Vector3(x, 0f, z), new Vector3(x, h, z) });
             }
+        }
+
+        // Word lying on the floor, readable from the visitor's side (+Z).
+        void FloorLabel(string text, Vector3 at, float h, Color c)
+        {
+            var t = Label(text, h, c);
+            if (t == null) return;
+            t.transform.localPosition = at;
+            t.transform.localRotation = Quaternion.Euler(90f, 180f, 0f);
+        }
+
+        // Word standing up, facing the visitor (+Z).
+        void UprightLabel(string text, Vector3 at, float h, Color c)
+        {
+            var t = Label(text, h, c);
+            if (t == null) return;
+            t.transform.localPosition = at;
+            t.transform.localRotation = Quaternion.Euler(0f, 180f, 0f);
+        }
+
+        TMPro.TextMeshPro Label(string text, float h, Color c)
+        {
+            if (labelFont == null) return null;
+            var go = new GameObject("Label_" + text, typeof(TMPro.TextMeshPro));
+            go.transform.SetParent(_ghost.transform, false);
+            var t = go.GetComponent<TMPro.TextMeshPro>();
+            t.font = labelFont; t.text = text; t.color = c;
+            t.fontStyle = TMPro.FontStyles.Bold; t.characterSpacing = 10f;
+            t.alignment = TMPro.TextAlignmentOptions.Center;
+            t.enableWordWrapping = false;
+            t.fontSize = h * 10f;   // TextMeshPro: font size 10 = 1 m line height
+            ((RectTransform)go.transform).sizeDelta = new Vector2(3f, h * 1.5f);
+            return t;
         }
 
         LineRenderer Line(Transform parent, string name, Color c, float w)
