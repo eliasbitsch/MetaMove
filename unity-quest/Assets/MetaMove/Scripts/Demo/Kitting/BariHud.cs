@@ -13,7 +13,7 @@ namespace MetaMove.Demo.Kitting
     //
     // Deliberately little: no line-state text, the story card says what happens.
     // With a 'mount' it is a fixed panel of the cell (on a stand beside the robot, like the
-    // operator panel of a real cell) and never in the way; without one it sits low in the
+    // operator panel of a real cell), swivelling to face the viewer, and never in the way; without one it sits low in the
     // view and follows the head lazily. Colours carry the same meaning as
     // the floor rings and the signal tower: green clear, amber scaled, red standstill.
     public class BariHud : MonoBehaviour
@@ -105,7 +105,16 @@ namespace MetaMove.Demo.Kitting
             bool placed = cell == null || cell.IsBound;
             if (_canvas.enabled != placed) _canvas.enabled = placed;
             if (!placed) return;
-            if (mount == null) UIKit.LazyFollow(_canvas.transform, Camera.main.transform, distance, elevation, 18f, 0.25f, _follow);
+            if (mount != null)
+            {
+                // on its stand like a monitor on a swivel: turns about the vertical towards the
+                // viewer, a little behind the head so it never jitters
+                var to = _canvas.transform.position - Camera.main.transform.position; to.y = 0f;
+                if (to.sqrMagnitude > 1e-4f)
+                    _canvas.transform.rotation = Quaternion.Slerp(_canvas.transform.rotation,
+                        Quaternion.LookRotation(to.normalized, Vector3.up), 1f - Mathf.Exp(-Time.deltaTime / 0.6f));
+            }
+            else UIKit.LazyFollow(_canvas.transform, Camera.main.transform, distance, elevation, 18f, 0.25f, _follow);
 
             bool ssmActive = cell == null || (cell.State != KittingCell.Phase.Guide && cell.State != KittingCell.Phase.Align);
             _ssmShown = Mathf.MoveTowards(_ssmShown, ssmActive ? 1f : 0f, Time.deltaTime / 0.25f);
