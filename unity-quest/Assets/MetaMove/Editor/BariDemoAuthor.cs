@@ -391,7 +391,8 @@ namespace MetaMove.EditorTools
             rings.fillAlpha = 0.22f;
             rings.fillScaled = true;
             rings.labelFont = inter;
-            rings.clipBehindZ = -1.29f;   // front face of the back wall (factory.py WZ + WT/2)
+            // no clip at the wall: the rings travel with the tool now, a fixed cut would open them
+            rings.clipBehindZ = float.NegativeInfinity;
 
             if (hud != null)
             {
@@ -480,6 +481,8 @@ namespace MetaMove.EditorTools
             cell.trayB.transform.SetPositionAndRotation(cell.trayBSpawn.position, cell.trayBSpawn.rotation);
             MakeCarryable(cell, cell.trayB, rack, CarryableTray.Kind.Supply, cell.trayBSpawn);
             AddGhostHands(cell.trayB.transform);
+            // the trolley stands front left: the hands reach in from the visitor's side
+            cell.trayB.transform.Find("GhostHands").localRotation = Quaternion.Euler(0f, 180f, 0f);
             Model("bari_trolley", "Trolley", frame, new Vector3(TrolleyX, -FloorBelowTable, TrolleyZ), 0f);
             cell.trayBPlaced = rack.entries[2];   // presenter fallback: rolls into a free lane
 

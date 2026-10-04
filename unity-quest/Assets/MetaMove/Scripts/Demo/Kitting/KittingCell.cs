@@ -153,9 +153,11 @@ namespace MetaMove.Demo.Kitting
         }
 
         // The empty tray A may be carried to the return lane once the robot no longer
-        // needs it: after its failed probe, or once it runs from tray B.
+        // needs it: after its failed probe, or once it runs from tray B - and only once the
+        // new batch is in the rack. One step at a time, however long the visitor waits: the
+        // voice never asks for the empty box while the orange one is still on the trolley.
         public bool AllowEmptyRemoval =>
-            trayA != null && trayA.Remaining == 0 &&
+            trayA != null && trayA.Remaining == 0 && _trayBOnTable &&
             (State == Phase.Waiting || State == Phase.Guide || State == Phase.Align ||
              (State == Phase.Running && Taught != trayA));
 
