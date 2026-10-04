@@ -274,6 +274,9 @@ namespace MetaMove.Demo.Kitting
                 while (storyVoice != null && storyVoice.isPlaying) yield return null;   // one voice at a time
                 var line = lines.Find(b => b.key == key);
                 if (line == null || line.voice == null) continue;
+                // the numbers are told: the card goes, the closing words are about what comes next
+                // (the Report button brings it back)
+                if (key == "report_outro" || key == "report_outro_expert") _target = 0f;
                 _voice.clip = line.voice;
                 _voice.Play();
                 _hl = RowsFor(key);

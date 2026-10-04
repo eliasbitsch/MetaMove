@@ -51,13 +51,31 @@ namespace MetaMove.Demo.Kitting
 
         public bool IsBlocked(int lane) => blocked != null && lane < blocked.Length && blocked[lane];
 
-        bool IsOccupied(int lane, KittingTray[] occupants)
+        // Lower level (return lanes): nearest free one. Lane 0 below holds the scenery's box.
+        public int NearestReturnLane(Vector3 world, params KittingTray[] occupants)
+        {
+            int best = -1; float bestD = float.MaxValue;
+            for (int i = 0; i < LaneCount; i++)
+            {
+                if (IsBlocked(i) || IsOccupied(i, occupants, returns)) continue;
+                float d = Mathf.Abs(transform.InverseTransformPoint(world).x - transform.InverseTransformPoint(returns[i].position).x);
+                if (d < bestD) { bestD = d; best = i; }
+            }
+            return best;
+        }
+
+        // Released below the middle between the two levels: it is meant for the lower one.
+        public bool IsLowerLevel(Vector3 world) => world.y < (returns[0].position.y + picks[0].position.y) * 0.5f;
+
+        bool IsOccupied(int lane, KittingTray[] occupants) => IsOccupied(lane, occupants, picks);
+
+        bool IsOccupied(int lane, KittingTray[] occupants, Transform[] level)
         {
             if (occupants == null) return false;
             foreach (var t in occupants)
             {
                 if (t == null) continue;
-                var local = picks[lane].InverseTransformPoint(t.transform.position);
+                var local = level[lane].InverseTransformPoint(t.transform.position);
                 if (Mathf.Abs(local.x) < 0.15f && local.z > -0.9f && local.z < 0.9f && Mathf.Abs(local.y) < 0.2f) return true;
             }
             return false;
@@ -74,12 +92,14 @@ namespace MetaMove.Demo.Kitting
             var outward = to.position - transform.position; outward.y = 0f;
             outward = outward.sqrMagnitude > 1e-4f ? outward.normalized : -transform.forward;
             var front = to.position + outward * 0.35f;
-            var pts = new[]
-            {
-                new Vector3(box.position.x, Mathf.Max(box.position.y, top), box.position.z),
-                new Vector3(front.x, Mathf.Max(box.position.y, top), front.z),
-                front,
-            };
+            // over the lanes only if it was let go above or inside the rack; from in front it
+            // goes straight to the lane's mouth
+            var l = transform.InverseTransformPoint(box.position);
+            bool inside = Mathf.Abs(l.x) < 0.65f && Mathf.Abs(l.z) < 0.45f;
+            var pts = inside
+                ? new[] { new Vector3(box.position.x, Mathf.Max(box.position.y, top), box.position.z),
+                          new Vector3(front.x, Mathf.Max(box.position.y, top), front.z), front }
+                : new[] { front };
             foreach (var p in pts)
             {
                 while ((box.position - p).sqrMagnitude > 1e-6f)

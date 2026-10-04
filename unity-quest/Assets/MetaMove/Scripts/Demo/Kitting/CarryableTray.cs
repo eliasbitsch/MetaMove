@@ -82,8 +82,13 @@ namespace MetaMove.Demo.Kitting
         {
             if (Freestyle)
             {
-                // over the rack: into a free lane; anywhere else it stays where it lands
-                if (rack != null && (rack.InLoadZone(transform.position) || NearRack())) LoadIntoRack();
+                // at the rack: into a free lane on the level it was held at; anywhere else it
+                // stays where it lands
+                if (rack != null && (rack.InLoadZone(transform.position) || NearRack()))
+                {
+                    if (rack.IsLowerLevel(transform.position)) LoadIntoReturn();
+                    else LoadIntoRack();
+                }
                 else Drop();
                 return;
             }
@@ -202,6 +207,18 @@ namespace MetaMove.Demo.Kitting
             Freeze();
             // only the demo's new batch tells the cell it has arrived
             StartCoroutine(RollTo(rack.entries[lane], rack.picks[lane], !Freestyle && cell != null && cell.trayB == _tray));
+        }
+
+        // Freestyle: onto a free lane of the lower level.
+        void LoadIntoReturn()
+        {
+            var others = new System.Collections.Generic.List<KittingTray>();
+            foreach (var t in cell.AllTrays) if (t != _tray) others.Add(t);
+            int lane = rack.NearestReturnLane(transform.position, others.ToArray());
+            if (lane < 0) { Drop(); return; }
+            Lane = lane;
+            Freeze();
+            StartCoroutine(RollTo(null, rack.returns[lane], false));
         }
 
         // The empty onto the return lane, gliding from where it is. Presenter fallback too.
