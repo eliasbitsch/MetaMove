@@ -10,7 +10,6 @@ namespace MetaMove.Demo.Kitting
     //
     //   [ speed gauge ] [ distance ]
     //    ring + percent  metres + zone
-    //   ▬▬▬▬▬▬▬▬▬▬▬▬▬▬  parts left in the box the arm works from
     //
     // Deliberately little: no line-state text, the story card says what happens.
     // Sits low in the view and follows the head lazily. Colours carry the same meaning as
@@ -25,16 +24,13 @@ namespace MetaMove.Demo.Kitting
         public float elevation = -33f;   // degrees below the horizon, under the story card
         public float worldWidth = 0.306f;   // same element size as the wider HUD with the status pill (0.50 m over 980)
 
-        const float W = 600f, H = 230f, GaugeX = -203f, DistX = 105f, SegY = -103f;
+        const float W = 600f, H = 230f, GaugeX = -203f, DistX = 105f;
         Canvas _canvas;
         Image _gaugeFill, _gaugeTrack, _zoneBar;
         TextMeshProUGUI _pct, _speedLabel, _dist, _zone;
         readonly UIKit.FollowState _follow = new UIKit.FollowState();
         float _shownFactor, _ssmShown = 1f;
         CanvasGroup _ssmGroup;
-        // tray fill: one segment per nest of the tray the robot picks from
-        const int MaxSegs = 12;
-        readonly Image[] _segs = new Image[MaxSegs];
 
         void Start() => Build();
 
@@ -53,7 +49,7 @@ namespace MetaMove.Demo.Kitting
 
             // --- speed gauge (centre)
             var gauge = UIKit.Panel("Gauge", ssm.transform, UIKit.Glass, 95f);
-            UIKit.Place(gauge.rectTransform, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(GaugeX, 18f), new Vector2(190f, 190f));
+            UIKit.Place(gauge.rectTransform, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(GaugeX, 0f), new Vector2(190f, 190f));
             _gaugeTrack = Radial("Track", gauge.transform, new Color(1f, 1f, 1f, 0.10f), 1f);
             _gaugeFill = Radial("Fill", gauge.transform, UIKit.Ok, 0f);
             _pct = UIKit.Text("Pct", gauge.transform, font, 54f, UIKit.TextHi, TextAlignmentOptions.Center, FontStyles.Bold);
@@ -65,7 +61,7 @@ namespace MetaMove.Demo.Kitting
 
             // --- distance (right)
             var dp = UIKit.Panel("Distance", ssm.transform, UIKit.Glass, 44f);
-            UIKit.Place(dp.rectTransform, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(DistX, 18f), new Vector2(380f, 150f));
+            UIKit.Place(dp.rectTransform, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(DistX, 0f), new Vector2(380f, 150f));
             _dist = UIKit.Text("Metres", dp.transform, font, 50f, UIKit.TextHi, TextAlignmentOptions.MidlineRight, FontStyles.Bold);
             UIKit.Place(_dist.rectTransform, new Vector2(1f, 0.5f), new Vector2(1f, 0.5f), new Vector2(-36f, 18f), new Vector2(300f, 60f));
             _zone = UIKit.Text("Zone", dp.transform, font, 24f, UIKit.TextLo, TextAlignmentOptions.MidlineRight);
@@ -73,15 +69,6 @@ namespace MetaMove.Demo.Kitting
             _zone.characterSpacing = 4f;
             _zoneBar = UIKit.Panel("ZoneBar", dp.transform, UIKit.Ok, 4f, 0f, false);
             UIKit.Place(_zoneBar.rectTransform, new Vector2(0f, 0.5f), new Vector2(0f, 0.5f), new Vector2(28f, 0f), new Vector2(8f, 96f));
-
-            // --- parts left, a slim bar under both
-            float span = DistX + 190f - (GaugeX - 95f);
-            float segW = (span - (MaxSegs - 1) * 6f) / MaxSegs;
-            for (int i = 0; i < MaxSegs; i++)
-            {
-                _segs[i] = UIKit.Panel("Seg" + i, root, UIKit.TextLo, 4f, 0f, false);
-                UIKit.Place(_segs[i].rectTransform, new Vector2(0.5f, 0.5f), new Vector2(0f, 0.5f), new Vector2(GaugeX - 95f + i * (segW + 6f), SegY), new Vector2(segW, 10f));
-            }
         }
 
         Image Radial(string name, Transform parent, Color c, float fill)
@@ -117,27 +104,6 @@ namespace MetaMove.Demo.Kitting
             _dist.text = d < 0f ? "--" : d.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture) + "<size=60%> m</size>";
             _zone.text = d < 0f ? "" : d <= near ? "STOP ZONE" : d <= far ? "SLOW ZONE" : "CLEAR";
             _zone.color = zc; _zoneBar.color = zc;
-
-            // tray fill: what is left in the box the arm works from, readable at a glance
-            var tr = cell != null ? cell.Taught : null;
-            int total = tr != null ? Mathf.Min(MaxSegs, tr.nests.Count) : 0, left = tr != null ? tr.Remaining : 0;
-            bool low = tr != null && tr == cell.trayA && left <= cell.lowAt;
-            bool showSegs = cell != null && cell.IsBound && (cell.State == KittingCell.Phase.Running || cell.State == KittingCell.Phase.Probe);
-            // the bar spans the full width whatever the tray size: segments share it
-            float span = DistX + 190f - (GaugeX - 95f);
-            float segW = total > 0 ? (span - (total - 1) * 6f) / total : 0f;
-            for (int i = 0; i < MaxSegs; i++)
-            {
-                _segs[i].enabled = showSegs && i < total;
-                if (!_segs[i].enabled) continue;
-                var rt = _segs[i].rectTransform;
-                rt.anchoredPosition = new Vector2(GaugeX - 95f + i * (segW + 6f), SegY);
-                rt.sizeDelta = new Vector2(segW, 10f);
-                var c = i < left ? (low ? UIKit.Warn : UIKit.Ok) : new Color(1f, 1f, 1f, 0.12f);
-                c.a *= _ssmShown;
-                _segs[i].color = c;
-            }
-
         }
     }
 }
