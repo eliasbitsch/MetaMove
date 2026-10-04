@@ -364,11 +364,13 @@ namespace MetaMove.EditorTools
             {
                 Undo.RecordObject(prox, "Bari prox");
                 prox.horizontalOnly = true;
-                // Nearest body part, not just the head: reaching over the table to set
-                // tray B down puts a hand inside dNear, and that is the standstill of beat 3.
+                // Where the visitor stands (head, on the floor plane), not the hands: the zones
+                // then match the floor rings exactly - slower in the amber ring, stop in the red.
+                // With the hands counted, a hand reaching out stopped the arm while the visitor
+                // still stood in amber, which looked like a jump from 13 % to nothing.
                 var rig = "[BuildingBlock] Camera Rig/TrackingSpace/";
                 var pts = new List<Transform>();
-                foreach (var n in new[] { "CenterEyeAnchor", "LeftHandAnchor", "RightHandAnchor" })
+                foreach (var n in new[] { "CenterEyeAnchor" })
                 {
                     var go = FindPath(rig + n);
                     if (go != null) pts.Add(go.transform);
@@ -1179,7 +1181,8 @@ namespace MetaMove.EditorTools
             float fy = -FloorBelowTable;
             Add("Floor", new Vector3(0f, fy - 0.05f, 0.80f), new Vector3(4.8f, 0.1f, 4.7f));
             Add("RobotTable", new Vector3(-0.15f, fy / 2f, 0f), new Vector3(1.0f, FloorBelowTable, 0.6f));
-            Add("FlowRack", new Vector3(0f, fy + 0.49f, RackCenterZ), new Vector3(1.2f, 0.98f, 0.8f));
+            // top below the roller lanes (~0.91 m): a box let go in a lane must not start inside it
+            Add("FlowRack", new Vector3(0f, fy + 0.40f, RackCenterZ), new Vector3(1.2f, 0.80f, 0.8f));
             Add("Trolley", new Vector3(TrolleyX, fy / 2f, TrolleyZ), new Vector3(0.55f, FloorBelowTable, 0.65f));
         }
 

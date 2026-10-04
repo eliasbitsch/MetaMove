@@ -331,7 +331,7 @@ namespace MetaMove.Demo.Kitting
             }
             _footer.text = r.expert || p != null
                 ? "Run " + r.number + ". Same task, second time: what came easier?"
-                : "Run " + r.number + ". Want another go? Hand menu, Expert: no hints.";
+                : "Run " + r.number + ". Want to play? Hand menu, Freestyle.";
         }
 
         static string Hints(Run r) => r.hints > 0 ? r.hints + (r.hints == 1 ? " hint" : " hints") : r.expert ? "none, on your own" : "none";

@@ -68,7 +68,7 @@ namespace MetaMove.Demo.Kitting
             _status.enableWordWrapping = true;
             UIKit.Fit(_status, 20f, 10f);
             if (report == null) report = FindAnyObjectByType<ShiftReport>();
-            string[] names = { "Teach", "Home", "Restart", "Freestyle", "Place", "Report" };
+            string[] names = { "Teach", "Home", "Restart", "Freestyle", "Calibrate room", "Report" };
             int[] slot = { 0, 1, 3, 4, 5, 2 };   // left to right: Teach Home Report Restart Expert Place
             System.Action[] acts = { () => { if (cell.State == KittingCell.Phase.Guide) cell.Teach(); else cell.StartGuide(); }, () => cell.ParkHome(),
                                      () => { if (Time.time - _restartArmed < 3f) { _restartArmed = -10f; cell.Restart(); } else _restartArmed = Time.time; },
@@ -84,6 +84,7 @@ namespace MetaMove.Demo.Kitting
                 b.label = UIKit.Text("Label", b.bg.transform, font, 25f, UIKit.TextHi, TextAlignmentOptions.Center, FontStyles.Bold);
                 UIKit.Stretch(b.label.rectTransform);
                 UIKit.Fit(b.label, 15f, 6f);
+                b.label.enableWordWrapping = true;   // "Calibrate room" goes on two lines
                 b.label.text = names[i];
                 _buttons[i] = b;
             }
@@ -154,7 +155,7 @@ namespace MetaMove.Demo.Kitting
             // Teach lights up once the tool is over a tray it would accept.
             bool ready = cell.State == KittingCell.Phase.Guide && cell.TrayUnderTool() != null;
             bool armed = Time.time - _placeArmed < 3f;
-            _buttons[4].label.text = armed ? "Sure?" : "Place";
+            _buttons[4].label.text = armed ? "Sure?" : "Calibrate room";
             bool restartArmed = Time.time - _restartArmed < 3f;
             _buttons[2].label.text = restartArmed ? "Sure?" : "Restart";
             // the last shift report, again or away; there is none before the first run ends
@@ -212,7 +213,7 @@ namespace MetaMove.Demo.Kitting
         // Test hook for the Editor / Simulator: press a button by name.
         public void Press(string name)
         {
-            foreach (var b in _buttons.Concat(_subOpen ? _subs : new Button[0])) if ((b.label.text == name || (name == "Home" && b.label.text == "Resume") || ((name == "Place" || name == "Restart") && b.label.text == "Sure?")) && b.enabled) { b.act(); return; }
+            foreach (var b in _buttons.Concat(_subOpen ? _subs : new Button[0])) if ((b.label.text == name || (name == "Home" && b.label.text == "Resume") || ((name == "Place" || name == "Calibrate room" || name == "Restart") && b.label.text == "Sure?") || (name == "Place" && b.label.text == "Calibrate room")) && b.enabled) { b.act(); return; }
         }
 
         bool PalmUp(OVRSkeleton hand, out Vector3 palm, out Vector3 normal, Transform head)

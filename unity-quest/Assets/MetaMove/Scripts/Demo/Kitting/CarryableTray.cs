@@ -76,7 +76,8 @@ namespace MetaMove.Demo.Kitting
                 Drop();
                 return;
             }
-            if (rack != null && rack.InLoadZone(transform.position))
+            // let go anywhere over the rack: into a lane, never through the rollers
+            if (rack != null && (rack.InLoadZone(transform.position) || NearRack()))
             {
                 LoadIntoRack();
                 return;
@@ -87,7 +88,8 @@ namespace MetaMove.Demo.Kitting
         bool NearRack()
         {
             var local = rack.transform.InverseTransformPoint(transform.position);
-            return Mathf.Abs(local.x) < 0.6f + returnReach && Mathf.Abs(local.z) < 0.4f + returnReach;
+            float reach = Mathf.Max(returnReach, 0.25f);
+            return Mathf.Abs(local.x) < 0.62f + reach && Mathf.Abs(local.z) < 0.43f + reach && local.y < 1.9f;
         }
 
         // ---------------------------------------------------------------- physics drop

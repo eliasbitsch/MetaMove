@@ -37,7 +37,7 @@ Step back. Notice it does not rush off straight away? Slowing down may be abrupt
 The first box is empty. The arm noticed and switched to the reserve box on the left, so the line keeps running. Take the empty box out at the front and put it on the return lane below. Watch the arm while your hands are close.
 
 [guide]
-The new box sits in a lane the arm has never seen. Instead of programming it, show it. Reach out with an open hand to the cyan sphere on the tool. Pinch it between thumb and index finger, and keep pinching while you move your hand: the arm follows. Bring it over the orange box, roughly is enough. Then raise either hand, palm up, and press Teach in the hand menu.
+The new box sits in a lane the arm has never seen. Instead of programming it, show it. Reach out with an open hand to the cyan sphere on the tool. Pinch it between thumb and index finger, and keep pinching while you move your hand: the arm follows. Bring it over the orange box, roughly is enough. Then raise your left hand, palm up, and press Teach in the hand menu.
 
 [grab]
 Steady. I will follow your hand anywhere, except into the rack. Someone has to be sensible here.
@@ -80,7 +80,7 @@ No rush on the teaching. It's not every day a factory grows out of the floor.
 And it learned the new position in no time.
 
 [report_outro]
-In short: the line kept running, you were safe the whole time, and you just did in a minute what used to need an engineer: you taught a robot, without a single line of code. If you like, try it once more in expert mode, without the hints.
+In short: the line kept running, you were safe the whole time, and you just did in a minute what used to need an engineer: you taught a robot, without a single line of code. If you like, open Freestyle in the hand menu: let the line run on its own, or teach the robot any box you like.
 
 [report_outro_expert]
-Same task, no hints this time. Next to each number you see your first run. Whatever came easier now, that is what you learned.
+Same task, second time. Next to each number you see your first run. Whatever came easier now, that is what you learned.
