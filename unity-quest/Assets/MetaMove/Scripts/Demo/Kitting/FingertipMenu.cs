@@ -19,11 +19,11 @@ namespace MetaMove.Demo.Kitting
 
         [Range(0f, 1f)] public float palmUpThreshold = 0.55f;
         public float showDelay = 0.15f, hideDelay = 0.25f;
-        public float worldWidth = 0.15f;
+        public float worldWidth = 0.27f;   // five buttons of ~4.5 cm with ~8 mm gaps: pokeable live
         public float pokeDepth = 0.018f;      // m in front of / behind the panel counts as a press
         public float pressCooldown = 0.8f;
 
-        const float W = 520f, H = 300f;
+        const float W = 640f, H = 330f;
         Canvas _canvas;
         CanvasGroup _group;
         TextMeshProUGUI _status;
@@ -59,8 +59,8 @@ namespace MetaMove.Demo.Kitting
                 var b = new Button { act = acts[i] };
                 b.bg = UIKit.Panel("Btn_" + names[i], root, UIKit.GlassLight, 34f, 3f);
                 b.rt = b.bg.rectTransform;
-                UIKit.Place(b.rt, new Vector2(0.5f, 0f), new Vector2(0.5f, 0f), new Vector2((i - 2f) * 98f, 30f), new Vector2(90f, 150f));
-                b.label = UIKit.Text("Label", b.bg.transform, font, 21f, UIKit.TextHi, TextAlignmentOptions.Center, FontStyles.Bold);
+                UIKit.Place(b.rt, new Vector2(0.5f, 0f), new Vector2(0.5f, 0f), new Vector2((i - 2f) * 124f, 26f), new Vector2(106f, 170f));
+                b.label = UIKit.Text("Label", b.bg.transform, font, 25f, UIKit.TextHi, TextAlignmentOptions.Center, FontStyles.Bold);
                 UIKit.Stretch(b.label.rectTransform);
                 b.label.text = names[i];
                 _buttons[i] = b;
@@ -94,7 +94,7 @@ namespace MetaMove.Demo.Kitting
 
             if (up)
             {
-                var pos = palm + normal * 0.07f + Vector3.up * 0.03f;
+                var pos = palm + normal * 0.10f + Vector3.up * 0.05f;   // clear of the menu hand's fingers
                 var look = pos - head.position; look.y = 0f;
                 _canvas.transform.SetPositionAndRotation(pos, Quaternion.LookRotation(look.normalized, Vector3.up) * Quaternion.Euler(20f, 0f, 0f));
             }
