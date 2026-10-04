@@ -18,8 +18,9 @@ namespace MetaMove.Demo.Kitting
         static readonly Color Bg = new Color(0.07f, 0.09f, 0.11f, 1f);
         static readonly Color Grid = new Color(1f, 1f, 1f, 0.07f);
         static readonly Color Red = new Color(1.00f, 0.32f, 0.28f), Amber = new Color(1.00f, 0.66f, 0.16f);
-        static readonly Color Green = new Color(0.30f, 0.90f, 0.52f), Cyan = new Color(0.25f, 0.82f, 0.88f);
-        static readonly Color White = new Color(0.95f, 0.97f, 1f), Steel = new Color(0.45f, 0.50f, 0.56f);
+        static readonly Color Green = new Color(0.30f, 0.90f, 0.52f), Steel = new Color(0.45f, 0.50f, 0.56f);
+        public static readonly Color Cyan = new Color(0.25f, 0.82f, 0.88f), White = new Color(0.95f, 0.97f, 1f);
+        public static readonly Color ArmGrey = new Color(0.72f, 0.76f, 0.80f);
 
         public static Color SpeedColour(float f) => f <= 0.001f ? Red : f < 0.99f ? Color.Lerp(Amber, Green, f) : Green;
 
@@ -89,7 +90,7 @@ namespace MetaMove.Demo.Kitting
             Rect(px, size, 0.65f, 2.30f, 1.15f, 2.90f, U, V, Steel, false);
             Circle(px, size, U(0f), V(0f), near / span * (size - 1), Red, 2.2f);
             Circle(px, size, U(0f), V(0f), far / span * (size - 1), Amber, 2.2f);
-            Disc(px, size, U(0f), V(0f), 7f, White);   // robot base
+            Disc(px, size, U(0f), V(0f), 9f, ArmGrey);   // robot base
             for (int i = 0; i + 1 < s.Count; i++)
                 Line(px, size, size, U(s[i].x), size - 1 - V(s[i].z), U(s[i + 1].x), size - 1 - V(s[i + 1].z), SpeedColour(s[i].factor), 3f, true);
             if (s.Count > 0)

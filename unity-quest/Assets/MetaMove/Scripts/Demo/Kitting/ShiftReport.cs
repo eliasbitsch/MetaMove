@@ -48,7 +48,10 @@ namespace MetaMove.Demo.Kitting
         bool _stopMarked;
         UnityEngine.UI.RawImage _timeline, _path;
         readonly List<TextMeshProUGUI> _markLabels = new List<TextMeshProUGUI>();
-        const float TlW = 560f, TlH = 230f, PathS = 300f, PlotX = 900f;   // plot column on the card
+        TextMeshProUGUI _tEnd, _zoneStop, _zoneSlow, _zoneFree, _ringStop, _ringSlow;
+        // plot column on the card: aligned with the number rows, timeline on top, path below
+        const float PlotX = 892f, PlotW = 564f, TlH = 180f, TlY = -170f, PathS = 224f, PathY = -428f;
+        const float MaxDist = 3f, Split = 0.62f;   // timeline: distance axis 0..MaxDist m in the lower Split
         Run _run;
         float _t0, _lowAt = -1f, _missAt = -1f, _guideAt = -1f, _showAt = -1f;
         bool _clearedSeen;
@@ -316,23 +319,71 @@ namespace MetaMove.Demo.Kitting
 
         void BuildPlots(RectTransform root)
         {
-            var t1 = UIKit.Text("TimelineTitle", root, font, 22f, UIKit.TextLo, TextAlignmentOptions.Left);
-            UIKit.Place(t1.rectTransform, new Vector2(0f, 1f), new Vector2(0f, 1f), new Vector2(PlotX, -40f), new Vector2(TlW, 30f));
-            t1.text = "ARM SPEED  \u00b7  YOUR DISTANCE TO THE ARM";
-            t1.characterSpacing = 4f;
-            _timeline = Img("Timeline", root, new Vector2(PlotX, -76f), new Vector2(TlW, TlH));
+            var panel = UIKit.Panel("PlotPanel", root, new Color(1f, 1f, 1f, 0.035f), 24f, 0f, false);
+            UIKit.Place(panel.rectTransform, new Vector2(0f, 1f), new Vector2(0f, 1f), new Vector2(PlotX - 18f, -126f), new Vector2(PlotW + 36f, 540f));
+
+            // shared colour key, top right next to the title
+            Legend(root, UIKit.Disc, RunPlots.SpeedColour(1f), "full speed", new Vector2(W - 44f - 3 * 150f, -58f), 14f);
+            Legend(root, UIKit.Disc, RunPlots.SpeedColour(0.25f), "slowed", new Vector2(W - 44f - 2 * 150f + 10f, -58f), 14f);
+            Legend(root, UIKit.Disc, RunPlots.SpeedColour(0f), "stopped", new Vector2(W - 44f - 150f + 10f, -58f), 14f);
+
+            Caption(root, "ARM SPEED  \u00b7  YOUR DISTANCE", new Vector2(PlotX, -140f));
+            _timeline = Img("Timeline", root, new Vector2(PlotX, TlY), new Vector2(PlotW, TlH));
+            // zone names inside the distance bands (heights set per run, the zones are configurable)
+            _zoneStop = Tag(_timeline.transform, RunPlots.SpeedColour(0f));
+            _zoneSlow = Tag(_timeline.transform, RunPlots.SpeedColour(0.25f));
+            _zoneFree = Tag(_timeline.transform, RunPlots.SpeedColour(1f));
+            // time axis and the story's moments under the plot
+            var t0 = UIKit.Text("T0", _timeline.transform, font, 16f, UIKit.TextLo, TextAlignmentOptions.TopLeft);
+            UIKit.Place(t0.rectTransform, Vector2.zero, new Vector2(0f, 1f), new Vector2(0f, -4f), new Vector2(60f, 20f));
+            t0.text = "0:00";
+            _tEnd = UIKit.Text("TEnd", _timeline.transform, font, 16f, UIKit.TextLo, TextAlignmentOptions.TopRight);
+            UIKit.Place(_tEnd.rectTransform, new Vector2(1f, 0f), new Vector2(1f, 1f), new Vector2(0f, -4f), new Vector2(80f, 20f));
             for (int i = 0; i < 6; i++)
             {
-                var m = UIKit.Text("Mark", _timeline.transform, font, 17f, UIKit.Accent, TextAlignmentOptions.Top);
-                UIKit.Place(m.rectTransform, new Vector2(0f, 0f), new Vector2(0.5f, 1f), new Vector2(0f, -2f), new Vector2(140f, 22f));   // under the plot
+                var m = UIKit.Text("Mark", _timeline.transform, font, 16f, UIKit.Accent, TextAlignmentOptions.Top);
+                UIKit.Place(m.rectTransform, Vector2.zero, new Vector2(0.5f, 1f), new Vector2(0f, -4f), new Vector2(130f, 20f));
                 m.gameObject.SetActive(false);
                 _markLabels.Add(m);
             }
-            var t2 = UIKit.Text("PathTitle", root, font, 22f, UIKit.TextLo, TextAlignmentOptions.Left);
-            UIKit.Place(t2.rectTransform, new Vector2(0f, 1f), new Vector2(0f, 1f), new Vector2(PlotX, -76f - TlH - 34f), new Vector2(TlW, 30f));
-            t2.text = "YOUR PATH  \u00b7  green full speed, amber slowed, red stopped";
-            t2.characterSpacing = 2f;
-            _path = Img("Path", root, new Vector2(PlotX + (TlW - PathS) / 2f, -76f - TlH - 70f), new Vector2(PathS, PathS));
+
+            Caption(root, "YOUR WALK, FROM ABOVE  ·  COLOURED BY ARM SPEED", new Vector2(PlotX, PathY + 30f));
+            _path = Img("Path", root, new Vector2(PlotX, PathY), new Vector2(PathS, PathS));
+            float lx = PlotX + PathS + 28f, ly = PathY - 40f;
+            Legend(root, UIKit.Disc, RunPlots.ArmGrey, "the arm", new Vector2(lx, ly), 14f);
+            Legend(root, UIKit.Disc, RunPlots.White, "you, at the start", new Vector2(lx, ly - 34f), 12f);
+            Legend(root, UIKit.Disc, RunPlots.Cyan, "you, at the end", new Vector2(lx, ly - 68f), 12f);
+            _ringStop = Legend(root, UIKit.Ring, RunPlots.SpeedColour(0f), "", new Vector2(lx, ly - 102f), 16f);
+            _ringSlow = Legend(root, UIKit.Ring, RunPlots.SpeedColour(0.25f), "", new Vector2(lx, ly - 136f), 16f);
+        }
+
+        void Caption(RectTransform root, string text, Vector2 pos)
+        {
+            var t = UIKit.Text("Caption", root, font, 19f, UIKit.TextLo, TextAlignmentOptions.Left);
+            UIKit.Place(t.rectTransform, new Vector2(0f, 1f), new Vector2(0f, 1f), pos, new Vector2(PlotW, 26f));
+            t.text = text;
+            t.characterSpacing = 4f;
+        }
+
+        TextMeshProUGUI Tag(Transform parent, Color c)
+        {
+            var t = UIKit.Text("Zone", parent, font, 15f, new Color(c.r, c.g, c.b, 0.95f), TextAlignmentOptions.MidlineLeft, FontStyles.Bold);
+            UIKit.Place(t.rectTransform, Vector2.zero, new Vector2(0f, 0.5f), new Vector2(8f, 0f), new Vector2(200f, 18f));
+            t.characterSpacing = 3f;
+            return t;
+        }
+
+        // a coloured mark (dot or ring) and its words; returns the words for later text
+        TextMeshProUGUI Legend(RectTransform root, Sprite sprite, Color c, string text, Vector2 pos, float size)
+        {
+            var dot = new GameObject("Key", typeof(UnityEngine.UI.Image)).GetComponent<UnityEngine.UI.Image>();
+            dot.transform.SetParent(root, false);
+            dot.sprite = sprite; dot.color = c; dot.raycastTarget = false;
+            UIKit.Place(dot.rectTransform, new Vector2(0f, 1f), new Vector2(0.5f, 0.5f), new Vector2(pos.x + 8f, pos.y), new Vector2(size, size));
+            var t = UIKit.Text("KeyText", root, font, 18f, UIKit.TextLo, TextAlignmentOptions.MidlineLeft);
+            UIKit.Place(t.rectTransform, new Vector2(0f, 1f), new Vector2(0f, 0.5f), new Vector2(pos.x + 24f, pos.y), new Vector2(220f, 24f));
+            t.text = text;
+            return t;
         }
 
         UnityEngine.UI.RawImage Img(string name, RectTransform root, Vector2 pos, Vector2 size)
@@ -345,25 +396,42 @@ namespace MetaMove.Demo.Kitting
             return img;
         }
 
-        void Plots(Run r)
+        void Plots(Run r, bool save = true)
         {
             float near = speed != null ? speed.dNear : 0.6f, far = speed != null ? speed.dFar : 2f;
             try
             {
-                if (_timeline.texture != null) Destroy(_timeline.texture);
-                if (_path.texture != null) Destroy(_path.texture);
-                var tl = RunPlots.Timeline(_trace, _marks, near, far, 3f, 1120, 460, _markX);
+                Free(_timeline.texture); Free(_path.texture);
+                var tl = RunPlots.Timeline(_trace, _marks, near, far, MaxDist, 1128, 420, _markX);
                 var pa = RunPlots.Path(_trace, near, far, 600);
                 _timeline.texture = tl; _timeline.color = Color.white;
                 _path.texture = pa; _path.color = Color.white;
+
+                float total = _trace.Count > 0 ? _trace[_trace.Count - 1].t : 0f;
+                _tEnd.text = ((int)(total / 60f)) + ":" + ((int)(total % 60f)).ToString("00");
+                // band centres in plot units: the distance strip is the lower Split of the image
+                float strip = TlH * Split - 3f;
+                System.Func<float, float> Y = m => Mathf.Clamp01(m / MaxDist) * strip;
+                _zoneStop.text = "STOP  < " + near.ToString("0.0", Inv) + " m";
+                _zoneSlow.text = "SLOWED  < " + far.ToString("0.0", Inv) + " m";
+                _zoneFree.text = "FREE";
+                _zoneStop.rectTransform.anchoredPosition = new Vector2(8f, Y(near) / 2f);
+                _zoneSlow.rectTransform.anchoredPosition = new Vector2(8f, (Y(near) + Y(far)) / 2f);
+                _zoneFree.rectTransform.anchoredPosition = new Vector2(8f, (Y(far) + strip) / 2f);
+                _ringStop.text = "stop zone, " + near.ToString("0.0", Inv) + " m";
+                _ringSlow.text = "slow zone, " + far.ToString("0.0", Inv) + " m";
+
                 for (int i = 0; i < _markLabels.Count; i++)
                 {
                     bool on = i < _marks.Count;
                     _markLabels[i].gameObject.SetActive(on);
                     if (!on) continue;
                     _markLabels[i].text = _marks[i].label;
-                    _markLabels[i].rectTransform.anchoredPosition = new Vector2(_markX[i] * TlW, -2f - (i % 2) * 18f);
+                    // clear of the time labels at both ends; neighbours alternate between two lines
+                    float x = Mathf.Clamp(_markX[i] * PlotW, 105f, PlotW - 105f);
+                    _markLabels[i].rectTransform.anchoredPosition = new Vector2(x, -4f - (i % 2) * 20f);
                 }
+                if (!save) return;
                 string dir = Application.persistentDataPath, stamp = System.DateTime.Now.ToString("yyyyMMdd_HHmmss", Inv);
                 System.IO.File.WriteAllBytes(System.IO.Path.Combine(dir, "run" + r.number + "_" + stamp + "_timeline.png"), tl.EncodeToPNG());
                 System.IO.File.WriteAllBytes(System.IO.Path.Combine(dir, "run" + r.number + "_" + stamp + "_path.png"), pa.EncodeToPNG());
@@ -376,6 +444,25 @@ namespace MetaMove.Demo.Kitting
                 }
             }
             catch (System.Exception e) { Debug.LogWarning("[Report] plots failed: " + e.Message); }
+        }
+
+        static void Free(Texture t)
+        {
+            if (t == null) return;
+            if (Application.isPlaying) Destroy(t); else DestroyImmediate(t);
+        }
+
+        // Editor preview: the card for a made-up run, fully shown, nothing saved.
+        public Canvas PreviewCard(Run r, Run prev, List<RunPlots.Sample> trace, List<RunPlots.Mark> marks)
+        {
+            if (_canvas == null) Build();
+            _trace.Clear(); _trace.AddRange(trace);
+            _marks.Clear(); _marks.AddRange(marks);
+            Fill(r, prev);
+            Plots(r, false);
+            _canvas.enabled = true;
+            _group.alpha = 1f;
+            return _canvas;
         }
 
         static string F2(float v) => v.ToString("0.00", Inv);

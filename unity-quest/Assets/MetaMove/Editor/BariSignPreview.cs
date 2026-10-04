@@ -89,11 +89,10 @@ namespace MetaMove.EditorTools
             if (Application.isBatchMode) EditorApplication.Exit(code);
         }
 
-        // The shift report plots from a made-up run, to check them without a headset.
-        public static void RenderPlots()
+        // A made-up run: the visitor walks in from the trolley, close to the arm, and back.
+        static void FakeRun(List<RunPlots.Sample> s, List<RunPlots.Mark> marks)
         {
-            var s = new System.Collections.Generic.List<MetaMove.Demo.Kitting.RunPlots.Sample>();
-            var path = new[] { new Vector2(0.3f, 2.9f), new Vector2(0.9f, 2.2f), new Vector2(0.4f, 1.5f), new Vector2(0.1f, 0.7f),
+            var path = new[] { new Vector2(0.3f, 2.9f), new Vector2(0.9f, 2.2f), new Vector2(0.4f, 1.5f), new Vector2(0.1f, 0.5f),
                                new Vector2(0.4f, 1.6f), new Vector2(-0.8f, 2.4f), new Vector2(0f, 2.6f) };
             float T = 140f;
             for (float t = 0f; t <= T; t += 0.2f)
@@ -103,21 +102,77 @@ namespace MetaMove.EditorTools
                 var p = Vector2.Lerp(path[i], path[i + 1], u - i);
                 float d = p.magnitude;
                 float f = Mathf.Clamp01((d - 0.6f) / 1.4f);
-                s.Add(new MetaMove.Demo.Kitting.RunPlots.Sample { t = t, dist = d, factor = f, x = p.x, z = p.y });
+                s.Add(new RunPlots.Sample { t = t, dist = d, factor = f, x = p.x, z = p.y });
             }
-            var marks = new System.Collections.Generic.List<MetaMove.Demo.Kitting.RunPlots.Mark>
-            {
-                new MetaMove.Demo.Kitting.RunPlots.Mark { t = 18f, label = "Refill asked" },
-                new MetaMove.Demo.Kitting.RunPlots.Mark { t = 52f, label = "Box in" },
-                new MetaMove.Demo.Kitting.RunPlots.Mark { t = 66f, label = "Stop" },
-                new MetaMove.Demo.Kitting.RunPlots.Mark { t = 110f, label = "Teach" },
-            };
-            var mx = new System.Collections.Generic.List<float>();
+            marks.Add(new RunPlots.Mark { t = 18f, label = "Refill asked" });
+            marks.Add(new RunPlots.Mark { t = 52f, label = "Box in" });
+            marks.Add(new RunPlots.Mark { t = 66f, label = "Stop" });
+            marks.Add(new RunPlots.Mark { t = 110f, label = "Teach" });
+        }
+
+        // The shift report plots from a made-up run, to check them without a headset.
+        public static void RenderPlots()
+        {
+            var s = new List<RunPlots.Sample>();
+            var marks = new List<RunPlots.Mark>();
+            FakeRun(s, marks);
+            var mx = new List<float>();
             System.IO.Directory.CreateDirectory(OutDir);
-            System.IO.File.WriteAllBytes(System.IO.Path.Combine(OutDir, "plot_timeline.png"), MetaMove.Demo.Kitting.RunPlots.Timeline(s, marks, 0.6f, 2f, 3f, 1120, 460, mx).EncodeToPNG());
-            System.IO.File.WriteAllBytes(System.IO.Path.Combine(OutDir, "plot_path.png"), MetaMove.Demo.Kitting.RunPlots.Path(s, 0.6f, 2f, 600).EncodeToPNG());
+            System.IO.File.WriteAllBytes(System.IO.Path.Combine(OutDir, "plot_timeline.png"), RunPlots.Timeline(s, marks, 0.6f, 2f, 3f, 1128, 420, mx).EncodeToPNG());
+            System.IO.File.WriteAllBytes(System.IO.Path.Combine(OutDir, "plot_path.png"), RunPlots.Path(s, 0.6f, 2f, 600).EncodeToPNG());
             Debug.Log("[SignPreview] plots rendered");
             if (Application.isBatchMode) EditorApplication.Exit(0);
+        }
+
+        // The whole shift report card for a made-up run, as the visitor sees it.
+        //   Unity.exe -batchmode -projectPath unity-quest -executeMethod MetaMove.EditorTools.BariSignPreview.RenderCard
+        public static void RenderCard()
+        {
+            int code = 0;
+            try
+            {
+                EditorSceneManager.OpenScene(Scene, OpenSceneMode.Single);
+                var report = Object.FindAnyObjectByType<ShiftReport>(FindObjectsInactive.Include);
+                report.gameObject.SetActive(true);
+                report.transform.SetPositionAndRotation(new Vector3(0f, 50f, 0f), Quaternion.identity);
+                var s = new List<RunPlots.Sample>();
+                var marks = new List<RunPlots.Mark>();
+                FakeRun(s, marks);
+                var run = new ShiftReport.Run { number = 2, total = 140f, minDist = 0.5f, slow = 38f, stop = 6f, lost = 24f, active = 120f, parts = 9,
+                                                refill = 34f, clear = 12f, teach = 19f, teachOffset = 0.042f };
+                var prev = new ShiftReport.Run { number = 1, total = 171f, minDist = 0.9f, slow = 52f, stop = 0f, lost = 30f, active = 150f, parts = 8,
+                                                 refill = 41f, clear = 15f, teach = 27f, teachOffset = 0.061f };
+                var canvas = report.PreviewCard(run, prev, s, marks);
+                canvas.transform.localPosition = Vector3.zero;
+                canvas.transform.localRotation = Quaternion.identity;
+                Canvas.ForceUpdateCanvases();
+                foreach (var t in canvas.GetComponentsInChildren<TMPro.TextMeshProUGUI>(true)) t.ForceMeshUpdate();
+
+                var go = new GameObject("PreviewCam");
+                var cam = go.AddComponent<Camera>();
+                cam.enabled = false;
+                cam.clearFlags = CameraClearFlags.SolidColor;
+                cam.backgroundColor = new Color(0.36f, 0.37f, 0.39f);   // a grey room behind the glass
+                cam.fieldOfView = 40f;
+                var c = canvas.transform.position;
+                cam.transform.position = c - Vector3.forward * 1.5f;
+                cam.transform.LookAt(c);
+                System.IO.Directory.CreateDirectory(OutDir);
+                var rt = new RenderTexture(2400, 1300, 24, RenderTextureFormat.ARGB32) { antiAliasing = 4 };
+                cam.targetTexture = rt;
+                cam.Render();
+                RenderTexture.active = rt;
+                var tex = new Texture2D(rt.width, rt.height, TextureFormat.RGB24, false);
+                tex.ReadPixels(new Rect(0, 0, rt.width, rt.height), 0, 0);
+                tex.Apply();
+                RenderTexture.active = null;
+                cam.targetTexture = null;
+                System.IO.File.WriteAllBytes(System.IO.Path.Combine(OutDir, "report_card.png"), tex.EncodeToPNG());
+                Debug.Log("[SignPreview] report card rendered");
+            }
+            catch (System.Exception e) { Debug.LogError("[SignPreview] " + e); code = 1; }
+            EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);   // never save
+            if (Application.isBatchMode) EditorApplication.Exit(code);
         }
 
         static void Shot(Camera cam, Transform frame, Vector3 eyeLocal, Vector3 atLocal, string file)
