@@ -15,8 +15,11 @@ namespace MetaMove.Demo.Kitting
     //   production lost to proximity (s of full-speed work, and parts)
     //   time to bring the new batch, to clear the empty, to teach
     //   teach accuracy: how far the pinch was off and the robot corrected on its own
+    //   help needed: how often the guide arrow had to step in (none in an expert run)
     // plus two plots (RunPlots): speed and distance over the shift, and the visitor's path
-    // from above - also saved on the headset as PNG and as a CSV trace.
+    // from above - also saved on the headset as PNG and as a CSV trace, plus an event log
+    // (cell cues, story beats, hints shown, zone changes) to see when help was needed and
+    // how long it took to act after it.
     public class ShiftReport : MonoBehaviour
     {
         public KittingCell cell;
@@ -35,7 +38,7 @@ namespace MetaMove.Demo.Kitting
         {
             public int number; public bool expert;
             public float total, minDist = float.MaxValue, slow, stop, lost, active;
-            public int parts;
+            public int parts, hints;
             public float refill = -1f, clear = -1f, teach = -1f, teachOffset = -1f;
             public float LostParts => parts > 0 && active - lost > 1f ? lost / ((active - lost) / parts) : 0f;
         }
@@ -61,7 +64,10 @@ namespace MetaMove.Demo.Kitting
         TextMeshProUGUI _title, _sub, _footer;
         readonly List<TextMeshProUGUI[]> _rows = new List<TextMeshProUGUI[]>();
         readonly List<UnityEngine.UI.Image> _rowHl = new List<UnityEngine.UI.Image>();
-        readonly float[] _hlAmount = new float[8];
+        readonly float[] _hlAmount = new float[9];
+        readonly List<string> _events = new List<string>();
+        string _zone = "";
+        StoryDirector _story;
         int[] _hl = new int[0];   // rows the voice is talking about right now
 
         // which card rows each spoken line is about
@@ -80,11 +86,37 @@ namespace MetaMove.Demo.Kitting
         readonly UIKit.FollowState _follow = new UIKit.FollowState();
         float _shown, _target;
 
-        const float W = 1500f, H = 760f, RowH = 64f, ColW = 860f;   // numbers left (ColW), plots right
+        const float W = 1500f, H = 760f, RowH = 57f, ColW = 860f;   // numbers left (ColW), plots right
         static readonly CultureInfo Inv = CultureInfo.InvariantCulture;
 
-        void OnEnable() { if (cell != null) cell.Cue += OnCue; }
-        void OnDisable() { if (cell != null) cell.Cue -= OnCue; }
+        void OnEnable()
+        {
+            if (cell != null) cell.Cue += OnCue;
+            KittingHints.HintShown += OnHint;
+            if (_story == null) _story = FindAnyObjectByType<StoryDirector>();
+            if (_story != null) _story.BeatStarted += OnBeat;
+        }
+
+        void OnDisable()
+        {
+            if (cell != null) cell.Cue -= OnCue;
+            KittingHints.HintShown -= OnHint;
+            if (_story != null) _story.BeatStarted -= OnBeat;
+        }
+
+        void OnHint(string kind, string what)
+        {
+            if (_run == null || _showAt >= 0f) return;
+            if (kind == "arrow") _run.hints++;
+            LogEvent("hint_" + kind, what);
+        }
+
+        void OnBeat(string key) { if (_run != null && _showAt < 0f) LogEvent("story", key); }
+
+        void LogEvent(string what, string detail)
+        {
+            _events.Add(F2(Time.time - _t0) + "," + what + "," + (detail ?? "").Replace(",", " "));
+        }
 
         AudioSource _voice;
         [Tooltip("The story's narrator: the report never talks over it.")]
@@ -103,12 +135,14 @@ namespace MetaMove.Demo.Kitting
         void OnCue(string key)
         {
             float now = Time.time;
+            if (key != "restart" && _run != null && _showAt < 0f) LogEvent("cell", key);
             switch (key)
             {
                 case "restart":
                     _run = new Run { number = _done.Count + 1, expert = cell.Expert };
                     _t0 = now; _lowAt = _missAt = _guideAt = _showAt = -1f; _clearedSeen = false; _finished = false;
                     _trace.Clear(); _marks.Clear(); _nextSample = 0f; _stopMarked = false;
+                    _events.Clear(); _zone = "";
                     _target = 0f;
                     StopAllCoroutines();
                     Speaking = false;
@@ -137,6 +171,8 @@ namespace MetaMove.Demo.Kitting
             var fr = cell.cellFrame;
             var l = Quaternion.Inverse(fr.rotation) * (Camera.main.transform.position - fr.position);
             _trace.Add(new RunPlots.Sample { t = Time.time - _t0, dist = d, factor = f, x = l.x, z = l.z });
+            string zone = d < 0f ? "" : f <= 0.001f ? "stop" : f < 0.99f ? "slow" : "clear";
+            if (zone != _zone) { _zone = zone; if (zone != "") LogEvent("zone", zone); }
             if (!_stopMarked && f <= 0.001f && cell.State == KittingCell.Phase.Running) { _stopMarked = true; Mark("Stop"); }
         }
 
@@ -274,6 +310,7 @@ namespace MetaMove.Demo.Kitting
                 new[] { "New position learned in", V(S(r.teach), p != null ? S(p.teach) : null) },
                 new[] { "Fine-tuned by the robot", V(r.teachOffset < 0f ? "--" : (r.teachOffset * 100f).ToString("0.0", Inv) + " cm",
                                                    p != null && p.teachOffset >= 0f ? (p.teachOffset * 100f).ToString("0.0", Inv) + " cm" : null) },
+                new[] { "Help needed", V(Hints(r), p != null ? Hints(p) : null) },
             };
             for (int i = 0; i < _rows.Count; i++)
             {
@@ -284,6 +321,8 @@ namespace MetaMove.Demo.Kitting
                 ? "Run " + r.number + ". Same task, second time: what came easier?"
                 : "Run " + r.number + ". Want another go? Hand menu, Expert: no hints.";
         }
+
+        static string Hints(Run r) => r.hints > 0 ? r.hints + (r.hints == 1 ? " hint" : " hints") : r.expert ? "none, on your own" : "none";
 
         void Build()
         {
@@ -305,7 +344,7 @@ namespace MetaMove.Demo.Kitting
             UIKit.Place(_sub.rectTransform, new Vector2(0f, 1f), new Vector2(0f, 1f), new Vector2(44f, -86f), new Vector2(ColW - 88f, 36f));
 
             float y = -140f;
-            for (int i = 0; i < 8; i++)
+            for (int i = 0; i < 9; i++)
             {
                 if (i > 0)
                 {
@@ -456,6 +495,11 @@ namespace MetaMove.Demo.Kitting
                         w.WriteLine(F2(p.t) + "," + F2(p.dist) + "," + F2(p.factor) + "," + F2(p.x) + "," + F2(p.z));
                     foreach (var m in _marks) w.WriteLine("# " + F2(m.t) + " " + m.label);
                 }
+                using (var w = new System.IO.StreamWriter(System.IO.Path.Combine(dir, "run" + r.number + "_" + stamp + "_events.csv")))
+                {
+                    w.WriteLine("t_s,event,detail");
+                    foreach (var e in _events) w.WriteLine(e);
+                }
             }
             catch (System.Exception e) { Debug.LogWarning("[Report] plots failed: " + e.Message); }
         }
@@ -487,17 +531,17 @@ namespace MetaMove.Demo.Kitting
         {
             try
             {
-                string path = System.IO.Path.Combine(Application.persistentDataPath, "metamove_runs.csv");
+                string path = System.IO.Path.Combine(Application.persistentDataPath, "metamove_runs_v2.csv");   // v2: + hints
                 bool fresh = !System.IO.File.Exists(path);
                 using (var w = new System.IO.StreamWriter(path, true))
                 {
                     if (fresh)
-                        w.WriteLine("timestamp,run,expert,total_s,min_dist_m,slow_s,stop_s,lost_s,lost_parts,parts,refill_s,clear_s,teach_s,teach_offset_m");
+                        w.WriteLine("timestamp,run,expert,total_s,min_dist_m,slow_s,stop_s,lost_s,lost_parts,parts,refill_s,clear_s,teach_s,teach_offset_m,hints");
                     w.WriteLine(string.Join(",", new[]
                     {
                         System.DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss", Inv), r.number.ToString(Inv), r.expert ? "1" : "0",
                         F(r.total), F(r.minDist), F(r.slow), F(r.stop), F(r.lost), F(r.LostParts), r.parts.ToString(Inv),
-                        F(r.refill), F(r.clear), F(r.teach), r.teachOffset.ToString("0.000", Inv),
+                        F(r.refill), F(r.clear), F(r.teach), r.teachOffset.ToString("0.000", Inv), r.hints.ToString(Inv),
                     }));
                 }
                 Debug.Log("[Report] logged to " + path);

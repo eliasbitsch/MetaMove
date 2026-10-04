@@ -31,6 +31,12 @@ namespace MetaMove.Demo.Kitting
         [Tooltip("Half-angle (deg) of 'looking at it'.")]
         public float viewCone = 35f;
 
+        // Every hint as it appears: ("arrow", target) when the visitor was lost and an arrow
+        // flew, ("marker", label) when a task marker came up, ("demo", "pinch") for the pinch demo.
+        public static event System.Action<string, string> HintShown;
+        string _lastWhat, _lastWhere;
+        bool _demoOn;
+
         Marker _what, _where;
         Canvas _pinchTag;
         TextMeshProUGUI _pinchText;
@@ -114,6 +120,11 @@ namespace MetaMove.Demo.Kitting
             PinchDemo(!quiet && cell.State == KittingCell.Phase.Guide && !cell.GuideHeld && cell.GuideRelay != null);
             if (!shownWhat || quiet) _what.Hide();
             if (!shownWhere || quiet) _where.Hide();
+            Announce(ref _lastWhat, shownWhat && !quiet ? _what.Label : null);
+            Announce(ref _lastWhere, shownWhere && !quiet ? _where.Label : null);
+            bool demo = !quiet && cell.State == KittingCell.Phase.Guide && !cell.GuideHeld && cell.GuideRelay != null;
+            if (demo && !_demoOn) HintShown?.Invoke("demo", "pinch");
+            _demoOn = demo;
             _what.Tick(); _where.Tick();
             GuideIfLost(quiet ? null : focus);
             _arrow.Tick(Camera.main.transform);
@@ -130,8 +141,15 @@ namespace MetaMove.Demo.Kitting
             if (Time.time - _taskSince > lostAfter && _away > lookAwayFor && Time.time >= _nextArrow)
             {
                 _arrow.Launch(cam, focus.position);
+                HintShown?.Invoke("arrow", focus.name);
                 _nextArrow = Time.time + arrowEvery;
             }
+        }
+
+        void Announce(ref string last, string now)
+        {
+            if (now != null && now != last) HintShown?.Invoke("marker", now);
+            last = now;
         }
 
         // Both hands reach in, close on the box, lift it a little, let go - on a loop.
@@ -272,6 +290,7 @@ namespace MetaMove.Demo.Kitting
 
         class Marker
         {
+            public string Label { get; private set; }
             readonly Transform _root, _label, _arrow, _ring;
             readonly CanvasGroup _labelGroup;
             readonly Image _ringImg, _arrowImg;
@@ -315,6 +334,7 @@ namespace MetaMove.Demo.Kitting
 
             public void Show(Transform target, float lift, string text, float ringSize, Vector3 head)
             {
+                Label = text;
                 _target = target; _lift = lift; _ringSize = ringSize; _goal = 1f;
                 if (_text.text != text) _text.text = text;
                 var surface = target.position;

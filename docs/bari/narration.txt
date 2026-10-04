@@ -77,7 +77,7 @@ No rush on the teaching. It's not every day a factory grows out of the floor.
 And it learned the new position in no time.
 
 [report_outro]
-In short: the line kept running, you were safe the whole time, and you taught a robot without writing a single line of code. If you like, try it once more in expert mode, without the hints.
+In short: the line kept running, you were safe the whole time, and you just did in a minute what used to need an engineer: you taught a robot, without a single line of code. If you like, try it once more in expert mode, without the hints.
 
 [report_outro_expert]
 Same task, no hints this time. Next to each number you see your first run. Whatever came easier now, that is what you learned.

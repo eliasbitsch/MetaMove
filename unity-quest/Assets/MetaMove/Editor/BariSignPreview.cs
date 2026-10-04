@@ -141,9 +141,9 @@ namespace MetaMove.EditorTools
                 var marks = new List<RunPlots.Mark>();
                 FakeRun(s, marks);
                 var run = new ShiftReport.Run { number = 2, total = 140f, minDist = 0.5f, slow = 38f, stop = 6f, lost = 24f, active = 120f, parts = 9,
-                                                refill = 34f, clear = 12f, teach = 19f, teachOffset = 0.042f };
+                                                refill = 34f, clear = 12f, teach = 19f, teachOffset = 0.042f, hints = 1 };
                 var prev = new ShiftReport.Run { number = 1, total = 171f, minDist = 0.9f, slow = 52f, stop = 0f, lost = 30f, active = 150f, parts = 8,
-                                                 refill = 41f, clear = 15f, teach = 27f, teachOffset = 0.061f };
+                                                 refill = 41f, clear = 15f, teach = 27f, teachOffset = 0.061f, hints = 4 };
                 var canvas = report.PreviewCard(run, prev, s, marks);
                 canvas.transform.localPosition = Vector3.zero;
                 canvas.transform.localRotation = Quaternion.identity;
