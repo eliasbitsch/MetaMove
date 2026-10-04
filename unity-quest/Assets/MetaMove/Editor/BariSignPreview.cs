@@ -98,6 +98,11 @@ namespace MetaMove.EditorTools
                 Shot(cam, frame, new Vector3(0.30f, fy + 1.70f, 2.40f), new Vector3(0.55f, fy + 1.45f, -0.30f), "qr_column.png");
                 // suction bell at the end of the duct, from below and in front
                 Shot(cam, frame, new Vector3(0.35f, fy + 1.95f, 1.25f), new Vector3(1.0f, fy + 2.58f, 0.26f), "duct_bell.png");
+                // the status panel on its stand, as built at runtime, from the visitor's spot
+                foreach (var hud in Object.FindObjectsByType<BariHud>(FindObjectsInactive.Include, FindObjectsSortMode.None))
+                    typeof(BariHud).GetMethod("Build", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).Invoke(hud, null);
+                Canvas.ForceUpdateCanvases();
+                Shot(cam, frame, new Vector3(0.30f, fy + 1.62f, 2.45f), new Vector3(0.45f, fy + 1.25f, 0.0f), "status_panel.png");
                 Debug.Log("[SignPreview] rendered to " + System.IO.Path.GetFullPath(OutDir));
             }
             catch (System.Exception e) { Debug.LogError("[SignPreview] " + e); code = 1; }

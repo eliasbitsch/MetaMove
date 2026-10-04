@@ -12,7 +12,9 @@ namespace MetaMove.Demo.Kitting
     //    ring + percent  metres + zone
     //
     // Deliberately little: no line-state text, the story card says what happens.
-    // Sits low in the view and follows the head lazily. Colours carry the same meaning as
+    // With a 'mount' it is a fixed panel of the cell (on a stand beside the robot, like the
+    // operator panel of a real cell) and never in the way; without one it sits low in the
+    // view and follows the head lazily. Colours carry the same meaning as
     // the floor rings and the signal tower: green clear, amber scaled, red standstill.
     public class BariHud : MonoBehaviour
     {
@@ -22,7 +24,10 @@ namespace MetaMove.Demo.Kitting
 
         public float distance = 0.95f;
         public float elevation = -33f;   // degrees below the horizon, under the story card
-        public float worldWidth = 0.306f;   // same element size as the wider HUD with the status pill (0.50 m over 980)
+        public float worldWidth = 0.306f;   // head-following: same element size as the wider HUD with the status pill (0.50 m over 980)
+        [Tooltip("Fixed place in the cell. Empty: follows the head.")]
+        public Transform mount;
+        public float mountWidth = 0.90f;   // on the stand: readable from the visitor's spot, ~2.5 m
 
         const float W = 600f, H = 230f, GaugeX = -203f, DistX = 105f;
         Canvas _canvas;
@@ -39,6 +44,17 @@ namespace MetaMove.Demo.Kitting
             _canvas = UIKit.WorldCanvas(transform, "BariHudCanvas", new Vector2(W, H), 6);
             var root = (RectTransform)_canvas.transform;
             _canvas.transform.localScale = Vector3.one * (worldWidth / W);
+            if (mount != null)
+            {
+                _canvas.transform.SetParent(mount, false);
+                _canvas.transform.localPosition = Vector3.zero;
+                _canvas.transform.localRotation = Quaternion.identity;
+                _canvas.transform.localScale = Vector3.one * (mountWidth / W);
+                // a housing behind both read-outs, so it reads as one panel of the cell
+                var housing = UIKit.Panel("Housing", root, new Color(0.10f, 0.11f, 0.13f, 1f), 48f, 4f);
+                UIKit.Stretch(housing.rectTransform, -18f);
+                housing.transform.SetAsFirstSibling();
+            }
 
             // Gauge and distance belong to speed and separation monitoring; while the visitor
             // guides the arm by hand it is not active, so they fade out (one group).
@@ -89,7 +105,7 @@ namespace MetaMove.Demo.Kitting
             bool placed = cell == null || cell.IsBound;
             if (_canvas.enabled != placed) _canvas.enabled = placed;
             if (!placed) return;
-            UIKit.LazyFollow(_canvas.transform, Camera.main.transform, distance, elevation, 18f, 0.25f, _follow);
+            if (mount == null) UIKit.LazyFollow(_canvas.transform, Camera.main.transform, distance, elevation, 18f, 0.25f, _follow);
 
             bool ssmActive = cell == null || (cell.State != KittingCell.Phase.Guide && cell.State != KittingCell.Phase.Align);
             _ssmShown = Mathf.MoveTowards(_ssmShown, ssmActive ? 1f : 0f, Time.deltaTime / 0.25f);

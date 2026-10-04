@@ -291,6 +291,7 @@ namespace MetaMove.EditorTools
             hudGo.transform.SetParent(root.transform, false);
             var bhud = hudGo.AddComponent<BariHud>();
             bhud.cell = cell; bhud.speed = prox; bhud.font = inter;
+            bhud.mount = HudStand(frame);
             var cardGo = new GameObject("StoryCard");
             cardGo.transform.SetParent(root.transform, false);
             var card = cardGo.AddComponent<MetaMove.UI.Kit.StoryCard>();
@@ -805,6 +806,39 @@ namespace MetaMove.EditorTools
             Group("tracking", Deep("AnchorPost"));                           // the anchor the tracking explains
             // trolley and orange box stand there from the start: always in view, never a surprise
             Group("reserve", cell.reserve != null ? cell.reserve.transform : null);   // when the arm switches to it
+        }
+
+        // The cell's status panel on a slim stand on the visitor's right of the robot table, about eye height,
+        // turned to the visitor's spot - out of the line of sight, readable from 2-3 m.
+        static Transform HudStand(Transform frame)
+        {
+            var old = frame.Find("StatusStand");
+            if (old != null) Object.DestroyImmediate(old.gameObject);
+            var stand = new GameObject("StatusStand").transform;
+            stand.SetParent(frame, false);
+            var at = new Vector3(-1.45f, 1.55f - FloorBelowTable, 0.05f);   // out of the arm's reach (GoFa ~0.95 m)   // panel centre, 1.62 m above the floor; cell -X is the visitor's right
+            var visitor = new Vector3(0.30f, 1.60f - FloorBelowTable, 2.45f);
+            var pole = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+            pole.name = "Pole";
+            Object.DestroyImmediate(pole.GetComponent<Collider>());
+            pole.transform.SetParent(stand, false);
+            float bottom = -FloorBelowTable, top = at.y - 0.17f;
+            pole.transform.localPosition = new Vector3(at.x, (bottom + top) / 2f, at.z - 0.03f);
+            pole.transform.localScale = new Vector3(0.04f, (top - bottom) / 2f, 0.04f);
+            pole.GetComponent<Renderer>().sharedMaterial = SlotMat("ControllerDark");
+            var foot = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+            foot.name = "Foot";
+            Object.DestroyImmediate(foot.GetComponent<Collider>());
+            foot.transform.SetParent(stand, false);
+            foot.transform.localPosition = new Vector3(at.x, bottom + 0.01f, at.z - 0.03f);
+            foot.transform.localScale = new Vector3(0.30f, 0.01f, 0.30f);
+            foot.GetComponent<Renderer>().sharedMaterial = SlotMat("ControllerDark");
+            var mount = new GameObject("PanelMount").transform;
+            mount.SetParent(stand, false);
+            mount.localPosition = at;
+            var look = at - visitor; look.y = 0f;
+            mount.localRotation = Quaternion.LookRotation(look.normalized, Vector3.up);   // canvas front faces the visitor
+            return mount;
         }
 
         // URP Lit -> alpha-blended transparent (alpha from _BaseColor).
