@@ -123,6 +123,8 @@ namespace MetaMove.Demo.Kitting
         public AudioSource storyVoice;
         // True while the report is being read out; the story holds its next line meanwhile.
         public static bool Speaking { get; private set; }
+        // The run is over and reported: hints and demos stay away until the next run.
+        public static bool RunReported { get; private set; }
 
         void Start()
         {
@@ -143,6 +145,7 @@ namespace MetaMove.Demo.Kitting
                     _t0 = now; _lowAt = _missAt = _guideAt = _showAt = -1f; _clearedSeen = false; _finished = false;
                     _trace.Clear(); _marks.Clear(); _nextSample = 0f; _stopMarked = false;
                     _events.Clear(); _zone = "";
+                    RunReported = false;
                     _target = 0f;
                     StopAllCoroutines();
                     Speaking = false;
@@ -224,6 +227,7 @@ namespace MetaMove.Demo.Kitting
         void Finish()
         {
             _finished = true;
+            RunReported = true;
             _run.total = _showAt - _t0 - (cell.Expert ? showDelayExpert : showDelay);
             _run.parts = cell.PartsPlaced;
             if (_run.minDist == float.MaxValue) _run.minDist = -1f;

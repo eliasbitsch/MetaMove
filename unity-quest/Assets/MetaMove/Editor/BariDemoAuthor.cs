@@ -310,6 +310,7 @@ namespace MetaMove.EditorTools
             if (menu.leftHand == null || menu.rightHand == null) Debug.LogWarning("[BariDemoAuthor] fingertip menu: hand skeletons not found");
             var hints = new GameObject("Hints").AddComponent<KittingHints>();
             hints.transform.SetParent(root.transform, false);
+            hints.pinchRayMaterial = AssetDatabase.LoadAssetAtPath<Material>("Assets/MetaMove/Materials/GrabRay.mat");
             hints.pinchHand = MakePinchHand(hints.transform);
             hints.cell = cell; hints.font = inter;
             hints.rack = frame.GetComponentInChildren<FlowRack>(true);
@@ -801,7 +802,7 @@ namespace MetaMove.EditorTools
             }
             Group("story", Deep("FloorZones"));                              // the safety layer: zones on the floor
             Group("tracking", Deep("AnchorPost"));                           // the anchor the tracking explains
-            Group("refill", cell.trayB.transform, Deep("Trolley"));          // the new batch, when it is asked for
+            // trolley and orange box stand there from the start: always in view, never a surprise
             Group("reserve", cell.reserve != null ? cell.reserve.transform : null);   // when the arm switches to it
         }
 

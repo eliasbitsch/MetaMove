@@ -12,7 +12,7 @@ namespace MetaMove.Demo
     // Puts the kitting cell into the room without a QR marker.
     //
     //   1. A ghost footprint (robot table, flow rack, the two speed zones) lies on the
-    //      floor where the right hand's pinch ray - or, without hands, the gaze - meets it,
+    //      floor where either hand's pinch ray - or, without hands, the gaze - meets it,
     //      and always turns its front towards the user.
     //   2. Pinch and hold (~1.2 s, a ring fills up) confirms. The robot is spawned with its
     //      foot on the virtual table top and the whole cell hangs off one spatial anchor.
@@ -80,7 +80,11 @@ namespace MetaMove.Demo
 
         void Update()
         {
-            bool rPinch = Pinching(rightHand) || OVRInput.Get(OVRInput.Button.One);
+            // either hand: the one that pinches aims, otherwise the right, then the left
+            bool lp = Pinching(leftHand), rp = Pinching(rightHand);
+            if (lp && !rp) _aim = leftHand; else if (rp) _aim = rightHand;
+            else if (!Usable(_aim)) _aim = Usable(rightHand) ? rightHand : leftHand;
+            bool rPinch = lp || rp || OVRInput.Get(OVRInput.Button.One);
 
             if (_phase != Phase.Placing) return;
             if (!FloorTarget(out _point)) return;
@@ -95,18 +99,21 @@ namespace MetaMove.Demo
             if (_hold >= holdToConfirm || (kb != null && kb.pKey.wasPressedThisFrame)) Confirm();
         }
 
+        OVRHand _aim;
+        static bool Usable(OVRHand h) => h != null && h.IsTracked && h.IsPointerPoseValid;
+
         bool Pinching(OVRHand h) =>
             h != null && h.IsTracked && h.GetFingerIsPinching(OVRHand.HandFinger.Index);
 
-        // Where the right hand's pointer ray (or the gaze) hits the floor.
+        // Where the aiming hand's pointer ray (or the gaze) hits the floor.
         bool FloorTarget(out Vector3 p)
         {
             float floorY = 0f;   // FloorLevel tracking origin
             var tracking = head != null ? head.parent : null;
             if (tracking != null) floorY = tracking.position.y;
             Ray ray;
-            if (rightHand != null && rightHand.IsTracked && rightHand.IsPointerPoseValid)
-                ray = new Ray(rightHand.PointerPose.position, rightHand.PointerPose.forward);
+            if (Usable(_aim))
+                ray = new Ray(_aim.PointerPose.position, _aim.PointerPose.forward);
             else
                 ray = new Ray(head.position, head.forward);
             var plane = new Plane(Vector3.up, new Vector3(0f, floorY, 0f));

@@ -6,7 +6,7 @@ using MetaMove.UI.Kit;
 
 namespace MetaMove.Demo.Kitting
 {
-    // Palm-up menu on either hand (left- and right-handers): status line plus Teach / Home /
+    // Palm-up menu on the left hand (one hand only, so it never jumps between hands): status line plus Teach / Home /
     // Report / Restart / Expert / Place, poked with the index finger of the other hand. Expert restarts the
     // run without hints or narration - the second go, from memory. It is there when you look for it and gone when you work, so it
     // never covers the cell. Teach is only live while the cell is waiting to be shown a tray.
@@ -79,13 +79,13 @@ namespace MetaMove.Demo.Kitting
             var head = Camera.main.transform;
 
             Vector3 palm, normal;
-            // Keep the hand that already holds the menu; otherwise take whichever palm is up.
+            // The left hand holds the menu, the right one pokes.
             bool up = false;
             if (_menuHand != null) up = PalmUp(_menuHand, out palm, out normal, head);
             else { palm = normal = Vector3.zero; }
             if (!up)
             {
-                foreach (var h in new[] { leftHand, rightHand })
+                foreach (var h in new[] { leftHand })
                     if (h != null && h != _menuHand && PalmUp(h, out palm, out normal, head)) { up = true; _menuHand = h; break; }
             }
             if (up) { _palmUpFor += Time.deltaTime; _palmDownFor = 0f; } else { _palmDownFor += Time.deltaTime; _palmUpFor = 0f; }

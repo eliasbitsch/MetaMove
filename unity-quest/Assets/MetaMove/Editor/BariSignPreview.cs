@@ -72,13 +72,27 @@ namespace MetaMove.EditorTools
                     if (p.name == "PinchDemoHand") ph = p;
                 if (ph != null)
                 {
+                    // as KittingHints.PinchDemo places it: in front of a visitor at 2.4 m, below and right of the eyes
+                    var eye = frame.TransformPoint(new Vector3(0.3f, fy + 1.65f, 2.4f));
+                    var handleW = frame.TransformPoint(new Vector3(0.2f, 0.35f, 0.25f));
+                    var fwdW = handleW - eye; fwdW.y = 0f; fwdW.Normalize();
+                    var rightW = Vector3.Cross(Vector3.up, fwdW);
+                    var startW = eye + fwdW * 0.42f - Vector3.up * 0.18f + rightW * 0.10f;
+                    var aim = handleW - startW; aim.y = Mathf.Max(aim.y, 0f) + 0.15f * aim.magnitude;
                     ph.gameObject.SetActive(true);
-                    ph.transform.position = frame.TransformPoint(new Vector3(0.2f, 0.45f, 0.35f));
-                    ph.transform.rotation = frame.rotation * Quaternion.LookRotation(new Vector3(0f, -0.3f, -1f), Vector3.up);
-                    ph.pinch = 1f; ph.Apply();
-                    Shot(cam, frame, new Vector3(0.45f, 0.62f, 0.75f), new Vector3(0.2f, 0.42f, 0.30f), "ghost_pinch.png");
-                    ph.pinch = 0f; ph.Apply();
-                    Shot(cam, frame, new Vector3(0.45f, 0.62f, 0.75f), new Vector3(0.2f, 0.42f, 0.30f), "ghost_open.png");
+                    ph.transform.rotation = Quaternion.LookRotation(aim.normalized, Vector3.up) * Quaternion.Euler(0f, 0f, 180f) * Quaternion.Euler(0f, 60f, 0f);
+                    foreach (var pv in new[] { 1f, 0f })
+                    {
+                        ph.pinch = pv; ph.Apply();
+                        ph.transform.position += startW - ph.PinchPoint;
+                        cam.transform.position = eye; cam.transform.LookAt(startW + fwdW * 0.3f);
+                        var rt = new RenderTexture(1600, 1000, 24, RenderTextureFormat.ARGB32) { antiAliasing = 4 };
+                        cam.targetTexture = rt; cam.Render(); RenderTexture.active = rt;
+                        var tex = new Texture2D(rt.width, rt.height, TextureFormat.RGB24, false);
+                        tex.ReadPixels(new Rect(0, 0, rt.width, rt.height), 0, 0); tex.Apply();
+                        RenderTexture.active = null; cam.targetTexture = null;
+                        System.IO.File.WriteAllBytes(System.IO.Path.Combine(OutDir, pv > 0f ? "ghost_pinch.png" : "ghost_open.png"), tex.EncodeToPNG());
+                    }
                 }
                 Shot(cam, frame, new Vector3(0.90f, fy + 1.60f, 1.85f), new Vector3(0.90f, fy + 0.90f, 2.60f), "ghost_hands.png");
                 Shot(cam, frame, new Vector3(0.30f, fy + 1.70f, 2.40f), new Vector3(0.55f, fy + 1.45f, -0.30f), "qr_column.png");

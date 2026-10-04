@@ -23,6 +23,9 @@ namespace MetaMove.Demo.Kitting
         [Tooltip("Ghost hand that shows how to guide the arm: reach, pinch the handle, drag to the box.")]
         public GhostHandPose pinchHand;
         public float pinchLoop = 5f;
+        [Tooltip("Thin line from the demo hand's pinch to the handle: guiding works from where you stand.")]
+        public Material pinchRayMaterial;
+        LineRenderer _pinchRay;
         [Tooltip("Seconds a task may be open before the guide arrow helps.")]
         public float lostAfter = 15f;
         [Tooltip("Seconds of looking away from the target before an arrow launches.")]
@@ -59,11 +62,21 @@ namespace MetaMove.Demo.Kitting
             UIKit.Stretch(_pinchText.rectTransform);
             _pinchText.characterSpacing = 6f;
             _pinchTag.gameObject.SetActive(false);
+            var rayGo = new GameObject("PinchDemoRay");
+            rayGo.transform.SetParent(transform, false);
+            _pinchRay = rayGo.AddComponent<LineRenderer>();
+            _pinchRay.positionCount = 2;
+            _pinchRay.widthMultiplier = 0.004f;
+            _pinchRay.sharedMaterial = pinchRayMaterial;
+            _pinchRay.startColor = new Color(UIKit.Accent.r, UIKit.Accent.g, UIKit.Accent.b, 0.9f);
+            _pinchRay.endColor = new Color(UIKit.Accent.r, UIKit.Accent.g, UIKit.Accent.b, 0.35f);
+            _pinchRay.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+            _pinchRay.enabled = false;
         }
 
         void LateUpdate()
         {
-            if (_what == null || cell == null || !cell.IsBound || cell.Expert || Camera.main == null) { Hide(); return; }
+            if (_what == null || cell == null || !cell.IsBound || cell.Expert || ShiftReport.RunReported || Camera.main == null) { Hide(); return; }
             if (_boundAt < 0f) _boundAt = Time.time;
             var head = Camera.main.transform.position;
 
@@ -170,8 +183,10 @@ namespace MetaMove.Demo.Kitting
             foreach (var p in g.GetComponentsInChildren<GhostHandPose>()) p.grip = Mathf.Clamp01(grip);
         }
 
-        // Shows how hand guiding works: a ghost hand comes up in front of the visitor, reaches to
-        // the cyan handle, pinches it, drags it over the orange box and lets go.
+        // Shows how hand guiding works - from where you stand: a ghost hand comes up in front of
+        // the visitor, pinches (a thin line links it to the cyan handle on the tool), moves a
+        // little towards the orange box and lets go. It never travels to the robot: you do not
+        // have to walk over and touch it.
         void PinchDemo(bool on)
         {
             if (pinchHand == null) return;
@@ -179,42 +194,55 @@ namespace MetaMove.Demo.Kitting
             {
                 if (pinchHand.gameObject.activeSelf) pinchHand.gameObject.SetActive(false);
                 if (_pinchTag != null && _pinchTag.gameObject.activeSelf) _pinchTag.gameObject.SetActive(false);
+                if (_pinchRay != null) _pinchRay.enabled = false;
                 return;
             }
             var cam = Camera.main.transform;
             var fwd = cam.forward; fwd.y = 0f; fwd = fwd.sqrMagnitude > 1e-4f ? fwd.normalized : Vector3.forward;
             var right = Vector3.Cross(Vector3.up, fwd);
-            var start = cam.position + fwd * 0.35f - Vector3.up * 0.30f + right * 0.12f;
             var handle = cell.GuideRelay.transform.position;
             var dest = cell.trayB.Center + Vector3.up * 0.30f;
+            // in front, a little right and below the eyes; the move is short and points the way
+            // the handle has to go
+            var start = cam.position + fwd * 0.42f - Vector3.up * 0.18f + right * 0.10f;
+            var way = dest - handle; way.y = 0f;
+            var move = way.sqrMagnitude > 1e-4f ? way.normalized * 0.16f : right * 0.16f;
 
             float t = Time.time % pinchLoop, pinch;
             Vector3 p;
-            if (t < 1.3f) { p = Vector3.Lerp(start, handle, Mathf.SmoothStep(0f, 1f, t / 1.3f)); pinch = 0f; }
-            else if (t < 1.7f) { p = handle; pinch = (t - 1.3f) / 0.4f; }
-            else if (t < 3.5f) { p = Vector3.Lerp(handle, dest, Mathf.SmoothStep(0f, 1f, (t - 1.7f) / 1.8f)); pinch = 1f; }
-            else if (t < 3.9f) { p = dest; pinch = 1f - (t - 3.5f) / 0.4f; }
-            else { p = dest; pinch = 0f; }
-            bool visible = t < 4.4f;
+            if (t < 0.8f) { p = start; pinch = 0f; }
+            else if (t < 1.2f) { p = start; pinch = (t - 0.8f) / 0.4f; }
+            else if (t < 3.0f) { p = Vector3.Lerp(start, start + move, Mathf.SmoothStep(0f, 1f, (t - 1.2f) / 1.8f)); pinch = 1f; }
+            else if (t < 3.4f) { p = start + move; pinch = 1f - (t - 3.0f) / 0.4f; }
+            else { p = start + move; pinch = 0f; }
+            bool visible = t < 4.2f;
             if (pinchHand.gameObject.activeSelf != visible) pinchHand.gameObject.SetActive(visible);
             if (_pinchTag != null && _pinchTag.gameObject.activeSelf != visible) _pinchTag.gameObject.SetActive(visible);
-            if (!visible) return;
+            if (!visible) { if (_pinchRay != null) _pinchRay.enabled = false; return; }
             if (_pinchTag != null)
             {
-                string label = t < 1.7f ? "PINCH" : t < 3.5f ? "KEEP PINCHING · MOVE" : "LET GO";
+                string label = t < 1.2f ? "PINCH" : t < 3.0f ? "KEEP PINCHING · MOVE" : "LET GO";
                 if (_pinchText.text != label) _pinchText.text = label;
-                var tp = p + Vector3.up * 0.12f;
+                var tp = p + Vector3.up * 0.10f;
                 _pinchTag.transform.position = tp;
                 var look = tp - cam.position; look.y = 0f;
                 if (look.sqrMagnitude > 1e-4f) _pinchTag.transform.rotation = Quaternion.LookRotation(look.normalized, Vector3.up);
             }
 
-            var aim = (t < 1.7f ? handle : dest) - p;
-            aim.y = Mathf.Min(aim.y, 0f) - 0.15f;   // fingers forward and a little down, palm down
+            // fingers towards the handle and slightly up; rolled over so the back of the hand faces up
+            var aim = handle - p;
+            aim.y = Mathf.Max(aim.y, 0f) + 0.15f * aim.magnitude;
             var hand = pinchHand.transform;
-            hand.rotation = Quaternion.LookRotation(aim.normalized, Vector3.up);
+            hand.rotation = Quaternion.LookRotation(aim.normalized, Vector3.up) * Quaternion.Euler(0f, 0f, 180f) * Quaternion.Euler(0f, 60f, 0f);   // three-quarter view: thumb and index meet in sight
             pinchHand.pinch = Mathf.Clamp01(pinch);
-            hand.position += p - pinchHand.PinchPoint;   // the pinch point, not the wrist, follows the path
+            hand.position += p - pinchHand.PinchPoint;   // the pinch point, not the wrist, sits on the path
+
+            // the link to the handle while pinching
+            if (_pinchRay != null)
+            {
+                _pinchRay.enabled = pinch > 0.6f;
+                if (_pinchRay.enabled) { _pinchRay.SetPosition(0, pinchHand.PinchPoint); _pinchRay.SetPosition(1, handle); }
+            }
         }
 
         void Hide()
