@@ -141,6 +141,14 @@ namespace MetaMove.Demo.Kitting
             switch (key)
             {
                 case "restart":
+                    if (cell.Mode != KittingCell.Freestyle.None)
+                    {
+                        // freestyle is play, not a shift: nothing measured, no card
+                        _run = null; _target = 0f; RunReported = false;
+                        StopAllCoroutines(); Speaking = false;
+                        if (_voice != null) _voice.Stop();
+                        break;
+                    }
                     _run = new Run { number = _done.Count + 1, expert = cell.Expert };
                     _t0 = now; _lowAt = _missAt = _guideAt = _showAt = -1f; _clearedSeen = false; _finished = false;
                     _trace.Clear(); _marks.Clear(); _nextSample = 0f; _stopMarked = false;

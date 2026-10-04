@@ -24,6 +24,12 @@ namespace MetaMove.Demo.Kitting
         public float rockerTilt = 2f;
 
         public static bool Muted { get; private set; }
+        // Muted and the card still up: the welcome waits for it. Closing the card with its X
+        // lets the demo go on silently; it comes back the next time the sound goes off.
+        public static bool Blocking => Muted && !_dismissed;
+        static bool _dismissed;
+        RectTransform _close;
+        OVRSkeleton[] _hands;
 
         Canvas _canvas;
         CanvasGroup _group;
@@ -62,9 +68,10 @@ namespace MetaMove.Demo.Kitting
                 bool muted = ReadMuted();
                 if (muted != Muted) Debug.Log("[Volume] " + (muted ? "muted - showing the hint" : "sound on"));
                 Muted = muted;
+                if (!muted) _dismissed = false;
             }
             if (_canvas == null || Camera.main == null) return;
-            _shown = Mathf.MoveTowards(_shown, Muted ? 1f : 0f, Time.unscaledDeltaTime / 0.3f);
+            _shown = Mathf.MoveTowards(_shown, Blocking ? 1f : 0f, Time.unscaledDeltaTime / 0.3f);
             _group.alpha = Mathf.SmoothStep(0f, 1f, _shown);
             _canvas.enabled = _shown > 0.001f;
             if (_canvas.enabled)
@@ -72,6 +79,7 @@ namespace MetaMove.Demo.Kitting
                 UIKit.LazyFollow(_canvas.transform, Camera.main.transform, 0.9f, -4f, 12f, 0.3f, _follow);
                 _draw = Mathf.MoveTowards(_draw, 1f, Time.unscaledDeltaTime / 0.6f);
                 Animate(Mathf.Repeat(Time.unscaledTime, 2f));
+                if (_shown > 0.9f && Poked(_close)) { _dismissed = true; Debug.Log("[Volume] hint closed"); }
             }
             else { _follow.placed = false; _draw = 0f; }
         }
@@ -87,6 +95,26 @@ namespace MetaMove.Demo.Kitting
             var v = _lineTo - _lineFrom;
             _line.sizeDelta = new Vector2(v.magnitude * d, 3f);
             _label.alpha = Mathf.Clamp01((_draw - 0.7f) / 0.3f);
+        }
+
+        // An index fingertip of either hand pressed into the X.
+        bool Poked(RectTransform r)
+        {
+            if (r == null) return false;
+            if (_hands == null || _hands.Length == 0) _hands = FindObjectsByType<OVRSkeleton>(FindObjectsSortMode.None);
+            foreach (var s in _hands)
+            {
+                if (s == null || !s.IsInitialized || !s.IsDataValid || s.Bones == null) continue;
+                var id = s.GetSkeletonType().ToString().StartsWith("XRHand") ? OVRSkeleton.BoneId.XRHand_IndexTip : OVRSkeleton.BoneId.Hand_IndexTip;
+                foreach (var b in s.Bones)
+                {
+                    if (b.Id != id) continue;
+                    var local = r.InverseTransformPoint(b.Transform.position);
+                    float depth = local.z * _canvas.transform.lossyScale.z;
+                    if (r.rect.Contains(new Vector2(local.x, local.y)) && Mathf.Abs(depth) < 0.025f) return true;
+                }
+            }
+            return false;
         }
 
         bool ReadMuted()
@@ -144,6 +172,14 @@ namespace MetaMove.Demo.Kitting
             _glow = _glowImg.rectTransform;
             _rockerImg = Img("Rocker", root, Capsule(), UIKit.Accent, _rockerAt, rs + new Vector2(4f, 4f));
             _glow.localRotation = _rockerImg.rectTransform.localRotation = Quaternion.Euler(0f, 0f, rockerTilt);
+            // close: an X in the top right corner, for when the demo should go on without sound
+            var close = UIKit.Panel("Close", root, UIKit.GlassLight, 34f, 2f);
+            _close = close.rectTransform;
+            UIKit.Place(_close, new Vector2(1f, 1f), new Vector2(1f, 1f), new Vector2(-22f, -22f), new Vector2(68f, 68f));
+            var x = UIKit.Text("X", _close, font, 40f, UIKit.TextHi, TextAlignmentOptions.Center, FontStyles.Bold);
+            UIKit.Stretch(x.rectTransform);
+            x.text = "×";
+
             // callout: dot on the button, a thin line up and out, the name of the button at its end
             _lineFrom = _rockerAt + new Vector2(rs.x * 0.5f + 4f, 2f);
             _lineTo = _rockerAt + new Vector2(156f, 58f);   // out past the strap, into the free space

@@ -1,3 +1,4 @@
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,7 +8,9 @@ using MetaMove.UI.Kit;
 namespace MetaMove.Demo.Kitting
 {
     // Palm-up menu on the left hand (one hand only, so it never jumps between hands): status line plus Teach / Home /
-    // Report / Restart / Expert / Place, poked with the index finger of the other hand. Expert restarts the
+    // Report / Restart / Freestyle / Place. Freestyle opens a row on top: Auto (the line just
+    // runs, to show the speed scaling), Teach (free guiding and teaching), Story (back to the
+    // guided demo), poked with the index finger of the other hand. Expert restarts the
     // run without hints or narration - the second go, from memory. It is there when you look for it and gone when you work, so it
     // never covers the cell. Teach is only live while the cell is waiting to be shown a tray.
     public class FingertipMenu : MonoBehaviour
@@ -32,11 +35,22 @@ namespace MetaMove.Demo.Kitting
         [Tooltip("Found in the scene when empty.")]
         public ShiftReport report;
         float _placeArmed = -10f;   // Place needs a second tap within 3 s
+        float _restartArmed = -10f; // so does Restart
         float _palmUpFor, _palmDownFor, _shown, _lastPress = -9f;
         bool _visible;
         OVRSkeleton _menuHand;   // the hand that holds the menu; the other one pokes
 
         class Button { public Image bg; public TextMeshProUGUI label; public RectTransform rt; public System.Action act; public bool enabled = true; }
+        readonly Button[] _subs = new Button[3];
+        bool _subOpen;
+
+        void Freestyle(KittingCell.Freestyle mode)
+        {
+            _subOpen = false;
+            cell.Mode = mode;
+            cell.Expert = mode != KittingCell.Freestyle.None;   // no story, no hints
+            cell.Restart();
+        }
 
         void Start() => Build();
 
@@ -53,10 +67,11 @@ namespace MetaMove.Demo.Kitting
             UIKit.Place(_status.rectTransform, new Vector2(0.5f, 1f), new Vector2(0.5f, 1f), new Vector2(0f, -26f), new Vector2(W - 40f, 70f));
             _status.enableWordWrapping = true;
             if (report == null) report = FindAnyObjectByType<ShiftReport>();
-            string[] names = { "Teach", "Home", "Restart", "Expert", "Place", "Report" };
+            string[] names = { "Teach", "Home", "Restart", "Freestyle", "Place", "Report" };
             int[] slot = { 0, 1, 3, 4, 5, 2 };   // left to right: Teach Home Report Restart Expert Place
-            System.Action[] acts = { () => { if (cell.State == KittingCell.Phase.Guide) cell.Teach(); else cell.StartGuide(); }, () => cell.ParkHome(), () => cell.Restart(),
-                                     () => { cell.Expert = !cell.Expert; cell.Restart(); },
+            System.Action[] acts = { () => { if (cell.State == KittingCell.Phase.Guide) cell.Teach(); else cell.StartGuide(); }, () => cell.ParkHome(),
+                                     () => { if (Time.time - _restartArmed < 3f) { _restartArmed = -10f; cell.Restart(); } else _restartArmed = Time.time; },
+                                     () => { _subOpen = !_subOpen; },
                                      () => { if (Time.time - _placeArmed < 3f && placer != null) placer.Replace(); else _placeArmed = Time.time; },
                                      () => { if (report != null) report.Toggle(); } };
             for (int i = 0; i < 6; i++)
@@ -69,6 +84,22 @@ namespace MetaMove.Demo.Kitting
                 UIKit.Stretch(b.label.rectTransform);
                 b.label.text = names[i];
                 _buttons[i] = b;
+            }
+            // freestyle row, in place of the status line while open
+            string[] subNames = { "Auto", "Teach", "Story" };
+            System.Action[] subActs = { () => Freestyle(KittingCell.Freestyle.Auto), () => Freestyle(KittingCell.Freestyle.Teach),
+                                        () => Freestyle(KittingCell.Freestyle.None) };
+            for (int i = 0; i < 3; i++)
+            {
+                var b = new Button { act = subActs[i] };
+                b.bg = UIKit.Panel("Sub_" + subNames[i], root, UIKit.GlassLight, 30f, 3f);
+                b.rt = b.bg.rectTransform;
+                UIKit.Place(b.rt, new Vector2(0.5f, 1f), new Vector2(0.5f, 1f), new Vector2((i - 1f) * 236f, -14f), new Vector2(220f, 104f));
+                b.label = UIKit.Text("Label", b.bg.transform, font, 28f, UIKit.TextHi, TextAlignmentOptions.Center, FontStyles.Bold);
+                UIKit.Stretch(b.label.rectTransform);
+                b.label.text = subNames[i];
+                b.bg.gameObject.SetActive(false);
+                _subs[i] = b;
             }
             _canvas.enabled = false;
         }
@@ -122,16 +153,26 @@ namespace MetaMove.Demo.Kitting
             bool ready = cell.State == KittingCell.Phase.Guide && cell.TrayUnderTool() != null;
             bool armed = Time.time - _placeArmed < 3f;
             _buttons[4].label.text = armed ? "Sure?" : "Place";
+            bool restartArmed = Time.time - _restartArmed < 3f;
+            _buttons[2].label.text = restartArmed ? "Sure?" : "Restart";
             // the last shift report, again or away; there is none before the first run ends
             _buttons[5].enabled = report != null && report.HasReport;
+            _status.gameObject.SetActive(!_subOpen);
+            for (int i = 0; i < 3; i++)
+            {
+                var sb = _subs[i];
+                if (sb.bg.gameObject.activeSelf != _subOpen) sb.bg.gameObject.SetActive(_subOpen);
+                var mode = i == 0 ? KittingCell.Freestyle.Auto : i == 1 ? KittingCell.Freestyle.Teach : KittingCell.Freestyle.None;
+                sb.bg.color = cell.Mode == mode ? new Color(UIKit.Accent.r, UIKit.Accent.g, UIKit.Accent.b, 0.55f) : UIKit.GlassLight;
+            }
             for (int i = 0; i < 6; i++)
             {
                 var b = _buttons[i];
                 b.label.color = b.enabled ? UIKit.TextHi : UIKit.TextLo * 0.8f;
                 float pulse = ready && i == 0 ? 0.35f + 0.35f * Mathf.Sin(Time.time * 6f) : 0f;
                 b.bg.color = i == 0 && b.enabled ? new Color(UIKit.Accent.r, UIKit.Accent.g, UIKit.Accent.b, 0.55f + pulse)
-                           : i == 3 && cell.Expert ? new Color(UIKit.Warn.r, UIKit.Warn.g, UIKit.Warn.b, 0.6f)
-                           : i == 4 && armed ? new Color(UIKit.Stop.r, UIKit.Stop.g, UIKit.Stop.b, 0.5f + 0.3f * Mathf.Sin(Time.time * 8f))
+                           : i == 3 && (_subOpen || cell.Mode != KittingCell.Freestyle.None) ? new Color(UIKit.Warn.r, UIKit.Warn.g, UIKit.Warn.b, 0.6f)
+                           : (i == 4 && armed) || (i == 2 && restartArmed) ? new Color(UIKit.Stop.r, UIKit.Stop.g, UIKit.Stop.b, 0.5f + 0.3f * Mathf.Sin(Time.time * 8f))
                            : i == 5 && report != null && report.Showing ? new Color(UIKit.Accent.r, UIKit.Accent.g, UIKit.Accent.b, 0.45f)
                            : i == 1 && cell.Parked ? new Color(UIKit.Warn.r, UIKit.Warn.g, UIKit.Warn.b, 0.45f + 0.3f * Mathf.Sin(Time.time * 5f))
                            : UIKit.GlassLight;
@@ -144,7 +185,7 @@ namespace MetaMove.Demo.Kitting
             var poker = _menuHand == leftHand ? rightHand : leftHand;
             if (!Bone(poker, OVRSkeleton.BoneId.XRHand_IndexTip, OVRSkeleton.BoneId.Hand_IndexTip, out tip)) return;
             if (Time.time - _lastPress < pressCooldown) return;
-            foreach (var b in _buttons)
+            foreach (var b in _buttons.Concat(_subOpen ? _subs : new Button[0]))
             {
                 var local = b.rt.InverseTransformPoint(tip);
                 var r = b.rt.rect;
@@ -169,7 +210,7 @@ namespace MetaMove.Demo.Kitting
         // Test hook for the Editor / Simulator: press a button by name.
         public void Press(string name)
         {
-            foreach (var b in _buttons) if ((b.label.text == name || (name == "Home" && b.label.text == "Resume") || (name == "Place" && b.label.text == "Sure?")) && b.enabled) { b.act(); return; }
+            foreach (var b in _buttons.Concat(_subOpen ? _subs : new Button[0])) if ((b.label.text == name || (name == "Home" && b.label.text == "Resume") || ((name == "Place" || name == "Restart") && b.label.text == "Sure?")) && b.enabled) { b.act(); return; }
         }
 
         bool PalmUp(OVRSkeleton hand, out Vector3 palm, out Vector3 normal, Transform head)

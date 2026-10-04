@@ -117,6 +117,11 @@ namespace MetaMove.Demo.Kitting
         public bool IsBound => _bound;
         [Tooltip("Second run: no hints, no narration - the visitor does it from memory.")]
         public bool Expert;
+        // Freestyle, from the hand menu: no story, no tasks, no report.
+        //   Auto   the line just runs - empty boxes fill up again - to show the speed scaling
+        //   Teach  starts in free guiding: pinch, guide to any box, Teach; Guide again any time
+        public enum Freestyle { None, Auto, Teach }
+        public Freestyle Mode;
         public int PartsPlaced { get; private set; }
         // Parked from the hand menu (Home). Home again resumes where the line stopped.
         public bool Parked { get; private set; }
@@ -467,6 +472,7 @@ namespace MetaMove.Demo.Kitting
             var reveal = cellFrame != null ? cellFrame.GetComponent<FactoryReveal>() : null;
             if (reveal != null) while (!reveal.Done) yield return null;
             ikTarget.SetPositionAndRotation(home.position, _graspRot);
+            if (Mode == Freestyle.Teach) { FreeGuide = true; yield return GuideFromReady(); yield break; }
             yield return RunLoop();
         }
 
@@ -494,6 +500,16 @@ namespace MetaMove.Demo.Kitting
                     continue;
                 }
                 int n = Taught.NextFilled();
+                if (n < 0 && Mode != Freestyle.None)
+                {
+                    // freestyle: nobody brings boxes - the empty one fills up again and on it goes
+                    yield return MoveTo(home, Vector3.zero);
+                    yield return new WaitForSeconds(0.6f);
+                    Taught.Refill();
+                    Emit("restock_free", Taught.label + " refilled");
+                    yield return new WaitForSeconds(0.4f);
+                    continue;
+                }
                 if (n < 0)
                 {
                     if (Taught != reserve) yield return Probe(Taught);
@@ -509,14 +525,14 @@ namespace MetaMove.Demo.Kitting
                     yield return WaitForTray();
                     yield break;   // Guide takes over; AlignThenRun restarts the loop
                 }
-                if (!_lowCued && Taught == trayA && Taught.Remaining <= lowAt && !IntroOver())
+                if (Mode == Freestyle.None && !_lowCued && Taught == trayA && Taught.Remaining <= lowAt && !IntroOver())
                 {
                     // not while the anchor is being explained: wait at home until the story is through
                     yield return MoveTo(home, Vector3.zero);
                     float since = Time.time;
                     while (!IntroOver() && Time.time - since < 45f) yield return null;
                 }
-                if (!_lowCued && Taught == trayA && Taught.Remaining <= lowAt)
+                if (Mode == Freestyle.None && !_lowCued && Taught == trayA && Taught.Remaining <= lowAt)
                 {
                     _lowCued = true;
                     Emit("low", Taught.label + " running low");

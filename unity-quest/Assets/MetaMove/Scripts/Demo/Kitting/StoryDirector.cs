@@ -133,7 +133,7 @@ namespace MetaMove.Demo.Kitting
             if (_pending.Count > 0 && QuietLongEnough()) PlayNow(_pending.Dequeue());
             // Straight away: "...so we brought the factory to you" lands while the hall grows out of the floor.
             // A muted headset holds the welcome (VolumeCheck shows where the button is), 20 s at most.
-            if (!_welcomed && Time.time - _boundAt > 0.3f && (!VolumeCheck.Muted || Time.time - _boundAt > 20f))
+            if (!_welcomed && Time.time - _boundAt > 0.3f && (!VolumeCheck.Blocking || Time.time - _boundAt > 20f))
             { _welcomed = true; _boundAt = Time.time - 0.3f; Play("welcome"); }
             float welcomeLen = Find("welcome") != null && Find("welcome").voice != null ? Find("welcome").voice.length + 4f : 14f;
             // The story follows the welcome whatever else was said in between (it queues).
