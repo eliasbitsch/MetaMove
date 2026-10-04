@@ -323,6 +323,8 @@ namespace MetaMove.EditorTools
             viz.cell = cell; viz.speed = prox; viz.story = story; viz.font = inter;
             viz.lineMaterial = SpriteMat("ZoneLine");
             var vol = new GameObject("VolumeCheck").AddComponent<VolumeCheck>();
+            // the headset photo is a third-party product shot: private folder, never in the public repo
+            vol.photo = AssetDatabase.LoadAssetAtPath<Texture2D>("Assets/MetaMove/Private/Volume/quest3_underside.png");
             vol.transform.SetParent(root.transform, false);
             vol.font = inter;
             var report = new GameObject("ShiftReport").AddComponent<ShiftReport>();

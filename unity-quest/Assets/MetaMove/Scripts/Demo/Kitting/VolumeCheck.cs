@@ -7,13 +7,20 @@ namespace MetaMove.Demo.Kitting
 {
     // The demo is narrated, and a headset handed from visitor to visitor is often muted. The
     // media volume is read from Android's AudioManager (Horizon OS is Android); while it is at
-    // zero a card in the middle of the view shows a muted speaker and a drawn headset whose
-    // volume button is being pressed by a fingertip, over and over. StoryDirector
+    // zero a card in the middle of the view shows a muted speaker and a photo of the headset
+    // from below, its volume-up button blinking cyan with an arrow pointing at it (a drawn
+    // headset stands in when the photo is not in the project). StoryDirector
     // holds the welcome until the sound is on (bounded), so nobody misses the first line.
     public class VolumeCheck : MonoBehaviour
     {
         public TMP_FontAsset font;
         public float pollEvery = 0.5f;
+        [Tooltip("The headset from below, transparent background. Optional: a drawing is used without it.")]
+        public Texture2D photo;
+        [Tooltip("Volume-up button in the photo: centre (u, v from the top-left) and size, 0..1.")]
+        public Vector4 rockerUV = new Vector4(0.740f, 0.794f, 0.116f, 0.041f);
+        [Tooltip("Tilt of the button in the photo, degrees.")]
+        public float rockerTilt = 2f;
 
         public static bool Muted { get; private set; }
 
@@ -21,11 +28,11 @@ namespace MetaMove.Demo.Kitting
         CanvasGroup _group;
         readonly UIKit.FollowState _follow = new UIKit.FollowState();
         float _next, _shown;
-        RectTransform _finger, _rocker, _plus;
-        Image _rockerImg, _fingerImg;
-        TextMeshProUGUI _plusText;
-        // headset drawing (px on the card): the rocker on the underside, right half
-        const float HsX = 150f, HsY = -44f, HsW = 400f, HsH = 190f, RockX = 98f;
+        RectTransform _glow, _arrow;
+        Image _glowImg, _rockerImg, _arrowImg;
+        Vector2 _rockerAt;   // card px
+        const float W = 900f, H = 520f;
+        static readonly Vector2 PicAt = new Vector2(110f, -78f), PicSize = new Vector2(430f, 350f);   // 920 x 749 photo
 #if UNITY_ANDROID && !UNITY_EDITOR
         AndroidJavaObject _audio;
 #endif
@@ -61,20 +68,15 @@ namespace MetaMove.Demo.Kitting
             else _follow.placed = false;
         }
 
-        // 2 s loop: the fingertip comes up from below, presses the button, a "+" pops, it lets go.
+        // 2 s loop: the button blinks cyan, a soft glow breathes around it, the arrow beside it nudges in.
         void Animate(float t)
         {
-            float up = t < 0.5f ? Mathf.SmoothStep(0f, 1f, t / 0.5f) : t < 1.2f ? 1f : t < 1.6f ? Mathf.SmoothStep(1f, 0f, (t - 1.2f) / 0.4f) : 0f;
-            bool pressed = t >= 0.5f && t < 1.2f;
-            float bottom = HsY - 0.76f * HsH / 2f;   // the visor's lower edge in the drawing
-            _finger.anchoredPosition = new Vector2(HsX + RockX, bottom - 18f - 40f * (1f - up) - (pressed ? 0f : 6f));
-            _fingerImg.color = new Color(1f, 1f, 1f, 0.25f + 0.65f * Mathf.Min(1f, up * 1.5f));
-            _rocker.anchoredPosition = new Vector2(HsX + RockX, bottom + 1f + (pressed ? 3f : 0f));
-            _rockerImg.color = pressed ? UIKit.Warn : new Color(0.55f, 0.58f, 0.62f);
-            float pop = pressed ? Mathf.Clamp01((t - 0.5f) / 0.25f) : t >= 1.2f ? Mathf.Clamp01(1f - (t - 1.2f) / 0.3f) : 0f;
-            _plus.anchoredPosition = new Vector2(HsX + RockX + 64f, bottom - 14f + 18f * pop);
-            _plus.localScale = Vector3.one * Mathf.Lerp(0.6f, 1f, pop);
-            _plusText.color = new Color(UIKit.Warn.r, UIKit.Warn.g, UIKit.Warn.b, pop);
+            float blink = 0.5f + 0.5f * Mathf.Cos(t * Mathf.PI * 2f);   // 1 at the start of the loop
+            _rockerImg.color = new Color(UIKit.Accent.r, UIKit.Accent.g, UIKit.Accent.b, Mathf.Lerp(0.25f, 0.95f, blink));
+            _glowImg.color = new Color(UIKit.Accent.r, UIKit.Accent.g, UIKit.Accent.b, 0.30f * blink);
+            _glow.localScale = Vector3.one * Mathf.Lerp(1.0f, 1.35f, 1f - blink);
+            float nudge = Mathf.Abs(Mathf.Sin(t * Mathf.PI));   // two pokes per loop
+            _arrow.anchoredPosition = _rockerAt + new Vector2(138f - 18f * nudge, 0f);
         }
 
         bool ReadMuted()
@@ -90,7 +92,6 @@ namespace MetaMove.Demo.Kitting
 
         void Build()
         {
-            const float W = 900f, H = 420f;
             _canvas = UIKit.WorldCanvas(transform, "VolumeHintCanvas", new Vector2(W, H), 11);
             _group = _canvas.gameObject.AddComponent<CanvasGroup>();
             _group.alpha = 0f;
@@ -104,23 +105,38 @@ namespace MetaMove.Demo.Kitting
             UIKit.Place(title.rectTransform, new Vector2(0.5f, 1f), new Vector2(0.5f, 1f), new Vector2(0f, -36f), new Vector2(W - 60f, 60f));
             title.text = "SOUND IS OFF";
             title.characterSpacing = 8f;
-
-            // muted speaker, left
-            Img("Speaker", root, MutedSpeaker(), UIKit.Warn, new Vector2(-250f, HsY), new Vector2(170f, 170f));
-            // the headset from the front, its volume button on the underside, right
-            Img("Headset", root, Headset(), Color.white, new Vector2(HsX, HsY), new Vector2(HsW, HsH));
-            var rock = Img("Rocker", root, Capsule(), new Color(0.55f, 0.58f, 0.62f), Vector2.zero, new Vector2(64f, 18f));
-            _rocker = rock.rectTransform; _rockerImg = rock;
-            var fin = Img("Fingertip", root, UIKit.Disc, Color.white, Vector2.zero, new Vector2(30f, 30f));
-            _finger = fin.rectTransform; _fingerImg = fin;
-            _plusText = UIKit.Text("Plus", root, font, 64f, UIKit.Warn, TextAlignmentOptions.Center, FontStyles.Bold);
-            _plusText.text = "+";
-            _plus = _plusText.rectTransform;
-            UIKit.Place(_plus, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(50f, 50f));
-
             var body = UIKit.Text("Body", root, font, 30f, UIKit.TextHi, TextAlignmentOptions.Center);
             UIKit.Place(body.rectTransform, new Vector2(0.5f, 1f), new Vector2(0.5f, 1f), new Vector2(0f, -98f), new Vector2(W - 80f, 44f));
             body.text = "This demo talks to you. Volume up: <b>underside, right</b>.";
+
+            Img("Speaker", root, MutedSpeaker(), UIKit.Warn, new Vector2(-280f, PicAt.y), new Vector2(150f, 150f));
+
+            // the headset from below; where its volume-up button sits on the card
+            Vector2 uv;
+            if (photo != null)
+            {
+                var pic = new GameObject("Headset", typeof(RawImage)).GetComponent<RawImage>();
+                pic.transform.SetParent(root, false);
+                pic.texture = photo; pic.raycastTarget = false;
+                UIKit.Place(pic.rectTransform, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), PicAt, PicSize);
+                uv = new Vector2(rockerUV.x, rockerUV.y);
+            }
+            else
+            {
+                Img("Headset", root, Headset(), Color.white, PicAt, new Vector2(PicSize.x, PicSize.x / 2f));
+                uv = new Vector2(0.75f, 0.5f + 0.38f * 0.5f);   // the drawing's lower edge, right half
+            }
+            var picH = photo != null ? PicSize.y : PicSize.x / 2f;
+            _rockerAt = PicAt + new Vector2((uv.x - 0.5f) * PicSize.x, (0.5f - uv.y) * picH);
+            var rs = photo != null ? new Vector2(rockerUV.z * PicSize.x, rockerUV.w * PicSize.y) : new Vector2(54f, 16f);
+
+            _glowImg = Img("Glow", root, Capsule(), UIKit.Accent, _rockerAt, rs + new Vector2(26f, 22f));
+            _glow = _glowImg.rectTransform;
+            _rockerImg = Img("Rocker", root, Capsule(), UIKit.Accent, _rockerAt, rs + new Vector2(4f, 4f));
+            _glow.localRotation = _rockerImg.rectTransform.localRotation = Quaternion.Euler(0f, 0f, rockerTilt);
+            _arrowImg = Img("Arrow", root, UIKit.Pointer, UIKit.Accent, _rockerAt, new Vector2(64f, 64f));
+            _arrow = _arrowImg.rectTransform;
+            _arrow.localRotation = Quaternion.Euler(0f, 0f, 180f);   // points left, at the button
             _canvas.enabled = false;
         }
 

@@ -186,6 +186,7 @@ namespace MetaMove.EditorTools
                 EditorSceneManager.OpenScene(Scene, OpenSceneMode.Single);
                 var vc = Object.FindAnyObjectByType<VolumeCheck>(FindObjectsInactive.Include);
                 vc.gameObject.SetActive(true);
+                if (vc.photo == null) vc.photo = AssetDatabase.LoadAssetAtPath<Texture2D>("Assets/MetaMove/Private/Volume/quest3_underside.png");
                 vc.transform.SetPositionAndRotation(new Vector3(0f, 50f, 0f), Quaternion.identity);
                 var go = new GameObject("PreviewCam");
                 var cam = go.AddComponent<Camera>();
