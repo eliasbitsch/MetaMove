@@ -61,9 +61,9 @@ namespace MetaMove.Safety
         [Tooltip("World pose used for the auto-spawn when devAutoSpawnAtTransform is true. If null, spawns at this GameObject's transform.")]
         public Transform devSpawnPose;
 
-        [Tooltip("Unity Editor only (Play mode, e.g. Meta XR Simulator): there is no QR marker, so spawn the robot at editorSpawnPosition/Yaw instead. Never affects a device build.")]
+        [Tooltip("Unity Editor only (Play mode, e.g. Meta XR Simulator): there is no QR marker, so spawn the robot with its BASE at editorSpawnPosition, turned by editorSpawnYaw. Never affects a device build.")]
         public bool editorAutoSpawn = true;
-        public Vector3 editorSpawnPosition = new Vector3(-0.53f, 0.91f, 1.2f);   // robot base ~(0, 0.8, 1.6): table height, in front
+        public Vector3 editorSpawnPosition = new Vector3(0f, 0.8f, 1.6f);   // robot base: table height, 1.6 m in front
         public float editorSpawnYaw = 180f;
 
         // QR detection skipped: explicit dev mode, or the Editor where no marker can be seen.
@@ -101,12 +101,24 @@ namespace MetaMove.Safety
             if (!devAutoSpawnAtTransform)
             {
                 SpawnAt(editorSpawnPosition, Quaternion.Euler(0f, editorSpawnYaw, 0f));
-                Debug.Log($"[QrAnchorCalibrator] EDITOR auto-spawn at {editorSpawnPosition} (no QR marker in the Editor).");
+                StartCoroutine(PlaceEditorBase());
                 return;
             }
             var src = devSpawnPose != null ? devSpawnPose : transform;
             SpawnAt(src.position, src.rotation);
             Debug.Log($"[QrAnchorCalibrator] DEV auto-spawn at {src.position} (QR detection skipped).");
+        }
+
+        // The QR anchor sits on the marker, not on the robot base, and the offset between the two
+        // (twin alignment, prefab layout) differs - shift the anchor until the BASE is where asked.
+        System.Collections.IEnumerator PlaceEditorBase()
+        {
+            yield return null;
+            yield return null;   // TwinAlignment applies its offset on the first frames
+            var ik = _spawned != null ? _spawned.GetComponentInChildren<MetaMove.Robot.Ros.IKTargetPosePublisher>(true) : null;
+            if (ik == null || ik.robotBase == null || _anchorGo == null) yield break;
+            _anchorGo.transform.position += editorSpawnPosition - ik.robotBase.position;
+            Debug.Log($"[QrAnchorCalibrator] EDITOR auto-spawn: robot base at {ik.robotBase.position} (no QR marker in the Editor).");
         }
 
         // Spawn without a QR marker (hand placement): robot base ends up at basePos. No

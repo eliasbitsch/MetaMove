@@ -255,6 +255,14 @@ namespace MetaMove.Safety
             if (hudCanvas == null) return;
             var hudRt = (RectTransform)hudCanvas.transform;
 
+            // Rebuild instead of adding a second one when the bar is baked into the scene.
+            var old = hudRt.parent.Find("SpeedBar");
+            if (old != null)
+            {
+                old.name = "SpeedBar (old)";
+                if (Application.isPlaying) Destroy(old.gameObject); else DestroyImmediate(old.gameObject);
+            }
+
             var go = new GameObject("SpeedBar", typeof(RectTransform), typeof(Canvas));
             go.transform.SetParent(hudRt.parent, false);
             go.GetComponent<Canvas>().renderMode = RenderMode.WorldSpace;

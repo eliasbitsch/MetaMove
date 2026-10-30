@@ -47,9 +47,20 @@ namespace MetaMove.UI.Hud
             foreach (RectTransform col in root)
             {
                 if (!col.name.StartsWith(columnPrefix)) continue;
-                // Column centre along x in canvas units, taken from its anchors.
-                float x = (Mathf.Lerp(col.anchorMin.x, col.anchorMax.x, 0.5f) - 0.5f) * root.rect.width;
-                float theta = x / r;                            // arc length -> angle
+                // Column centre along x in canvas units, taken from its anchors - on the first
+                // run. Once applied (ArcBG exists, e.g. baked into the scene) the anchors are
+                // centred, so the angle is read back from the column's own rotation instead;
+                // otherwise every run after the first stacked all columns in the middle.
+                float theta;
+                if (col.Find("ArcBG") == null)
+                {
+                    float x = (Mathf.Lerp(col.anchorMin.x, col.anchorMax.x, 0.5f) - 0.5f) * root.rect.width;
+                    theta = x / r;                              // arc length -> angle
+                }
+                else
+                {
+                    theta = Mathf.DeltaAngle(0f, col.localEulerAngles.y) * Mathf.Deg2Rad;
+                }
                 col.anchorMin = col.anchorMax = new Vector2(0.5f, col.anchorMin.y);
                 col.anchorMin = new Vector2(0.5f, 0f);
                 col.anchorMax = new Vector2(0.5f, 1f);
