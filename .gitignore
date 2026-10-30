@@ -110,3 +110,6 @@ _memory/
 
 # adb copied onto hosts without the Android SDK (lab PC) - found there by the launcher
 tools/platform-tools/
+
+# Meta XR Operator installs project skills here (tooling, not project code)
+unity-quest/.claude/
