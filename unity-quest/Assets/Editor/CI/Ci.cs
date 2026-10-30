@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using UnityEditor;
 using UnityEditor.Build;
 using UnityEditor.Build.Reporting;
@@ -139,6 +140,84 @@ namespace AgentCI
             {
                 Fail("CI_INFO_FAILED " + e.Message);
             }
+        }
+
+        // --------------------------------------------------------------- meta fix
+
+        // The Meta Project Setup Tool's "Fix All" for Required + Recommended, headless.
+        // Reflection keeps this file compiling in projects without the Meta SDK.
+        public static void MetaFix()
+        {
+            try
+            {
+                var group = BuildTargetGroup.Android;
+                var setup = FindType("OVRProjectSetup");
+                if (setup == null) { Say("CI_METAFIX_SKIP reason=no_meta_sdk"); Quit(0); return; }
+                var status = FindType("OVRProjectSetupStatus");
+                var getTasks = setup.GetMethod("GetTasks", BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
+                var manual = status?.GetMethod("IsManuallyFixable", BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
+
+                int fixedCount = 0;
+                // A fix can unlock or invalidate others, so repeat like the tool does.
+                for (int pass = 0; pass < 4; pass++)
+                {
+                    int before = fixedCount;
+                    foreach (var task in Outstanding(getTasks, group))
+                    {
+                        if (manual != null && (bool)manual.Invoke(null, new[] { task })) continue;
+                        if ((bool)task.GetType().GetMethod("Fix").Invoke(task, new object[] { group }))
+                        {
+                            fixedCount++;
+                            Say("CI_METAFIX_FIXED " + TaskText(task, group));
+                        }
+                    }
+                    if (fixedCount == before) break;
+                }
+                AssetDatabase.SaveAssets();
+
+                var left = Outstanding(getTasks, group).ToList();
+                foreach (var task in left) Say("CI_METAFIX_LEFT " + TaskText(task, group));
+                Say("CI_METAFIX_OK fixed=" + fixedCount + " left=" + left.Count);
+                Quit(0);
+            }
+            catch (Exception e)
+            {
+                Fail("CI_METAFIX_FAILED exception=" + (e.InnerException ?? e).Message);
+            }
+        }
+
+        static IEnumerable<object> Outstanding(MethodInfo getTasks, BuildTargetGroup group)
+        {
+            foreach (var task in (System.Collections.IEnumerable)getTasks.Invoke(null, new object[] { group }))
+            {
+                var t = task.GetType();
+                int level = Convert.ToInt32(LambdaValue(t.GetProperty("Level").GetValue(task), group));
+                if (level < 1) continue; // Optional
+                var isDone = (Func<BuildTargetGroup, bool>)t.GetProperty("IsDone").GetValue(task);
+                if (isDone(group) || (bool)t.GetMethod("IsIgnored").Invoke(task, new object[] { group })) continue;
+                yield return task;
+            }
+        }
+
+        static object LambdaValue(object optionalLambda, BuildTargetGroup group)
+        {
+            return optionalLambda.GetType().GetMethod("GetValue", new[] { typeof(BuildTargetGroup) })
+                .Invoke(optionalLambda, new object[] { group });
+        }
+
+        static string TaskText(object task, BuildTargetGroup group)
+        {
+            var t = task.GetType();
+            var level = LambdaValue(t.GetProperty("Level").GetValue(task), group);
+            var msg = LambdaValue(t.GetProperty("Message").GetValue(task), group);
+            return "level=" + level + " " + Convert.ToString(msg).Replace("\n", " ");
+        }
+
+        static Type FindType(string name)
+        {
+            return AppDomain.CurrentDomain.GetAssemblies()
+                .Select(a => a.GetType(name, false))
+                .FirstOrDefault(t => t != null);
         }
 
         // ---------------------------------------------------------------- helpers
