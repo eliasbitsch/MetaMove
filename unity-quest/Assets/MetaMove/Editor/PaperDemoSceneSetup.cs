@@ -218,11 +218,9 @@ namespace MetaMove.EditorTools
 
         static GameObject SetupPassthrough(GameObject camRig)
         {
-            // Underlay layer: virtual geometry renders on top of the camera feed.
+            // The SDK (207+) always composites the layer as an underlay.
             var host = camRig != null ? camRig : new GameObject("Passthrough");
-            var layer = host.GetComponent<OVRPassthroughLayer>();
-            if (layer == null) layer = host.AddComponent<OVRPassthroughLayer>();
-            layer.overlayType = OVROverlay.OverlayType.Underlay;
+            if (host.GetComponent<OVRPassthroughLayer>() == null) host.AddComponent<OVRPassthroughLayer>();
 
             // Transparent clear on every rig camera so the underlay shows
             // wherever nothing is drawn. Post-processing off: it writes opaque
