@@ -7,7 +7,7 @@ namespace MetaMove.UI.Hud
     // Does three things on Awake:
     //   1. Sets OVRManager.isInsightPassthroughEnabled = true (via reflection so the
     //      script compiles even if the Meta SDK is stripped from a build target).
-    //   2. Adds OVRPassthroughLayer with overlayType=Underlay if none exists in the scene.
+    //   2. Adds OVRPassthroughLayer (always an underlay) if none exists in the scene.
     //   3. Switches the main camera to a transparent clear so the passthrough underlay
     //      shows through wherever no virtual geometry is drawn.
     //
@@ -53,15 +53,8 @@ namespace MetaMove.UI.Hud
 
             if (Object.FindFirstObjectByType(layerType) != null) return;
 
-            var go = new GameObject("OVRPassthroughLayer");
-            var layer = go.AddComponent(layerType);
-
-            // overlayType = Underlay so virtual objects render on top of passthrough.
-            var overlayTypeProp = layerType.GetProperty("overlayType");
-            var underlayEnum = System.Enum.Parse(
-                System.Type.GetType("OVROverlay+OverlayType, Oculus.VR") ?? typeof(int),
-                "Underlay");
-            overlayTypeProp?.SetValue(layer, underlayEnum);
+            // The SDK (207+) always composites the layer as an underlay.
+            new GameObject("OVRPassthroughLayer").AddComponent(layerType);
         }
 
         void MakeCameraTransparent()
