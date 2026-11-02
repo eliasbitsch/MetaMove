@@ -3,7 +3,7 @@
     "at.ac.ait.xrui": "file:../../../ait-xrui",
     "com.meta.xr.sdk.all": "207.0.1",
     "com.meta.xr.unity-mcp.extension": "https://github.com/meta-quest/Unity-MCP-Extensions.git",
-    "com.unity.ai.assistant": "2.19.0-pre.2",
+    "com.unity.ai.assistant": "2.21.0-pre.2",
     "com.unity.feature.development": "1.0.2",
     "com.unity.ide.rider": "3.0.39",
     "com.unity.inputsystem": "1.19.0",
