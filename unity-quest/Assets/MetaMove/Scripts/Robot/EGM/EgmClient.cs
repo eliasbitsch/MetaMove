@@ -47,12 +47,12 @@ namespace MetaMove.Robot.EGM
         {
             try
             {
+                if (!autoDetectRemote) _remote = new IPEndPoint(IPAddress.Parse(remoteHost), remotePort);
                 _sock = new UdpClient(listenPort);
                 _sock.Client.ReceiveBufferSize = 1 << 20;
                 _running = true;
                 _rxThread = new Thread(RxLoop) { IsBackground = true, Name = "EGM-RX" };
                 _rxThread.Start();
-                if (!autoDetectRemote) _remote = new IPEndPoint(IPAddress.Parse(remoteHost), remotePort);
                 Debug.Log($"[EGM] Listening on UDP {listenPort}");
             }
             catch (Exception e)
@@ -107,7 +107,9 @@ namespace MetaMove.Robot.EGM
 
         public bool SendJoints(IReadOnlyList<double> jointDeg)
         {
-            if (_sock == null || _remote == null) return false;
+            if (_sock == null || _remote == null || jointDeg == null || jointDeg.Count == 0) return false;
+            for (int i = 0; i < jointDeg.Count; i++)
+                if (double.IsNaN(jointDeg[i]) || double.IsInfinity(jointDeg[i])) return false;
             uint tm = (uint)(Time.realtimeSinceStartup * 1000.0);
             byte[] pkt = EgmSensorBuilder.BuildJointCommand(++_txSeqno, tm, jointDeg);
             try { _sock.Send(pkt, pkt.Length, _remote); _packetsSent++; return true; }
@@ -117,15 +119,33 @@ namespace MetaMove.Robot.EGM
         public bool SendPose(Vector3 posMeters, Quaternion rot)
         {
             if (_sock == null || _remote == null) return false;
+            if (!IsFinite(posMeters) || !IsFinite(rot.x) || !IsFinite(rot.y) || !IsFinite(rot.z) || !IsFinite(rot.w)) return false;
             uint tm = (uint)(Time.realtimeSinceStartup * 1000.0);
-            // rparak proven pattern: ABB EGM Pose mode reads EgmPose.euler (XYZ degrees),
-            // not the quaternion field. Convert Unity quat → Euler ZYX-deg.
-            Vector3 eul = rot.eulerAngles;
+            // EGM pose mode reads EgmPose.euler, not the quaternion field.
+            ToAbbEulerDeg(rot, out double ex, out double ey, out double ez);
             byte[] pkt = EgmSensorBuilder.BuildPoseCommand(++_txSeqno, tm,
                 posMeters.x * 1000.0, posMeters.y * 1000.0, posMeters.z * 1000.0,
-                eul.x, eul.y, eul.z);
+                ex, ey, ez);
             try { _sock.Send(pkt, pkt.Length, _remote); _packetsSent++; return true; }
             catch (Exception e) { Debug.LogWarning($"[EGM] TX error: {e.Message}"); return false; }
+        }
+
+        static bool IsFinite(float v) => !float.IsNaN(v) && !float.IsInfinity(v);
+        static bool IsFinite(Vector3 v) => IsFinite(v.x) && IsFinite(v.y) && IsFinite(v.z);
+
+        // ABB euler is RAPID's ZYX order (R = Rz * Ry * Rx), not Unity's eulerAngles (ZXY).
+        // The quaternion is taken as plain components (x, y, z, w) in the robot frame.
+        public static void ToAbbEulerDeg(Quaternion q, out double xDeg, out double yDeg, out double zDeg)
+        {
+            double x = q.x, y = q.y, z = q.z, w = q.w;
+            double n = System.Math.Sqrt(x * x + y * y + z * z + w * w);
+            if (n < 1e-12) { xDeg = yDeg = zDeg = 0; return; }
+            x /= n; y /= n; z /= n; w /= n;
+            double sinY = System.Math.Max(-1.0, System.Math.Min(1.0, 2.0 * (w * y - z * x)));
+            const double R2D = 180.0 / System.Math.PI;
+            xDeg = System.Math.Atan2(2.0 * (w * x + y * z), 1.0 - 2.0 * (x * x + y * y)) * R2D;
+            yDeg = System.Math.Asin(sinY) * R2D;
+            zDeg = System.Math.Atan2(2.0 * (w * z + x * y), 1.0 - 2.0 * (y * y + z * z)) * R2D;
         }
 
         public float MeasuredHz => _hz;
