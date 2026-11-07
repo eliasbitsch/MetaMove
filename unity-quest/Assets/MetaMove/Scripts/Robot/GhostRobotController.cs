@@ -45,7 +45,7 @@ namespace MetaMove.Robot
         void Awake()
         {
             _sink = _sinkBehaviour as IRobotCommandSink;
-            GhostPosition = initialPosition;
+            GhostPosition = Clamp(initialPosition);
             GhostRotation = Quaternion.Euler(initialEulerDegrees);
             _committedPosition = GhostPosition;
             _committedRotation = GhostRotation;
@@ -98,9 +98,14 @@ namespace MetaMove.Robot
         // touch the ghost so the user can resume editing after stop release.
         public void EmergencyStop() => _sink?.Stop();
 
-        Vector3 Clamp(Vector3 p) => new Vector3(
-            Mathf.Clamp(p.x, workspaceMin.x, workspaceMax.x),
-            Mathf.Clamp(p.y, workspaceMin.y, workspaceMax.y),
-            Mathf.Clamp(p.z, workspaceMin.z, workspaceMax.z));
+        // Mathf.Clamp passes NaN through, so a NaN target would bypass the workspace box.
+        Vector3 Clamp(Vector3 p)
+        {
+            if (float.IsNaN(p.x) || float.IsNaN(p.y) || float.IsNaN(p.z)) return GhostPosition;
+            return new Vector3(
+                Mathf.Clamp(p.x, workspaceMin.x, workspaceMax.x),
+                Mathf.Clamp(p.y, workspaceMin.y, workspaceMax.y),
+                Mathf.Clamp(p.z, workspaceMin.z, workspaceMax.z));
+        }
     }
 }
