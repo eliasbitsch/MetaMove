@@ -20,6 +20,7 @@ Fail-safe: no distance for stale_timeout s -> 0 (freeze).
 from __future__ import annotations
 
 import json
+import math
 import threading
 import time
 
@@ -107,8 +108,10 @@ class DistanceSpeedScaler(Node):
             f"(EMA + slew, continuous)")
 
     def _on_dist(self, msg: Float32) -> None:
+        d = float(msg.data)
         with self._lock:
-            self._raw_dist = float(msg.data)
+            # NaN/inf must read as "no distance" (freeze), not flow into the speed math.
+            self._raw_dist = d if math.isfinite(d) else None
             self._last_t = time.monotonic()
 
     def _on_enable_cmd(self, msg: Bool) -> None:

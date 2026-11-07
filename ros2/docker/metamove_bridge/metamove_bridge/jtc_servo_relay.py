@@ -221,7 +221,7 @@ class JtcServoRelay(Node):
                     return result
                 # advance the cursor by the LIVE speed factor (read each tick)
                 sp = float(self.get_parameter('live_speed').value)
-                sp = max(0.0, min(1.0, sp))
+                sp = max(0.0, min(1.0, sp)) if math.isfinite(sp) else 0.0
                 tc += period * sp
                 if tc >= total:
                     break
