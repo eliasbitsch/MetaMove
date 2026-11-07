@@ -17,6 +17,8 @@ Disarmed = echo the measured pose, so the robot holds still.
 """
 from __future__ import annotations
 
+import math
+
 RAPID_RUNNING = 2   # egm_pb2.EgmRobot.rapidExecState
 MOTORS_ON = 1       # egm_pb2.EgmRobot.motorState
 
@@ -39,7 +41,11 @@ class CommandGuard:
                 f"robot not ready (rapidExecState={rapid_state}, motorState={motor_state})")
         if command_deg is None:
             return feedback_deg, None
-        dev = max(abs(c - f) for c, f in zip(command_deg, feedback_deg))
+        # NaN compares False against every tolerance and would slip through as "armed".
+        if any(not math.isfinite(c) for c in command_deg):
+            dev = math.inf
+        else:
+            dev = max(abs(c - f) for c, f in zip(command_deg, feedback_deg))
         if not self.armed:
             if dev <= self.arm_tol_deg:
                 self.armed = True

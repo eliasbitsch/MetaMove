@@ -71,3 +71,10 @@ def test_motors_off_blocks():
     g.decide(RUN, ON, HOME, near(1.0))
     out, trip = g.decide(RUN, OFF, HOME, near(1.0))
     assert out == HOME and trip
+
+
+def test_nan_command_while_armed_trips():
+    g = CommandGuard()
+    g.decide(RUN, ON, HOME, near(1.0))
+    out, trip = g.decide(RUN, ON, HOME, [float("nan")] + HOME[1:])
+    assert out == HOME and trip and not g.armed
