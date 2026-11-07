@@ -70,8 +70,9 @@ namespace MetaMove.Robot.EGM
 
         public string ReadString()
         {
-            int len = (int)ReadVarint();
-            if (_pos + len > _end) throw new EndOfStreamException("string");
+            ulong ulen = ReadVarint();
+            if (ulen > (ulong)(_end - _pos)) throw new EndOfStreamException("string");
+            int len = (int)ulen;
             string s = Encoding.UTF8.GetString(_buf, _pos, len);
             _pos += len;
             return s;
@@ -79,11 +80,19 @@ namespace MetaMove.Robot.EGM
 
         public ProtoReader ReadMessage()
         {
-            int len = (int)ReadVarint();
-            if (_pos + len > _end) throw new EndOfStreamException("message");
+            ulong ulen = ReadVarint();
+            if (ulen > (ulong)(_end - _pos)) throw new EndOfStreamException("message");
+            int len = (int)ulen;
             var sub = new ProtoReader(_buf, _pos, len);
             _pos += len;
             return sub;
+        }
+
+        // Malformed UDP input must not move the cursor outside the buffer (negative or huge lengths).
+        void Advance(ulong n)
+        {
+            if (n > (ulong)(_end - _pos)) throw new EndOfStreamException("skip");
+            _pos += (int)n;
         }
 
         public void SkipField(int wireType)
@@ -91,9 +100,9 @@ namespace MetaMove.Robot.EGM
             switch (wireType)
             {
                 case 0: ReadVarint(); break;
-                case 1: _pos += 8; break;
-                case 2: { int len = (int)ReadVarint(); _pos += len; break; }
-                case 5: _pos += 4; break;
+                case 1: Advance(8); break;
+                case 2: Advance(ReadVarint()); break;
+                case 5: Advance(4); break;
                 default: throw new FormatException($"unknown wire type {wireType}");
             }
         }
