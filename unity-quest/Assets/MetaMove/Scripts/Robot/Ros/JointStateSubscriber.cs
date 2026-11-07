@@ -44,7 +44,8 @@ namespace MetaMove.Robot.Ros
 
         void OnEnable()
         {
-            CacheRestPose();
+            // Re-caching after a disable/enable would take the already rotated pose as rest.
+            if (_restLocalRot == null || _restLocalRot.Length != joints.Length) CacheRestPose();
             _ros = ROSConnection.GetOrCreateInstance();
             _ros.Subscribe<JointStateMsg>(topic, OnState);
             _subscribed = true;
@@ -52,7 +53,7 @@ namespace MetaMove.Robot.Ros
 
         void OnDisable() => _subscribed = false;
 
-        void OnValidate() => CacheRestPose();
+        void OnValidate() { if (!Application.isPlaying) CacheRestPose(); }
 
         void CacheRestPose()
         {
