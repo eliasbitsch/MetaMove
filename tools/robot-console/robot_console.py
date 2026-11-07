@@ -50,10 +50,10 @@ class Console:
         self.root, self.ros = root, ros
         self.state = {"max": None, "speed": None, "joints": None, "override": False, "status": None,
                       "ctrl": None}
+        self.lock = threading.Lock()
         # Controller over RWS: one session, polled every 2 s in the background.
         self.rws = Rws()
         threading.Thread(target=self._poll_controller, daemon=True).start()
-        self.lock = threading.Lock()
 
         self.max_req = roslibpy.Topic(ros, "/quest/max_speed", "std_msgs/Float32")
         self.max_req.advertise()
