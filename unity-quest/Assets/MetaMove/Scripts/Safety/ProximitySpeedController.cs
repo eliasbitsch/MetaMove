@@ -78,7 +78,8 @@ namespace MetaMove.Safety
             else
             {
                 _distFilt = _distFilt < 0f ? d : emaAlpha * d + (1f - emaAlpha) * _distFilt;
-                target = Mathf.Clamp01((_distFilt - dNear) / Mathf.Max(1e-4f, dFar - dNear));
+                // Never let the low-pass lag hide a fast approach: use the nearer of raw and filtered.
+                target = Mathf.Clamp01((Mathf.Min(d, _distFilt) - dNear) / Mathf.Max(1e-4f, dFar - dNear));
                 target = Mathf.Lerp(slowFloor, 1f, target);
                 if (d <= dNear) target = 0f;   // safety on raw distance
             }
