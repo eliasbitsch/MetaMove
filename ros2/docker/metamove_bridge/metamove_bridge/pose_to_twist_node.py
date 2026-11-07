@@ -103,6 +103,10 @@ class PoseToTwist(Node):
                 throttle_duration_sec=2.0,
             )
             return
+        p, o = msg.pose.position, msg.pose.orientation
+        if not all(math.isfinite(v) for v in (p.x, p.y, p.z, o.x, o.y, o.z, o.w)):
+            self.get_logger().warn('non-finite target pose - ignoring', throttle_duration_sec=2.0)
+            return
         self._target = msg
         self._target_stamp_ns = self.get_clock().now().nanoseconds
 
