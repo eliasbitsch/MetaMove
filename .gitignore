@@ -113,3 +113,5 @@ tools/platform-tools/
 
 # Meta XR Operator installs project skills here (tooling, not project code)
 unity-quest/.claude/
+video/
+*.bak-*
